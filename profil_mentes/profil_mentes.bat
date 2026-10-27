@@ -7,7 +7,7 @@ set "PM_KODLAP="
 for /f "tokens=2 delims=:." %%c in ('chcp ^<nul') do set "PM_KODLAP=%%c"
 if defined PM_KODLAP set "PM_KODLAP=!PM_KODLAP: =!"
 >nul chcp 65001 <nul
-title Profil mentes / visszaallitas
+title Eszközcsere segédlet
 
 rem ---------- Nev, verzio, keszito - a kepernyokon es a fajlokban ----------
 set "VERZIO=1.0"
@@ -37,6 +37,7 @@ set "PSDIR=%APP%\ps"
 rem ---------- Segedrutinok hivasa, pl.: %UI% :JELOL OK "uzenet" ----------
 rem Idezojel nelkuli set: igy a & vagy zarojel a mappa neveben sem gond
 set UI=call "%LIB%\ui.cmd"
+set KEZDO=call "%LIB%\kezdokepernyo.cmd"
 set MASOLAS=call "%LIB%\masolas.cmd"
 set TETELEK=call "%LIB%\tetelek.cmd"
 set ELLENORZES=call "%LIB%\ellenorzes.cmd"
@@ -100,36 +101,22 @@ set "ADMIN=0"
 net session >nul 2>&1 && set "ADMIN=1"
 
 rem ==========================================================
-rem  Kezdokepernyo
+rem  Kezdokepernyo es menu
 rem ==========================================================
-cls
-%UI% :CIM "ESZKOZCSERE SEGEDLET"
-echo    Felhasznalo : !C_FEHER!%USERNAME%!C_0!
-echo    Gep         : %COMPUTERNAME%
-echo    Profil      : %USERPROFILE%
-if "%ADMIN%"=="1" echo    Jogosultsag : !C_SARGA!rendszergazda!C_0!
-
-echo.
-echo    !C_FEHER!Nyomja meg a kivant lehetoseg sorszamat:!C_0!
-echo.
-echo      1. Adatok mentese (eszkozcsere regi)
-echo      2. Adatok exportalasa (eszkozcsere uj)
-echo      3. BitLocker aktivalasa, fedel beallitasa (laptop)
-echo      4. Teszt futtatas - a mentes probaja, nem masol semmit
-echo      5. Alapertelmezett alkalmazasok - Word, Excel, PowerPoint, PDF, Chrome
-echo.
-%UI% :VALASZT 12345 "   Valasztas [1/2/3/4/5]: " N
+%KEZDO% :MUTAT
+%UI% :VALASZT 12345 "Válassz menüpontot [1–5]:" N
 set "MOD=%errorlevel%"
 
-rem Menupont -> nev es modul. Uj menupontnal: fenti lista, egy betu a VALASZT-ba, es egy sor ide.
+rem Menupont -> nev es modul. Uj menupontnal: lib\kezdokepernyo.cmd, egy betu a VALASZT-ba, es egy sor ide.
+rem A tovabbi kod csak a MODUL es a TESZTMOD valtozot nezi, a sorszamot nem.
 set "MODUL="
-if "%MOD%"=="1" set "MOD_NEV=Adatok mentese"               & set "MODUL=mentes"
-if "%MOD%"=="2" set "MOD_NEV=Adatok exportalasa"           & set "MODUL=export"
-if "%MOD%"=="3" set "MOD_NEV=Laptop beallitasok"           & set "MODUL=laptop"
-if "%MOD%"=="4" set "MOD_NEV=Teszt futtatas"               & set "MODUL=mentes"
-if "%MOD%"=="5" set "MOD_NEV=Alapertelmezett alkalmazasok" & set "MODUL=alapalk"
-if "%MOD%"=="4" set "TESZTMOD=1"
+if "%MOD%"=="1" set "MOD_NEV=Adatok mentése"               & set "MODUL=mentes"
+if "%MOD%"=="2" set "MOD_NEV=Próbafuttatás"                & set "MODUL=mentes" & set "TESZTMOD=1"
+if "%MOD%"=="3" set "MOD_NEV=Adatok visszaállítása"        & set "MODUL=visszaallitas"
+if "%MOD%"=="4" set "MOD_NEV=Laptop beállítása"            & set "MODUL=laptop"
+if "%MOD%"=="5" set "MOD_NEV=Alapértelmezett alkalmazások" & set "MODUL=alapalk"
 if not defined MODUL goto :MEGSZAKITVA
+title Eszközcsere segédlet – %MOD_NEV%
 
 rem A modul 0-val ter vissza, ha vegigment, 1-gyel, ha megszakitottak
 call "%MODULOK%\%MODUL%.cmd"
@@ -141,8 +128,9 @@ exit /b 0
 
 :MEGSZAKITVA
 echo.
-echo    !C_SARGA!Megszakitva. Nem tortent valtoztatas.!C_0!
+%UI% :SAV FIGYEL "Megszakítva – nem történt változtatás."
 echo.
-pause
+echo   Kilépéshez nyomj meg egy billentyűt...
+pause >nul
 if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
 exit /b 1

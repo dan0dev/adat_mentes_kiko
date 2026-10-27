@@ -17,11 +17,11 @@ if "%TESZTMOD%"=="1" goto :TESZT
 rem Osszegzes fajl - az eredmeny mar a fajlnevben latszik
 set "OSSZ_HELY=%TEMP%"
 set "OSSZ_ELO=_LAPTOP"
-if "%MOD%"=="5" set "OSSZ_ELO=_ALAPALK"
-if "%MOD%"=="1" set "OSSZ_HELY=%CEL%"
-if "%MOD%"=="1" set "OSSZ_ELO=_MENTES"
-if "%MOD%"=="2" set "OSSZ_ELO=_EXPORT"
-if "%MOD%"=="2" if "%IRHATO%"=="1" set "OSSZ_HELY=%FORRAS%"
+if "%MODUL%"=="alapalk" set "OSSZ_ELO=_ALAPALK"
+if "%MODUL%"=="mentes" set "OSSZ_HELY=%CEL%"
+if "%MODUL%"=="mentes" set "OSSZ_ELO=_MENTES"
+if "%MODUL%"=="visszaallitas" set "OSSZ_ELO=_EXPORT"
+if "%MODUL%"=="visszaallitas" if "%IRHATO%"=="1" set "OSSZ_HELY=%FORRAS%"
 if %DB_HIBA%==0 (
     set "OSSZ_NEV=%OSSZ_ELO%_OK_%DATUM%.txt"
 ) else (
@@ -41,8 +41,8 @@ if not exist "%OSSZ_FAJL%" (
 
 rem Kezi teendok listaja
 set "TODO="
-if "%MOD%"=="1" %TEENDOK% :MENTES
-if "%MOD%"=="2" %TEENDOK% :EXPORT
+if "%MODUL%"=="mentes" %TEENDOK% :MENTES
+if "%MODUL%"=="visszaallitas" %TEENDOK% :EXPORT
 
 echo.
 %UI% :CIM "OSSZEGZES - %MOD_NEV%"
@@ -70,10 +70,10 @@ if %DB_HIBA% GTR 0 (
 
 if defined TODO (
     echo.
-    if "%MOD%"=="1" echo    !C_FEHER!Kezi teendok a regi gepen es kesobb az uj gepen: _LEFT-TO-DO.txt!C_0!
-    if "%MOD%"=="2" echo    !C_FEHER!Kezi teendok az uj gepen: _LEFT-TO-DO.txt, 2. resz!C_0!
+    if "%MODUL%"=="mentes" echo    !C_FEHER!Kezi teendok a regi gepen es kesobb az uj gepen: _LEFT-TO-DO.txt!C_0!
+    if "%MODUL%"=="visszaallitas" echo    !C_FEHER!Kezi teendok az uj gepen: _LEFT-TO-DO.txt, 2. resz!C_0!
 )
-if "%MOD%"=="5" (
+if "%MODUL%"=="alapalk" (
     echo.
     if "!AA_MOD!"=="beallit" if "!AA_OK!"=="1" (
         echo    !C_ZOLD!Alapertelmezett alkalmazasok: BEALLITVA.!C_0!
@@ -106,11 +106,11 @@ if defined TODO (
     %UI% :VALASZT IN "   Megnyissam a teendok listajat - _LEFT-TO-DO.txt"
     if not errorlevel 2 start "" notepad "%TODO%"
 )
-if "%MOD%"=="1" (
+if "%MODUL%"=="mentes" (
     %UI% :VALASZT IN "   Megnyissam a mentes mappat ellenorzesre"
     if not errorlevel 2 start "" explorer "%CEL%"
 )
-if "%MOD%"=="2" (
+if "%MODUL%"=="visszaallitas" (
     %UI% :VALASZT IN "   Megnyissam a mentes mappat - outlook_lista.txt, apps.txt, talca.txt"
     if not errorlevel 2 start "" explorer "%FORRAS%"
 )

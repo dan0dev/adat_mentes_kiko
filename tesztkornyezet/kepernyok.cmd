@@ -19,27 +19,10 @@ if not defined VALASZ_SORBOL set "VALASZ_SORBOL=0"
 set /a OSSZES=16, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0
 %UI% :SZINEK_BEALLIT
 
-rem ---------- Kezdőképernyő ----------
-cls
-%UI% :NYITO
-%UI% :ADAT "Felhasználó" "kakuk"
-%UI% :ADAT "Számítógép" "DESKTOP-1234"
-%UI% :ADAT "Profil" "C:\Users\kakuk"
-%UI% :ADAT "Jogosultság" "rendszergazda" SARGA
-echo.
-%UI% :SZAKASZ "A RÉGI GÉPEN"
-echo.
-%UI% :MENU 1 "Adatok mentése" "a külső meghajtóra"
-%UI% :MENU 2 "Próbafuttatás" "a mentés ellenőrzése másolás nélkül"
-echo.
-%UI% :SZAKASZ "AZ ÚJ GÉPEN"
-echo.
-%UI% :MENU 3 "Adatok visszaállítása" "a külső meghajtón lévő mentésből"
-%UI% :MENU 4 "Laptop beállítása" "fedél lehajtása, BitLocker"
-%UI% :MENU 5 "Alapértelmezett alkalmazások" "Word, Excel, PowerPoint, PDF, Chrome"
-echo.
-%UI% :LABLEC NYITO
-echo.
+rem ---------- Kezdőképernyő - a valódi, lib\kezdokepernyo.cmd ----------
+set KEZDO=call "%LIB%\kezdokepernyo.cmd"
+set "ADMIN=1"
+%KEZDO% :MUTAT
 %UI% :VALASZT 12345 "Válassz menüpontot [1–5]:" N
 
 rem ---------- Futás ----------
