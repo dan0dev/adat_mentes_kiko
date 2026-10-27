@@ -69,9 +69,12 @@ $beFajl = "$tmp\_valaszok.txt"
 [IO.File]::WriteAllText($beFajl, (($sorok -join "`r`n") + "`r`n"), [Text.Encoding]::ASCII)
 $kiFajl = "$tmp\_atirat.bin"
 
+# Tiszta Windows PATH: Git Bash-bol inditva a find es a sort a GNU valtozat lenne,
+# a segedlet pedig a Windows sajat find.exe-jere es sort.exe-jere szamit.
+$tisztaPath = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
 $regi = @{}
 $uj = @{ USERPROFILE = $profil; APPDATA = "$profil\AppData\Roaming"; LOCALAPPDATA = "$profil\AppData\Local"
-         TEMP = $tmp; TMP = $tmp; VALASZ_SORBOL = '1'; PM_TESZT_KONFIG = "$itt\teszt_konfig.cmd" }
+         TEMP = $tmp; TMP = $tmp; VALASZ_SORBOL = '1'; PM_TESZT_KONFIG = "$itt\teszt_konfig.cmd"; Path = $tisztaPath }
 try {
     foreach ($k in $uj.Keys) { $regi[$k] = [Environment]::GetEnvironmentVariable($k); [Environment]::SetEnvironmentVariable($k, $uj[$k]) }
     # A bemenetet a cmd sajat < atiranyitasa adja: a set /p igy soronkent olvas.
