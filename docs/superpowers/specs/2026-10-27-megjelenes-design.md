@@ -93,6 +93,7 @@ classic console.
   ║                                                                    ║
   ║   ESZKÖZCSERE SEGÉDLET                                Verzió: 1.0  ║
   ║   Felhasználói adatok mentése és visszaállítása eszközcseréhez     ║
+  ║   Készítette: Kakuk Dániel                                         ║
   ║                                                                    ║
   ╚════════════════════════════════════════════════════════════════════╝
 
@@ -113,7 +114,6 @@ classic console.
      5   Alapértelmezett alkalmazások  Word, Excel, PowerPoint, PDF, Chrome
 
   ──────────────────────────────────────────────────────────────────────
-     Készítette: Kakuk Dániel
 
   › Válassz menüpontot [1–5]:
 ```
@@ -238,7 +238,7 @@ Row: 4 spaces, tag (10), 2 spaces, name padded to 26, 1 space, message (≤ 33, 
 
 ### Credit and version
 
-- Start screen footer: `Készítette: Kakuk Dániel`
+- Start screen: `Készítette: Kakuk Dániel` inside the box at the top, under the description (changed 2026-10-27 at the author's request; no footer credit on this screen)
 - Summary footer and the last line of every text file the tool writes
   (`_TEENDOK.txt`, the summary file, `outlook_lista.txt`, `talca.txt`):
   `Eszközcsere segédlet 1.0 · Készítette: Kakuk Dániel`

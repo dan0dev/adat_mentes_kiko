@@ -20,7 +20,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $itt = $PSScriptRoot
-$bat = Join-Path (Split-Path $itt) 'profil_mentes\profil_mentes.bat'
+$bat = Join-Path (Split-Path $itt) 'profil_mentes\Eszkozcsere_segedlet.bat'
 $valaszFajl = Join-Path $itt "valaszok\$Valaszok.txt"
 if (-not (Test-Path -LiteralPath $valaszFajl)) { throw "Nincs ilyen valaszfajl: $valaszFajl" }
 

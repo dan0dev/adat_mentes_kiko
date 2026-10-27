@@ -35,6 +35,9 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\tetelek.cmd:36` | Fájlkezelő – Gyorselérés |
 | `config\tetelek.cmd:37` | Start menü rögzítései |
 | `config\tetelek.cmd:38` | C:\TEMP mappa |
+| `Eszkozcsere_segedlet.bat:110` | Válassz menüpontot [1–5]: |
+| `Eszkozcsere_segedlet.bat:134` | Megszakítva – nem történt változtatás. |
+| `Eszkozcsere_segedlet.bat:136` | Kilépéshez nyomj meg egy billentyűt... |
 | `lib\alapalk.cmd:22` | a gép nincs tartományban |
 | `lib\alapalk.cmd:22` | A Windows ezt a beállítást csak tartományi gépen alkalmazza. |
 | `lib\alapalk.cmd:25` | a tartománytagság nem ellenőrizhető, folytatom |
@@ -226,6 +229,7 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\programlista.cmd:15` | a PowerShell nem elérhető, egyszerűbb lista készül |
 | `lib\programlista.cmd:26` | a programlista nem készült el |
 | `lib\programlista.cmd:28` | %ADB% program – apps.txt |
+| `lib\robo_prog.cmd:10` | %errorlevel% |
 | `lib\talca.cmd:17` | a PowerShell nem elérhető, csak az asztali programok kerülnek a listára |
 | `lib\talca.cmd:28` | nincs rögzített ikon a tálcán |
 | `lib\talca.cmd:32` | %TALCA_DB% ikon – listázható |
@@ -297,19 +301,18 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\tipusok\MAPPA.cmd:23` | ezen a gépen nincs ilyen mappa |
 | `lib\tipusok\MAPPA.cmd:43` | %FDB% fájl, elérhető – menthető |
 | `lib\tipusok\MAPPA.cmd:45` | %FDB% fájl, ellenőrizve |
-| `lib\ui.cmd:22` | ╔════════════════════════════════════════════════════════════════════╗ |
-| `lib\ui.cmd:23` | ║                                                                    ║ |
-| `lib\ui.cmd:24` | ║!_l!!_r!║ |
-| `lib\ui.cmd:25` | ║   Felhasználói adatok mentése és visszaállítása eszközcseréhez     ║ |
-| `lib\ui.cmd:26` | ║                                                                    ║ |
-| `lib\ui.cmd:27` | ╚════════════════════════════════════════════════════════════════════╝ |
-| `lib\ui.cmd:35` | ESZKÖZCSERE SEGÉDLET  ›  %~1 |
-| `lib\ui.cmd:36` | ══════════════════════════════════════════════════════════════════════ |
-| `lib\ui.cmd:45` | !_s! |
-| `lib\ui.cmd:49` | ────────────────────────────────────────────────────────────────────── |
-| `lib\ui.cmd:64` | %~1   !_m!%~3 |
-| `lib\ui.cmd:71` | Eszközcsere segédlet %VERZIO%  ·  Készítette: %SZERZO% |
-| `lib\ui.cmd:73` | Készítette: %SZERZO% |
+| `lib\ui.cmd:24` | ╔════════════════════════════════════════════════════════════════════╗ |
+| `lib\ui.cmd:25` | ║                                                                    ║ |
+| `lib\ui.cmd:26` | ║!_l!!_r!║ |
+| `lib\ui.cmd:27` | ║   Felhasználói adatok mentése és visszaállítása eszközcseréhez     ║ |
+| `lib\ui.cmd:28` | ║!_k!║ |
+| `lib\ui.cmd:29` | ║                                                                    ║ |
+| `lib\ui.cmd:30` | ╚════════════════════════════════════════════════════════════════════╝ |
+| `lib\ui.cmd:38` | ESZKÖZCSERE SEGÉDLET  ›  %~1 |
+| `lib\ui.cmd:39` | ══════════════════════════════════════════════════════════════════════ |
+| `lib\ui.cmd:48` | !_s! |
+| `lib\ui.cmd:52` | ────────────────────────────────────────────────────────────────────── |
+| `lib\ui.cmd:67` | %~1   !_m!%~3 |
 | `lib\ui.cmd:85` | [!_n!/%OSSZES%]  %~1 |
 | `lib\ui.cmd:88` | [%time%] [%LEPES%/%OSSZES%] %~1 |
 | `lib\ui.cmd:93` | !UI_BEHUZAS!%~1 |
@@ -398,9 +401,6 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:103` | Adatok visszaállítása folyamatban |
 | `modulok\visszaallitas.cmd:104` | A folyamat végéig ne húzd ki a külső meghajtót. |
 | `modulok\visszaallitas.cmd:110` | Office-parancsikonok |
-| `profil_mentes.bat:110` | Válassz menüpontot [1–5]: |
-| `profil_mentes.bat:134` | Megszakítva – nem történt változtatás. |
-| `profil_mentes.bat:136` | Kilépéshez nyomj meg egy billentyűt... |
 | `ps\atnezendo.ps1:66` |    Mérés: {0}/{1} mappa kész, {2}/{3} mp |
 | `ps\atnezendo.ps1:79` | , mérete nem mérhető – nincs jogosultság |
 | `ps\atnezendo.ps1:80` | , mérete nem ismert – időkorlát |

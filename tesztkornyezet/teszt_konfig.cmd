@@ -1,4 +1,4 @@
-rem Teszt beallitasok - a profil_mentes.bat a PM_TESZT_KONFIG valtozon keresztul hivja
+rem Teszt beallitasok - a Eszkozcsere_segedlet.bat a PM_TESZT_KONFIG valtozon keresztul hivja
 rem a config\beallitasok.cmd utan. Igy a futo programok kerdese nem jon elo,
 rem es az atnezendo mappak merese gyorsan lezarul.
 set "FIGYELT_PROGRAMOK=pm_nincs_ilyen.exe"

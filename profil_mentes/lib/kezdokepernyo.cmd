@@ -4,7 +4,7 @@
 rem ==========================================================
 rem  Kezdokepernyo: keret, a gep adatai, a menu es a keszito
 rem  Uj menupontnal: egy %UI% :MENU sor ide, egy betu a VALASZT-ba
-rem  es egy sor a menupont -> modul tablaba a profil_mentes.bat-ban.
+rem  es egy sor a menupont -> modul tablaba a Eszkozcsere_segedlet.bat-ban.
 rem  Hivas: %KEZDO% :MUTAT
 rem ==========================================================
 

@@ -18,11 +18,14 @@ set "_r=Verzió: %VERZIO%  "
 call :HOSSZ _r _rh
 set /a _lh=68-_rh
 call :PAD _l %_lh%
+set "_k=   Készítette: %SZERZO%"
+call :PAD _k 68
 echo.
 echo   !C_KEK!╔════════════════════════════════════════════════════════════════════╗!C_0!
 echo   !C_KEK!║!C_0!                                                                    !C_KEK!║!C_0!
 echo   !C_KEK!║!C_0!!C_FEHER!!_l!!C_0!!_r!!C_KEK!║!C_0!
 echo   !C_KEK!║!C_0!   Felhasználói adatok mentése és visszaállítása eszközcseréhez     !C_KEK!║!C_0!
+echo   !C_KEK!║!C_0!!C_SZURKE!!_k!!C_0!!C_KEK!║!C_0!
 echo   !C_KEK!║!C_0!                                                                    !C_KEK!║!C_0!
 echo   !C_KEK!╚════════════════════════════════════════════════════════════════════╝!C_0!
 echo.
@@ -65,13 +68,10 @@ echo      !C_FEHER!%~1!C_0!   !_m!!C_SZURKE!%~3!C_0!
 goto :eof
 
 :LABLEC
-rem %1 = NYITO: csak a keszito; TELJES: nev, verzio es keszito
+rem %1 = NYITO: csak a vonal (a keszito a kezdokepernyo kereteben van);
+rem TELJES: vonal, utana nev, verzio es keszito
 call :VONAL
-if /I "%~1"=="TELJES" (
-    echo      !C_SZURKE!Eszközcsere segédlet %VERZIO%  ·  Készítette: %SZERZO%!C_0!
-) else (
-    echo      !C_SZURKE!Készítette: %SZERZO%!C_0!
-)
+if /I "%~1"=="TELJES" echo      !C_SZURKE!Eszközcsere segédlet %VERZIO%  ·  Készítette: %SZERZO%!C_0!
 goto :eof
 
 :FEJLEC

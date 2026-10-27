@@ -5,7 +5,7 @@
 Felhasználói adatok mentése a régi gépen és visszaállítása az új gépen eszközcserénél.
 Csak a Windows beépített eszközeit használja (cmd, robocopy, PowerShell), telepíteni nem kell semmit.
 
-Indítás: **`profil_mentes.bat`** dupla kattintással. A teljes mappát kell vinni (pl. a külső meghajtóra),
+Indítás: **`Eszkozcsere_segedlet.bat`** dupla kattintással. A teljes mappát kell vinni (pl. a külső meghajtóra),
 a fájlok együtt működnek.
 
 ## Használat
@@ -38,7 +38,7 @@ további postaládái és feladócímei, a böngészőben mentett jelszavak. Eze
 ## Felépítés
 
 ```
-profil_mentes.bat        belépési pont: környezet, menü, a modul indítása, összegzés
+Eszkozcsere_segedlet.bat        belépési pont: környezet, menü, a modul indítása, összegzés
 config\                  ITT BŐVÍTS – listák és beállítások, kód nélkül
   beallitasok.cmd          mappanév, tartalék hely, figyelt programok, MBAM helye...
   tetelek.cmd              a mentendő tételek – egy sor = egy tétel
@@ -88,11 +88,11 @@ a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaál
 `config\alapertelmezett_alk.cmd`-be.
 
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű a `profil_mentes.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
+egy betű a `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
 
 ## Szabályok a kódhoz
 
-- **UTF-8 (BOM nélkül)** és **CRLF** sorvég. A `profil_mentes.bat` elején `chcp 65001` fut, a végén az eredeti
+- **UTF-8 (BOM nélkül)** és **CRLF** sorvég. A `Eszkozcsere_segedlet.bat` elején `chcp 65001` fut, a végén az eredeti
   kódlap visszaáll. A felhasználónak szóló szövegek ékezetesek, tegező hangnemben; a címkék, változónevek,
   fájlnevek és a megjegyzések ékezet nélküliek.
 - A szövegekben nincs `!` (a késleltetett kiértékelés elnyelné). `( … )` blokkon belül a `)` jelet `^)`-ként kell
@@ -107,7 +107,7 @@ egy betű a `profil_mentes.bat` `%UI% :VALASZT 12345` sorában, és egy sor a me
   csendben vár tovább. Ugyanúgy errorlevelt ad (I = 1, N = 2). Automatikus futtatásnál `VALASZ_SORBOL=1` mellett
   soronként olvassa a válaszokat a bemenetről.
 - A `lib\` fájlok első két sora (`@call %*` / `@exit /b`) teszi hívhatóvá a címkéiket kívülről. A rövidítéseket
-  (`%UI%`, `%MASOLAS%`...) a `profil_mentes.bat` definiálja.
+  (`%UI%`, `%MASOLAS%`...) a `Eszkozcsere_segedlet.bat` definiálja.
 - A modul `exit /b 0`-val tér vissza, ha végigment (jön az összegzés), `exit /b 1`-gyel, ha megszakították.
 - Minden változó közös – nincs `setlocal` a modulokban és a `lib`-ben, mert az eredmények (`E_n`, `DB_OK`...) így
   jutnak vissza.
