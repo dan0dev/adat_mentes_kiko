@@ -30,6 +30,7 @@ rem %1 = KELL: csak irhato meghajto fogadhato el, JELEZ: nem irhatonal csak figy
 :MEGHAJTO_BEKER
 echo.
 %UI% :BEKER DRIVE "A külső meghajtó betűjele (pl. E):"
+if errorlevel 255 exit /b 1
 if not defined DRIVE goto :MEGHAJTO_BEKER
 rem Ellenorzes pipe nelkul: pontosan egy betu, utana legfeljebb : es \
 set "_d=!DRIVE:"=!"
@@ -65,7 +66,7 @@ if "%IRHATO%"=="0" if /I "%~1"=="KELL" (
     goto :MEGHAJTO_BEKER
 )
 set "ROOT=%DRIVE%:\%MAPPA_NEV%"
-goto :eof
+exit /b 0
 
 :APPOK
 rem A config\beallitasok.cmd FIGYELT_PROGRAMOK listajabol a meg futok bezarasa.  Kimenet: FUTO

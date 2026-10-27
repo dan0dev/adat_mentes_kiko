@@ -154,9 +154,13 @@ set "%~1="
 if not defined _vbs for /f %%b in ('"prompt $H & for %%c in (1) do rem"') do set "_vbs=%%b"
 <nul set /p "=.!_vbs!!UI_BEHUZAS!› %~2 "
 set /p "%~1="
-rem Automatikus futtatasnal a valasz nem latszik - kiirjuk, hogy az atirat olvashato legyen
-if "%VALASZ_SORBOL%"=="1" echo !%~1!
-goto :eof
+rem Automatikus futtatasnal a valasz nem latszik - kiirjuk, hogy az atirat olvashato legyen.
+rem Ha elfogytak a valaszok, 255-tel ter vissza, hogy a hivo ne kerdezzen a vegtelensegig.
+if "%VALASZ_SORBOL%"=="1" (
+    if not defined %~1 exit /b 255
+    echo !%~1!
+)
+exit /b 0
 
 :PAD
 rem %1 = valtozo neve, %2 = hossz - szokozokkel feltolti, ha rovidebb

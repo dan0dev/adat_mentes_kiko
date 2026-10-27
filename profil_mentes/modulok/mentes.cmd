@@ -9,6 +9,7 @@ rem ==========================================================
 %ELLENORZES% :FELHASZNALO
 if errorlevel 1 goto :MEGSZAKITVA
 if "%TESZTMOD%"=="1" (%ELLENORZES% :MEGHAJTO JELEZ) else (%ELLENORZES% :MEGHAJTO KELL)
+if errorlevel 1 goto :MEGSZAKITVA
 
 %TETELEK% :BETOLT
 rem Lepesek: a tetelek, a programlista, a talca es az Outlook-lista, probafuttatasnal a kornyezet is

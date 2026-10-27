@@ -20,19 +20,20 @@ call :UTANA_%T_P2%
 goto :eof
 
 :UTANA_EXPLORER
-%UI% :VALASZT IN "       Ujrainditsam az Intezot, hogy betoltse: %T_NEV%"
+%UI% :VALASZT IN "Újraindítsam a Fájlkezelőt a Gyorselérés betöltéséhez?"
 if errorlevel 2 goto :eof
 taskkill /F /IM explorer.exe >nul 2>&1
 start "" explorer.exe
-echo        Intezo ujrainditva.
+%UI% :RESZLET "Fájlkezelő újraindítva."
 goto :eof
 
 :UTANA_STARTMENU
 rem A Start menu a start2.bin-t csak indulaskor olvassa be. Leallitva a Windows magatol ujrainditja.
-%UI% :VALASZT IN "       Ujrainditsam a Start menut, hogy betoltse: %T_NEV%"
+%UI% :VALASZT IN "Újraindítsam a Start menüt a rögzítések betöltéséhez?"
 if errorlevel 2 goto :eof
 taskkill /F /IM StartMenuExperienceHost.exe >nul 2>&1
-echo        Start menu ujrainditva. Ami ezen a gepen nincs telepitve, annak a rogzitese kimarad.
+%UI% :RESZLET "Start menü újraindítva."
+%UI% :RESZLET "Ami ezen a gépen nincs telepítve, annak a rögzítése kimarad."
 goto :eof
 
 :FAJL

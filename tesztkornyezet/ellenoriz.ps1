@@ -18,6 +18,8 @@ $problemak = New-Object System.Collections.Generic.List[string]
 if ($nyers.Contains([char]7)) { $problemak.Add('BEL (csipogas) karakter az atiratban') }
 
 $tiszta = [regex]::Replace($nyers, [string][char]27 + '\[[0-9;]*m', '')
+# A kerdesek elotti pont + visszatorles a kepernyon nem latszik - a hosszba sem szamit
+$tiszta = $tiszta.Replace('.' + [char]8, '')
 $sorok = $tiszta -split "`r?`n"
 
 for ($i = 0; $i -lt $sorok.Count; $i++) {
