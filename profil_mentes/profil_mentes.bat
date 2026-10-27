@@ -45,6 +45,8 @@ set PS_FUTTAT=powershell -NoProfile -NonInteractive -Command "& ([scriptblock]::
 
 rem ---------- Beallitasok ----------
 call "%CONF%\beallitasok.cmd"
+rem Teszt kornyezet: a tesztkornyezet\futtat.ps1 ezen keresztul irja felul a beallitasokat
+if defined PM_TESZT_KONFIG call "%PM_TESZT_KONFIG%"
 
 rem ---------- Szinek ----------
 %UI% :SZINEK_BEALLIT

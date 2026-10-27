@@ -1,0 +1,4 @@
+===== MENTES 2026-10-01 10:00 - teszt / TESZT-PC =====
+
+[10:00:01] [1/16] Outlook alairasok
+       Eredmeny: OK - 2 fajl, ellenorizve
