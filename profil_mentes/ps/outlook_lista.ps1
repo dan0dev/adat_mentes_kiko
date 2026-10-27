@@ -6,13 +6,11 @@
 #            SRC_PST - a PST mappa, ami mentesre kerul
 #            VERZIO, SZERZO - a fajl lablecehez
 #  Kimenet:  PST|<eleresi ut> minden csatolt PST-rol - ez latszik a kepernyon
-#            KINT|<eleresi ut> a PST mappan kivuliekrol - a kezzel atnezendo mappak
-#            listaja ezzel jeloli a PST-t tartalmazo mappakat
 #            SUM|<darab> a vegen
 #  Nem figyelmeztet: a PST barhol lehet, csak a helye szamit.
 # ==========================================================
 $ErrorActionPreference = 'SilentlyContinue'
-$out = $env:OL_OUT; $pstDir = $env:SRC_PST.TrimEnd('\') + '\'
+$out = $env:OL_OUT
 
 # A csatolt PST-k utvonala a profilok 001f6700 erteke, Unicode szovegkent
 $psts = New-Object System.Collections.Generic.List[string]
@@ -39,7 +37,6 @@ if ($psts.Count -eq 0) { $L.Add('  – nincs') }
 foreach ($p in $psts) {
     $L.Add('  – ' + $p)
     Write-Output ('PST|' + $p)
-    if (-not $p.StartsWith($pstDir, [StringComparison]::OrdinalIgnoreCase)) { Write-Output ('KINT|' + $p) }
 }
 $L.Add('')
 $L.Add('KÉZZEL – régi gépen')

@@ -11,22 +11,16 @@ rem ==========================================================
 :LISTA_KESZIT
 rem Az elokeszitesben fut: hol vannak a csatolt PST-k. Nem figyelmeztet, nem kerdez -
 rem a PST barhol lehet, csak a helye szamit.
-rem Kimenet: OL_STOP (mindig 0), OL_PST, OL_KINT, OLK_n (a PST-mappan kivuliek - a
-rem kezzel atnezendo mappak listaja jeloli veluk a PST-t tartalmazo mappakat), OL_OUT
+rem Kimenet: OL_STOP (mindig 0), OL_PST, OL_OUT
 set "OL_STOP=0"
 set "OL_OUT=%TEMP%\outlook_lista_%RANDOM%.txt"
 set "OL_PST="
-set "OL_KINT=0"
 echo.
 echo   !C_FEHER!Outlook-lista!C_0! – csatolt PST-fájlok keresése...
 set "PS_FAJL=%PSDIR%\outlook_lista.ps1"
 for /f "tokens=1,2 delims=|" %%a in ('%PS_FUTTAT% 2^>nul') do (
     if "%%a"=="SUM" set "OL_PST=%%b"
     if "%%a"=="PST" echo     !C_SZURKE!%%b!C_0!
-    if "%%a"=="KINT" (
-        set /a OL_KINT+=1
-        set "OLK_!OL_KINT!=%%b"
-    )
 )
 if not defined OL_PST (
     echo   !C_SARGA!A PST-lista nem készült el – a PowerShell nem elérhető.!C_0!

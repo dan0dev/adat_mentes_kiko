@@ -27,12 +27,6 @@ if not exist "%TODO%" (
     echo [ ] Tálca ikonjai – talca.txt
     echo [ ] Böngészőben mentett jelszavak
 )
-if %ATN_DB% GTR 0 (
-    >>"%TODO%" echo [ ] Kézzel átnézendő mappák:
-    for /l %%i in (1,1,%ATN_DB%) do >>"%TODO%" echo       !ATN_%%i!
-) else (
-    >>"%TODO%" echo [ ] Kézzel átnézendő mappák: C: gyökér, saját mappa, Letöltések
-)
 for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
 if defined TAN_NEMEXP >>"%TODO%" echo [ ] Tanúsítványok: %TAN_NEMEXP% kulcs nem menthető – IT-tól újra igényelni, lista: Tanusitvanyok\lista.txt
 call :IMPORT_RESZ
@@ -51,7 +45,6 @@ goto :eof
     echo [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés
     echo [ ] Sticky Notes
     echo [ ] Programok: apps.txt összevetése, hiányzók telepítése
-    echo [ ] Letöltések, kézzel mentett mappák visszamásolása
     echo [ ] Tálca ikonjai újra – talca.txt
     echo [ ] Start menü: hiányzó rögzítések kézzel
     echo [ ] Minden rendben: mentés törlése a meghajtóról

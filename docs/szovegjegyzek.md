@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 10. 27. – 414 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 10. 27. – 398 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -36,9 +36,9 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\tetelek.cmd:38` | Fájlkezelő – Gyorselérés |
 | `config\tetelek.cmd:39` | Start menü rögzítései |
 | `config\tetelek.cmd:40` | C:\TEMP mappa |
-| `Eszkozcsere_segedlet.bat:111` | Válassz menüpontot [1–5]: |
-| `Eszkozcsere_segedlet.bat:135` | Megszakítva – nem történt változtatás. |
-| `Eszkozcsere_segedlet.bat:137` | Kilépéshez nyomj meg egy billentyűt... |
+| `Eszkozcsere_segedlet.bat:109` | Válassz menüpontot [1–5]: |
+| `Eszkozcsere_segedlet.bat:133` | Megszakítva – nem történt változtatás. |
+| `Eszkozcsere_segedlet.bat:135` | Kilépéshez nyomj meg egy billentyűt... |
 | `lib\alapalk.cmd:22` | a gép nincs tartományban |
 | `lib\alapalk.cmd:22` | A Windows ezt a beállítást csak tartományi gépen alkalmazza. |
 | `lib\alapalk.cmd:25` | a tartománytagság nem ellenőrizhető, folytatom |
@@ -66,7 +66,6 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\alapalk.cmd:152` | %~1 – %~2: !AA_AKT! |
 | `lib\alapalk.cmd:154` | %~1: rendben – !AA_AKT!!AA_FORRAS! |
 | `lib\alapalk.cmd:156` | %~1: nem a kért program – !AA_AKT! |
-| `lib\atnezendo.cmd:13` | Kézzel átnézendő – ezeket a segédlet nem menti, keresem... |
 | `lib\ellenorzes.cmd:15` | Figyelem: a segédlet rendszergazdaként fut. A mentés és a visszaállítás |
 | `lib\ellenorzes.cmd:16` | annak a fióknak az adataival dolgozik, amelyik elindította. |
 | `lib\ellenorzes.cmd:19` | Ennek a felhasználónak az adataival dolgozom: %USERNAME% |
@@ -207,15 +206,15 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\osszegzes.cmd:159` | Napló |
 | `lib\osszegzes.cmd:164` | Megnyissam a naplót? |
 | `lib\osszegzes.cmd:168` | Kész. Kilépéshez nyomj meg egy billentyűt... |
-| `lib\outlook.cmd:21` | Outlook-lista – csatolt PST-fájlok keresése... |
-| `lib\outlook.cmd:32` | A PST-lista nem készült el – a PowerShell nem elérhető. |
-| `lib\outlook.cmd:35` | Kész: %OL_PST% csatolt PST |
-| `lib\outlook.cmd:41` | a lista nem készült el |
-| `lib\outlook.cmd:41` | A PowerShell nem elérhető. |
-| `lib\outlook.cmd:45` | a lista nem készült el |
-| `lib\outlook.cmd:50` | %OL_PST% csatolt PST megtalálva |
-| `lib\outlook.cmd:56` | nem másolható a mentésbe |
-| `lib\outlook.cmd:59` | %OL_PST% csatolt PST – outlook_lista.txt |
+| `lib\outlook.cmd:19` | Outlook-lista – csatolt PST-fájlok keresése... |
+| `lib\outlook.cmd:26` | A PST-lista nem készült el – a PowerShell nem elérhető. |
+| `lib\outlook.cmd:29` | Kész: %OL_PST% csatolt PST |
+| `lib\outlook.cmd:35` | a lista nem készült el |
+| `lib\outlook.cmd:35` | A PowerShell nem elérhető. |
+| `lib\outlook.cmd:39` | a lista nem készült el |
+| `lib\outlook.cmd:44` | %OL_PST% csatolt PST megtalálva |
+| `lib\outlook.cmd:50` | nem másolható a mentésbe |
+| `lib\outlook.cmd:53` | %OL_PST% csatolt PST – outlook_lista.txt |
 | `lib\programlista.cmd:15` | a PowerShell nem elérhető, egyszerűbb lista készül |
 | `lib\programlista.cmd:26` | a programlista nem készült el |
 | `lib\programlista.cmd:28` | %ADB% program – apps.txt |
@@ -229,25 +228,22 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\teendok.cmd:26` | [ ] Outlook: további postaládák, Feladó címek, további fiókok – outlook_lista.txt |
 | `lib\teendok.cmd:27` | [ ] Tálca ikonjai – talca.txt |
 | `lib\teendok.cmd:28` | [ ] Böngészőben mentett jelszavak |
-| `lib\teendok.cmd:31` | [ ] Kézzel átnézendő mappák: |
-| `lib\teendok.cmd:34` | [ ] Kézzel átnézendő mappák: C: gyökér, saját mappa, Letöltések |
-| `lib\teendok.cmd:44` | ÚJ GÉP |
-| `lib\teendok.cmd:45` | [ ] 3 Visszaállítás, laptopnál 4 Laptop |
-| `lib\teendok.cmd:46` | [ ] 5 Alapértelmezett alkalmazások, ki- és bejelentkezés, 5 ellenőrzés |
-| `lib\teendok.cmd:47` | [ ] Tanúsítványok: certmgr.msc – Személyes, ellenőrzés |
-| `lib\teendok.cmd:48` | [ ] Outlook: PST-k csatolása – outlook_lista.txt |
-| `lib\teendok.cmd:49` | [ ] Outlook: postaládák, feladók, fiókok |
-| `lib\teendok.cmd:50` | [ ] Outlook: alapértelmezett aláírás |
-| `lib\teendok.cmd:51` | [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés |
-| `lib\teendok.cmd:52` | [ ] Sticky Notes |
-| `lib\teendok.cmd:53` | [ ] Programok: apps.txt összevetése, hiányzók telepítése |
-| `lib\teendok.cmd:54` | [ ] Letöltések, kézzel mentett mappák visszamásolása |
-| `lib\teendok.cmd:55` | [ ] Tálca ikonjai újra – talca.txt |
-| `lib\teendok.cmd:56` | [ ] Start menü: hiányzó rögzítések kézzel |
-| `lib\teendok.cmd:57` | [ ] Minden rendben: mentés törlése a meghajtóról |
-| `lib\teendok.cmd:74` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\teendok.cmd:83` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
-| `lib\teendok.cmd:85` | Minden tétel rendben |
+| `lib\teendok.cmd:38` | ÚJ GÉP |
+| `lib\teendok.cmd:39` | [ ] 3 Visszaállítás, laptopnál 4 Laptop |
+| `lib\teendok.cmd:40` | [ ] 5 Alapértelmezett alkalmazások, ki- és bejelentkezés, 5 ellenőrzés |
+| `lib\teendok.cmd:41` | [ ] Tanúsítványok: certmgr.msc – Személyes, ellenőrzés |
+| `lib\teendok.cmd:42` | [ ] Outlook: PST-k csatolása – outlook_lista.txt |
+| `lib\teendok.cmd:43` | [ ] Outlook: postaládák, feladók, fiókok |
+| `lib\teendok.cmd:44` | [ ] Outlook: alapértelmezett aláírás |
+| `lib\teendok.cmd:45` | [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés |
+| `lib\teendok.cmd:46` | [ ] Sticky Notes |
+| `lib\teendok.cmd:47` | [ ] Programok: apps.txt összevetése, hiányzók telepítése |
+| `lib\teendok.cmd:48` | [ ] Tálca ikonjai újra – talca.txt |
+| `lib\teendok.cmd:49` | [ ] Start menü: hiányzó rögzítések kézzel |
+| `lib\teendok.cmd:50` | [ ] Minden rendben: mentés törlése a meghajtóról |
+| `lib\teendok.cmd:67` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
+| `lib\teendok.cmd:76` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
+| `lib\teendok.cmd:78` | Minden tétel rendben |
 | `lib\tetelek.cmd:23` | config\tetelek.cmd: ismeretlen típus: %~1 – %~2 |
 | `lib\tetelek.cmd:88` | !_nb!. !L_%_b%! |
 | `lib\tetelek.cmd:90` | !_nb!. !_bal!!_nj!. !L_%_j%! |
@@ -340,19 +336,19 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\mentes.cmd:31` | Mentendő tételek: |
 | `modulok\mentes.cmd:35` | Ennek a gépnek már van mentése: a meglévő fájlok frissülnek, |
 | `modulok\mentes.cmd:36` | semmi nem törlődik. |
-| `modulok\mentes.cmd:45` | Helyellenőrzés, egy pillanat... |
-| `modulok\mentes.cmd:55` | Indulhat a mentés? |
-| `modulok\mentes.cmd:60` | A mentés mappája nem hozható létre: !CEL! |
-| `modulok\mentes.cmd:64` | ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== \|\| set "LOG=%TEMP%\mentes_naplo.txt" |
-| `modulok\mentes.cmd:68` | Adatok mentése folyamatban |
-| `modulok\mentes.cmd:69` | A folyamat végéig ne húzd ki a külső meghajtót. |
-| `modulok\mentes.cmd:73` | Indulhat a próbafuttatás? |
-| `modulok\mentes.cmd:77` | ===== PRÓBAFUTTATÁS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
-| `modulok\mentes.cmd:80` | Próbafuttatás folyamatban – semmi nem másolódik |
-| `modulok\mentes.cmd:81` | Környezet |
-| `modulok\mentes.cmd:88` | Programlista |
-| `modulok\mentes.cmd:96` | Tálcaikonok listája |
-| `modulok\mentes.cmd:104` | Outlook-lista |
+| `modulok\mentes.cmd:43` | Helyellenőrzés, egy pillanat... |
+| `modulok\mentes.cmd:53` | Indulhat a mentés? |
+| `modulok\mentes.cmd:58` | A mentés mappája nem hozható létre: !CEL! |
+| `modulok\mentes.cmd:62` | ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== \|\| set "LOG=%TEMP%\mentes_naplo.txt" |
+| `modulok\mentes.cmd:66` | Adatok mentése folyamatban |
+| `modulok\mentes.cmd:67` | A folyamat végéig ne húzd ki a külső meghajtót. |
+| `modulok\mentes.cmd:71` | Indulhat a próbafuttatás? |
+| `modulok\mentes.cmd:75` | ===== PRÓBAFUTTATÁS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
+| `modulok\mentes.cmd:78` | Próbafuttatás folyamatban – semmi nem másolódik |
+| `modulok\mentes.cmd:79` | Környezet |
+| `modulok\mentes.cmd:86` | Programlista |
+| `modulok\mentes.cmd:94` | Tálcaikonok listája |
+| `modulok\mentes.cmd:102` | Outlook-lista |
 | `modulok\visszaallitas.cmd:14` | Nincs mentés mappa a külső meghajtón: !ROOT! |
 | `modulok\visszaallitas.cmd:20` | Adatok visszaállítása – mentés kiválasztása |
 | `modulok\visszaallitas.cmd:25` | !N!   %%~nxF   [%%~tF] |
@@ -381,25 +377,13 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:103` | Adatok visszaállítása folyamatban |
 | `modulok\visszaallitas.cmd:104` | A folyamat végéig ne húzd ki a külső meghajtót. |
 | `modulok\visszaallitas.cmd:110` | Office-parancsikonok |
-| `ps\atnezendo.ps1:66` |    Mérés: {0}/{1} mappa kész, {2}/{3} mp |
-| `ps\atnezendo.ps1:79` | , nincs jogosultság |
-| `ps\atnezendo.ps1:80` | , időkorlát |
-| `ps\atnezendo.ps1:99` | Letöltések |
-| `ps\atnezendo.ps1:102` | Képek |
-| `ps\atnezendo.ps1:103` | Videók |
-| `ps\atnezendo.ps1:112` | hálózaton |
-| `ps\atnezendo.ps1:115` | hálózati meghajtón |
-| `ps\atnezendo.ps1:117` | OneDrive – szinkronizált |
-| `ps\atnezendo.ps1:168` | csatolt PST mappája |
-| `ps\atnezendo.ps1:170` |          A mérés  |
-| `ps\atnezendo.ps1:170` |  mp után leállt – a többi mappa méretét nem mértem. |
-| `ps\outlook_lista.ps1:37` | PST – újra csatolni: Fájl › Megnyitás és exportálás › Outlook-adatfájl megnyitása |
-| `ps\outlook_lista.ps1:45` | KÉZZEL – régi gépen |
-| `ps\outlook_lista.ps1:46` | [ ] További postaládák: Fiókbeállítások › Módosítás › További beállítások › Speciális |
-| `ps\outlook_lista.ps1:47` | [ ] Feladó címek: új levél › Feladó (az automatikus postaládák maguktól jönnek vissza) |
-| `ps\outlook_lista.ps1:48` | [ ] További fiókok: Fiókbeállítások › E-mail |
-| `ps\outlook_lista.ps1:50` | Eszközcsere segédlet  |
-| `ps\outlook_lista.ps1:50` |  · Készítette:  |
+| `ps\outlook_lista.ps1:35` | PST – újra csatolni: Fájl › Megnyitás és exportálás › Outlook-adatfájl megnyitása |
+| `ps\outlook_lista.ps1:42` | KÉZZEL – régi gépen |
+| `ps\outlook_lista.ps1:43` | [ ] További postaládák: Fiókbeállítások › Módosítás › További beállítások › Speciális |
+| `ps\outlook_lista.ps1:44` | [ ] Feladó címek: új levél › Feladó (az automatikus postaládák maguktól jönnek vissza) |
+| `ps\outlook_lista.ps1:45` | [ ] További fiókok: Fiókbeállítások › E-mail |
+| `ps\outlook_lista.ps1:47` | Eszközcsere segédlet  |
+| `ps\outlook_lista.ps1:47` |  · Készítette:  |
 | `ps\talca.ps1:14` | Újra: Start › program › jobb klikk › Rögzítés a tálcára |
 | `ps\talca.ps1:40` | Eszközcsere segédlet  |
 | `ps\talca.ps1:40` |  · Készítette:  |

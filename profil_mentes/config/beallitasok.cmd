@@ -21,14 +21,6 @@ set "FIGYELT_PROGRAMOK=chrome.exe msedge.exe outlook.exe winword.exe excel.exe M
 rem Ezek a hatterben is futnak, ezert bezaraskor kenyszerrel zarjuk oket
 set "KENYSZER_BEZARAS=msedge.exe Microsoft.Notes.exe"
 
-rem Kezzel atnezendo mappak keresese mentes elott - ezeket a mappaneveket kihagyja.
-rem Pontosvesszovel elvalasztva, * hasznalhato. A rejtett mappakat mindig kihagyja.
-rem A C: gyokereben:
-set "ATNEZ_KIHAGY_C=$*;Config.Msi;Documents and Settings;PerfLogs;Program Files;Program Files (x86);ProgramData;Recovery;System Volume Information;Users;Windows;Windows.old;Intel;AMD;NVIDIA;Drivers;OneDriveTemp;ESD;inetpub;MSOCache;XboxGames;TEMP"
-rem A felhasznalo mappajaban - a szabvanyos mappakat kulon, nevvel listazza:
-set "ATNEZ_KIHAGY_PROFIL=AppData;Contacts;Desktop;Documents;Downloads;Favorites;Links;Music;Pictures;Videos;Saved Games;Searches;3D Objects;OneDrive*;PST;MicrosoftEdgeBackups;IntelGraphicsProfiles;ansel;Tracing"
-rem Ennyi masodperc utan a tobbi mappa meretet mar nem meri, csak felsorolja
-set "ATNEZ_IDOKORLAT_MP=60"
 
 rem Office parancsikonok forrasa, es az MSI-s Office parancsikonjainak helye
 set "PD_START=%ProgramData%\Microsoft\Windows\Start Menu\Programs"

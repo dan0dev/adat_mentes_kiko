@@ -44,7 +44,6 @@ set ELLENORZES=call "%LIB%\ellenorzes.cmd"
 set OUTLOOK=call "%LIB%\outlook.cmd"
 set PROGRAMLISTA=call "%LIB%\programlista.cmd"
 set TALCA=call "%LIB%\talca.cmd"
-set ATNEZENDO=call "%LIB%\atnezendo.cmd"
 set IKONOK=call "%LIB%\ikonok.cmd"
 set ALAPALK=call "%LIB%\alapalk.cmd"
 set LAPTOP=call "%LIB%\laptop.cmd"
@@ -76,7 +75,6 @@ if not defined DATUM (
     set "DATUM=!DATUM: =!"
     if "!DATUM:~-1!"=="-" set "DATUM=!DATUM:~0,-1!"
 )
-set /a OL_KINT=0
 set "TESZTMOD=0"
 set "MOD_NEV="
 set "T_HELY="
@@ -90,7 +88,7 @@ if not defined DESK set "DESK=%USERPROFILE%\Desktop"
 
 rem ---------- Szamlalok ----------
 set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0
-set /a DO_IKON=0, DO_BL=0, DO_FEDEL=0, ATN_DB=0
+set /a DO_IKON=0, DO_BL=0, DO_FEDEL=0
 set "AA_MOD="
 set "AA_OK=0"
 set "LOG=%TEMP%\profil_mentes_naplo.txt"

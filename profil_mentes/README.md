@@ -41,9 +41,8 @@ azt a `_TEENDOK.txt` jelzi: az IT-tól kell újra igényelni. A tárolók a `con
 **PST-fájlok** – az `outlook_lista.txt` és a képernyő is kiírja, hol van minden csatolt PST. A PST bárhol
 lehet; a `%USERPROFILE%\PST` mappát a segédlet menti, a máshol lévőket kézzel kell átvinni.
 
-Amit a segédlet szándékosan **nem** ment, csak megkeres és felsorol (a `_TEENDOK.txt`-be is): a Letöltések,
-a felhasználó saját mappái a C: gyökerében és a profiljában, az Outlook további postaládái és feladócímei,
-a böngészőben mentett jelszavak. Ezeket kézzel kell átnézni.
+Amit a segédlet szándékosan **nem** ment: a Letöltések, a felhasználó saját mappái, az Outlook további
+postaládái és feladócímei, a böngészőben mentett jelszavak.
 
 ## Felépítés
 
@@ -62,7 +61,6 @@ lib\                     a munkát végző közös rutinok
   tetelek.cmd              a config\tetelek.cmd beolvasása és futtatása
   tipusok\                 tételtípusok: MAPPA, FAJL, BONGESZO, TANUSITVANY
   ellenorzes.cmd           felhasználó, meghajtó, futó programok, szabad hely
-  atnezendo.cmd            kézzel átnézendő mappák keresése
   talca.cmd                a tálcára rögzített ikonok listája – talca.txt
   outlook.cmd, programlista.cmd, ikonok.cmd, alapalk.cmd, laptop.cmd
   teendok.cmd              _TEENDOK.txt
@@ -88,9 +86,6 @@ Az eredményt `%UI% :JELOL OK|HIBA|KIHAGYVA "üzenet" "részlet"` jelzi.
 
 **Visszaállítás utáni teendő egy FAJL tételhez** – a sor 6. oszlopa egy név (pl. `EXPLORER`, `STARTMENU`),
 a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaállítás után ez fut.
-
-**Kézzel átnézendő mappák** – mit hagyjon ki, és meddig mérjen (alapból 60 mp), a `config\beallitasok.cmd`-ben
-állítható (`ATNEZ_*`).
 
 **Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
 

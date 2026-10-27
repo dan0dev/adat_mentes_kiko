@@ -39,8 +39,6 @@ if exist "%CEL%\" (
 %OUTLOOK% :LISTA_KESZIT
 if "%OL_STOP%"=="1" goto :MEGSZAKITVA
 
-%ATNEZENDO% :KERES
-
 echo.
 echo   Helyellenőrzés, egy pillanat...
 %TETELEK% :FORRASOK
