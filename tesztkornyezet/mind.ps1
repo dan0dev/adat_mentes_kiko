@@ -31,7 +31,28 @@ foreach ($v in $sorrend) {
         $arg.Mentes = "$d\alap\mentes_regi"
         $mappa = "$env:TEMP\pm_teszt\kulso\Mentes\mentes_regi"
     }
+    # Tanusitvanyok: mentes elott a harom teszt tanusitvany (kulcsos, nem exportalhato, nyilvanos),
+    # visszaallitas elott ures tarolo - utana a kulcsos es a nyilvanos ujra ott kell legyen
+    if ($v -eq 'mentes') { & "$d\profil_feltolt.ps1" -CsakTanusitvany }
+    if ($v -eq 'visszaallitas') { & "$d\profil_feltolt.ps1" -TanusitvanyUrit }
     $atirat = & "$d\futtat.ps1" @arg
+    if ($v -eq 'mentes') {
+        $ch = "$mappa\Chrome_mentes\Default"
+        foreach ($f in 'Bookmarks', 'History', 'History Provider Cache', 'Preferences') {
+            if (-not (Test-Path -LiteralPath "$ch\$f")) { $gond.Add("Chrome: hianyzik a mentesbol: Default\$f") }
+        }
+        $tan = @(Get-ChildItem "$mappa\Tanusitvanyok\PmTeszt" -File -ErrorAction SilentlyContinue)
+        if (@($tan | Where-Object Extension -eq '.pfx').Count -ne 1) { $gond.Add('tanusitvany: nem 1 .pfx') }
+        if (@($tan | Where-Object Extension -eq '.cer').Count -ne 1) { $gond.Add('tanusitvany: nem 1 .cer') }
+        if (-not (Test-Path "$mappa\Tanusitvanyok\lista.txt")) { $gond.Add('tanusitvany: nincs lista.txt') }
+        $todo = [IO.File]::ReadAllText("$mappa\_TEENDOK.txt", [Text.Encoding]::UTF8)
+        if (-not $todo.Contains('1 kulcs nem menthető')) { $gond.Add('_TEENDOK.txt: hianyzik a nem mentheto kulcs sora') }
+    }
+    if ($v -eq 'visszaallitas') {
+        $vissza = @(Get-ChildItem Cert:\CurrentUser\PmTeszt)
+        if ($vissza.Count -ne 2) { $gond.Add("tanusitvany: visszaallitas utan $($vissza.Count) db, nem 2") }
+        if (@($vissza | Where-Object HasPrivateKey).Count -ne 1) { $gond.Add('tanusitvany: a kulcsos nem kulccsal allt vissza') }
+    }
     if ($v -eq 'regi_mentes') {
         $todo = "$mappa\_LEFT-TO-DO.txt"
         if (-not (Test-Path $todo)) { $gond.Add('nincs _LEFT-TO-DO.txt') }
@@ -62,5 +83,7 @@ foreach ($v in $sorrend) {
     }
     if ($gond.Count) { $hibak++; "FAIL  $v"; $gond | ForEach-Object { "      $_" } } else { "ok    $v" }
 }
+# A teszt tanusitvanyok es kulcsaik ne maradjanak a gepen
+& "$d\profil_feltolt.ps1" -TanusitvanyUrit
 "Hibas forgatokonyvek: $hibak / $($sorrend.Count)"
 exit $hibak

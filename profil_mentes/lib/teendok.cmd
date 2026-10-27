@@ -33,8 +33,8 @@ if %ATN_DB% GTR 0 (
 ) else (
     >>"%TODO%" echo [ ] Kézzel átnézendő mappák: C: gyökér, saját mappa, Letöltések
 )
-for /l %%i in (1,1,%OL_KINT%) do >>"%TODO%" echo [ ] PST a PST-mappán kívül, nincs mentve: !OLK_%%i!
 for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
+if defined TAN_NEMEXP >>"%TODO%" echo [ ] Tanúsítványok: %TAN_NEMEXP% kulcs nem menthető – IT-tól újra igényelni, lista: Tanusitvanyok\lista.txt
 call :IMPORT_RESZ
 goto :eof
 
@@ -44,6 +44,7 @@ goto :eof
     echo ÚJ GÉP
     echo [ ] 3 Visszaállítás, laptopnál 4 Laptop
     echo [ ] 5 Alapértelmezett alkalmazások, ki- és bejelentkezés, 5 ellenőrzés
+    echo [ ] Tanúsítványok: certmgr.msc – Személyes, ellenőrzés
     echo [ ] Outlook: PST-k csatolása – outlook_lista.txt
     echo [ ] Outlook: postaládák, feladók, fiókok
     echo [ ] Outlook: alapértelmezett aláírás

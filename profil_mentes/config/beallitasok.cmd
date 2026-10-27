@@ -12,6 +12,10 @@ set /a RAHAGYAS_MB=300
 rem A PST mappa: a mentes ezt viszi at, az Outlook lista ehhez viszonyit
 set "SRC_PST=%USERPROFILE%\PST"
 
+rem Tanusitvany tarolok (certmgr.msc - Aktualis felhasznalo), szokozzel elvalasztva:
+rem My = Szemelyes, AddressBook = Masok. A kulcsosak jelszoval vedett .pfx-be kerulnek.
+set "TAN_TAROLOK=My AddressBook"
+
 rem Ezek a programok zarolhatjak a fajlokat, mentes es exportalas elott ellenorizzuk
 set "FIGYELT_PROGRAMOK=chrome.exe msedge.exe outlook.exe winword.exe excel.exe Microsoft.Notes.exe"
 rem Ezek a hatterben is futnak, ezert bezaraskor kenyszerrel zarjuk oket

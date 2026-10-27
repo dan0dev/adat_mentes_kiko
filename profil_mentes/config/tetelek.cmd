@@ -5,7 +5,7 @@ rem  Uj tetel: egy uj %TETEL% sor. A mentes es a visszaallitas is
 rem  automatikusan viszi, a lepesszam es a lista is magatol frissul.
 rem
 rem  Oszlopok:
-rem    1. Tipus     - lib\tipusok\ alatti fajl neve: MAPPA, FAJL, BONGESZO
+rem    1. Tipus     - lib\tipusok\ alatti fajl neve: MAPPA, FAJL, BONGESZO, TANUSITVANY
 rem    2. Nev       - ez latszik a kepernyon, a naploban es az osszegzesben,
 rem                   legfeljebb 26 karakter, ekezetesen
 rem    3. Forras    - a hely a felhasznalo profiljaban
@@ -23,6 +23,8 @@ set CHROME_FAJLOK=Bookmarks History "History Provider Cache" Preferences
 set EDGE_FAJLOK=Bookmarks
 
 rem     Tipus     Nev                           Forras                                                                         Mappa          Parameterek
+rem A tanusitvanyok elol: jelszot kerhet, igy a kerdes a futas elejen jon, nem egy hosszu masolas utan
+%TETEL% TANUSITVANY "Tanúsítványok (certmgr)"   "%TAN_TAROLOK%"                                                               Tanusitvanyok
 %TETEL% MAPPA     "Outlook-aláírások"           "%APPDATA%\Microsoft\Signatures"                                              Signatures
 %TETEL% MAPPA     "Office-sablonok"             "%APPDATA%\Microsoft\Templates"                                               Templates
 %TETEL% MAPPA     "Office egyéni szótárai"      "%APPDATA%\Microsoft\UProof"                                                  UProof

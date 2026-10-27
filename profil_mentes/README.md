@@ -31,9 +31,19 @@ Minden menüpont végén összegzés jelenik meg, és a mentés mappájába (ill
 összegzésfájl, aminek a nevében az eredmény is látszik: `_MENTES_OK_2026-10-27.txt` vagy
 `_MENTES_2_HIBA_2026-10-27.txt`. A részletek a `*_naplo.txt` fájlokban vannak.
 
+**Tanúsítványok (certmgr.msc)** – a mentés első lépése. A Személyes és a Mások tároló tanúsítványai a
+`Tanusitvanyok\` mappába kerülnek: a kulcsosak egy jelszóval védett `.pfx` fájlba (AES-256), a többi `.cer`-be,
+a `lista.txt` mindet felsorolja. A jelszót a mentéskor kéri (kétszer), a visszaállításkor ugyanezt kell
+megadni – a segédlet sehová nem írja le. Amelyik kulcs nem exportálható (pl. céges, automatikusan kiadott),
+azt a `_TEENDOK.txt` jelzi: az IT-tól kell újra igényelni. A tárolók a `config\beallitasok.cmd`-ben
+állíthatók (`TAN_TAROLOK`).
+
+**PST-fájlok** – az `outlook_lista.txt` és a képernyő is kiírja, hol van minden csatolt PST. A PST bárhol
+lehet; a `%USERPROFILE%\PST` mappát a segédlet menti, a máshol lévőket kézzel kell átvinni.
+
 Amit a segédlet szándékosan **nem** ment, csak megkeres és felsorol (a `_TEENDOK.txt`-be is): a Letöltések,
-a felhasználó saját mappái a C: gyökerében és a profiljában, a PST-mappán kívüli csatolt PST-k, az Outlook
-további postaládái és feladócímei, a böngészőben mentett jelszavak. Ezeket kézzel kell átnézni.
+a felhasználó saját mappái a C: gyökerében és a profiljában, az Outlook további postaládái és feladócímei,
+a böngészőben mentett jelszavak. Ezeket kézzel kell átnézni.
 
 ## Felépítés
 
@@ -50,7 +60,7 @@ lib\                     a munkát végző közös rutinok
   kezdokepernyo.cmd        a kezdőképernyő és a menü
   masolas.cmd              robocopy + ellenőrző másodfutás
   tetelek.cmd              a config\tetelek.cmd beolvasása és futtatása
-  tipusok\                 tételtípusok: MAPPA, FAJL, BONGESZO
+  tipusok\                 tételtípusok: MAPPA, FAJL, BONGESZO, TANUSITVANY
   ellenorzes.cmd           felhasználó, meghajtó, futó programok, szabad hely
   atnezendo.cmd            kézzel átnézendő mappák keresése
   talca.cmd                a tálcára rögzített ikonok listája – talca.txt
