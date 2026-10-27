@@ -97,9 +97,6 @@ if "%DO_BL%"=="1" (
     echo    !C_FEHER!Teendo:!C_0! kovesd az MBAM ablakot, a titkositas utana a hatterben fut
 )
 
-rem Hangjelzes, hogy akkor is eszrevedd, ha nem a gep elott vagy
-forfiles /p "%SystemRoot%\System32" /m cmd.exe /c "cmd /c echo 0x07" 2>nul
-
 echo.
 if %DB_HIBA% GTR 0 (
     %UI% :VALASZT IN "   Megnyissam a logot"
@@ -146,7 +143,6 @@ if defined FUTO (
 echo.
 echo    A teszt nem hozott letre semmit a kulso meghajton.
 echo    A megnyitott programok altal zarolt fajlokat a teszt nem tudja ellenorizni.
-forfiles /p "%SystemRoot%\System32" /m cmd.exe /c "cmd /c echo 0x07" 2>nul
 echo.
 if %DB_HIBA% GTR 0 (
     %UI% :VALASZT IN "   Megnyissam a logot"

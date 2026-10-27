@@ -104,7 +104,7 @@ if not errorlevel 1 (
 rem 2. Kulonben kiolvassuk, hova mutat
 set "IK_LNK=!IK_F!"
 set "IK_CEL="
-for /f "delims=" %%t in ('powershell -NoProfile -NonInteractive -Command "(New-Object -ComObject WScript.Shell).CreateShortcut($env:IK_LNK).TargetPath" 2^>nul') do set "IK_CEL=%%t"
+for /f "delims=" %%t in ('powershell -NoProfile -NonInteractive -Command "[Console]::OutputEncoding=[Text.Encoding]::UTF8; (New-Object -ComObject WScript.Shell).CreateShortcut($env:IK_LNK).TargetPath" 2^>nul') do set "IK_CEL=%%t"
 if not defined IK_CEL (
     echo        - !IK_NEV!: !IK_FNEV! celja nem olvashato, meghagyom
     goto :eof

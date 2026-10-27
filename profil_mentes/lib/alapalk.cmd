@@ -17,7 +17,7 @@ set "AA_NINCS="
 
 rem 0. A Windows ezt a hazirendet csak tartomanyhoz csatlakoztatott gepen alkalmazza
 set "AA_TARTOMANY="
-for /f %%d in ('powershell -NoProfile -NonInteractive -Command "(Get-CimInstance Win32_ComputerSystem).PartOfDomain" 2^>nul') do set "AA_TARTOMANY=%%d"
+for /f %%d in ('powershell -NoProfile -NonInteractive -Command "[Console]::OutputEncoding=[Text.Encoding]::UTF8; (Get-CimInstance Win32_ComputerSystem).PartOfDomain" 2^>nul') do set "AA_TARTOMANY=%%d"
 if /I "!AA_TARTOMANY!"=="False" (
     %UI% :JELOL HIBA "a gep nincs tartomanyban - a Windows itt nem alkalmazza ezt a beallitast"
     goto :eof

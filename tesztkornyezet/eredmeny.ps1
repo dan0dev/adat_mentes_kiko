@@ -19,7 +19,6 @@ if ($Mentes -and (Test-Path -LiteralPath $Mentes)) {
         $r = $_.FullName.Substring($gy.Length)
         $r = $r -replace '_LEFT-TO-DO\.txt$', '_TEENDOK.txt' -replace '_log\.txt$', '_naplo.txt' -replace '^teszt_', 'probafuttatas_'
         $r = $r -replace '^_MENTES_.*\.txt$', '_MENTES.txt' -replace '^_(EXPORT|VISSZAALLITAS)_.*\.txt$', '_VISSZAALLITAS.txt'
-        $r = $r -replace '_robocopy\.txt$', '_naplo.txt'
         $r
     } | Sort-Object -Unique)
 }

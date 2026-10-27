@@ -6,17 +6,11 @@ rem  Kezi teendok listaja: _LEFT-TO-DO.txt a mentes mappaban
 rem  Mentesnel keszul el az 1. es 2. resz, exportalasnal kerul
 rem  hozza a 3. resz az eredmennyel.
 rem  Hivas: %TEENDOK% :MENTES  vagy  %TEENDOK% :EXPORT.  Kimenet: TODO
-rem  A fajl UTF-8 - iras kozben a kodlap 65001, igy az ekezetes
+rem  A fajl UTF-8: a teljes futas a 65001 kodlapon megy, igy az ekezetes
 rem  mappanevek (Letoltesek, sajat mappa, PST utak) helyesen latszanak.
 rem ==========================================================
 
 :MENTES
-call :KODLAP_UTF8
-call :MENTES_IR
-call :KODLAP_VISSZA
-goto :eof
-
-:MENTES_IR
 set "TODO=%CEL%\_LEFT-TO-DO.txt"
 (>"%TODO%" echo LEFT-TO-DO - kezi teendok az eszkozcserehez) 2>nul
 if not exist "%TODO%" (
@@ -66,12 +60,6 @@ goto :eof
 goto :eof
 
 :EXPORT
-call :KODLAP_UTF8
-call :EXPORT_IR
-call :KODLAP_VISSZA
-goto :eof
-
-:EXPORT_IR
 if "%IRHATO%"=="0" (
     if exist "%FORRAS%\_LEFT-TO-DO.txt" set "TODO=%FORRAS%\_LEFT-TO-DO.txt"
     goto :eof
@@ -93,18 +81,4 @@ if %DB_HIBA%==0 (
 ) else (
     for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo    - HIBAS TETEL, ellenorizd kezzel: !NEV_%%i! - !M_%%i!
 )
-goto :eof
-
-:KODLAP_UTF8
-rem A cmd a fajlba az aktualis kodlapon ir - 852 vagy 1250 mellett az ekezetek
-rem a Jegyzettombben olvashatatlanok. Az eredeti kodlapot a KODLAP_VISSZA allitja vissza.
-rem A nul bemenet kell: a chcp kulonben elnyelheti a bemenetet, es a kovetkezo kerdes nem kap valaszt.
-set "KODLAP_REGI="
-for /f "tokens=2 delims=:." %%c in ('chcp ^<nul') do set "KODLAP_REGI=%%c"
-if defined KODLAP_REGI set "KODLAP_REGI=!KODLAP_REGI: =!"
->nul chcp 65001 <nul
-goto :eof
-
-:KODLAP_VISSZA
-if defined KODLAP_REGI >nul chcp !KODLAP_REGI! <nul
 goto :eof

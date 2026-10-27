@@ -1,5 +1,12 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
+rem A futas UTF-8 kodlapon megy, igy az ekezetes szovegek es fajlnevek helyesek.
+rem Az eredeti kodlapot a vegen visszaallitjuk - nyitott cmd ablakbol inditva szamit.
+rem A nul bemenet kell: a chcp kulonben elnyelhetne a bemenetet.
+set "PM_KODLAP="
+for /f "tokens=2 delims=:." %%c in ('chcp ^<nul') do set "PM_KODLAP=%%c"
+if defined PM_KODLAP set "PM_KODLAP=!PM_KODLAP: =!"
+>nul chcp 65001 <nul
 title Profil mentes / visszaallitas
 
 rem ==========================================================
@@ -41,7 +48,7 @@ set OSSZEGZES=call "%LIB%\osszegzes.cmd"
 
 rem PowerShell resz futtatasa: set "PS_FAJL=%PSDIR%\nev.ps1", utana %PS_FUTTAT%
 rem Szovegkent tolti be, igy a vegrehajtasi hazirend nem tiltja le a .ps1 fajlt
-set PS_FUTTAT=powershell -NoProfile -NonInteractive -Command "& ([scriptblock]::Create([IO.File]::ReadAllText($env:PS_FAJL)))"
+set PS_FUTTAT=powershell -NoProfile -NonInteractive -Command "[Console]::OutputEncoding=[Text.Encoding]::UTF8; & ([scriptblock]::Create([IO.File]::ReadAllText($env:PS_FAJL)))"
 
 rem ---------- Beallitasok ----------
 call "%CONF%\beallitasok.cmd"
@@ -125,6 +132,7 @@ call "%MODULOK%\%MODUL%.cmd"
 if errorlevel 1 goto :MEGSZAKITVA
 
 %OSSZEGZES% :OSSZEGZES
+if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
 exit /b 0
 
 :MEGSZAKITVA
@@ -132,4 +140,5 @@ echo.
 echo    !C_SARGA!Megszakitva. Nem tortent valtoztatas.!C_0!
 echo.
 pause
+if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
 exit /b 1

@@ -22,7 +22,9 @@ $sorok = $tiszta -split "`r?`n"
 
 for ($i = 0; $i -lt $sorok.Count; $i++) {
     $s = $sorok[$i]
-    if ($s -match 'Ã|Å|Ĺ|Ă|â€|�') { $problemak.Add(('{0}. sor: hibas ekezet (mojibake): {1}' -f ($i + 1), $s.Trim())) }
+    # A robocopy folyamatjelzo sorai tabulatorral kezdodnek, es a robocopy ezeket mindig a 852-es
+    # kodlapon irja - az atiratban ezert nem UTF-8-ak. A segedlet sajat soraiban nincs tabulator.
+    if ($s -match 'Ã|Å|Ĺ|Ă|â€|�' -and -not $s.Contains("`t")) { $problemak.Add(('{0}. sor: hibas ekezet (mojibake): {1}' -f ($i + 1), $s.Trim())) }
     if ($s.Length -gt 76 -and $s -notmatch ':\\|\\\\') { $problemak.Add(('{0}. sor: {1} karakter, tul hosszu: {2}' -f ($i + 1), $s.Length, $s.Trim())) }
     if ($s -match 'unexpected at this time|not recognized as an internal|cannot find the batch label|nem várt|kötegcímke|syntax of the command is incorrect') {
         $problemak.Add(('{0}. sor: cmd hiba: {1}' -f ($i + 1), $s.Trim()))
