@@ -1,0 +1,47 @@
+# ==========================================================
+#  Outlook lista - lib\outlook.cmd futtatja
+#  Csak a registryt olvassa, az Outlookhoz nem nyul.
+#  Bemenet:  OL_OUT  - a kimeneti szovegfajl
+#            SRC_PST - a PST mappa, ami mentesre kerul
+#  Kimenet:  KINT|<eleresi ut> soronkent a PST mappan kivuli PST-krol
+#            SUM|<darab> a vegen
+# ==========================================================
+$ErrorActionPreference = 'SilentlyContinue'
+$out = $env:OL_OUT; $pstDir = $env:SRC_PST.TrimEnd('\') + '\'
+
+# A csatolt PST-k utvonala a profilok 001f6700 erteke, Unicode szovegkent
+$psts = New-Object System.Collections.Generic.List[string]
+$roots = 'HKCU:\Software\Microsoft\Office\16.0\Outlook\Profiles',
+         'HKCU:\Software\Microsoft\Office\15.0\Outlook\Profiles',
+         'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Windows Messaging Subsystem\Profiles'
+foreach ($r in $roots) {
+    if (Test-Path $r) {
+        Get-ChildItem -Path $r -Recurse | ForEach-Object {
+            $v = $_.GetValue('001f6700')
+            if ($v -is [byte[]]) {
+                $p = [Text.Encoding]::Unicode.GetString($v).TrimEnd([char]0)
+                if ($p -and -not $psts.Contains($p)) { $psts.Add($p) }
+            }
+        }
+    }
+}
+
+$L = New-Object System.Collections.Generic.List[string]
+$L.Add('OUTLOOK LISTA - ' + $env:USERNAME + ' / ' + $env:COMPUTERNAME + ' - ' + (Get-Date -Format 'yyyy.MM.dd HH:mm'))
+$L.Add('')
+$L.Add('1. CSATOLT ADATFAJLOK - PST, pl. archivum')
+$L.Add('   Ujra hozzaadas az uj gepen: Fajl - Megnyitas es exportalas - Outlook-adatfajl megnyitasa')
+$kint = 0
+if ($psts.Count -eq 0) { $L.Add('   - nincs csatolt PST') }
+foreach ($p in $psts) {
+    if ($p.StartsWith($pstDir, [StringComparison]::OrdinalIgnoreCase)) { $L.Add('   - ' + $p) }
+    else { $kint++; $L.Add('   - ' + $p + '   FIGYELEM: nem a PST mappaban van, a script nem mentette'); Write-Output ('KINT|' + $p) }
+}
+$L.Add('')
+$L.Add('2. KEZZEL ELLENORIZENDO A REGI GEPEN - a script ezeket nem menti')
+$L.Add('   [ ] Tovabbi postaladak: Fajl - Fiokbeallitasok - Modositas - Tovabbi beallitasok - Specialis')
+$L.Add('       Az automatikusan csatolt postaladak maguktol visszajonnek.')
+$L.Add('   [ ] Felado mezo: uj level - Felado gomb lenyilo listaja, a tobbi cimet ird fel')
+$L.Add('   [ ] Tovabbi fiokok: Fajl - Fiokbeallitasok - E-mail lap')
+$L | Out-File -LiteralPath $out -Encoding UTF8
+Write-Output ('SUM|' + $psts.Count)

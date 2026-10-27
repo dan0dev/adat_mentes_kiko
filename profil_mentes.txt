@@ -1,0 +1,1690 @@
+@echo off
+setlocal EnableExtensions EnableDelayedExpansion
+title Profil mentes / visszaallitas
+
+rem ==========================================================
+rem  Eszkozcsere segedlet: adatok mentese, exportalasa, BitLocker
+rem  Csak beepitett Windows eszkozok: cmd, robocopy, es
+rem  ellenorzesekhez powershell. Fajlt csak a hibas Office
+rem  parancsikonoknal torol, mast nem torol es nem mozgat.
+rem ==========================================================
+
+rem ---------- Beallitasok ----------
+set "MAPPA_NEV=Mentes"
+set /a RAHAGYAS_MB=300
+
+set "SRC_SIG=%APPDATA%\Microsoft\Signatures"
+set "SRC_TPL=%APPDATA%\Microsoft\Templates"
+set "SRC_UPROOF=%APPDATA%\Microsoft\UProof"
+set "SRC_XLSTART=%APPDATA%\Microsoft\Excel\XLSTART"
+set "SRC_STARTUP=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+set "SRC_PST=%USERPROFILE%\PST"
+set "SRC_FAV=%USERPROFILE%\Favorites"
+set "SRC_CTEMP=%SystemDrive%\TEMP"
+set "SRC_CHROME=%LOCALAPPDATA%\Google\Chrome\User Data"
+set "SRC_EDGE=%LOCALAPPDATA%\Microsoft\Edge\User Data"
+set "SRC_NOTES=%LOCALAPPDATA%\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState"
+set "SRC_QA=%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations"
+set "QA_FAJL=f01b4d95cf55d32a.automaticDestinations-ms"
+
+rem Bongeszonkent mentett fajlok, profilonkent. A Local State nem kerul at,
+rem mert abban van a gephez kotott titkositokulcs - csak a profillista.
+set CHROME_FAJLOK=Bookmarks History "History Provider Cache" Preferences
+set EDGE_FAJLOK=Bookmarks
+
+rem Office parancsikonok forrasa, es az MSI-s Office parancsikonjainak helye
+set "PD_START=%ProgramData%\Microsoft\Windows\Start Menu\Programs"
+set "WIN_INST=%WINDIR:~2%\Installer\"
+
+rem BitLocker / MBAM kliens helye - mindig a 64 bites Program Files
+if defined ProgramW6432 (set "PF64=%ProgramW6432%") else (set "PF64=%ProgramFiles%")
+set "MBAM_DIR=%PF64%\Microsoft\MDOP MBAM"
+
+
+rem ---------- Szinek ----------
+call :SZINEK_BEALLIT
+
+rem ---------- Datum a fajlnevekhez, pl. 2026-10-16 ----------
+set "DATUM="
+for /f %%d in ('powershell -NoProfile -NonInteractive -Command "Get-Date -Format yyyy-MM-dd" 2^>nul') do set "DATUM=%%d"
+if not defined DATUM (
+    set "DATUM=%date%"
+    set "DATUM=!DATUM:/=-!"
+    set "DATUM=!DATUM:.=-!"
+    set "DATUM=!DATUM: =!"
+    if "!DATUM:~-1!"=="-" set "DATUM=!DATUM:~0,-1!"
+)
+set /a OL_KINT=0
+set "TESZTMOD=0"
+set "MOD_NEV="
+set "T_HELY="
+set "FUTO="
+
+rem ---------- Asztal valodi helye, ha at van iranyitva ----------
+
+set "DESK="
+for /f "tokens=2,*" %%a in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop 2^>nul ^| find "REG_"') do set "DESK=%%b"
+if defined DESK call set "DESK=%DESK%"
+if not defined DESK set "DESK=%USERPROFILE%\Desktop"
+
+rem ---------- Szamlalok ----------
+set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0
+set /a DO_IKON=0, DO_BL=0, DO_FEDEL=0
+set "AA_MOD="
+set "AA_OK=0"
+set "LOG=%TEMP%\profil_mentes_log.txt"
+set "IRHATO=1"
+set "CEL="
+set "FORRAS="
+set "DRIVE="
+
+set "SELF=%~f0"
+set "OL_PST="
+
+set "ADMIN=0"
+net session >nul 2>&1 && set "ADMIN=1"
+
+rem ==========================================================
+rem  Kezdokepernyo
+rem ==========================================================
+cls
+call :CIM "ESZKOZCSERE SEGEDLET"
+echo    Felhasznalo : !C_FEHER!%USERNAME%!C_0!
+echo    Gep         : %COMPUTERNAME%
+echo    Profil      : %USERPROFILE%
+if "%ADMIN%"=="1" echo    Jogosultsag : !C_SARGA!rendszergazda!C_0!
+
+echo.
+echo    !C_FEHER!Nyomja meg a kivant lehetoseg sorszamat:!C_0!
+echo.
+echo      1. Adatok mentese (eszkozcsere regi)
+echo      2. Adatok exportalasa (eszkozcsere uj)
+echo      3. BitLocker aktivalasa, fedel beallitasa (laptop)
+echo      4. Teszt futtatas - a mentes probaja, nem masol semmit
+echo      5. Alapertelmezett alkalmazasok - Word, Excel, PowerPoint, PDF, Chrome
+echo.
+choice /C 12345 /N /M "   Valasztas [1/2/3/4/5]: "
+set "MOD=%errorlevel%"
+if "%MOD%"=="1" set "MOD_NEV=Adatok mentese"
+if "%MOD%"=="2" set "MOD_NEV=Adatok exportalasa"
+if "%MOD%"=="3" set "MOD_NEV=Laptop beallitasok"
+if "%MOD%"=="4" set "MOD_NEV=Teszt futtatas"
+if "%MOD%"=="4" set "TESZTMOD=1"
+if "%MOD%"=="5" set "MOD_NEV=Alapertelmezett alkalmazasok"
+if not defined MOD_NEV goto :MEGSZAKITVA
+
+rem A 3-as es 5-os menupont gepszintu beallitas: mindegy, melyik fiok futtatja
+if "%MOD%"=="3" goto :BL_MOD
+if "%MOD%"=="5" goto :ALAP_MOD
+
+rem Mentes, exportalas, teszt: a felhasznalo sajat profiljaval dolgozik
+echo.
+if "%ADMIN%"=="1" (
+    echo    !C_SARGA!Figyelem: a script rendszergazdakent fut.!C_0!
+    echo    !C_SARGA!A mentes es az exportalas annak a fioknak az adataival dolgozik, amelyik futtatja.!C_0!
+    echo.
+)
+echo    Felhasznalo, akinek az adataival dolgozom: !C_FEHER!%USERNAME%!C_0!
+choice /C IN /M "   Ez a helyes felhasznalo"
+if not errorlevel 2 goto :FELHASZNALO_OK
+echo.
+echo    Inditsd el a scriptet a felhasznalo sajat fiokjaban, rendszergazdai jog nelkul:
+echo    sima dupla kattintassal, ne Futtatas rendszergazdakent.
+goto :MEGSZAKITVA
+:FELHASZNALO_OK
+
+rem ---------- Kulso meghajto betujel bekerese ----------
+:DRIVE_BEKER
+set "DRIVE="
+echo.
+set /p "DRIVE=   Kulso meghajto betujele, pl. E: "
+if not defined DRIVE goto :DRIVE_BEKER
+rem Ellenorzes pipe nelkul: pontosan egy betu, utana legfeljebb : es \
+set "_d=!DRIVE:"=!"
+if "!_d:~-1!"=="\" set "_d=!_d:~0,-1!"
+if "!_d:~-1!"==":" set "_d=!_d:~0,-1!"
+set "_jo=1"
+if not defined _d set "_jo=0"
+if defined _d if not "!_d:~1!"=="" set "_jo=0"
+if "!_jo!"=="1" for /f "tokens=1,* delims=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" %%x in ("1!_d!") do if not "%%x%%y"=="1" set "_jo=0"
+if "!_jo!"=="0" (
+    echo    !C_PIROS!Csak egy betut adj meg, pl. E!C_0!
+    goto :DRIVE_BEKER
+)
+set "DRIVE=!_d!"
+if /I "%DRIVE%:"=="%SystemDrive%" (
+    echo    !C_PIROS!A rendszermeghajto nem lehet a celmeghajto.!C_0!
+    goto :DRIVE_BEKER
+)
+if not exist "%DRIVE%:\" (
+    echo    !C_PIROS!Nem talalhato meghajto: !DRIVE!: - csatlakoztatva van a kulso meghajto?!C_0!
+    goto :DRIVE_BEKER
+)
+
+rem Irhatosag teszt - csak a sajat tesztfajljat hozza letre es torli
+set "IRHATO=1"
+set "TESZT=%DRIVE%:\_irasteszt_%RANDOM%.tmp"
+(echo teszt) >"%TESZT%" 2>nul
+if exist "%TESZT%" (del /q "%TESZT%" >nul 2>&1) else (set "IRHATO=0")
+if "%IRHATO%"=="0" if "%MOD%"=="4" echo    !C_PIROS!A %DRIVE%: meghajto nem irhato - a teszt ezt hibakent jelzi.!C_0!
+if "%IRHATO%"=="0" if "%MOD%"=="1" (
+    echo    !C_PIROS!A !DRIVE!: meghajto nem irhato - irasvedett vagy nincs jogosultsag.!C_0!
+    goto :DRIVE_BEKER
+)
+set "ROOT=%DRIVE%:\%MAPPA_NEV%"
+
+if "%MOD%"=="1" goto :MENTES
+if "%MOD%"=="4" goto :MENTES
+goto :VISSZA
+
+rem ==========================================================
+rem  MENTES
+rem ==========================================================
+:MENTES
+set /a OSSZES=14+TESZTMOD
+set "CEL=%ROOT%\%USERNAME%_%COMPUTERNAME%"
+cls
+if "%TESZTMOD%"=="1" (
+    call :CIM "TESZT FUTTATAS - a mentes probaja"
+    echo    !C_SARGA!Teszt mod: minden lepest vegigellenoriz, de semmit nem masol es nem hoz letre.!C_0!
+    echo.
+) else (
+    call :CIM "ADATOK MENTESE - ELOKESZITES"
+)
+echo    Cel mappa  : %CEL%
+echo.
+echo    Mentendo tetelek:
+echo      1. Outlook alairasok          9. Kedvencek - Favorites
+echo      2. Office sablonok           10. Sticky Notes
+echo      3. Office egyeni szotar      11. Intezo Gyorseleres
+echo      4. Excel XLSTART             12. C:\TEMP
+echo      5. Startup mappa             13. Telepitett programok listaja
+echo      6. PST mappa                 14. Outlook lista - csatolt PST-k
+echo      7. Chrome profilok
+echo      8. Edge kedvencek
+if exist "%CEL%\" (
+    echo.
+    echo    !C_SARGA!Mar letezik mentes ennek a gepnek. A meglevo fajlok frissulnek, semmi nem torlodik.!C_0!
+)
+
+call :OUTLOOK_LISTA_KESZIT
+if "%OL_STOP%"=="1" goto :MEGSZAKITVA
+
+echo.
+echo    Hely ellenorzese, egy pillanat...
+set "PS_FORRASOK=%SRC_SIG%;%SRC_TPL%;%SRC_UPROOF%;%SRC_XLSTART%;%SRC_STARTUP%;%SRC_PST%;%SRC_FAV%;%SRC_NOTES%;%SRC_CTEMP%"
+set "PS_BETU=%DRIVE%:"
+call :HELY_ELLENORZES
+if "%HELY_STOP%"=="1" goto :MEGSZAKITVA
+
+call :APPOK_ELLENORZES
+
+echo.
+if "%TESZTMOD%"=="1" goto :TESZT_INDUL
+choice /C IN /M "   Indulhat a mentes"
+if errorlevel 2 goto :MEGSZAKITVA
+
+mkdir "%CEL%" 2>nul
+if not exist "%CEL%\" (
+    echo    !C_PIROS!Nem sikerult letrehozni a mentes mappat: !CEL!!C_0!
+    goto :MEGSZAKITVA
+)
+set "LOG=%CEL%\mentes_log.txt"
+>>"%LOG%" echo ===== MENTES %date% %time% - %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\mentes_log.txt"
+
+call :IDO START_MP
+cls
+call :CIM "ADATOK MENTESE FOLYAMATBAN"
+echo    Ne huzd ki a kulso meghajtot, amig a script fut.
+goto :MENTES_LEPESEK
+
+:TESZT_INDUL
+choice /C IN /M "   Indulhat a teszt"
+if errorlevel 2 goto :MEGSZAKITVA
+set "LOG=%TEMP%\teszt_log.txt"
+del /q "%LOG%" >nul 2>&1
+>>"%LOG%" echo ===== TESZT %date% %time% - %USERNAME% / %COMPUTERNAME% =====
+call :IDO START_MP
+cls
+call :CIM "TESZT FUTTATAS FOLYAMATBAN - semmi nem masolodik"
+call :FEJLEC "Kornyezet"
+call :KORNYEZET
+
+:MENTES_LEPESEK
+call :FEJLEC "Outlook alairasok"
+call :MAPPA "%SRC_SIG%" "%CEL%\Signatures"
+call :FEJLEC "Office sablonok"
+call :MAPPA "%SRC_TPL%" "%CEL%\Templates"
+call :FEJLEC "Office egyeni szotar"
+call :MAPPA "%SRC_UPROOF%" "%CEL%\UProof"
+call :FEJLEC "Excel XLSTART"
+call :MAPPA "%SRC_XLSTART%" "%CEL%\XLSTART"
+call :FEJLEC "Startup mappa"
+call :MAPPA "%SRC_STARTUP%" "%CEL%\Startup"
+call :FEJLEC "PST mappa"
+call :MAPPA "%SRC_PST%" "%CEL%\PST" P
+call :FEJLEC "Chrome profilok"
+call :BONGESZO_MENT "%SRC_CHROME%" "%CEL%\Chrome_mentes" CHROME_FAJLOK
+call :FEJLEC "Edge kedvencek"
+call :BONGESZO_MENT "%SRC_EDGE%" "%CEL%\Edge_mentes" EDGE_FAJLOK
+call :FEJLEC "Kedvencek - Favorites"
+call :MAPPA "%SRC_FAV%" "%CEL%\Favorites"
+call :FEJLEC "Sticky Notes"
+call :MAPPA "%SRC_NOTES%" "%CEL%\StickyNotes"
+call :FEJLEC "Intezo Gyorseleres"
+call :FAJL "%SRC_QA%" "%CEL%\Gyorseleres" "%QA_FAJL%"
+call :FEJLEC "C:\TEMP"
+call :MAPPA "%SRC_CTEMP%" "%CEL%\C_TEMP" P
+call :FEJLEC "Telepitett programok"
+if "%TESZTMOD%"=="1" (
+    call :APPS_LISTA "%TEMP%\_teszt_apps.txt"
+    del /q "%TEMP%\_teszt_apps.txt" >nul 2>&1
+) else (
+    call :APPS_LISTA "%CEL%\apps.txt"
+)
+call :FEJLEC "Outlook lista"
+call :OUTLOOK_LISTA_MENT
+goto :OSSZEGZES
+
+rem ==========================================================
+rem  VISSZAALLITAS
+rem ==========================================================
+:VISSZA
+if not exist "%ROOT%\" (
+    echo    !C_PIROS!Nincs mentes mappa a kulso meghajton: !ROOT!!C_0!
+    goto :MEGSZAKITVA
+)
+cls
+call :CIM "ADATOK EXPORTALASA - MENTES KIVALASZTASA"
+set /a N=0
+for /d %%F in ("%ROOT%\*") do (
+    set /a N+=1
+    set "MENTES_!N!=%%~fF"
+    echo      !N! - %%~nxF   [%%~tF]
+)
+if %N%==0 (
+    echo    !C_PIROS!Nincs mentes a kulso meghajton.!C_0!
+    goto :MEGSZAKITVA
+)
+
+:VALASZT
+set "SZAM="
+echo.
+set /p "SZAM=   Melyiket allitsam vissza? Szam: "
+if not defined SZAM goto :VALASZT
+rem Ellenorzes pipe nelkul: csak szamjegyek
+set "_n="
+for /f "tokens=1,* delims=0123456789" %%x in ("x!SZAM!") do if not "%%x%%y"=="x" set "_n=1"
+if defined _n (
+    echo    !C_PIROS!Csak szamot adj meg.!C_0!
+    goto :VALASZT
+)
+if not defined MENTES_%SZAM% (
+    echo    !C_PIROS!Nincs ilyen sorszam.!C_0!
+    goto :VALASZT
+)
+set "FORRAS=!MENTES_%SZAM%!"
+
+rem Ellenorzes: a mentes ennek a felhasznalonak keszult-e
+for %%x in ("!FORRAS!") do set "F_NEV=%%~nxx"
+echo %F_NEV%| findstr /B /I /L /C:"%USERNAME%_" >nul
+if errorlevel 1 (
+    echo.
+    echo    !C_PIROS!FIGYELEM: ez a mentes nem %USERNAME% felhasznaloe: !F_NEV!!C_0!
+    echo    Kozos kulso meghajton konnyu rossz mappat valasztani.
+    choice /C IN /M "   Biztosan ezt allitsam vissza"
+    if errorlevel 2 goto :VALASZT
+)
+
+cls
+call :CIM "ADATOK EXPORTALASA - ELOKESZITES"
+echo    Forras : %FORRAS%
+echo    Cel    : %USERNAME% profilja ezen a gepen
+echo.
+echo    !C_SARGA!Az azonos nevu fajlok felulirodnak, pl. bongeszo konyvjelzok es beallitasok.!C_0!
+echo    !C_SARGA!Tipp: a Chrome-ot es az Edge-et visszaallitas elott meg ne inditsd el ezen a gepen.!C_0!
+
+if "%IRHATO%"=="0" (
+    echo.
+    echo    !C_SARGA!A kulso meghajto nem irhato, a log ide kerul: !TEMP!!C_0!
+)
+
+
+echo.
+echo    !C_FEHER!Az adatok utan, opcionalisan:!C_0!
+call :IKON_KERDES
+
+echo.
+echo    Hely ellenorzese, egy pillanat...
+set "PS_FORRASOK=%FORRAS%"
+set "PS_BETU=%SystemDrive%"
+call :HELY_ELLENORZES
+if "%HELY_STOP%"=="1" goto :MEGSZAKITVA
+
+call :APPOK_ELLENORZES
+
+echo.
+choice /C IN /M "   Indulhat az exportalas"
+if errorlevel 2 goto :MEGSZAKITVA
+
+set /a OSSZES=12+DO_IKON
+if "%IRHATO%"=="1" (set "LOG=%FORRAS%\visszaallitas_log.txt") else (set "LOG=%TEMP%\visszaallitas_log.txt")
+>>"%LOG%" echo ===== VISSZAALLITAS %date% %time% - %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\visszaallitas_log.txt"
+
+call :IDO START_MP
+cls
+call :CIM "ADATOK EXPORTALASA FOLYAMATBAN"
+echo    Ne huzd ki a kulso meghajtot, amig a script fut.
+
+call :FEJLEC "Outlook alairasok"
+call :MAPPA "%FORRAS%\Signatures" "%SRC_SIG%"
+call :FEJLEC "Office sablonok"
+call :MAPPA "%FORRAS%\Templates" "%SRC_TPL%"
+call :FEJLEC "Office egyeni szotar"
+call :MAPPA "%FORRAS%\UProof" "%SRC_UPROOF%"
+call :FEJLEC "Excel XLSTART"
+call :MAPPA "%FORRAS%\XLSTART" "%SRC_XLSTART%"
+call :FEJLEC "Startup mappa"
+call :MAPPA "%FORRAS%\Startup" "%SRC_STARTUP%"
+call :FEJLEC "PST mappa"
+call :MAPPA "%FORRAS%\PST" "%SRC_PST%" P
+call :FEJLEC "Chrome profilok"
+call :BONGESZO_VISSZA "%FORRAS%\Chrome_mentes" "%SRC_CHROME%" CHROME_FAJLOK "Chrome"
+call :FEJLEC "Edge kedvencek"
+call :BONGESZO_VISSZA "%FORRAS%\Edge_mentes" "%SRC_EDGE%" EDGE_FAJLOK "Edge"
+call :FEJLEC "Kedvencek - Favorites"
+call :MAPPA "%FORRAS%\Favorites" "%SRC_FAV%"
+call :FEJLEC "Sticky Notes"
+call :MAPPA "%FORRAS%\StickyNotes" "%SRC_NOTES%"
+call :FEJLEC "Intezo Gyorseleres"
+call :FAJL "%FORRAS%\Gyorseleres" "%SRC_QA%" "%QA_FAJL%"
+if "!E_%LEPES%!"=="OK" (
+    choice /C IN /M "       Ujrainditsam az Intezot, hogy betoltse a Gyorselerest"
+    if not errorlevel 2 (
+        taskkill /F /IM explorer.exe >nul 2>&1
+        start "" explorer.exe
+        echo        Intezo ujrainditva.
+    )
+)
+call :FEJLEC "C:\TEMP"
+call :MAPPA "%FORRAS%\C_TEMP" "%SRC_CTEMP%" P
+call :IKON_FUTTAT
+goto :OSSZEGZES
+
+rem ==========================================================
+rem  ALAPERTELMEZETT ALKALMAZASOK
+rem ==========================================================
+:ALAP_MOD
+cls
+call :CIM "ALAPERTELMEZETT ALKALMAZASOK"
+echo    Word, Excel, PowerPoint, Adobe Acrobat Reader - PDF, Chrome - bongeszo
+echo.
+echo    A Windows nem engedi, hogy egy script kozvetlenul atirja a felhasznalo
+echo    alapertelmezett alkalmazasait. A Microsoft altal tamogatott mod: egy
+echo    beallitofajlt rogzitunk, amit a Windows a bejelentkezeskor maga alkalmaz.
+echo.
+if "%ADMIN%"=="1" (
+    set "AA_MOD=beallit"
+    echo    !C_ZOLD!Rendszergazdakent fut:!C_0! a beallitofajl elkeszul es rogzitesre kerul.
+    echo    Utana a felhasznalo jelentkezzen ki es be, majd ellenorizd ugyanitt,
+    echo    a script sima inditasaval, az 5-os menuponttal.
+) else (
+    set "AA_MOD=ellenoriz"
+    echo    !C_SARGA!Felhasznalokent fut:!C_0! most csak ellenorzom a jelenlegi beallitasokat.
+    echo    A beallitashoz: jobb klikk a scripten - Futtatas rendszergazdakent - 5-os menu.
+)
+echo.
+choice /C IN /M "   Indulhat"
+if errorlevel 2 goto :MEGSZAKITVA
+
+set /a OSSZES=1
+set "LOG=%TEMP%\alapertelmezett_alk_log.txt"
+>>"%LOG%" echo ===== ALAPERTELMEZETT ALKALMAZASOK %date% %time% - %USERNAME% / %COMPUTERNAME% =====
+
+call :IDO START_MP
+cls
+call :CIM "ALAPERTELMEZETT ALKALMAZASOK"
+if "%AA_MOD%"=="beallit" (
+    call :FEJLEC "Alapertelmezett alkalmazasok beallitasa"
+    call :ALAP_BEALLIT
+) else (
+    call :FEJLEC "Alapertelmezett alkalmazasok ellenorzese"
+    call :ALAP_ELLENORIZ
+)
+goto :OSSZEGZES
+
+rem ==========================================================
+rem  BITLOCKER AKTIVALASA - kulso meghajto nelkul
+rem ==========================================================
+:BL_MOD
+cls
+call :CIM "LAPTOP BEALLITASOK"
+echo    Valaszthato lepesek:
+echo      - Fedel lehajtasa: ne tortenjen semmi - halozatrol es akkumulatorrol is
+echo      - BitLocker aktivalasa: MBAMAgent, 2 mp, MBAMClientUI, 2 mp, MBAMAgent ujra
+echo.
+set /a DO_FEDEL=0, DO_BL=0
+choice /C IN /M "   Fedel lehajtasakor ne tortenjen semmi"
+if not errorlevel 2 set /a DO_FEDEL=1
+choice /C IN /M "   BitLocker aktivalasa"
+if not errorlevel 2 set /a DO_BL=1
+set /a OSSZES=DO_FEDEL+DO_BL
+if %OSSZES%==0 (
+    echo.
+    echo    Nem valasztottal semmit.
+    goto :MEGSZAKITVA
+)
+echo.
+choice /C IN /M "   Indulhat"
+if errorlevel 2 goto :MEGSZAKITVA
+
+set "LOG=%TEMP%\laptop_log.txt"
+>>"%LOG%" echo ===== LAPTOP BEALLITASOK %date% %time% - %USERNAME% / %COMPUTERNAME% =====
+
+call :IDO START_MP
+cls
+call :CIM "LAPTOP BEALLITASOK FOLYAMATBAN"
+if "%DO_FEDEL%"=="1" (
+    call :FEJLEC "Fedel lehajtasa"
+    call :FEDEL
+)
+if "%DO_BL%"=="1" (
+    call :FEJLEC "BitLocker - MBAM"
+    call :BITLOCKER
+)
+goto :OSSZEGZES
+
+rem ==========================================================
+rem  OSSZEGZES ES VEGSO MEGEROSITES
+rem ==========================================================
+:OSSZEGZES
+call :IDO VEGE_MP
+set /a ELTELT=VEGE_MP-START_MP
+if %ELTELT% LSS 0 set /a ELTELT+=86400
+set /a E_PERC=ELTELT/60, E_MP=ELTELT%%60
+title %MOD_NEV% kesz - Profil mentes
+if "%TESZTMOD%"=="1" goto :OSSZEGZES_TESZT
+
+rem Osszegzes fajl - az eredmeny mar a fajlnevben latszik
+set "OSSZ_HELY=%TEMP%"
+set "OSSZ_ELO=_LAPTOP"
+if "%MOD%"=="5" set "OSSZ_ELO=_ALAPALK"
+if "%MOD%"=="1" set "OSSZ_HELY=%CEL%"
+if "%MOD%"=="1" set "OSSZ_ELO=_MENTES"
+if "%MOD%"=="2" set "OSSZ_ELO=_EXPORT"
+if "%MOD%"=="2" if "%IRHATO%"=="1" set "OSSZ_HELY=%FORRAS%"
+if %DB_HIBA%==0 (
+    set "OSSZ_NEV=%OSSZ_ELO%_OK_%DATUM%.txt"
+) else (
+    set "OSSZ_NEV=%OSSZ_ELO%_%DB_HIBA%_HIBA_%DATUM%.txt"
+)
+rem A korabbi futasok sajat osszegzes fajljai, hogy ne legyen ket ellentmondo
+del /q "%OSSZ_HELY%\%OSSZ_ELO%_*.txt" >nul 2>&1
+set "OSSZ_FAJL=%OSSZ_HELY%\%OSSZ_NEV%"
+(>"%OSSZ_FAJL%" echo %MOD_NEV% osszegzes) 2>nul
+if not exist "%OSSZ_FAJL%" (
+    set "OSSZ_HELY=%TEMP%"
+    set "OSSZ_FAJL=%TEMP%\%OSSZ_NEV%"
+)
+>"%OSSZ_FAJL%" echo %MOD_NEV% osszegzes - %DATUM% %time:~0,5%
+>>"%OSSZ_FAJL%" echo Felhasznalo: %USERNAME%   Gep: %COMPUTERNAME%
+>>"%OSSZ_FAJL%" echo.
+
+rem Kezi teendok listaja
+set "TODO="
+if "%MOD%"=="1" call :TODO_MENTES
+if "%MOD%"=="2" call :TODO_EXPORT
+
+echo.
+call :CIM "OSSZEGZES - %MOD_NEV%"
+for /l %%i in (1,1,%OSSZES%) do call :OSSZ_SOR %%i
+echo.
+echo  ----------------------------------------------------------
+echo    Sikeres: !C_ZOLD!%DB_OK%!C_0!    Hiba: !C_PIROS!%DB_HIBA%!C_0!    Kihagyva: !C_SARGA!%DB_KIHAGY%!C_0!
+echo    Idotartam : %E_PERC% perc %E_MP% mp
+echo    Helye     : %OSSZ_HELY%
+echo    Osszegzes : %OSSZ_NEV%
+if defined TODO echo    Teendok   : _LEFT-TO-DO.txt
+echo    Log       : %LOG%
+echo  ----------------------------------------------------------
+>>"%OSSZ_FAJL%" echo.
+>>"%OSSZ_FAJL%" echo Sikeres: %DB_OK%  Hiba: %DB_HIBA%  Kihagyva: %DB_KIHAGY%  Idotartam: %E_PERC% perc %E_MP% mp
+echo.
+if %DB_HIBA% GTR 0 (
+    echo  !C_PIROS_HATTER!   FIGYELEM: %DB_HIBA% tetel hibaval zarult. Nezd meg a fenti listat es a logot.   !C_0!
+) else if %DB_KIHAGY% GTR 0 (
+    echo  !C_ZOLD_HATTER!   KESZ - minden letezo tetel rendben.   !C_0!
+    echo    A kihagyott tetelek ezen a gepen nem leteztek, ez altalaban rendben van.
+) else (
+    echo  !C_ZOLD_HATTER!   MINDEN RENDBEN - minden tetel sikeresen lefutott.   !C_0!
+)
+
+if defined TODO (
+    echo.
+    if "%MOD%"=="1" echo    !C_FEHER!Kezi teendok a regi gepen es kesobb az uj gepen: _LEFT-TO-DO.txt!C_0!
+    if "%MOD%"=="2" echo    !C_FEHER!Kezi teendok az uj gepen: _LEFT-TO-DO.txt, 2. resz!C_0!
+)
+if "%MOD%"=="5" (
+    echo.
+    if "!AA_MOD!"=="beallit" if "!AA_OK!"=="1" (
+        echo    !C_ZOLD!Alapertelmezett alkalmazasok: BEALLITVA.!C_0!
+        echo    A felhasznalo jelentkezzen ki es be. Utana ellenorizd: script sima inditasa - 5-os menu.
+    )
+    if "!AA_MOD!"=="beallit" if not "!AA_OK!"=="1" if "!E_1!"=="KIHAGYVA" echo    !C_SARGA!Alapertelmezett alkalmazasok: nem modositva - a ceges beallitas marad.!C_0!
+    if "!AA_MOD!"=="beallit" if not "!AA_OK!"=="1" if not "!E_1!"=="KIHAGYVA" echo    !C_PIROS!Alapertelmezett alkalmazasok: NEM SIKERULT beallitani - az okat lasd fent.!C_0!
+    if "!AA_MOD!"=="ellenoriz" if "!AA_OK!"=="1" echo    !C_ZOLD!Alapertelmezett alkalmazasok: MINDEN RENDBEN - a kert programok az alapertelmezettek.!C_0!
+    if "!AA_MOD!"=="ellenoriz" if not "!AA_OK!"=="1" echo    !C_PIROS!Alapertelmezett alkalmazasok: NEM MINDEN JO - lasd fent. Beallitas: rendszergazdakent, 5-os menu.!C_0!
+)
+if "%DO_FEDEL%"=="1" (
+    echo.
+    if "!FEDEL_OK!"=="1" (
+        echo    !C_ZOLD!Fedel lehajtasa: BEALLITVA - lehajtaskor nem tortenik semmi.!C_0!
+    ) else (
+        echo    !C_PIROS!Fedel lehajtasa: NEM SIKERULT beallitani - az okat lasd fent a listaban.!C_0!
+    )
+)
+if "%DO_BL%"=="1" (
+    echo.
+    echo    !C_FEHER!Teendo:!C_0! kovesd az MBAM ablakot, a titkositas utana a hatterben fut
+)
+
+rem Hangjelzes, hogy akkor is eszrevedd, ha nem a gep elott vagy
+forfiles /p "%SystemRoot%\System32" /m cmd.exe /c "cmd /c echo 0x07" 2>nul
+
+echo.
+if %DB_HIBA% GTR 0 (
+    choice /C IN /M "   Megnyissam a logot"
+    if not errorlevel 2 start "" notepad "%LOG%"
+)
+if defined TODO (
+    choice /C IN /M "   Megnyissam a teendok listajat - _LEFT-TO-DO.txt"
+    if not errorlevel 2 start "" notepad "%TODO%"
+)
+if "%MOD%"=="1" (
+    choice /C IN /M "   Megnyissam a mentes mappat ellenorzesre"
+    if not errorlevel 2 start "" explorer "%CEL%"
+)
+if "%MOD%"=="2" (
+    choice /C IN /M "   Megnyissam a mentes mappat - outlook_lista.txt, apps.txt"
+    if not errorlevel 2 start "" explorer "%FORRAS%"
+)
+echo.
+echo    Kesz. Nyomj meg egy gombot a bezarashoz...
+pause >nul
+exit /b 0
+
+:OSSZEGZES_TESZT
+set "OSSZ_FAJL=nul"
+echo.
+call :CIM "TESZT EREDMENYE - semmi nem lett masolva"
+for /l %%i in (1,1,%OSSZES%) do call :OSSZ_SOR %%i
+echo.
+echo  ----------------------------------------------------------
+echo    Rendben: !C_ZOLD!%DB_OK%!C_0!    Problema: !C_PIROS!%DB_HIBA%!C_0!    Kihagyva: !C_SARGA!%DB_KIHAGY%!C_0!
+echo    Idotartam : %E_PERC% perc %E_MP% mp
+echo    Log       : %LOG%
+echo  ----------------------------------------------------------
+echo.
+if %DB_HIBA% GTR 0 (
+    echo  !C_PIROS_HATTER!   TESZT: %DB_HIBA% problema. Javitsd ezeket, mielott elesben mentesz.   !C_0!
+) else (
+    echo  !C_ZOLD_HATTER!   TESZT SIKERES - a mentes lefuthat ezen a gepen.   !C_0!
+)
+if defined FUTO (
+    echo.
+    echo    !C_SARGA!Eles mentes elott be kell majd zarni:!FUTO!!C_0!
+)
+echo.
+echo    A teszt nem hozott letre semmit a kulso meghajton.
+echo    A megnyitott programok altal zarolt fajlokat a teszt nem tudja ellenorizni.
+forfiles /p "%SystemRoot%\System32" /m cmd.exe /c "cmd /c echo 0x07" 2>nul
+echo.
+if %DB_HIBA% GTR 0 (
+    choice /C IN /M "   Megnyissam a logot"
+    if not errorlevel 2 start "" notepad "%LOG%"
+)
+echo.
+echo    Kesz. Nyomj meg egy gombot a bezarashoz...
+pause >nul
+exit /b 0
+
+:MEGSZAKITVA
+echo.
+echo    !C_SARGA!Megszakitva. Nem tortent valtoztatas.!C_0!
+echo.
+pause
+exit /b 1
+
+rem ==========================================================
+rem  Segedrutinok - altalanos
+rem ==========================================================
+
+:CIM
+echo.
+echo  !C_KEK!==========================================================!C_0!
+echo  !C_FEHER!  %~1!C_0!
+echo  !C_KEK!==========================================================!C_0!
+echo.
+goto :eof
+
+:FEJLEC
+rem Uj lepes kezdete: sorszam, ablakcim, log
+set /a LEPES+=1
+set "NEV_%LEPES%=%~1"
+title [%LEPES%/%OSSZES%] %~1 - %MOD_NEV%
+echo.
+echo  !C_KEK![%LEPES%/%OSSZES%]!C_0! !C_FEHER!%~1!C_0!
+echo        folyamatban...
+>>"%LOG%" echo.
+>>"%LOG%" echo [%time%] [%LEPES%/%OSSZES%] %~1
+goto :eof
+
+:JELOL
+rem %1 = OK / HIBA / KIHAGYVA / NEMKERT, %2 = uzenet
+set "E_%LEPES%=%~1"
+set "M_%LEPES%=%~2"
+if "%~1"=="OK" set /a DB_OK+=1
+if "%~1"=="HIBA" set /a DB_HIBA+=1
+if "%~1"=="KIHAGYVA" set /a DB_KIHAGY+=1
+if "%~1"=="OK" echo        !C_ZOLD![OK]!C_0! %~2
+if "%~1"=="HIBA" echo        !C_PIROS![HIBA]!C_0! %~2
+if "%~1"=="KIHAGYVA" echo        !C_SARGA![KIHAGYVA]!C_0! %~2
+if "%~1"=="NEMKERT" echo        !C_SZURKE![ - ]!C_0! %~2
+>>"%LOG%" echo        Eredmeny: %~1 - %~2
+goto :eof
+
+:IKON_KERDES
+set /a DO_IKON=0
+choice /C IN /M "   Office parancsikonok ellenorzese es javitasa az asztalon"
+if not errorlevel 2 set /a DO_IKON=1
+goto :eof
+
+:IKON_FUTTAT
+if "%DO_IKON%"=="1" (
+    call :FEJLEC "Office parancsikonok"
+    call :IKONOK
+)
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - masolas
+rem ==========================================================
+
+:ROBO
+rem Bemenet: R_SRC, R_DST, R_OPT, R_PROG.  Kimenet: R_ALLAPOT, R_UZENET
+>>"%LOG%" echo        %R_SRC% -^> %R_DST%
+if "%TESZTMOD%"=="1" goto :ROBO_TESZT
+if "%R_PROG%"=="1" goto :ROBO_PROG
+robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /R:1 /W:1 /NP /LOG+:"%LOG%" >nul
+set "R_RC=%errorlevel%"
+goto :ROBO_ELLENORZES
+:ROBO_PROG
+robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /R:1 /W:1 /NJH /NJS /NDL /NC /NS /TEE /LOG+:"%LOG%"
+set "R_RC=%errorlevel%"
+:ROBO_ELLENORZES
+rem Ellenorzes: ugyanaz a masolas csak listazva - ha lenne mit masolni, elter
+robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /L /R:0 /W:0 /NJH /NJS /NDL /NFL /NP >nul
+set "R_VRC=%errorlevel%"
+set /a "R_VBIT=R_VRC & 1"
+set "R_ALLAPOT=OK"
+set "R_UZENET=atmasolva, ellenorizve"
+if %R_RC% GEQ 16 (
+    set "R_ALLAPOT=HIBA"
+    set "R_UZENET=sulyos hiba - eleresi ut vagy jogosultsag, lasd a logot"
+    goto :eof
+)
+if %R_RC% GEQ 8 (
+    set "R_ALLAPOT=HIBA"
+    set "R_UZENET=nehany fajl nem masolhato - zarolt fajl vagy nincs jog, lasd a logot"
+    goto :eof
+)
+if %R_VRC% GEQ 8 (
+    set "R_ALLAPOT=HIBA"
+    set "R_UZENET=az ellenorzes nem futott le, lasd a logot"
+    goto :eof
+)
+if %R_VBIT%==1 (
+    set "R_ALLAPOT=HIBA"
+    set "R_UZENET=ellenorzes: a cel elter a forrastol - a fajl kozben valtozott vagy zarolt"
+    goto :eof
+)
+goto :eof
+
+:ROBO_TESZT
+rem Csak listazas: a robocopy vegigolvassa a forrast, de nem masol es nem hoz letre semmit
+robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /L /R:0 /W:0 /NP /LOG+:"%LOG%" >nul
+set "R_RC=%errorlevel%"
+set "R_ALLAPOT=OK"
+set "R_UZENET=elerheto, mentheto"
+if %R_RC% GEQ 8 (
+    set "R_ALLAPOT=HIBA"
+    set "R_UZENET=a forras nem olvashato - jogosultsag vagy eleresi ut, lasd a logot"
+)
+goto :eof
+
+:MAPPA
+rem %1 = forras mappa, %2 = cel mappa, %3 = P ha kell folyamatjelzo
+if not exist "%~1\" (
+    call :JELOL KIHAGYVA "nem letezik: %~1"
+    goto :eof
+)
+set "R_SRC=%~1"
+set "R_DST=%~2"
+set "R_OPT=/E /DCOPY:T /XJ"
+set "R_PROG=0"
+if /I "%~3"=="P" set "R_PROG=1"
+call :ROBO
+if not "%R_ALLAPOT%"=="OK" (
+    call :JELOL HIBA "%R_UZENET%"
+    goto :eof
+)
+set "FDB=0"
+set "_hol=%R_DST%"
+if "%TESZTMOD%"=="1" set "_hol=%R_SRC%"
+for /f %%c in ('dir /a-d /b /s "%_hol%" 2^>nul ^| find /c /v ""') do set "FDB=%%c"
+if "%TESZTMOD%"=="1" (
+    call :JELOL OK "%FDB% fajl, elerheto - mentheto"
+) else (
+    call :JELOL OK "%FDB% fajl, ellenorizve"
+)
+goto :eof
+
+:FAJL
+rem %1 = forras mappa, %2 = cel mappa, %3 = fajlnev
+if not exist "%~1\%~3" (
+    call :JELOL KIHAGYVA "nincs mentheto fajl ezen a gepen"
+    goto :eof
+)
+set "R_SRC=%~1"
+set "R_DST=%~2"
+set "R_OPT=%~3"
+set "R_PROG=0"
+call :ROBO
+call :JELOL %R_ALLAPOT% "%R_UZENET%"
+goto :eof
+
+:BONGESZO_MENT
+rem %1 = User Data mappa, %2 = cel mappa, %3 = fajllista valtozo neve
+if not exist "%~1\" (
+    call :JELOL KIHAGYVA "a bongeszo nincs hasznalva ezen a gepen"
+    goto :eof
+)
+set /a B_DB=0, B_HIBA=0
+set "B_NEVEK="
+for /d %%P in ("%~1\Default" "%~1\Profile *") do (
+    if exist "%%~fP\Preferences" (
+        set /a B_DB+=1
+        if defined B_NEVEK (set "B_NEVEK=!B_NEVEK!, %%~nxP") else (set "B_NEVEK=%%~nxP")
+        echo        - %%~nxP
+        set "R_SRC=%%~fP"
+        set "R_DST=%~2\%%~nxP"
+        set "R_OPT=!%~3!"
+        set "R_PROG=0"
+        call :ROBO
+        if not "!R_ALLAPOT!"=="OK" (
+            set /a B_HIBA+=1
+            echo          !C_PIROS!!R_UZENET!!C_0!
+        )
+    )
+)
+if %B_DB%==0 (
+    call :JELOL KIHAGYVA "nincs bongeszo profil"
+    goto :eof
+)
+if exist "%~1\Local State" call :PROFILLISTA_MENT "%~1\Local State" "%~2\profilok.json"
+if %B_HIBA% GTR 0 (
+    call :JELOL HIBA "%B_HIBA% profil hibaval - %B_NEVEK%"
+) else (
+    call :JELOL OK "%B_DB% profil: %B_NEVEK% - ellenorizve"
+)
+goto :eof
+
+:PROFILLISTA_MENT
+rem Csak a profillista kerul ki a Local State-bol, a titkositokulcs nem
+rem %1 = Local State, %2 = kimeneti json
+set "LS_SRC=%~1"
+set "LS_DST=%~2"
+if "%TESZTMOD%"=="1" set "LS_DST=%TEMP%\_teszt_profilok_%RANDOM%.json"
+if "%TESZTMOD%"=="0" if not exist "%~dp2" mkdir "%~dp2" 2>nul
+powershell -NoProfile -NonInteractive -Command "$ErrorActionPreference='Stop';$j=Get-Content -Raw -Encoding UTF8 -LiteralPath $env:LS_SRC|ConvertFrom-Json;$c=$j.profile.info_cache;if(-not $c){exit 2};ConvertTo-Json -InputObject $c -Depth 50 -Compress|Set-Content -LiteralPath $env:LS_DST -Encoding UTF8" >nul 2>&1
+if errorlevel 1 (
+    echo        !C_SARGA!- a profillista nem mentheto, a Default profil igy is visszaall!C_0!
+) else (
+    echo        - profillista rendben, titkositokulcs nelkul
+)
+if "%TESZTMOD%"=="1" del /q "%LS_DST%" >nul 2>&1
+goto :eof
+
+:BONGESZO_VISSZA
+rem %1 = mentes mappa, %2 = User Data cel, %3 = fajllista valtozo neve, %4 = bongeszo neve
+if not exist "%~1\" (
+    call :JELOL KIHAGYVA "nincs a mentesben"
+    goto :eof
+)
+set "VOLT_LS=0"
+if exist "%~2\Local State" set "VOLT_LS=1"
+set /a B_DB=0, B_HIBA=0
+set "B_NEVEK="
+for /d %%P in ("%~1\*") do (
+    set /a B_DB+=1
+    if defined B_NEVEK (set "B_NEVEK=!B_NEVEK!, %%~nxP") else (set "B_NEVEK=%%~nxP")
+    echo        - %%~nxP
+    set "R_SRC=%%~fP"
+    set "R_DST=%~2\%%~nxP"
+    set "R_OPT=!%~3!"
+    set "R_PROG=0"
+    call :ROBO
+    if not "!R_ALLAPOT!"=="OK" (
+        set /a B_HIBA+=1
+        echo          !C_PIROS!!R_UZENET!!C_0!
+    )
+)
+if %B_DB%==0 (
+    call :JELOL KIHAGYVA "a mentes ures"
+    goto :eof
+)
+call :PROFILLISTA_VISSZA "%~1" "%~2" "%~4"
+if %B_HIBA% GTR 0 (
+    call :JELOL HIBA "%B_HIBA% hiba - %B_NEVEK%"
+) else (
+    call :JELOL OK "%B_DB% profil: %B_NEVEK% - ellenorizve"
+)
+goto :eof
+
+:PROFILLISTA_VISSZA
+rem Uj Local State csak a profillistaval - a bongeszo sajat, uj kulcsot general
+rem %1 = mentes mappa, %2 = User Data cel, %3 = bongeszo neve
+if not exist "%~1\profilok.json" goto :eof
+if not exist "%~1\Profile *" goto :eof
+if "%VOLT_LS%"=="1" (
+    echo        !C_SARGA!A %~3 mar futott ezen a gepen. A tobbi profil megjelenitesehez uj profillistat irok,!C_0!
+    echo        !C_SARGA!ekkor az ezen a gepen eddig mentett bongeszo jelszavak es sutik elveszhetnek.!C_0!
+    choice /C IN /M "       Irjam at a profillistat? A regit Local State.regi neven megtartom"
+    if errorlevel 2 goto :eof
+    copy /Y "%~2\Local State" "%~2\Local State.regi" >nul
+)
+if not exist "%~2\" mkdir "%~2" 2>nul
+set "LS_JSON=%~1\profilok.json"
+set "LS_DST=%~2\Local State"
+powershell -NoProfile -NonInteractive -Command "$ErrorActionPreference='Stop';$c=Get-Content -Raw -Encoding UTF8 -LiteralPath $env:LS_JSON|ConvertFrom-Json;$o=@{profile=@{info_cache=$c}};$t=ConvertTo-Json -InputObject $o -Depth 50 -Compress;[IO.File]::WriteAllText($env:LS_DST,$t)" >nul 2>&1
+if errorlevel 1 (
+    set /a B_HIBA+=1
+    echo          !C_PIROS!a profillista nem irhato - a tobbi profilt kezzel kell hozzaadni!C_0!
+) else (
+    echo        - profillista visszaallitva, titkositokulcs nelkul
+)
+goto :eof
+
+:APPS_LISTA
+rem %1 = kimeneti fajl. Elsodlegesen PowerShell, ha tiltva van, reg query.
+set "APPS_FAJL=%~1"
+powershell -NoProfile -NonInteractive -Command "$ErrorActionPreference='Stop';$k='HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*','HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*','HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*';$l=Get-ItemProperty -Path $k -ErrorAction SilentlyContinue|Where-Object{$_.DisplayName -and -not $_.SystemComponent}|Sort-Object DisplayName -Unique|ForEach-Object{'{0}  |  {1}  |  {2}' -f $_.DisplayName,$_.DisplayVersion,$_.Publisher};$l|Out-File -LiteralPath $env:APPS_FAJL -Encoding UTF8" >nul 2>&1
+if not errorlevel 1 if exist "%APPS_FAJL%" goto :APPS_KESZ
+echo        PowerShell nem elerheto, egyszerubb lista keszul...
+set "APPS_TMP=%TEMP%\_apps_%RANDOM%.tmp"
+(for %%k in ("HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" "HKLM\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall" "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall") do (
+    for /f "tokens=2,*" %%a in ('reg query "%%~k" /s /v DisplayName 2^>nul ^| find "REG_SZ"') do echo %%b
+)) >"%APPS_TMP%" 2>nul
+sort "%APPS_TMP%" /o "%APPS_FAJL%" >nul 2>&1
+del /q "%APPS_TMP%" >nul 2>&1
+:APPS_KESZ
+set "ADB=0"
+if exist "%APPS_FAJL%" for /f %%c in ('type "%APPS_FAJL%" ^| find /c /v ""') do set "ADB=%%c"
+if "%ADB%"=="0" (
+    call :JELOL HIBA "a programlista nem keszult el"
+) else (
+    call :JELOL OK "%ADB% program - apps.txt"
+)
+goto :eof
+
+:OUTLOOK_LISTA_KESZIT
+rem Az elokeszitesben fut. Csak a registrybol olvas, az Outlookhoz nem nyul.
+set "OL_STOP=0"
+set "OL_OUT=%TEMP%\outlook_lista_%RANDOM%.txt"
+set "OL_PST="
+set "OL_KINT=0"
+echo.
+echo    !C_FEHER!Outlook lista!C_0! - csatolt PST adatfajlok keresese...
+for /f "tokens=1,2 delims=|" %%a in ('powershell -NoProfile -NonInteractive -Command "$c=(Get-Content -LiteralPath $env:SELF|Where-Object{$_.StartsWith('::OL::')}|ForEach-Object{$_.Substring(6)}) -join [char]10;& ([scriptblock]::Create($c))" 2^>nul') do (
+    if "%%a"=="SUM" set "OL_PST=%%b"
+    if "%%a"=="KINT" (
+        set /a OL_KINT+=1
+        set "OLK_!OL_KINT!=%%b"
+        echo    !C_SARGA!FIGYELEM: ez a PST nem a PST mappaban van, igy nem kerul mentesre:!C_0!
+        echo      %%b
+    )
+)
+if not defined OL_PST (
+    echo    !C_SARGA![i] A PST lista nem keszult el - a PowerShell nem elerheto.!C_0!
+    goto :eof
+)
+echo    !C_ZOLD!Kesz:!C_0! %OL_PST% csatolt PST
+if "%OL_KINT%"=="0" goto :eof
+if "%TESZTMOD%"=="1" goto :eof
+echo    !C_SARGA!A fenti PST-ket az Outlook bezarasa utan masold at kezzel a %SRC_PST% mappaba,!C_0!
+echo    !C_SARGA!es inditsd ujra a mentest. Az uj gepen onnan kell majd csatolni oket.!C_0!
+choice /C FM /M "   F = folytatas igy, M = megszakitas"
+if errorlevel 2 set "OL_STOP=1"
+goto :eof
+
+:OUTLOOK_LISTA_MENT
+if not defined OL_PST (
+    call :JELOL HIBA "nem keszult el - a PowerShell nem elerheto"
+    goto :eof
+)
+if not exist "%OL_OUT%" (
+    call :JELOL HIBA "nem keszult el"
+    goto :eof
+)
+if "%TESZTMOD%"=="1" (
+    del /q "%OL_OUT%" >nul 2>&1
+    if not "%OL_KINT%"=="0" (
+        call :JELOL HIBA "%OL_KINT% PST a PST mappan kivul van - eles mentesnel nem kerulne mentesre"
+    ) else (
+        call :JELOL OK "%OL_PST% csatolt PST megtalalva"
+    )
+    goto :eof
+)
+copy /Y "%OL_OUT%" "%CEL%\outlook_lista.txt" >nul 2>&1
+del /q "%OL_OUT%" >nul 2>&1
+if not exist "%CEL%\outlook_lista.txt" (
+    call :JELOL HIBA "nem masolhato a celmappaba"
+    goto :eof
+)
+if not "%OL_KINT%"=="0" (
+    call :JELOL HIBA "%OL_PST% PST, ebbol %OL_KINT% a PST mappan kivul - nincs mentve"
+) else (
+    call :JELOL OK "%OL_PST% csatolt PST - outlook_lista.txt"
+)
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - teszt mod
+rem ==========================================================
+
+:KORNYEZET
+rem Csak a teszt modban: a futtatashoz szukseges eszkozok ellenorzese
+set "K_HIBA="
+set "K_OK="
+where robocopy >nul 2>&1
+if errorlevel 1 (set "K_HIBA=!K_HIBA! robocopy hianyzik;") else (set "K_OK=!K_OK! robocopy,")
+powershell -NoProfile -NonInteractive -Command "exit 0" >nul 2>&1
+if errorlevel 1 (set "K_HIBA=!K_HIBA! PowerShell tiltva - listak es ellenorzesek kimaradnak;") else (set "K_OK=!K_OK! PowerShell,")
+if "%IRHATO%"=="0" (set "K_HIBA=!K_HIBA! a kulso meghajto nem irhato;") else (set "K_OK=!K_OK! irhato celmeghajto,")
+if defined T_HELY (set "K_HIBA=!K_HIBA! !T_HELY!;") else (set "K_OK=!K_OK! hely rendben")
+if "%ADMIN%"=="1" echo        !C_SARGA!- rendszergazdakent fut: biztos, hogy ez a felhasznalo profilja?!C_0!
+if defined K_HIBA (
+    call :JELOL HIBA "!K_HIBA!"
+) else (
+    call :JELOL OK "!K_OK!"
+)
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - kezi teendok listaja: _LEFT-TO-DO.txt
+rem ==========================================================
+
+:TODO_MENTES
+set "TODO=%CEL%\_LEFT-TO-DO.txt"
+(>"%TODO%" echo LEFT-TO-DO - kezi teendok az eszkozcserehez) 2>nul
+if not exist "%TODO%" (
+    set "TODO="
+    goto :eof
+)
+>>"%TODO%" (
+    echo Felhasznalo: %USERNAME%    Regi gep: %COMPUTERNAME%    Mentes: %DATUM%
+    echo ==========================================================
+    echo.
+    echo 1. MENTESKOR - A REGI GEPEN
+    echo    - Outlook: ird fel a tovabbi postaladakat, a Felado lista cimeit es a tovabbi fiokokat
+    echo      Menuutak: outlook_lista.txt 2. pont
+    echo    - Talca rogzitett ikonjai: ird fel vagy fotozd le
+    echo    - Bongeszoben mentett jelszavak: a script nem viszi at, a felhasznalo gondoskodjon rola
+    echo    - C: gyokerebe mentett mappak: nezd at, ami kell, masold at kezzel
+    echo    - Letoltesek: masold at kezzel, ami kell
+)
+for /l %%i in (1,1,%OL_KINT%) do >>"%TODO%" echo    - PST a PST mappan kivul, NINCS mentve - masold at kezzel: !OLK_%%i!
+for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo    - HIBAS TETEL, ellenorizd kezzel: !NEV_%%i! - !M_%%i!
+call :TODO_IMPORT_RESZ
+goto :eof
+
+:TODO_IMPORT_RESZ
+>>"%TODO%" (
+    echo.
+    echo 2. IMPORTNAL - AZ UJ GEPEN
+    echo    - Futtasd a scriptet: 2. Adatok exportalasa, laptopnal utana 3. BitLocker es fedel beallitasa
+    echo    - Alapertelmezett alkalmazasok: 5. menu rendszergazdakent, ki-be jelentkezes utan 5. menu ellenorzesre
+    echo    - Outlook: csatold a PST-ket - lista: outlook_lista.txt 1. pont
+    echo      Fajl - Megnyitas es exportalas - Outlook-adatfajl megnyitasa
+    echo    - Outlook: add hozza a felirt postaladakat, feladokat es fiokokat
+    echo    - Outlook alairas: allitsd be alapertelmezettnek - Fajl - Beallitasok - Levelezes - Alairasok
+    echo    - Chrome, Edge: inditsd el, nezd meg a konyvjelzoket es profilokat, jelentkezz be ujra az oldalakra
+    echo    - Sticky Notes: inditsd el, nezd meg a jegyzeteket
+    echo    - Programok: vesd ossze az apps.txt-vel, ami hianyzik, telepittesd
+    echo    - Letoltesek es a C: gyokerebol kezzel mentett mappak: masold vissza
+    echo    - Talca ikonok: rogzitsd ujra a feljegyzes alapjan
+    echo    - Ha a felhasznalo mindent rendben talalt: torold a mentest a kulso meghajtorol
+)
+goto :eof
+
+:TODO_EXPORT
+if "%IRHATO%"=="0" (
+    if exist "%FORRAS%\_LEFT-TO-DO.txt" set "TODO=%FORRAS%\_LEFT-TO-DO.txt"
+    goto :eof
+)
+set "TODO=%FORRAS%\_LEFT-TO-DO.txt"
+rem Regebbi mentesnel meg nincs ilyen fajl - ekkor az importalo reszt itt irjuk meg
+if not exist "%TODO%" (
+    (>"%TODO%" echo LEFT-TO-DO - kezi teendok az eszkozcserehez) 2>nul
+    if exist "%TODO%" call :TODO_IMPORT_RESZ
+)
+if not exist "%TODO%" (
+    set "TODO="
+    goto :eof
+)
+>>"%TODO%" echo.
+>>"%TODO%" echo 3. EXPORT EREDMENYE - %DATUM%, uj gep: %COMPUTERNAME%
+if %DB_HIBA%==0 (
+    >>"%TODO%" echo    - Minden tetel rendben
+) else (
+    for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo    - HIBAS TETEL, ellenorizd kezzel: !NEV_%%i! - !M_%%i!
+)
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - Office parancsikonok
+rem ==========================================================
+
+:IKONOK
+if not exist "%DESK%\" (
+    call :JELOL HIBA "az asztal mappa nem talalhato: %DESK%"
+    goto :eof
+)
+if not exist "%PD_START%\" (
+    call :JELOL HIBA "a Start menu mappa nem talalhato"
+    goto :eof
+)
+set /a IK_HIBA=0, IK_TELEPITVE=0
+set "IK_UZ="
+>>"%LOG%" echo        Asztal: %DESK%
+
+set IK_MINTA="Outlook.lnk" "Outlook 20*.lnk" "Microsoft Outlook*.lnk" "Microsoft Office Outlook*.lnk"
+call :IKON_APP "Outlook" "OUTLOOK.EXE"
+set IK_MINTA="Word.lnk" "Word 20*.lnk" "Microsoft Word*.lnk" "Microsoft Office Word*.lnk"
+call :IKON_APP "Word" "WINWORD.EXE"
+set IK_MINTA="Excel.lnk" "Excel 20*.lnk" "Microsoft Excel*.lnk" "Microsoft Office Excel*.lnk"
+call :IKON_APP "Excel" "EXCEL.EXE"
+set IK_MINTA="PowerPoint.lnk" "PowerPoint 20*.lnk" "Microsoft PowerPoint*.lnk" "Microsoft Office PowerPoint*.lnk"
+call :IKON_APP "PowerPoint" "POWERPNT.EXE"
+set IK_MINTA="Skype for Business*.lnk" "Skype V*.lnk" "Microsoft Lync*.lnk" "Lync 20*.lnk"
+call :IKON_APP "Skype" "lync.exe"
+
+if %IK_TELEPITVE%==0 (
+    call :JELOL KIHAGYVA "egyik program sincs a Start menuben"
+    goto :eof
+)
+if %IK_HIBA% GTR 0 (
+    call :JELOL HIBA "!IK_UZ!"
+) else (
+    call :JELOL OK "!IK_UZ!"
+)
+goto :eof
+
+:IKON_APP
+rem %1 = program neve, %2 = vart exe neve.  Bemenet: IK_MINTA
+set "IK_NEV=%~1"
+set "IK_EXE_VART=%~2"
+set "IK_S="
+for %%m in (%IK_MINTA%) do if not defined IK_S for /f "delims=" %%f in ('dir /b /s /a-d "%PD_START%\%%~m" 2^>nul') do if not defined IK_S set "IK_S=%%f"
+if not defined IK_S (
+    echo        - %~1: nincs a Start menuben, kihagyva
+    call :IK_UZ_ADD "%~1 nincs telepitve"
+    goto :eof
+)
+set /a IK_TELEPITVE+=1
+for %%x in ("!IK_S!") do set "IK_SNEV=%%~nxx"
+>>"%LOG%" echo        %~1 forras: !IK_S!
+set "IK_OK=0"
+set "IK_JAV=0"
+call :IKON_DIR "%DESK%"
+call :IKON_DIR "%PUBLIC%\Desktop"
+if "!IK_OK!"=="1" (
+    if "!IK_JAV!"=="1" (call :IK_UZ_ADD "%~1 javitva") else (call :IK_UZ_ADD "%~1 rendben")
+    goto :eof
+)
+if exist "%DESK%\!IK_SNEV!" (
+    echo        - %~1: !C_SARGA!az asztalon mar van !IK_SNEV! mas cellal, meghagyom - ellenorizd kezzel!C_0!
+    call :IK_UZ_ADD "%~1 ellenorizendo"
+    goto :eof
+)
+copy /Y "!IK_S!" "%DESK%\" >nul 2>&1
+if exist "%DESK%\!IK_SNEV!" (
+    echo        - %~1: !C_ZOLD!parancsikon kirakva az asztalra!C_0!
+    >>"%LOG%" echo        %~1 kirakva: %DESK%\!IK_SNEV!
+    call :IK_UZ_ADD "%~1 kirakva"
+) else (
+    echo        - %~1: !C_PIROS!nem sikerult kirakni az asztalra!C_0!
+    set /a IK_HIBA+=1
+    call :IK_UZ_ADD "%~1 HIBA"
+)
+goto :eof
+
+:IKON_DIR
+rem %1 = asztal mappa.  A mintaknak megfelelo parancsikonokat vizsgalja.
+if not exist "%~1\" goto :eof
+pushd "%~1" 2>nul || goto :eof
+for %%f in (%IK_MINTA%) do if exist "%%~ff" call :IKON_FAJL "%%~ff"
+popd
+goto :eof
+
+:IKON_FAJL
+rem %1 = vizsgalt parancsikon
+set "IK_F=%~1"
+set "IK_FNEV=%~nx1"
+rem 1. Ha megegyezik a Start menus parancsikonnal, biztosan jo
+fc /b "!IK_F!" "!IK_S!" >nul 2>&1
+if not errorlevel 1 (
+    set "IK_OK=1"
+    echo        - !IK_NEV!: !IK_FNEV! rendben
+    goto :eof
+)
+rem 2. Kulonben kiolvassuk, hova mutat
+set "IK_LNK=!IK_F!"
+set "IK_CEL="
+for /f "delims=" %%t in ('powershell -NoProfile -NonInteractive -Command "(New-Object -ComObject WScript.Shell).CreateShortcut($env:IK_LNK).TargetPath" 2^>nul') do set "IK_CEL=%%t"
+if not defined IK_CEL (
+    echo        - !IK_NEV!: !IK_FNEV! celja nem olvashato, meghagyom
+    goto :eof
+)
+rem 3. Ha a cel nem letezik, hibas - toroljuk
+if not exist "!IK_CEL!" (
+    >>"%LOG%" echo        Hibas parancsikon: !IK_F! -^> !IK_CEL!
+    del /q "!IK_F!" >nul 2>&1
+    if exist "!IK_F!" (
+        echo        - !IK_NEV!: !C_PIROS!!IK_FNEV! hibas, de nem torolheto - nincs jog!C_0!
+        set /a IK_HIBA+=1
+    ) else (
+        echo        - !IK_NEV!: !IK_FNEV! hibas eleresi ut, torolve
+        set "IK_JAV=1"
+    )
+    goto :eof
+)
+rem 4. Letezo cel: jo, ha a vart programra mutat, vagy MSI-s Office eseten
+rem    a Windows\Installer ala. Kulonben nem nyulunk hozza.
+for %%x in ("!IK_CEL!") do set "IK_CELNEV=%%~nxx"
+set "IK_JO=0"
+if /I "!IK_CELNEV!"=="!IK_EXE_VART!" set "IK_JO=1"
+set "_t=!IK_CEL:%WIN_INST%=!"
+if not "!_t!"=="!IK_CEL!" set "IK_JO=1"
+if "!IK_JO!"=="1" (
+    set "IK_OK=1"
+    echo        - !IK_NEV!: !IK_FNEV! rendben
+) else (
+    echo        - !IK_NEV!: !IK_FNEV! mas programra mutat, meghagyom
+)
+goto :eof
+
+:IK_UZ_ADD
+if defined IK_UZ (set "IK_UZ=!IK_UZ!, %~1") else (set "IK_UZ=%~1")
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - alapertelmezett alkalmazasok
+rem ==========================================================
+
+:ALAP_BEALLIT
+rem Beallitofajl a Windows sajat formatumaban, es a hozza tartozo rendszerhazirend:
+rem HKLM\SOFTWARE\Policies\Microsoft\Windows\System - DefaultAssociationsConfiguration
+set "AA_OK=0"
+set "AA_DIR=%ProgramData%\EszkozcsereScript"
+set "AA_XML=%AA_DIR%\alapertelmezett_alkalmazasok.xml"
+set "AA_KULCS=HKLM\SOFTWARE\Policies\Microsoft\Windows\System"
+set /a AA_DB=0
+set "AA_VAN="
+set "AA_NINCS="
+
+rem 0. A Windows ezt a hazirendet csak tartomanyhoz csatlakoztatott gepen alkalmazza
+set "AA_TARTOMANY="
+for /f %%d in ('powershell -NoProfile -NonInteractive -Command "(Get-CimInstance Win32_ComputerSystem).PartOfDomain" 2^>nul') do set "AA_TARTOMANY=%%d"
+if /I "!AA_TARTOMANY!"=="False" (
+    call :JELOL HIBA "a gep nincs tartomanyban - a Windows itt nem alkalmazza ezt a beallitast"
+    goto :eof
+)
+if not defined AA_TARTOMANY echo        !C_SARGA!- a tartomanytagsag nem ellenorizheto, folytatom!C_0!
+if /I "!AA_TARTOMANY!"=="True" echo        - a gep tartomanyban van
+
+rem 1. Van-e mar ceges beallitas
+set "AA_REGI="
+for /f "tokens=2,*" %%a in ('reg query "%AA_KULCS%" /v DefaultAssociationsConfiguration 2^>nul ^| find "REG_"') do set "AA_REGI=%%b"
+if defined AA_REGI if /I not "!AA_REGI!"=="!AA_XML!" (
+    echo        !C_SARGA!Mar van ilyen beallitas ezen a gepen: !AA_REGI!!C_0!
+    echo        !C_SARGA!Ez valoszinuleg ceges csoporthazirend - felulirva a kovetkezo frissiteskor visszaallhat.!C_0!
+    choice /C IN /M "       Felulirjam"
+    if errorlevel 2 (
+        call :JELOL KIHAGYVA "mar van ceges beallitas, nem irtam felul: !AA_REGI!"
+        goto :eof
+    )
+)
+
+rem 2. A telepitett programok azonositoinak felderitese
+set "PDF_ID="
+for %%i in (Acrobat.Document.DC AcroExch.Document.DC AcroExch.Document.11 AcroExch.Document.7) do if not defined PDF_ID reg query "HKCR\%%i\shell\open\command" >nul 2>&1 && set "PDF_ID=%%i"
+set "CHROME_ID="
+reg query "HKCR\ChromeHTML\shell\open\command" >nul 2>&1 && set "CHROME_ID=ChromeHTML"
+if not defined CHROME_ID for /f "tokens=2 delims=\" %%k in ('reg query HKCR /f ChromeHTML /k 2^>nul ^| find /i "ChromeHTML"') do if not defined CHROME_ID reg query "HKCR\%%k\shell\open\command" >nul 2>&1 && set "CHROME_ID=%%k"
+>>"%LOG%" echo        PDF azonosito: %PDF_ID%   Chrome azonosito: %CHROME_ID%
+
+rem 3. A beallitofajl megirasa - csak a tenylegesen telepitett programokkal
+mkdir "%AA_DIR%" 2>nul
+(>"%AA_XML%" echo ^<?xml version="1.0" encoding="UTF-8"?^>) 2>nul
+if not exist "%AA_XML%" (
+    call :JELOL HIBA "a beallitofajl nem irhato: %AA_XML%"
+    goto :eof
+)
+>>"%AA_XML%" echo ^<DefaultAssociations^>
+set "AA_APP=Word"
+set "AA_T=0"
+call :AA_SOR ".docx" "Word.Document.12" "Microsoft Word"
+call :AA_SOR ".doc" "Word.Document.8" "Microsoft Word"
+call :AA_SOR ".docm" "Word.DocumentMacroEnabled.12" "Microsoft Word"
+call :AA_SOR ".dotx" "Word.Template.12" "Microsoft Word"
+call :AA_SOR ".dot" "Word.Template.8" "Microsoft Word"
+call :AA_SOR ".rtf" "Word.RTF.8" "Microsoft Word"
+call :AA_APP_VEGE
+set "AA_APP=Excel"
+set "AA_T=0"
+call :AA_SOR ".xlsx" "Excel.Sheet.12" "Microsoft Excel"
+call :AA_SOR ".xls" "Excel.Sheet.8" "Microsoft Excel"
+call :AA_SOR ".xlsm" "Excel.SheetMacroEnabled.12" "Microsoft Excel"
+call :AA_SOR ".xlsb" "Excel.SheetBinaryMacroEnabled.12" "Microsoft Excel"
+call :AA_SOR ".csv" "Excel.CSV" "Microsoft Excel"
+call :AA_APP_VEGE
+set "AA_APP=PowerPoint"
+set "AA_T=0"
+call :AA_SOR ".pptx" "PowerPoint.Show.12" "Microsoft PowerPoint"
+call :AA_SOR ".ppt" "PowerPoint.Show.8" "Microsoft PowerPoint"
+call :AA_SOR ".pptm" "PowerPoint.ShowMacroEnabled.12" "Microsoft PowerPoint"
+call :AA_SOR ".ppsx" "PowerPoint.SlideShow.12" "Microsoft PowerPoint"
+call :AA_SOR ".pps" "PowerPoint.SlideShow.8" "Microsoft PowerPoint"
+call :AA_APP_VEGE
+set "AA_APP=PDF - Acrobat Reader"
+set "AA_T=0"
+if defined PDF_ID call :AA_SOR ".pdf" "%PDF_ID%" "Adobe Acrobat Reader"
+call :AA_APP_VEGE
+set "AA_APP=Chrome"
+set "AA_T=0"
+if defined CHROME_ID (
+    call :AA_SOR "http" "%CHROME_ID%" "Google Chrome"
+    call :AA_SOR "https" "%CHROME_ID%" "Google Chrome"
+    call :AA_SOR ".htm" "%CHROME_ID%" "Google Chrome"
+    call :AA_SOR ".html" "%CHROME_ID%" "Google Chrome"
+)
+call :AA_APP_VEGE
+>>"%AA_XML%" echo ^</DefaultAssociations^>
+>>"%LOG%" type "%AA_XML%"
+
+if %AA_DB%==0 (
+    call :JELOL HIBA "egyik program sincs telepitve - nincs mit beallitani"
+    goto :eof
+)
+
+rem 4. A hazirend rogzitese es visszaolvasasa
+reg add "%AA_KULCS%" /v DefaultAssociationsConfiguration /t REG_SZ /d "%AA_XML%" /f >>"%LOG%" 2>&1
+set "AA_UJ="
+for /f "tokens=2,*" %%a in ('reg query "%AA_KULCS%" /v DefaultAssociationsConfiguration 2^>nul ^| find "REG_"') do set "AA_UJ=%%b"
+if /I not "!AA_UJ!"=="!AA_XML!" (
+    call :JELOL HIBA "a rendszerhazirend nem irhato - rendszergazdai jog kell"
+    goto :eof
+)
+set "AA_OK=1"
+set "_m=beallitva: !AA_VAN!"
+if defined AA_NINCS set "_m=!_m! - nincs telepitve: !AA_NINCS!"
+call :JELOL OK "!_m! - ki-be jelentkezes utan el"
+goto :eof
+
+:AA_SOR
+rem %1 = kiterjesztes vagy protokoll, %2 = program azonosito, %3 = program neve
+rem Csak akkor, ha a program tenyleg telepitve van: a megnyito parancs is letezik
+reg query "HKCR\%~2\shell\open\command" >nul 2>&1
+if errorlevel 1 goto :eof
+>>"%AA_XML%" echo   ^<Association Identifier="%~1" ProgId="%~2" ApplicationName="%~3" /^>
+set /a AA_DB+=1, AA_T+=1
+goto :eof
+
+:AA_APP_VEGE
+if %AA_T% GTR 0 (
+    if defined AA_VAN (set "AA_VAN=!AA_VAN!, !AA_APP!") else (set "AA_VAN=!AA_APP!")
+    echo        - !AA_APP!: %AA_T% fajltipus
+) else (
+    if defined AA_NINCS (set "AA_NINCS=!AA_NINCS!, !AA_APP!") else (set "AA_NINCS=!AA_APP!")
+    echo        - !AA_APP!: !C_SARGA!nincs telepitve, kihagyva!C_0!
+)
+goto :eof
+
+:ALAP_ELLENORIZ
+rem Csak olvas: a felhasznalo jelenlegi alapertelmezett programjai
+set "AA_OK=0"
+set "AA_ROSSZ="
+call :AA_NEZ "Word" ".docx" "F" "Word."
+call :AA_NEZ "Excel" ".xlsx" "F" "Excel."
+call :AA_NEZ "PowerPoint" ".pptx" "F" "PowerPoint."
+call :AA_NEZ "PDF" ".pdf" "F" "Acro"
+call :AA_NEZ "Bongeszo - http" "http" "U" "ChromeHTML"
+call :AA_NEZ "Bongeszo - https" "https" "U" "ChromeHTML"
+call :AA_NEZ "Weboldal - .html" ".html" "F" "ChromeHTML"
+if defined AA_ROSSZ (
+    call :JELOL HIBA "nem a kert program: !AA_ROSSZ!"
+) else (
+    set "AA_OK=1"
+    call :JELOL OK "Word, Excel, PowerPoint, Acrobat Reader, Chrome - mind rendben"
+)
+goto :eof
+
+:AA_NEZ
+rem %1 = megnevezes, %2 = tipus, %3 = U protokoll vagy F fajltipus, %4 = vart azonosito resz
+set "AA_AKT="
+set "AA_FORRAS="
+set "_k=HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\%~2"
+if /I "%~3"=="U" set "_k=HKCU\Software\Microsoft\Windows\Shell\Associations\UrlAssociations\%~2"
+rem Ujabb Windows 11 a UserChoiceLatest kulcsot hasznalja, regebbi a UserChoice-t
+for /f "tokens=2,*" %%a in ('reg query "%_k%\UserChoiceLatest" /v ProgId 2^>nul ^| find "REG_"') do set "AA_AKT=%%b"
+if not defined AA_AKT for /f "tokens=2,*" %%a in ('reg query "%_k%\UserChoice" /v ProgId 2^>nul ^| find "REG_"') do set "AA_AKT=%%b"
+if not defined AA_AKT if /I not "%~3"=="U" for /f "tokens=2,*" %%a in ('reg query "HKCR\%~2" /ve 2^>nul ^| find "REG_"') do set "AA_AKT=%%b"
+if not defined AA_AKT goto :AA_NEZ_TOVABB
+reg query "%_k%\UserChoiceLatest" /v ProgId >nul 2>&1 && goto :AA_NEZ_TOVABB
+reg query "%_k%\UserChoice" /v ProgId >nul 2>&1 && goto :AA_NEZ_TOVABB
+set "AA_FORRAS= - csak rendszer szintu alapertelmezes"
+:AA_NEZ_TOVABB
+set "_ok=0"
+if defined AA_AKT (
+    set "_x=!AA_AKT:%~4=!"
+    if /I not "!_x!"=="!AA_AKT!" set "_ok=1"
+)
+if not defined AA_AKT set "AA_AKT=nincs beallitva"
+>>"%LOG%" echo        %~1 - %~2: !AA_AKT!
+if "%_ok%"=="1" (
+    echo        - %~1: !C_ZOLD!rendben!C_0! - !AA_AKT!!AA_FORRAS!
+) else (
+    echo        - %~1: !C_PIROS!nem a kert program!C_0! - !AA_AKT!
+    if defined AA_ROSSZ (set "AA_ROSSZ=!AA_ROSSZ!, %~1") else (set "AA_ROSSZ=%~1")
+)
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - fedel lehajtasa
+rem ==========================================================
+
+:FEDEL
+rem Fedel lehajtasakor vegzett muvelet = 0, vagyis Nem tortenik semmi.
+rem Halozati - AC - es akkumulatoros - DC - uzemre is, az aktiv energiasemaban.
+set "F_HIBA=0"
+set "FEDEL_OK=0"
+powercfg /setacvalueindex SCHEME_CURRENT SUB_BUTTONS LIDACTION 0 >>"%LOG%" 2>&1
+if errorlevel 1 set "F_HIBA=1"
+powercfg /setdcvalueindex SCHEME_CURRENT SUB_BUTTONS LIDACTION 0 >>"%LOG%" 2>&1
+if errorlevel 1 set "F_HIBA=1"
+powercfg /setactive SCHEME_CURRENT >>"%LOG%" 2>&1
+
+rem Ellenorzes: visszaolvassuk az aktiv semabol
+set "F_AC="
+set "F_DC="
+for /f "tokens=2 delims=:" %%v in ('powercfg /query SCHEME_CURRENT SUB_BUTTONS LIDACTION 2^>nul ^| findstr /c:"0x"') do (
+    if not defined F_AC (set "F_AC=%%v") else (set "F_DC=%%v")
+)
+if defined F_AC set "F_AC=!F_AC: =!"
+if defined F_DC set "F_DC=!F_DC: =!"
+>>"%LOG%" echo        Visszaolvasva: halozat=!F_AC! akkumulator=!F_DC!
+
+rem Csoporthazirend: ha a ceg szabalyozza, az felulirja a helyi beallitast
+set "F_POL="
+set "F_PAC="
+set "F_PDC="
+set "F_KULCS=HKLM\SOFTWARE\Policies\Microsoft\Power\PowerSettings\5ca83367-6e45-459f-a27b-476b1d01c936"
+reg query "%F_KULCS%" >nul 2>&1 && set "F_POL=1"
+if defined F_POL (
+    for /f "tokens=3" %%v in ('reg query "%F_KULCS%" /v ACSettingIndex 2^>nul ^| find "REG_"') do set "F_PAC=%%v"
+    for /f "tokens=3" %%v in ('reg query "%F_KULCS%" /v DCSettingIndex 2^>nul ^| find "REG_"') do set "F_PDC=%%v"
+)
+set "F_POL_ROSSZ=0"
+if defined F_PAC if not "!F_PAC!"=="0x0" set "F_POL_ROSSZ=1"
+if defined F_PDC if not "!F_PDC!"=="0x0" set "F_POL_ROSSZ=1"
+
+if not defined F_AC (
+    call :JELOL HIBA "a beallitas nem olvashato vissza - van fedele ennek a gepnek?"
+    goto :eof
+)
+if "%F_POL_ROSSZ%"=="1" (
+    call :JELOL HIBA "csoporthazirend felulirja - halozat=!F_PAC! akku=!F_PDC! - ezt csak az IT tudja modositani"
+    goto :eof
+)
+if "!F_AC!"=="0x00000000" if "!F_DC!"=="0x00000000" (
+    set "FEDEL_OK=1"
+    call :JELOL OK "beallitva es ellenorizve: halozatrol es akkumulatorrol is - Nem tortenik semmi"
+    goto :eof
+)
+if "%F_HIBA%"=="1" (
+    call :JELOL HIBA "nem sikerult beallitani - nincs jogosultsag, futtasd rendszergazdakent"
+) else (
+    call :JELOL HIBA "a beallitas nem lett ervenyes - halozat=!F_AC! akku=!F_DC!"
+)
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - BitLocker / MBAM
+rem ==========================================================
+
+:BITLOCKER
+if not exist "%MBAM_DIR%\MBAMAgent.exe" (
+    call :JELOL HIBA "MBAMAgent.exe nem talalhato - telepitve van az MBAM kliens?"
+    goto :eof
+)
+if not exist "%MBAM_DIR%\MBAMClientUI.exe" (
+    call :JELOL HIBA "MBAMClientUI.exe nem talalhato - telepitve van az MBAM kliens?"
+    goto :eof
+)
+>>"%LOG%" echo        MBAM mappa: %MBAM_DIR%
+
+echo        1/3 MBAMAgent inditasa...
+ver >nul
+start "" "%MBAM_DIR%\MBAMAgent.exe"
+if errorlevel 1 (
+    call :JELOL HIBA "az MBAMAgent nem indult el"
+    goto :eof
+)
+timeout /t 2 /nobreak >nul
+
+echo        2/3 MBAMClientUI inditasa...
+ver >nul
+start "" "%MBAM_DIR%\MBAMClientUI.exe"
+if errorlevel 1 (
+    call :JELOL HIBA "az MBAMClientUI nem indult el"
+    goto :eof
+)
+timeout /t 2 /nobreak >nul
+
+echo        3/3 MBAMAgent ujra...
+ver >nul
+start "" "%MBAM_DIR%\MBAMAgent.exe"
+if errorlevel 1 (
+    call :JELOL HIBA "az MBAMAgent masodszor nem indult el"
+    goto :eof
+)
+call :JELOL OK "elinditva - kovesd a megjeleno BitLocker ablakot"
+goto :eof
+
+rem ==========================================================
+rem  Segedrutinok - ellenorzesek, egyeb
+rem ==========================================================
+
+:APPOK_ELLENORZES
+set "FUTO="
+for %%p in (chrome.exe msedge.exe outlook.exe winword.exe excel.exe Microsoft.Notes.exe) do (
+    tasklist /FI "IMAGENAME eq %%p" 2>nul | find /I "%%p" >nul && set "FUTO=!FUTO! %%p"
+)
+if not defined FUTO goto :eof
+if "%TESZTMOD%"=="1" (
+    echo.
+    echo    !C_SARGA!Meg futnak:!FUTO! - eles mentes elott ezeket be kell zarni.!C_0!
+    goto :eof
+)
+echo.
+echo    !C_SARGA!Meg futnak:!FUTO!!C_0!
+echo    A nyitott programok zarolhatjak a fajlokat. Az Edge es a Sticky Notes a hatterben is futhat.
+choice /C UBF /M "   U = ujra ellenoriz, B = bezarom oket, F = folytatas igy is"
+if errorlevel 3 goto :eof
+if errorlevel 2 (
+    echo    Bezaras... az Outlook, Word es Excel normalisan zar be, ha mentest kernek, valaszolj.
+    for %%p in (!FUTO!) do (
+        if /I "%%p"=="msedge.exe" (
+            taskkill /F /IM %%p >nul 2>&1
+        ) else if /I "%%p"=="Microsoft.Notes.exe" (
+            taskkill /F /IM %%p >nul 2>&1
+        ) else (
+            taskkill /IM %%p >nul 2>&1
+        )
+    )
+    timeout /t 3 /nobreak >nul
+)
+goto :APPOK_ELLENORZES
+
+:HELY_ELLENORZES
+rem Bemenet: PS_FORRASOK, PS_BETU.  Kimenet: HELY_STOP
+set "HELY_STOP=0"
+set "H_KELL="
+set "H_SZABAD="
+set "H_FS="
+set "H_MAX="
+for /f "tokens=1-4" %%a in ('powershell -NoProfile -NonInteractive -Command "$s=0;$m=0;foreach($x in ($env:PS_FORRASOK -split ';')){if($x -and (Test-Path -LiteralPath $x)){Get-ChildItem -LiteralPath $x -Recurse -File -Force -ErrorAction SilentlyContinue|ForEach-Object{$s+=$_.Length;if($_.Length -gt $m){$m=$_.Length}}}};$d=Get-CimInstance Win32_LogicalDisk|Where-Object DeviceID -eq $env:PS_BETU;if(-not $d){exit 1};[string]([long]($s/1MB)+1)+' '+[string]([long]($d.FreeSpace/1MB))+' '+$d.FileSystem+' '+[string]([long]($m/1MB))" 2^>nul') do (
+    set "H_KELL=%%a"
+    set "H_SZABAD=%%b"
+    set "H_FS=%%c"
+    set "H_MAX=%%d"
+)
+if not defined H_MAX (
+    echo    !C_SARGA![i] A helyellenorzes nem futott le, folytatom nelkule.!C_0!
+    goto :eof
+)
+set /a H_KELL+=RAHAGYAS_MB
+call :MB_GB H_KELL H_KELL_TXT
+call :MB_GB H_SZABAD H_SZABAD_TXT
+echo    Szukseges kb.: !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fajlrendszer: !H_FS!
+if !H_KELL! GTR !H_SZABAD! (
+    echo.
+    echo    !C_PIROS![HIBA] Nincs eleg hely a celmeghajton.!C_0!
+    if "%TESZTMOD%"=="1" (
+        set "T_HELY=nincs eleg hely a kulso meghajton"
+        goto :eof
+    )
+    choice /C MF /M "   M = megszakitas, F = folytatas igy is"
+    if errorlevel 2 goto :eof
+    set "HELY_STOP=1"
+    goto :eof
+)
+if /I "!H_FS!"=="FAT32" if !H_MAX! GEQ 4096 (
+    echo.
+    echo    !C_PIROS![HIBA] Van 4 GB-nal nagyobb fajl, ez nem fer el FAT32 fajlrendszeru meghajton.!C_0!
+    echo    Formazd a kulso meghajtot exFAT vagy NTFS fajlrendszerre, vagy hasznalj masikat.
+    if "%TESZTMOD%"=="1" (
+        set "T_HELY=4 GB-nal nagyobb fajl FAT32 meghajton"
+        goto :eof
+    )
+    choice /C MF /M "   M = megszakitas, F = folytatas igy is"
+    if errorlevel 2 goto :eof
+    set "HELY_STOP=1"
+    goto :eof
+)
+echo    !C_ZOLD!Hely rendben.!C_0!
+goto :eof
+
+:MB_GB
+rem %1 = MB erteket tartalmazo valtozo, %2 = kimeneti szoveg valtozo
+set /a "_g=!%~1!/1024, _t=(!%~1! %% 1024)*10/1024"
+set "%~2=!_g!,!_t! GB"
+goto :eof
+
+:IDO
+rem %1 = kimeneti valtozo, masodpercben az ejfel ota
+set "_t=%time: =0%"
+for /f "tokens=1-3 delims=:.," %%a in ("%_t%") do set /a "%~1=(1%%a-100)*3600+(1%%b-100)*60+(1%%c-100)"
+goto :eof
+
+:OSSZ_SOR
+rem %1 = lepes sorszama
+set "_st=!E_%~1!"
+set "_nv=!NEV_%~1!"
+set "_ms=!M_%~1!"
+set "_pad=!_nv!                              "
+set "_pad=!_pad:~0,24!"
+if "!_st!"=="OK" echo    !C_ZOLD![OK]      !C_0!!_pad! !_ms!
+if "!_st!"=="HIBA" echo    !C_PIROS![HIBA]    !C_0!!_pad! !_ms!
+if "!_st!"=="KIHAGYVA" echo    !C_SARGA![KIHAGYVA]!C_0!!_pad! !_ms!
+if "!_st!"=="NEMKERT" echo    !C_SZURKE![ - ]     !C_0!!_pad! !_ms!
+>>"%OSSZ_FAJL%" echo [!_st!] !_nv! - !_ms!
+goto :eof
+
+:SZINEK_BEALLIT
+rem Szines kiiras Windows 10 1511 vagy ujabb eseten, kulonben sima szoveg
+set "C_0="
+set "C_ZOLD="
+set "C_PIROS="
+set "C_SARGA="
+set "C_KEK="
+set "C_FEHER="
+set "C_SZURKE="
+set "C_ZOLD_HATTER="
+set "C_PIROS_HATTER="
+set "_ver="
+set "V_MAJ="
+set "V_BLD="
+for /f "tokens=2 delims=[]" %%v in ('ver') do set "_ver=%%v"
+if not defined _ver goto :eof
+for /f "tokens=2-4 delims=. " %%a in ("%_ver%") do (
+    set "V_MAJ=%%a"
+    set "V_BLD=%%c"
+)
+if not defined V_BLD goto :eof
+if %V_MAJ% LSS 10 goto :eof
+if %V_BLD% LSS 10586 goto :eof
+set "ESC="
+for /f %%e in ('echo prompt $E ^| cmd') do set "ESC=%%e"
+if not defined ESC goto :eof
+set "C_0=%ESC%[0m"
+set "C_ZOLD=%ESC%[92m"
+set "C_PIROS=%ESC%[91m"
+set "C_SARGA=%ESC%[93m"
+set "C_KEK=%ESC%[96m"
+set "C_FEHER=%ESC%[97m"
+set "C_SZURKE=%ESC%[90m"
+set "C_ZOLD_HATTER=%ESC%[42;30m"
+set "C_PIROS_HATTER=%ESC%[41;97m"
+goto :eof
+
+rem ==========================================================
+rem  Beagyazott PowerShell az Outlook listahoz. A batch soha nem
+rem  futtatja ezeket a sorokat, az :OUTLOOK_LISTA_KESZIT olvassa ki.
+rem  Csak a registryt olvassa, az Outlookhoz nem nyul.
+rem ==========================================================
+::OL::$ErrorActionPreference = 'SilentlyContinue'
+::OL::$out = $env:OL_OUT; $pstDir = $env:SRC_PST.TrimEnd('\') + '\'
+::OL::$psts = New-Object System.Collections.Generic.List[string]
+::OL::$roots = 'HKCU:\Software\Microsoft\Office\16.0\Outlook\Profiles','HKCU:\Software\Microsoft\Office\15.0\Outlook\Profiles','HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Windows Messaging Subsystem\Profiles'
+::OL::foreach ($r in $roots) { if (Test-Path $r) { Get-ChildItem -Path $r -Recurse | ForEach-Object { $v = $_.GetValue('001f6700'); if ($v -is [byte[]]) { $p = [Text.Encoding]::Unicode.GetString($v).TrimEnd([char]0); if ($p -and -not $psts.Contains($p)) { $psts.Add($p) } } } } }
+::OL::$L = New-Object System.Collections.Generic.List[string]
+::OL::$L.Add('OUTLOOK LISTA - ' + $env:USERNAME + ' / ' + $env:COMPUTERNAME + ' - ' + (Get-Date -Format 'yyyy.MM.dd HH:mm'))
+::OL::$L.Add('')
+::OL::$L.Add('1. CSATOLT ADATFAJLOK - PST, pl. archivum')
+::OL::$L.Add('   Ujra hozzaadas az uj gepen: Fajl - Megnyitas es exportalas - Outlook-adatfajl megnyitasa')
+::OL::$kint = 0
+::OL::if ($psts.Count -eq 0) { $L.Add('   - nincs csatolt PST') }
+::OL::foreach ($p in $psts) {
+::OL::  if ($p.StartsWith($pstDir, [StringComparison]::OrdinalIgnoreCase)) { $L.Add('   - ' + $p) }
+::OL::  else { $kint++; $L.Add('   - ' + $p + '   FIGYELEM: nem a PST mappaban van, a script nem mentette'); Write-Output ('KINT|' + $p) }
+::OL::}
+::OL::$L.Add('')
+::OL::$L.Add('2. KEZZEL ELLENORIZENDO A REGI GEPEN - a script ezeket nem menti')
+::OL::$L.Add('   [ ] Tovabbi postaladak: Fajl - Fiokbeallitasok - Modositas - Tovabbi beallitasok - Specialis')
+::OL::$L.Add('       Az automatikusan csatolt postaladak maguktol visszajonnek.')
+::OL::$L.Add('   [ ] Felado mezo: uj level - Felado gomb lenyilo listaja, a tobbi cimet ird fel')
+::OL::$L.Add('   [ ] Tovabbi fiokok: Fajl - Fiokbeallitasok - E-mail lap')
+::OL::$L | Out-File -LiteralPath $out -Encoding UTF8
+::OL::Write-Output ('SUM|' + $psts.Count)
