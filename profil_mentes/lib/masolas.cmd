@@ -7,12 +7,13 @@ rem  Hivas: %MASOLAS% :ROBO
 rem ==========================================================
 
 :ROBO
-rem Bemenet: R_SRC, R_DST, R_OPT, R_PROG.  Kimenet: R_ALLAPOT, R_UZENET
+rem Bemenet: R_SRC, R_DST, R_OPT, R_PROG.  Kimenet: R_ALLAPOT, R_UZENET, R_RESZLET
 rem A naplo UTF-8, a robocopy viszont a /LOG+ fajlba es a kepernyore mindig a 852-es
 rem kodlapon ir, a /UNILOG+ pedig hozzafuzeskor nem Unicode. Ezert minden hivas egy
 rem uj Unicode fajlba naploz (/UNILOG:), amit a type UTF-8-kent fuz a naplohoz.
 >>"%LOG%" echo        %R_SRC% -^> %R_DST%
 set "R_LOGT=%TEMP%\_robocopy_%RANDOM%.txt"
+set "R_RESZLET="
 if "%TESZTMOD%"=="1" goto :ROBO_TESZT
 if "%R_PROG%"=="1" goto :ROBO_PROG
 robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /R:1 /W:1 /NP /UNILOG:"%R_LOGT%" >nul
@@ -33,25 +34,29 @@ robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /L /R:0 /W:0 /NJH /NJS /NDL /NFL /NP >
 set "R_VRC=%errorlevel%"
 set /a "R_VBIT=R_VRC & 1"
 set "R_ALLAPOT=OK"
-set "R_UZENET=atmasolva, ellenorizve"
+set "R_UZENET=átmásolva, ellenőrizve"
 if %R_RC% GEQ 16 (
     set "R_ALLAPOT=HIBA"
-    set "R_UZENET=sulyos hiba - eleresi ut vagy jogosultsag, lasd a logot"
+    set "R_UZENET=nem másolható"
+    set "R_RESZLET=Az elérési út vagy a jogosultság nem megfelelő – részletek a naplóban."
     goto :eof
 )
 if %R_RC% GEQ 8 (
     set "R_ALLAPOT=HIBA"
-    set "R_UZENET=nehany fajl nem masolhato - zarolt fajl vagy nincs jog, lasd a logot"
+    set "R_UZENET=néhány fájl nem másolható"
+    set "R_RESZLET=Zárolt fájl vagy hiányzó jogosultság – részletek a naplóban."
     goto :eof
 )
 if %R_VRC% GEQ 8 (
     set "R_ALLAPOT=HIBA"
-    set "R_UZENET=az ellenorzes nem futott le, lasd a logot"
+    set "R_UZENET=az ellenőrzés nem futott le"
+    set "R_RESZLET=Részletek a naplóban."
     goto :eof
 )
 if %R_VBIT%==1 (
     set "R_ALLAPOT=HIBA"
-    set "R_UZENET=ellenorzes: a cel elter a forrastol - a fajl kozben valtozott vagy zarolt"
+    set "R_UZENET=a másolat eltér az eredetitől"
+    set "R_RESZLET=Egy fájl másolás közben megváltozott vagy zárolt volt."
     goto :eof
 )
 goto :eof
@@ -62,10 +67,11 @@ robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /L /R:0 /W:0 /NP /UNILOG:"%R_LOGT%" >n
 set "R_RC=%errorlevel%"
 call :ROBO_NAPLO
 set "R_ALLAPOT=OK"
-set "R_UZENET=elerheto, mentheto"
+set "R_UZENET=elérhető, menthető"
 if %R_RC% GEQ 8 (
     set "R_ALLAPOT=HIBA"
-    set "R_UZENET=a forras nem olvashato - jogosultsag vagy eleresi ut, lasd a logot"
+    set "R_UZENET=nem olvasható"
+    set "R_RESZLET=Jogosultság vagy elérési út – részletek a naplóban."
 )
 goto :eof
 

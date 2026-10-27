@@ -12,7 +12,7 @@ rem ==========================================================
 :MENT
 set "B_FAJLOK=!%T_P2%!"
 if not exist "%T_FORRAS%\" (
-    %UI% :JELOL KIHAGYVA "a bongeszo nincs hasznalva ezen a gepen"
+    %UI% :JELOL KIHAGYVA "a böngésző nincs ezen a gépen"
     goto :eof
 )
 set /a B_DB=0, B_HIBA=0
@@ -21,7 +21,6 @@ for /d %%P in ("%T_FORRAS%\Default" "%T_FORRAS%\Profile *") do (
     if exist "%%~fP\Preferences" (
         set /a B_DB+=1
         if defined B_NEVEK (set "B_NEVEK=!B_NEVEK!, %%~nxP") else (set "B_NEVEK=%%~nxP")
-        echo        - %%~nxP
         set "R_SRC=%%~fP"
         set "R_DST=%CEL%\%T_MAPPA%\%%~nxP"
         set "R_OPT=!B_FAJLOK!"
@@ -29,19 +28,20 @@ for /d %%P in ("%T_FORRAS%\Default" "%T_FORRAS%\Profile *") do (
         %MASOLAS% :ROBO
         if not "!R_ALLAPOT!"=="OK" (
             set /a B_HIBA+=1
-            echo          !C_PIROS!!R_UZENET!!C_0!
+            echo            !C_PIROS!%%~nxP: !R_UZENET!!C_0!
         )
     )
 )
 if %B_DB%==0 (
-    %UI% :JELOL KIHAGYVA "nincs bongeszo profil"
+    %UI% :JELOL KIHAGYVA "nincs böngészőprofil"
     goto :eof
 )
+%UI% :RESZLET "!B_NEVEK!"
 if exist "%T_FORRAS%\Local State" call :PROFILLISTA_MENT "%T_FORRAS%\Local State" "%CEL%\%T_MAPPA%\profilok.json"
 if %B_HIBA% GTR 0 (
-    %UI% :JELOL HIBA "%B_HIBA% profil hibaval - %B_NEVEK%"
+    %UI% :JELOL HIBA "%B_HIBA% profil hibával"
 ) else (
-    %UI% :JELOL OK "%B_DB% profil: %B_NEVEK% - ellenorizve"
+    %UI% :JELOL OK "%B_DB% profil, ellenőrizve"
 )
 goto :eof
 
@@ -92,9 +92,9 @@ if "%TESZTMOD%"=="0" if not exist "%~dp2" mkdir "%~dp2" 2>nul
 set "PS_FAJL=%PSDIR%\profillista_ment.ps1"
 %PS_FUTTAT% >nul 2>&1
 if errorlevel 1 (
-    echo        !C_SARGA!- a profillista nem mentheto, a Default profil igy is visszaall!C_0!
+    echo            !C_SARGA!a profillista nem menthető – a Default profil így is visszaáll!C_0!
 ) else (
-    echo        - profillista rendben, titkositokulcs nelkul
+    %UI% :RESZLET "profillista mentve, titkosítókulcs nélkül"
 )
 if "%TESZTMOD%"=="1" del /q "%LS_DST%" >nul 2>&1
 goto :eof

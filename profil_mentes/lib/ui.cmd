@@ -52,8 +52,9 @@ goto :eof
 :ADAT
 rem %1 = cimke, %2 = ertek, %3 = SARGA: az ertek sargan
 set "_c=%~1"
+set "_e=%~2"
 call :PAD _c 16
-if /I "%~3"=="SARGA" (echo      !_c!!C_SARGA!%~2!C_0!) else (echo      !_c!!C_FEHER!%~2!C_0!)
+if /I "%~3"=="SARGA" (echo      !_c!!C_SARGA!!_e!!C_0!) else (echo      !_c!!C_FEHER!!_e!!C_0!)
 goto :eof
 
 :MENU
@@ -145,6 +146,16 @@ if /I "%~1"=="FIGYEL" (
 call :VAG _t 70
 call :PAD _t 70
 if /I "%~1"=="OK" (echo   !C_ZOLD_HATTER!!_t!!C_0!) else (echo   !C_PIROS_HATTER!!_t!!C_0!)
+goto :eof
+
+:BEKER
+rem %1 = valtozo neve, %2 = kerdes - szabad szoveges valasz Enterrel, pl. meghajto betuje
+set "%~1="
+if not defined _vbs for /f %%b in ('"prompt $H & for %%c in (1) do rem"') do set "_vbs=%%b"
+<nul set /p "=.!_vbs!!UI_BEHUZAS!› %~2 "
+set /p "%~1="
+rem Automatikus futtatasnal a valasz nem latszik - kiirjuk, hogy az atirat olvashato legyen
+if "%VALASZ_SORBOL%"=="1" echo !%~1!
 goto :eof
 
 :PAD

@@ -38,7 +38,8 @@ goto :eof
 :FAJL
 rem %1 = forras mappa, %2 = cel mappa, %3 = fajlnev
 if not exist "%~1\%~3" (
-    %UI% :JELOL KIHAGYVA "nincs mentheto fajl ezen a gepen"
+    >>"%LOG%" echo        nincs ilyen fájl: %~1\%~3
+    %UI% :JELOL KIHAGYVA "ezen a gépen nincs ilyen fájl"
     goto :eof
 )
 set "R_SRC=%~1"
@@ -46,5 +47,5 @@ set "R_DST=%~2"
 set "R_OPT=%~3"
 set "R_PROG=0"
 %MASOLAS% :ROBO
-%UI% :JELOL %R_ALLAPOT% "%R_UZENET%"
+%UI% :JELOL %R_ALLAPOT% "%R_UZENET%" "%R_RESZLET%"
 goto :eof

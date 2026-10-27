@@ -18,10 +18,11 @@ goto :eof
 
 :UJ
 rem %1 = tipus, %2 = nev, %3 = forras, %4 = mappa a mentesben, %5 %6 = tipus szerinti parameterek
-if not exist "%LIB%\tipusok\%~1.cmd" (
-    echo    !C_PIROS!config\tetelek.cmd: ismeretlen tipus: %~1 - %~2!C_0!
-    goto :eof
-)
+rem A nev zarojelet is tartalmazhat, ezert a %~2 nem kerulhet ( ) blokkba.
+if exist "%LIB%\tipusok\%~1.cmd" goto :UJ_OK
+echo   !C_PIROS!config\tetelek.cmd: ismeretlen típus: %~1 – %~2!C_0!
+goto :eof
+:UJ_OK
 set /a T_DB+=1
 set "T_TIPUS_%T_DB%=%~1"
 set "T_NEV_%T_DB%=%~2"
@@ -82,12 +83,7 @@ set "_nj= %_j%"
 set "_nb=!_nb:~-2!"
 set "_nj=!_nj:~-2!"
 set "_bal=!L_%_b%!"
-if "!_bal:~25!"=="" (
-    set "_bal=!_bal!                          "
-    set "_bal=!_bal:~0,26!"
-) else (
-    set "_bal=!_bal! "
-)
+%UI% :PAD _bal 27
 if %_j% GTR %L_DB% (
     echo     !_nb!. !L_%_b%!
 ) else (

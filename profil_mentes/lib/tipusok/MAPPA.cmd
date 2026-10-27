@@ -19,7 +19,8 @@ goto :eof
 :MAPPA
 rem %1 = forras mappa, %2 = cel mappa, %3 = jelzok: P, J vagy PJ
 if not exist "%~1\" (
-    %UI% :JELOL KIHAGYVA "nem letezik: %~1"
+    >>"%LOG%" echo        nincs ilyen mappa: %~1
+    %UI% :JELOL KIHAGYVA "ezen a gépen nincs ilyen mappa"
     goto :eof
 )
 set "R_SRC=%~1"
@@ -31,7 +32,7 @@ if /I not "!_jel:P=!"=="!_jel!" set "R_PROG=1"
 if /I not "!_jel:J=!"=="!_jel!" set "R_OPT=!R_OPT! /J"
 %MASOLAS% :ROBO
 if not "%R_ALLAPOT%"=="OK" (
-    %UI% :JELOL HIBA "%R_UZENET%"
+    %UI% :JELOL HIBA "%R_UZENET%" "%R_RESZLET%"
     goto :eof
 )
 set "FDB=0"
@@ -39,8 +40,8 @@ set "_hol=%R_DST%"
 if "%TESZTMOD%"=="1" set "_hol=%R_SRC%"
 for /f %%c in ('dir /a-d /b /s "%_hol%" 2^>nul ^| find /c /v ""') do set "FDB=%%c"
 if "%TESZTMOD%"=="1" (
-    %UI% :JELOL OK "%FDB% fajl, elerheto - mentheto"
+    %UI% :JELOL OK "%FDB% fájl, elérhető – menthető"
 ) else (
-    %UI% :JELOL OK "%FDB% fajl, ellenorizve"
+    %UI% :JELOL OK "%FDB% fájl, ellenőrizve"
 )
 goto :eof
