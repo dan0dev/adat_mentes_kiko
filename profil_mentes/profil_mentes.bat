@@ -9,6 +9,10 @@ if defined PM_KODLAP set "PM_KODLAP=!PM_KODLAP: =!"
 >nul chcp 65001 <nul
 title Profil mentes / visszaallitas
 
+rem ---------- Nev, verzio, keszito - a kepernyokon es a fajlokban ----------
+set "VERZIO=1.0"
+set "SZERZO=Kakuk Dániel"
+
 rem ==========================================================
 rem  Eszkozcsere segedlet: adatok mentese, exportalasa, BitLocker
 rem  Csak beepitett Windows eszkozok: cmd, robocopy, es
