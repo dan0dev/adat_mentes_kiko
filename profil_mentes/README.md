@@ -2,137 +2,98 @@
 
 **Verzió: 1.0** · **Készítette: Kakuk Dániel**
 
-Felhasználói adatok mentése a régi gépen és visszaállítása az új gépen eszközcserénél.
-Csak a Windows beépített eszközeit használja (cmd, robocopy, PowerShell), telepíteni nem kell semmit.
+A felhasználó adatait a régi gépen elmenti egy külső meghajtóra, az új gépen pedig visszaállítja.
+Telepíteni nem kell semmit, csak a Windows saját eszközeit használja.
 
-Indítás: **`Eszkozcsere_segedlet.bat`** dupla kattintással. A teljes mappát kell vinni (pl. a külső meghajtóra),
-a fájlok együtt működnek.
+## Mit tud
+
+| Menü | Hol | Mit csinál |
+|---|---|---|
+| **1 Adatok mentése** | régi gép | elmenti az adatokat a külső meghajtóra |
+| **2 Próbafuttatás** | régi gép | mindent ellenőriz, de semmit nem másol – éles mentés előtt ajánlott |
+| **3 Adatok visszaállítása** | új gép | visszamásolja a mentést a felhasználó profiljába |
+| **4 Laptop beállítása** | új gép | fedél lehajtásakor: Nincs művelet · BitLocker (MBAM) indítása |
+| **5 Alapértelmezett alkalmazások** | új gép | Word, Excel, PowerPoint, PDF: Adobe Acrobat Reader, böngésző: Chrome |
+
+**Amit ment és visszaállít:**
+
+- Tanúsítványok (certmgr.msc – Személyes, Mások) – a kulcsosakat jelszóval védve
+- Outlook-aláírások, a `%USERPROFILE%\PST` mappa
+- Office-sablonok, egyéni szótárak, Excel XLSTART
+- Chrome: könyvjelzők, előzmények, beállítások – minden profil
+- Edge-kedvencek, Kedvencek mappa
+- Sticky Notes-jegyzetek
+- Fájlkezelő – Gyorselérés, Start menü rögzítései
+- Indítópult mappa, C:\TEMP
+
+**Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`),
+csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
+
+## Ami kell hozzá
+
+- Külső meghajtó. Ha 4 GB-nál nagyobb fájl is van (pl. PST), **NTFS vagy exFAT** legyen, ne FAT32.
+- A **`profil_mentes` mappa** a meghajtón – egészben, a benne lévő fájlok együtt működnek.
+- A **felhasználó saját fiókja**. Az 1–4. menüt sima dupla kattintással indítsd, ne rendszergazdaként.
+  Az 5. menü beállításához kell a *Futtatás rendszergazdaként*.
 
 ## Használat
 
-A menü a munka sorrendjét követi.
-
 **A régi gépen**
 
-| Menü | Mit csinál |
-|---|---|
-| 1 Adatok mentése | A felhasználó adatait a külső meghajtóra menti: `<meghajtó>:\Mentes\<felhasználó>_<gép>`. Elkészíti a programlistát (`apps.txt`), a tálcaikonok listáját (`talca.txt`), az Outlook-listát (`outlook_lista.txt`) és a kézi teendők listáját (`_TEENDOK.txt`). |
-| 2 Próbafuttatás | Ugyanazt ellenőrzi, mint a mentés, de semmit nem másol és nem hoz létre. Éles mentés előtt érdemes lefuttatni. |
+1. Dupla kattintás: `Eszkozcsere_segedlet.bat`
+2. Ha akarod, előbb **2 Próbafuttatás** – megmutatja, menthető-e minden.
+3. **1 Adatok mentése** → a külső meghajtó betűjele (pl. `E`) → **Indulhat a mentés? I**
+4. **Tanúsítványok jelszava** – kétszer kéri. **Jegyezd meg**, a visszaállításnál kell! Sehová nem kerül leírásra.
+5. Megvárod a végét, átnézed az összegzést.
 
 **Az új gépen**
 
-| Menü | Mit csinál |
+1. A felhasználó jelentkezzen be (a Chrome-ot és az Edge-et még ne indítsa el).
+2. Dupla kattintás: `Eszkozcsere_segedlet.bat` → **3 Adatok visszaállítása** → a mentés sorszáma
+3. Tanúsítványok jelszava → megvárod a végét.
+4. Laptopnál: **4 Laptop beállítása**.
+5. Jobb kattintás → *Futtatás rendszergazdaként* → **5** (beállítás).
+   Utána a felhasználó jelentkezzen ki és be, majd sima indítással **5** (ellenőrzés).
+6. A `_TEENDOK.txt` alapján a kézi lépések – lásd lent.
+
+## Mire számíts
+
+- **Lépésenként halad**, mindegyik mellett: `[ OK ]` sikerült · `[ HIBA ]` nézd meg · `[KIHAGYVA]` ezen a
+  gépen nem létezik – ez általában rendben van.
+- **A futó programokat** (Outlook, Word, Excel, Chrome, Edge, Sticky Notes) bezárást kéri, mert zárolhatják a fájlokat.
+- **A végén összegzés** és egy színes sáv: zöld = kész, piros = valami hibás.
+- **Időtartam**: pár perc, a PST-k méretétől függően több.
+- **Újrafuttatható**: a meglévő mentés frissül, semmi nem törlődik.
+- **Ha a Chrome már futott** az új gépen, rákérdez, átírhatja-e a profillistát (az ott mentett jelszavak,
+  sütik elveszhetnek; a régit `Local State.regi` néven megtartja).
+- **Hangot nem ad.**
+
+A mentés mappája: `<meghajtó>:\Mentes\<felhasználó>_<gép>\`
+
+| Fájl | Mi ez |
 |---|---|
-| 3 Adatok visszaállítása | A kiválasztott mentést a felhasználó profiljába másolja, kérésre az asztali Office-parancsikonokat is rendbe teszi. A `_TEENDOK.txt` végére írja az eredményt. |
-| 4 Laptop beállítása | Fedél lehajtásakor: Nincs művelet (hálózatról és akkumulátorról is), BitLocker aktiválása az MBAM klienssel. |
-| 5 Alapértelmezett alkalmazások | Rendszergazdaként beállítja (Word, Excel, PowerPoint, Acrobat Reader, Chrome), felhasználóként ellenőrzi. |
+| `_TEENDOK.txt` | a kézi teendők listája, pipálható |
+| `_MENTES_OK_<dátum>.txt` / `_MENTES_<n>_HIBA_<dátum>.txt` | a mentés összegzése – a nevében az eredmény |
+| `_VISSZAALLITAS_…txt` | a visszaállítás összegzése |
+| `mentes_naplo.txt`, `visszaallitas_naplo.txt` | részletes napló, hiba esetén ide nézz |
+| `apps.txt`, `talca.txt`, `outlook_lista.txt` | listák a kézi lépésekhez |
+| `Tanusitvanyok\lista.txt` | a mentett tanúsítványok |
 
-Minden menüpont végén összegzés jelenik meg, és a mentés mappájába (illetve a `%TEMP%`-be) kerül egy
-összegzésfájl, aminek a nevében az eredmény is látszik: `_MENTES_OK_2026-10-27.txt` vagy
-`_MENTES_2_HIBA_2026-10-27.txt`. A részletek a `*_naplo.txt` fájlokban vannak.
+## Ami kézzel marad
 
-**Tanúsítványok (certmgr.msc)** – a mentés első lépése. A Személyes és a Mások tároló tanúsítványai a
-`Tanusitvanyok\` mappába kerülnek: a kulcsosak egy jelszóval védett `.pfx` fájlba (AES-256), a többi `.cer`-be,
-a `lista.txt` mindet felsorolja. A jelszót a mentéskor kéri (kétszer), a visszaállításkor ugyanezt kell
-megadni – a segédlet sehová nem írja le. Amelyik kulcs nem exportálható (pl. céges, automatikusan kiadott),
-azt a `_TEENDOK.txt` jelzi: az IT-tól kell újra igényelni. A tárolók a `config\beallitasok.cmd`-ben
-állíthatók (`TAN_TAROLOK`).
+A `_TEENDOK.txt` ezeket pipálható listában adja:
 
-**PST-fájlok** – az `outlook_lista.txt` és a képernyő is kiírja, hol van minden csatolt PST. A PST bárhol
-lehet; a `%USERPROFILE%\PST` mappát a segédlet menti, a máshol lévőket kézzel kell átvinni.
+- **Tálcaikonok** újrarögzítése – `talca.txt` alapján (Windows 11 nem engedi scriptből).
+- **Outlook**: PST-k csatolása (`outlook_lista.txt`), további postaládák, feladócímek, fiókok, alapértelmezett aláírás.
+- **PST-k a `%USERPROFILE%\PST` mappán kívül** – a helyük az `outlook_lista.txt`-ben, ezeket kézzel vidd át.
+- **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
+- **Böngészőben mentett jelszavak**, újra bejelentkezés a weboldalakra.
+- **Programok** telepítése az `apps.txt` alapján.
+- **Nem exportálható kulcsú tanúsítványok** – az IT-tól kell újra igényelni.
+- A végén: **a mentés törlése** a külső meghajtóról – személyes adatok vannak benne.
 
-Amit a segédlet szándékosan **nem** ment: a Letöltések, a felhasználó saját mappái, az Outlook további
-postaládái és feladócímei, a böngészőben mentett jelszavak.
+## Tudnivalók
 
-## Felépítés
-
-```
-Eszkozcsere_segedlet.bat        belépési pont: környezet, menü, a modul indítása, összegzés
-config\                  ITT BŐVÍTS – listák és beállítások, kód nélkül
-  beallitasok.cmd          mappanév, tartalék hely, figyelt programok, MBAM helye...
-  tetelek.cmd              a mentendő tételek – egy sor = egy tétel
-  parancsikonok.cmd        az asztali Office-parancsikonok listája
-  alapertelmezett_alk.cmd  fájltípusok és programok az 5. menühöz
-modulok\                 menüpontonként egy fájl: képernyők, kérdések, sorrend
-lib\                     a munkát végző közös rutinok
-  ui.cmd                   minden rajzolás: keretek, lépések, állapotjelek, sávok, kérdések
-  kezdokepernyo.cmd        a kezdőképernyő és a menü
-  masolas.cmd              robocopy + ellenőrző másodfutás
-  tetelek.cmd              a config\tetelek.cmd beolvasása és futtatása
-  tipusok\                 tételtípusok: MAPPA, FAJL, BONGESZO, TANUSITVANY
-  ellenorzes.cmd           felhasználó, meghajtó, futó programok, szabad hely
-  talca.cmd                a tálcára rögzített ikonok listája – talca.txt
-  outlook.cmd, programlista.cmd, ikonok.cmd, alapalk.cmd, laptop.cmd
-  teendok.cmd              _TEENDOK.txt
-  osszegzes.cmd            a végső összegzés minden menüponthoz
-ps\                      a PowerShell részek, olvasható formában
-```
-
-## Bővítés
-
-**Új mentendő tétel** – egy sor a `config\tetelek.cmd`-be, pl.:
-
-```bat
-%TETEL% MAPPA  "Letöltések"  "%USERPROFILE%\Downloads"  Downloads  P
-```
-
-A mentés, a próbafuttatás és a visszaállítás is automatikusan viszi; a lista és a lépésszám magától frissül.
-A név legfeljebb 26 karakter. A MAPPA tétel jelzői együtt is megadhatók: `P` = folyamatjelző, `J` = gyorsabb
-másolás nagy fájloknál (robocopy `/J`), pl. `PJ` – így megy a PST-mappa és a C:\TEMP.
-
-**Új tételtípus** – új fájl a `lib\tipusok\` alá (pl. `REGISTRY.cmd`) a többi mintájára, `:MENT` és `:VISSZA`
-címkével. Bemenet: `T_NEV`, `T_FORRAS`, `T_MAPPA`, `T_P1`, `T_P2`, mentésnél `CEL`, visszaállításnál `FORRAS`.
-Az eredményt `%UI% :JELOL OK|HIBA|KIHAGYVA "üzenet" "részlet"` jelzi.
-
-**Visszaállítás utáni teendő egy FAJL tételhez** – a sor 6. oszlopa egy név (pl. `EXPLORER`, `STARTMENU`),
-a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaállítás után ez fut.
-
-**Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
-
-**Új alapértelmezett fájltípus** – `%AA_TIPUS%` sor (és ha kell, `%AA_ELLENORIZ%` sor) a
-`config\alapertelmezett_alk.cmd`-be.
-
-**Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű a `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
-
-## Szabályok a kódhoz
-
-- **UTF-8 (BOM nélkül)** és **CRLF** sorvég. A `Eszkozcsere_segedlet.bat` elején `chcp 65001` fut, a végén az eredeti
-  kódlap visszaáll. A felhasználónak szóló szövegek ékezetesek, tegező hangnemben; a címkék, változónevek,
-  fájlnevek és a megjegyzések ékezet nélküliek.
-- A szövegekben nincs `!` (a késleltetett kiértékelés elnyelné). `( … )` blokkon belül a `)` jelet `^)`-ként kell
-  írni, és `%~n` paramétert, aminek az értékében `)` lehet (pl. tételnév), nem szabad blokkba tenni – helyette
-  `set` és `!változó!`.
-- Egy sor sem hosszabb 76 oszlopnál (elérési utak kivételével). Az eredményüzenet legfeljebb 33 karakter, ami
-  hosszabb, az a `:JELOL` harmadik paramétereként részletsor lesz.
-- Minden rajzolás a `lib\ui.cmd`-ben van: `:CIM` fejléc, `:FEJLEC` lépés, `:JELOL` eredmény, `:RESZLET` szürke
-  részletsor, `:SAV OK|HIBA|FIGYEL` sáv, `:ADAT` címke–érték, `:MENU`, `:SZAKASZ`, `:VONAL`, `:LABLEC NYITO|TELJES`,
-  `:VALASZT` egybillentyűs kérdés, `:BEKER` szöveges kérdés, `:PAD`/`:VAG`/`:HOSSZ` segédek.
-- Kérdéshez `%UI% :VALASZT IN "Kérdés?"`, ne `choice`: a `choice` minden rossz billentyűnél sípol, a `VALASZT`
-  csendben vár tovább. Ugyanúgy errorlevelt ad (I = 1, N = 2). Automatikus futtatásnál `VALASZ_SORBOL=1` mellett
-  soronként olvassa a válaszokat a bemenetről.
-- A `lib\` fájlok első két sora (`@call %*` / `@exit /b`) teszi hívhatóvá a címkéiket kívülről. A rövidítéseket
-  (`%UI%`, `%MASOLAS%`...) a `Eszkozcsere_segedlet.bat` definiálja.
-- A modul `exit /b 0`-val tér vissza, ha végigment (jön az összegzés), `exit /b 1`-gyel, ha megszakították.
-- Minden változó közös – nincs `setlocal` a modulokban és a `lib`-ben, mert az eredmények (`E_n`, `DB_OK`...) így
-  jutnak vissza.
-- PowerShell: `set "PS_FAJL=%PSDIR%\nev.ps1"`, utána `%PS_FUTTAT%`. Szövegként töltődik be, így a végrehajtási
-  házirend nem tiltja le; a paraméterek környezeti változóban mennek, a kimenet UTF-8.
-- Robocopy: a saját kimenetét mindig a 852-es kódlapon írja, ezért a naplója hívásonként egy Unicode fájlba megy,
-  amit a `type` UTF-8-ként fűz a naplóhoz; a folyamatjelző idejére a konzol 852-re vált.
-
-## Tesztelés
-
-A `..\tesztkornyezet\` mappa a segédletet hamis felhasználói profillal és hamis külső meghajtóval
-(`subst`) futtatja, előre megírt válaszokkal, és az átiratokat ellenőrzi:
-
-```powershell
-..\tesztkornyezet\mind.ps1 -Ellenoriz -Kredit -Szoveg    # minden forgatókönyv, minden ellenőrzéssel
-..\tesztkornyezet\kepernyok.ps1                          # a képernyőgaléria: minden ui.cmd rutin mintaadatokkal
-..\tesztkornyezet\futtat.ps1 -Valaszok mentes            # egy forgatókönyv, az átirat a kimenet\ mappába kerül
-```
-
-Az ellenőrzés keresi: csipogást, hibás ékezetet, 76-nál hosszabb sort, cmd hibát, ékezet nélküli és magázó
-szavakat, a "Készítette" sort, és az eredményeket az `alap\` mappában rögzített alapértékekhez hasonlítja.
-A `PM_TESZT_KONFIG` környezeti változóval a tesztkörnyezet a `config\beallitasok.cmd` után felülírja a
-beállításokat (pl. hogy ne kérdezzen rá a futó programokra).
+- Az **5. menü** beállítása csak **tartományi** gépen él (a Windows így működik), ki- és bejelentkezés után.
+- A **kulcsos tanúsítványok** jelszóval védett fájlban vannak (AES-256); jelszó nélkül nem állíthatók vissza.
+- A fejlesztői leírás (bővítés, tesztelés): `docs\FEJLESZTES.md` a projekt mappájában.
