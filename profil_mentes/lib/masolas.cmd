@@ -21,12 +21,17 @@ set "R_RC=%errorlevel%"
 call :ROBO_NAPLO
 goto :ROBO_ELLENORZES
 :ROBO_PROG
-rem Folyamatjelzovel: a kepernyore a robocopy 852-es kodlapon ir, ezert a kijelzes
-rem idejere a konzol is 852-re valt, igy az ekezetes fajlnevek helyesen latszanak.
->nul chcp 852 <nul
-robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /R:1 /W:1 /NJH /NJS /NDL /NC /NS /TEE /UNILOG:"%R_LOGT%"
-set "R_RC=%errorlevel%"
->nul chcp 65001 <nul
+rem Folyamatjelzovel: a robocopy Unicode kimenete a ps\folyamat.ps1-en at megy a
+rem kepernyore - UTF-8, behuzva, a Log File sor nelkul. A kilepesi kod fajlbol jon,
+rem mert a cso jobb oldala adna az errorlevelt.
+set "R_RCF=%TEMP%\_robocopy_rc_%RANDOM%.txt"
+set "PS_FAJL=%PSDIR%\folyamat.ps1"
+call "%LIB%\robo_prog.cmd" | %PS_FUTTAT%
+set "R_RC=16"
+if exist "%R_RCF%" (
+    set /p R_RC=<"%R_RCF%"
+    del /q "%R_RCF%" >nul 2>&1
+)
 call :ROBO_NAPLO
 :ROBO_ELLENORZES
 rem Ellenorzes: ugyanaz a masolas csak listazva - ha lenne mit masolni, elter
