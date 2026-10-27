@@ -95,8 +95,8 @@ if errorlevel 2 goto :MEGSZAKITVA
 
 %TETELEK% :BETOLT
 set /a OSSZES=T_DB+DO_IKON
-if "%IRHATO%"=="1" (set "LOG=%FORRAS%\visszaallitas_log.txt") else (set "LOG=%TEMP%\visszaallitas_log.txt")
->>"%LOG%" echo ===== VISSZAÁLLÍTÁS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\visszaallitas_log.txt"
+if "%IRHATO%"=="1" (set "LOG=%FORRAS%\visszaallitas_naplo.txt") else (set "LOG=%TEMP%\visszaallitas_naplo.txt")
+>>"%LOG%" echo ===== VISSZAÁLLÍTÁS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\visszaallitas_naplo.txt"
 
 %UI% :IDO START_MP
 cls

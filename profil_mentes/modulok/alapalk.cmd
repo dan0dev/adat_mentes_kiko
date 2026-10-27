@@ -29,7 +29,7 @@ echo.
 if errorlevel 2 goto :MEGSZAKITVA
 
 set /a OSSZES=1
-set "LOG=%TEMP%\alapertelmezett_alk_log.txt"
+set "LOG=%TEMP%\alapertelmezett_alk_naplo.txt"
 >>"%LOG%" echo ===== ALAPÉRTELMEZETT ALKALMAZÁSOK %date% %time% – %USERNAME% / %COMPUTERNAME% =====
 
 %UI% :IDO START_MP

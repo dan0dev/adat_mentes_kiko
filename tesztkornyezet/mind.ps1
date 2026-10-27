@@ -17,18 +17,34 @@ param(
 $ErrorActionPreference = 'Stop'
 $d = $PSScriptRoot
 $m = "$env:TEMP\pm_teszt\kulso\Mentes\$($env:USERNAME)_$($env:COMPUTERNAME)"
-$sorrend = 'mentes', 'probafuttatas', 'visszaallitas', 'laptop_megse', 'alapalk_ellenoriz', 'hibas_bevitel', 'visszaallitas_hibas'
+$sorrend = 'mentes', 'probafuttatas', 'visszaallitas', 'laptop_megse', 'alapalk_ellenoriz', 'hibas_bevitel', 'visszaallitas_hibas', 'regi_mentes'
 if ($Csak) { $sorrend = $sorrend | Where-Object { $Csak -contains $_ } }
 $hibak = 0
 foreach ($v in $sorrend) {
     $gond = New-Object System.Collections.Generic.List[string]
     $arg = @{ Valaszok = $v; AtiratKodlap = $AtiratKodlap }
     if ($v -eq 'mentes') { $arg.Tiszta = $true }
+    $mappa = $m
+    if ($v -eq 'regi_mentes') {
+        # A regi verzio altal keszitett mentes visszaallitasa: a _LEFT-TO-DO.txt-t folytatja,
+        # nem nyit ujat, es a regi _EXPORT_ osszegzest lecsereli
+        $arg.Mentes = "$d\alap\mentes_regi"
+        $mappa = "$env:TEMP\pm_teszt\kulso\Mentes\mentes_regi"
+    }
     $atirat = & "$d\futtat.ps1" @arg
+    if ($v -eq 'regi_mentes') {
+        $todo = "$mappa\_LEFT-TO-DO.txt"
+        if (-not (Test-Path $todo)) { $gond.Add('nincs _LEFT-TO-DO.txt') }
+        elseif (-not ([IO.File]::ReadAllText($todo, [Text.Encoding]::UTF8)).Contains('3. VISSZAÁLLÍTÁS EREDMÉNYE')) { $gond.Add('a _LEFT-TO-DO.txt nem kapta meg a 3. részt') }
+        if (Test-Path "$mappa\_TEENDOK.txt") { $gond.Add('uj _TEENDOK.txt keszult a regi _LEFT-TO-DO.txt melle') }
+        $vo = @(Get-ChildItem $mappa -Filter '_VISSZAALLITAS_*.txt'); $ex = @(Get-ChildItem $mappa -Filter '_EXPORT_*.txt')
+        if ($vo.Count -ne 1) { $gond.Add("_VISSZAALLITAS_*.txt: $($vo.Count) db, nem 1") }
+        if ($ex.Count -ne 0) { $gond.Add("regi _EXPORT_*.txt maradt: $($ex.Count) db") }
+    }
     $alapFajl = "$d\alap\$v.json"
     if (Test-Path $alapFajl) {
         $alap = Get-Content $alapFajl -Raw -Encoding UTF8 | ConvertFrom-Json
-        $uj = (& "$d\eredmeny.ps1" -Atirat $atirat -Mentes $m) | ConvertFrom-Json
+        $uj = (& "$d\eredmeny.ps1" -Atirat $atirat -Mentes $mappa) | ConvertFrom-Json
         foreach ($k in 'sikeres', 'hibas', 'kihagyva') {
             if ($alap.$k -ne $uj.$k) { $gond.Add("$k : alap $($alap.$k), most $($uj.$k)") }
         }

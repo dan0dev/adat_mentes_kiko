@@ -60,8 +60,8 @@ if not exist "%CEL%\" (
     echo   !C_PIROS!A mentés mappája nem hozható létre: !CEL!!C_0!
     goto :MEGSZAKITVA
 )
-set "LOG=%CEL%\mentes_log.txt"
->>"%LOG%" echo ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\mentes_log.txt"
+set "LOG=%CEL%\mentes_naplo.txt"
+>>"%LOG%" echo ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\mentes_naplo.txt"
 
 %UI% :IDO START_MP
 cls
@@ -72,7 +72,7 @@ goto :LEPESEK
 :TESZT_INDUL
 %UI% :VALASZT IN "Indulhat a próbafuttatás?"
 if errorlevel 2 goto :MEGSZAKITVA
-set "LOG=%TEMP%\teszt_log.txt"
+set "LOG=%TEMP%\probafuttatas_naplo.txt"
 del /q "%LOG%" >nul 2>&1
 >>"%LOG%" echo ===== PRÓBAFUTTATÁS %date% %time% – %USERNAME% / %COMPUTERNAME% =====
 %UI% :IDO START_MP

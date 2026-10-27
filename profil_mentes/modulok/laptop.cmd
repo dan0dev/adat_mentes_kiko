@@ -26,7 +26,7 @@ echo.
 %UI% :VALASZT IN "Indulhat?"
 if errorlevel 2 goto :MEGSZAKITVA
 
-set "LOG=%TEMP%\laptop_log.txt"
+set "LOG=%TEMP%\laptop_naplo.txt"
 >>"%LOG%" echo ===== LAPTOP BEÁLLÍTÁSA %date% %time% – %USERNAME% / %COMPUTERNAME% =====
 
 %UI% :IDO START_MP

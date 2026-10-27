@@ -47,6 +47,7 @@ rem ---------- Összegzés ----------
 for /l %%i in (1,1,6) do %UI% :OSSZ_SOR %%i
 %UI% :VONAL
 echo     Sikeres: 3     Hibás: 1     Kihagyva: 1     Időtartam: 3 perc 12 mp
+echo     Rendben: 3     Probléma: 1     Kihagyva: 1     Időtartam: 0 perc 41 mp
 echo.
 %UI% :SAV HIBA "FIGYELEM: 1 tétel hibával zárult – nézd át a listát és a naplót."
 %UI% :SAV OK "KÉSZ – minden tétel sikeresen lefutott."

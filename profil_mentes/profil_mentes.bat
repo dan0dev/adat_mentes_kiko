@@ -66,7 +66,10 @@ rem ---------- Szinek ----------
 rem ---------- Datum a fajlnevekhez, pl. 2026-10-16 ----------
 set "DATUM="
 for /f %%d in ('powershell -NoProfile -NonInteractive -Command "Get-Date -Format yyyy-MM-dd" 2^>nul') do set "DATUM=%%d"
+rem A kepernyore es a dokumentumokba: 2026. 10. 27.
+if defined DATUM set "DATUM_SZEP=%DATUM:~0,4%. %DATUM:~5,2%. %DATUM:~8,2%."
 if not defined DATUM (
+    set "DATUM_SZEP=%date%"
     set "DATUM=%date%"
     set "DATUM=!DATUM:/=-!"
     set "DATUM=!DATUM:.=-!"
@@ -90,7 +93,7 @@ set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0
 set /a DO_IKON=0, DO_BL=0, DO_FEDEL=0, ATN_DB=0
 set "AA_MOD="
 set "AA_OK=0"
-set "LOG=%TEMP%\profil_mentes_log.txt"
+set "LOG=%TEMP%\profil_mentes_naplo.txt"
 set "IRHATO=1"
 set "CEL="
 set "FORRAS="
