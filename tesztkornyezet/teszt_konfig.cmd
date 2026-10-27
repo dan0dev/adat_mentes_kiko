@@ -5,4 +5,6 @@ set "KENYSZER_BEZARAS="
 rem Tanusitvanyok: csak a kulon PmTeszt tarolo - a valodi Szemelyes tarolohoz a teszt nem nyul.
 rem A jelszot nem kerdezi, ezt hasznalja.
 set "TAN_TAROLOK=PmTeszt"
+rem A C:\TEMP helyett a hamis profil egy mappaja - a valodi C:\TEMP-hez a teszt nem nyul
+set "C_TEMP_FORRAS=%USERPROFILE%\_C_TEMP"
 set "PM_TESZT_JELSZO=Teszt-1234"

@@ -37,4 +37,4 @@ rem A tanusitvanyok elol: jelszot kerhet, igy a kerdes a futas elejen jon, nem e
 %TETEL% MAPPA     "Sticky Notes-jegyzetek"      "%LOCALAPPDATA%\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState"  StickyNotes
 %TETEL% FAJL      "Fájlkezelő – Gyorselérés"    "%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations"                    Gyorseleres    f01b4d95cf55d32a.automaticDestinations-ms  EXPLORER
 %TETEL% FAJL      "Start menü rögzítései"       "%LOCALAPPDATA%\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState"  StartMenu  start2.bin  STARTMENU
-%TETEL% MAPPA     "C:\TEMP mappa"               "%SystemDrive%\TEMP"                                                          C_TEMP         PJ
+%TETEL% MAPPA     "C:\TEMP mappa"               "%C_TEMP_FORRAS%"                                                              C_TEMP         PJ

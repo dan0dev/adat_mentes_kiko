@@ -31,11 +31,6 @@ foreach ($d in $profil, $kulso, $tmp) { New-Item -ItemType Directory -Force -Pat
 if (-not (Test-Path "$profil\PST")) { & "$itt\profil_feltolt.ps1" -Cel $profil | Out-Null }
 New-Item -ItemType Directory -Force -Path "$itt\kimenet" | Out-Null
 
-$ctemp = "$env:SystemDrive\TEMP"
-if (Test-Path $ctemp) {
-    $mb = (Get-ChildItem -LiteralPath $ctemp -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum / 1MB
-    if ($mb -gt 1024) { Write-Warning ("A valodi {0} {1:0} MB - a mentes ezt is olvassa, lassu lesz." -f $ctemp, $mb) }
-}
 
 $mentesGyoker = "$kulso\Mentes"
 $kivalasztott = $null
@@ -56,8 +51,6 @@ if (Test-Path $mentesGyoker) {
         $n = $lista[$i].Name
         if (($kivalasztott -and $n -eq $kivalasztott) -or (-not $kivalasztott -and $n -like "$($env:USERNAME)_*")) { $mentesSzam = $i + 1; $kivalasztott = $n; break }
     }
-    # Visszaallitasnal a C:\TEMP tetel soha ne irjon a valodi gepre
-    if ($kivalasztott -and (Test-Path "$mentesGyoker\$kivalasztott\C_TEMP")) { Remove-Item -LiteralPath "$mentesGyoker\$kivalasztott\C_TEMP" -Recurse -Force }
 }
 
 $betu = 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' | Where-Object { -not (Test-Path "${_}:\") } | Select-Object -First 1

@@ -48,6 +48,8 @@ Fajl "$roaming\Microsoft\Signatures\Aláírás – Dániel_files\colorschememapp
 Fajl "$roaming\Microsoft\Templates\Sablon.dotx" 'sablon'
 Fajl "$Cel\Favorites\Céges portál.url" "[InternetShortcut]`r`nURL=https://intranet.example/"
 Fajl "$Cel\Saját adatok – Dániel\jegyzet.txt" 'saját jegyzet'
+# A C:\TEMP helyett - a teszt_konfig.cmd ide iranyitja
+Fajl "$Cel\_C_TEMP\teszt.txt" 'teszt C:\TEMP tartalom'
 
 # PST: 1 MB veletlen tartalom
 Mappa "$Cel\PST" | Out-Null

@@ -12,6 +12,9 @@ set /a RAHAGYAS_MB=300
 rem A PST mappa: a mentes ezt viszi at, az Outlook lista ehhez viszonyit
 set "SRC_PST=%USERPROFILE%\PST"
 
+rem A C:\TEMP mappa helye
+set "C_TEMP_FORRAS=%SystemDrive%\TEMP"
+
 rem Tanusitvany tarolok (certmgr.msc - Aktualis felhasznalo), szokozzel elvalasztva:
 rem My = Szemelyes, AddressBook = Masok. A kulcsosak jelszoval vedett .pfx-be kerulnek.
 set "TAN_TAROLOK=My AddressBook"
