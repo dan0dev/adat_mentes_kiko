@@ -39,8 +39,8 @@ if not exist "%OSSZ_FAJL%" (
     set "OSSZ_HELY=%TEMP%"
     set "OSSZ_FAJL=%TEMP%\%OSSZ_NEV%"
 )
->"%OSSZ_FAJL%" echo ESZKÖZCSERE SEGÉDLET – %MOD_NEV% – összegzés
->>"%OSSZ_FAJL%" echo Dátum: %DATUM_SZEP% %time:~0,5%    Felhasználó: %USERNAME%    Számítógép: %COMPUTERNAME%
+rem Rovid, kulcsszavas: a fajl neve megmondja, mi ez - a tartalom csak a sorok
+>"%OSSZ_FAJL%" echo %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP% %time:~0,5% · %MOD_NEV%
 >>"%OSSZ_FAJL%" echo.
 
 rem Kezi teendok listaja
@@ -54,7 +54,7 @@ for /l %%i in (1,1,%OSSZES%) do %UI% :OSSZ_SOR %%i
 %UI% :VONAL
 echo     Sikeres: %DB_OK%     Hibás: %DB_HIBA%     Kihagyva: %DB_KIHAGY%     Időtartam: %E_PERC% perc %E_MP% mp
 >>"%OSSZ_FAJL%" echo.
->>"%OSSZ_FAJL%" echo Sikeres: %DB_OK%    Hibás: %DB_HIBA%    Kihagyva: %DB_KIHAGY%    Időtartam: %E_PERC% perc %E_MP% mp
+>>"%OSSZ_FAJL%" echo Sikeres %DB_OK% · Hibás %DB_HIBA% · Kihagyva %DB_KIHAGY% · %E_PERC% perc %E_MP% mp
 echo.
 if %DB_HIBA% GTR 0 (
     %UI% :SAV HIBA "FIGYELEM: %DB_HIBA% tétel hibával zárult – nézd át a listát és a naplót."

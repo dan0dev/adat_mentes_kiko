@@ -1,6 +1,7 @@
 # ==========================================================
 #  A talcara rogzitett ikonok listaja - lib\talca.cmd futtatja
 #  Csak olvas. Bemenet: TALCA_FAJL - a kimeneti fajl, VERZIO, SZERZO - a lablechez
+#  Rovid, kulcsszavas - a fajl neve (talca.txt) mar megmondja, mi ez.
 #  Kimenet: a talalt ikonok szama
 #  Asztali programok: .lnk a User Pinned\TaskBar mappaban.
 #  Store appok: az azonositojuk a Taskband Favorites ertekeben van,
@@ -9,14 +10,14 @@
 $ErrorActionPreference = 'Stop'
 $tb = Join-Path $env:APPDATA 'Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar'
 $L = New-Object System.Collections.Generic.List[string]
-$L.Add('A TÁLCÁRA RÖGZÍTETT IKONOK – ' + $env:USERNAME + ' / ' + $env:COMPUTERNAME + ' – ' + (Get-Date -Format 'yyyy. MM. dd. HH:mm'))
-$L.Add('Újra rögzítés az új gépen: Start – keresd meg a programot – jobb kattintás – Rögzítés a tálcára')
+$L.Add($env:USERNAME + ' · ' + $env:COMPUTERNAME + ' · ' + (Get-Date -Format 'yyyy. MM. dd.'))
+$L.Add('Újra: Start › program › jobb klikk › Rögzítés a tálcára')
 $L.Add('')
 $db = 0
 
 if (Test-Path -LiteralPath $tb) {
     Get-ChildItem -LiteralPath $tb -Filter *.lnk -File -Force | Sort-Object Name | ForEach-Object {
-        $L.Add('   – ' + $_.BaseName); $db++
+        $L.Add('– ' + $_.BaseName); $db++
     }
 }
 
@@ -29,12 +30,12 @@ if ($fav) {
         try { Get-StartApps | ForEach-Object { $nevek[$_.AppID] = $_.Name } } catch { }
         foreach ($id in $ids) {
             $n = $nevek[$id]; if (-not $n) { $n = $id }
-            $L.Add('   – ' + $n + '   (Store-alkalmazás)'); $db++
+            $L.Add('– ' + $n + ' (Store)'); $db++
         }
     }
 }
 
-if ($db -eq 0) { $L.Add('   – nincs rögzített ikon') }
+if ($db -eq 0) { $L.Add('– nincs') }
 $L.Add('')
 $L.Add('Eszközcsere segédlet ' + $env:VERZIO + ' · Készítette: ' + $env:SZERZO)
 $L | Out-File -LiteralPath $env:TALCA_FAJL -Encoding UTF8

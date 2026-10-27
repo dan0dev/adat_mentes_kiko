@@ -35,7 +35,7 @@ foreach ($v in $sorrend) {
     if ($v -eq 'regi_mentes') {
         $todo = "$mappa\_LEFT-TO-DO.txt"
         if (-not (Test-Path $todo)) { $gond.Add('nincs _LEFT-TO-DO.txt') }
-        elseif (-not ([IO.File]::ReadAllText($todo, [Text.Encoding]::UTF8)).Contains('3. VISSZAÁLLÍTÁS EREDMÉNYE')) { $gond.Add('a _LEFT-TO-DO.txt nem kapta meg a 3. részt') }
+        elseif (-not ([IO.File]::ReadAllText($todo, [Text.Encoding]::UTF8)).Contains('VISSZAÁLLÍTÁS – ')) { $gond.Add('a _LEFT-TO-DO.txt nem kapta meg a visszaállítás részt') }
         if (Test-Path "$mappa\_TEENDOK.txt") { $gond.Add('uj _TEENDOK.txt keszult a regi _LEFT-TO-DO.txt melle') }
         $vo = @(Get-ChildItem $mappa -Filter '_VISSZAALLITAS_*.txt'); $ex = @(Get-ChildItem $mappa -Filter '_EXPORT_*.txt')
         if ($vo.Count -ne 1) { $gond.Add("_VISSZAALLITAS_*.txt: $($vo.Count) db, nem 1") }

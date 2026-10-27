@@ -1,7 +1,7 @@
 # ==========================================================
 #  Kezzel atnezendo mappak - lib\atnezendo.cmd futtatja
 #  Csak olvas, semmit nem masol. Soronkent egy talalat:
-#    meret   utvonal   - megjegyzes
+#    meret  utvonal  - megjegyzes, csak ha van (rovid, kulcsszavas)
 #  1. A szabvanyos mappak - Letoltesek, Asztal, Dokumentumok... -: hol vannak,
 #     helyben vagy a halozaton, es mekkorak.
 #  2. A nem szabvanyos mappak a C: gyokereben es a felhasznalo mappajaban,
@@ -76,9 +76,12 @@ function Szoveg($b) {
     return '< 1 MB'
 }
 function Sor($b, $ut, $megj) {
-    if ($b -eq -1) { $megj += ', mérete nem mérhető – nincs jogosultság' }
-    if ($b -eq -2) { $megj += ', mérete nem ismert – időkorlát' }
-    '{0,8}   {1}   – {2}' -f (Szoveg $b), $ut, $megj
+    if ($b -eq -1) { $megj += ', nincs jogosultság' }
+    if ($b -eq -2) { $megj += ', időkorlát' }
+    $megj = $megj.TrimStart(',', ' ')
+    $s = '{0,8}  {1}' -f (Szoveg $b), $ut
+    if ($megj) { $s += '  – ' + $megj }
+    $s
 }
 function VanPst($ut) {
     $e = $ut.TrimEnd('\') + '\'
@@ -113,7 +116,7 @@ foreach ($k in $ismert) {
     }
     if ($hely -eq 'helyi' -and $ut -match '\\OneDrive') { $hely = 'OneDrive – szinkronizált' }
     if ($hely -ne 'helyi') {
-        if ($k[3]) { $szabvanyos += @{ ut = $ut; sor = ('{0,8}   {1}   – {2}' -f '-', $ut, ($k[0] + ', ' + $hely + ' – nem kell kézzel menteni')) } }
+        if ($k[3]) { $szabvanyos += @{ ut = $ut; sor = ('{0,8}  {1}  – {2}' -f '-', $ut, ($k[0] + ', ' + $hely + ', nem kell menteni')) } }
         continue
     }
     if (-not (Test-Path -LiteralPath $ut)) { continue }
@@ -143,16 +146,16 @@ foreach ($s in $szabvanyos) {
     if ($s.sor) { $kimenet.Add($s.sor); continue }
     $b = $meret[$s.ut]
     if ($b -eq 0 -and -not $s.mindig) { continue }
-    $megj = $s.nev + ', helyi – nincs a hálózaton'
-    if (VanPst $s.ut) { $megj += ', csatolt PST van benne' }
+    $megj = $s.nev
+    if (VanPst $s.ut) { $megj += ', PST van benne' }
     $listazott.Add($s.ut)
     $kimenet.Add((Sor $b $s.ut $megj))
 }
 # A lemert mappak meret szerint csokkenoen, a nem lemertek a vegen
 $talalat = @($egyeb | Where-Object { $meret[$_] -ne 0 } | ForEach-Object { New-Object PSObject -Property @{ ut = $_; meret = $meret[$_] } })
 foreach ($t in ($talalat | Sort-Object @{ e = { if ($_.meret -lt 0) { 0 } else { 1 } }; Descending = $true }, @{ e = 'meret'; Descending = $true })) {
-    $megj = 'nem szabványos mappa'
-    if (VanPst $t.ut) { $megj += ', csatolt PST van benne' }
+    $megj = ''
+    if (VanPst $t.ut) { $megj += ', PST van benne' }
     $listazott.Add($t.ut)
     $kimenet.Add((Sor $t.meret $t.ut $megj))
 }
@@ -162,7 +165,7 @@ $pstMappak = $psts | ForEach-Object { Split-Path $_ -Parent } | Select-Object -U
 foreach ($m in $pstMappak) {
     $benne = $false
     foreach ($l in $listazott) { if (($m.TrimEnd('\') + '\').StartsWith($l.TrimEnd('\') + '\', [StringComparison]::OrdinalIgnoreCase)) { $benne = $true } }
-    if (-not $benne) { $kimenet.Add(('{0,8}   {1}   – {2}' -f '-', $m, 'csatolt PST mappája')) }
+    if (-not $benne) { $kimenet.Add(('{0,8}  {1}  – {2}' -f '-', $m, 'csatolt PST mappája')) }
 }
 if ($allapot.lekeses) { $kimenet.Add('         A mérés ' + $korlat + ' mp után leállt – a többi mappa méretét nem mértem.') }
 

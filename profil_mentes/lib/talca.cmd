@@ -17,12 +17,14 @@ if defined TALCA_DB if exist "%TALCA_FAJL%" goto :KESZ
 %UI% :RESZLET "a PowerShell nem elérhető, csak az asztali programok kerülnek a listára"
 set /a TALCA_DB=0
 set "_tb=%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar"
->"%TALCA_FAJL%" echo A TÁLCÁRA RÖGZÍTETT IKONOK – %USERNAME% / %COMPUTERNAME%
+>"%TALCA_FAJL%" echo %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP%
 >>"%TALCA_FAJL%" echo.
 for %%f in ("%_tb%\*.lnk") do (
-    >>"%TALCA_FAJL%" echo    - %%~nf
+    >>"%TALCA_FAJL%" echo – %%~nf
     set /a TALCA_DB+=1
 )
+>>"%TALCA_FAJL%" echo.
+>>"%TALCA_FAJL%" echo Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO%
 :KESZ
 if "%TALCA_DB%"=="0" (
     %UI% :JELOL KIHAGYVA "nincs rögzített ikon a tálcán"
