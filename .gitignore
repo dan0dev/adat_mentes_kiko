@@ -1,2 +1,31 @@
+# Teszt futtatások kimenete: átiratok, képernyőképek (a futtat.ps1 / mind.ps1 újragenerálja)
 tesztkornyezet/kimenet/
+
+# Claude Code / superpowers munkamappa és helyi beállítások
 .superpowers/
+.claude/
+
+# Ha a repo mappájában készül mentés: az ne kerüljön be (a tesztmentés a %TEMP%-ben van)
+/Mentes/
+
+# Ideiglenes és biztonsági másolatok
+*.tmp
+*.bak
+*.orig
+*.rej
+*~
+*.swp
+*.swo
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+
+# Szerkesztők
+.vscode/
+.idea/
