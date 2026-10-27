@@ -1,0 +1,3 @@
+7-Zip 23.01 (x64)  |  23.01  |  Igor Pavlov
+Google Chrome  |  130.0  |  Google LLC
+Microsoft 365  |  16.0  |  Microsoft Corporation

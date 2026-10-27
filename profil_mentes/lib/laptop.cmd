@@ -2,12 +2,12 @@
 @exit /b
 
 rem ==========================================================
-rem  Laptop beallitasok: fedel lehajtasa es BitLocker / MBAM
+rem  Laptop beallitasa: fedel lehajtasa es BitLocker / MBAM
 rem  Hivas: %LAPTOP% :FEDEL  vagy  %LAPTOP% :BITLOCKER
 rem ==========================================================
 
 :FEDEL
-rem Fedel lehajtasakor vegzett muvelet = 0, vagyis Nem tortenik semmi.
+rem Fedel lehajtasakor vegzett muvelet = 0, vagyis Nincs muvelet.
 rem Halozati - AC - es akkumulatoros - DC - uzemre is, az aktiv energiasemaban.
 set "F_HIBA=0"
 set "FEDEL_OK=0"
@@ -25,7 +25,7 @@ for /f "tokens=2 delims=:" %%v in ('powercfg /query SCHEME_CURRENT SUB_BUTTONS L
 )
 if defined F_AC set "F_AC=!F_AC: =!"
 if defined F_DC set "F_DC=!F_DC: =!"
->>"%LOG%" echo        Visszaolvasva: halozat=!F_AC! akkumulator=!F_DC!
+>>"%LOG%" echo        Visszaolvasva: hálózat=!F_AC! akkumulátor=!F_DC!
 
 rem Csoporthazirend: ha a ceg szabalyozza, az felulirja a helyi beallitast
 set "F_POL="
@@ -42,38 +42,38 @@ if defined F_PAC if not "!F_PAC!"=="0x0" set "F_POL_ROSSZ=1"
 if defined F_PDC if not "!F_PDC!"=="0x0" set "F_POL_ROSSZ=1"
 
 if not defined F_AC (
-    %UI% :JELOL HIBA "a beallitas nem olvashato vissza - van fedele ennek a gepnek?"
+    %UI% :JELOL HIBA "a beállítás nem olvasható vissza" "Van fedele ennek a gépnek?"
     goto :eof
 )
 if "%F_POL_ROSSZ%"=="1" (
-    %UI% :JELOL HIBA "csoporthazirend felulirja - halozat=!F_PAC! akku=!F_PDC! - ezt csak az IT tudja modositani"
+    %UI% :JELOL HIBA "csoportházirend felülírja" "hálózat=!F_PAC! akkumulátor=!F_PDC! – ezt csak az IT tudja módosítani."
     goto :eof
 )
 if "!F_AC!"=="0x00000000" if "!F_DC!"=="0x00000000" (
     set "FEDEL_OK=1"
-    %UI% :JELOL OK "beallitva es ellenorizve: halozatrol es akkumulatorrol is - Nem tortenik semmi"
+    %UI% :JELOL OK "beállítva és ellenőrizve" "Hálózatról és akkumulátorról is: Nincs művelet."
     goto :eof
 )
 if "%F_HIBA%"=="1" (
-    %UI% :JELOL HIBA "nem sikerult beallitani - nincs jogosultsag, futtasd rendszergazdakent"
+    %UI% :JELOL HIBA "nem sikerült beállítani" "Nincs jogosultság – futtasd rendszergazdaként."
 ) else (
-    %UI% :JELOL HIBA "a beallitas nem lett ervenyes - halozat=!F_AC! akku=!F_DC!"
+    %UI% :JELOL HIBA "a beállítás nem lett érvényes" "hálózat=!F_AC! akkumulátor=!F_DC!"
 )
 goto :eof
 
 :BITLOCKER
 rem MBAMAgent, 2 mp, MBAMClientUI, 2 mp, MBAMAgent ujra
 if not exist "%MBAM_DIR%\MBAMAgent.exe" (
-    %UI% :JELOL HIBA "MBAMAgent.exe nem talalhato - telepitve van az MBAM kliens?"
+    %UI% :JELOL HIBA "MBAMAgent.exe nem található" "Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR%"
     goto :eof
 )
 if not exist "%MBAM_DIR%\MBAMClientUI.exe" (
-    %UI% :JELOL HIBA "MBAMClientUI.exe nem talalhato - telepitve van az MBAM kliens?"
+    %UI% :JELOL HIBA "MBAMClientUI.exe nem található" "Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR%"
     goto :eof
 )
 >>"%LOG%" echo        MBAM mappa: %MBAM_DIR%
 
-echo        1/3 MBAMAgent inditasa...
+%UI% :RESZLET "1/3 MBAMAgent indítása..."
 ver >nul
 start "" "%MBAM_DIR%\MBAMAgent.exe"
 if errorlevel 1 (
@@ -82,7 +82,7 @@ if errorlevel 1 (
 )
 timeout /t 2 /nobreak >nul
 
-echo        2/3 MBAMClientUI inditasa...
+%UI% :RESZLET "2/3 MBAMClientUI indítása..."
 ver >nul
 start "" "%MBAM_DIR%\MBAMClientUI.exe"
 if errorlevel 1 (
@@ -91,12 +91,12 @@ if errorlevel 1 (
 )
 timeout /t 2 /nobreak >nul
 
-echo        3/3 MBAMAgent ujra...
+%UI% :RESZLET "3/3 MBAMAgent újra..."
 ver >nul
 start "" "%MBAM_DIR%\MBAMAgent.exe"
 if errorlevel 1 (
-    %UI% :JELOL HIBA "az MBAMAgent masodszor nem indult el"
+    %UI% :JELOL HIBA "az MBAMAgent másodszor nem indult el"
     goto :eof
 )
-%UI% :JELOL OK "elinditva - kovesd a megjeleno BitLocker ablakot"
+%UI% :JELOL OK "elindítva" "Kövesd a megjelenő BitLocker ablakot."
 goto :eof

@@ -35,7 +35,7 @@ rem ==========================================================
 %AA_TIPUS%   ".ppsx"  "PowerPoint.SlideShow.12"           "Microsoft PowerPoint"
 %AA_TIPUS%   ".pps"   "PowerPoint.SlideShow.8"            "Microsoft PowerPoint"
 
-%AA_PROGRAM% "PDF - Acrobat Reader"
+%AA_PROGRAM% "PDF – Acrobat Reader"
 %AA_TIPUS%   ".pdf"   "%PDF_ID%"                          "Adobe Acrobat Reader"
 
 %AA_PROGRAM% "Chrome"
@@ -49,6 +49,6 @@ rem             Megnevezes           Tipus    F/U  Vart ProgId resz
 %AA_ELLENORIZ%  "Excel"              ".xlsx"  F    "Excel."
 %AA_ELLENORIZ%  "PowerPoint"         ".pptx"  F    "PowerPoint."
 %AA_ELLENORIZ%  "PDF"                ".pdf"   F    "Acro"
-%AA_ELLENORIZ%  "Bongeszo - http"    "http"   U    "ChromeHTML"
-%AA_ELLENORIZ%  "Bongeszo - https"   "https"  U    "ChromeHTML"
-%AA_ELLENORIZ%  "Weboldal - .html"   ".html"  F    "ChromeHTML"
+%AA_ELLENORIZ%  "Böngésző – http"    "http"   U    "ChromeHTML"
+%AA_ELLENORIZ%  "Böngésző – https"   "https"  U    "ChromeHTML"
+%AA_ELLENORIZ%  "Weboldal – .html"   ".html"  F    "ChromeHTML"

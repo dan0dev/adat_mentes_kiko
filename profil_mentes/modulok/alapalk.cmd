@@ -6,39 +6,40 @@ rem  Kilepesi kod: 0 = vegigment, osszegzes jon; 1 = megszakitva
 rem ==========================================================
 
 cls
-%UI% :CIM "ALAPERTELMEZETT ALKALMAZASOK"
-echo    Word, Excel, PowerPoint, Adobe Acrobat Reader - PDF, Chrome - bongeszo
+%UI% :CIM "Alapértelmezett alkalmazások"
+echo   Word, Excel, PowerPoint, Adobe Acrobat Reader – PDF, Chrome – böngésző
 echo.
-echo    A Windows nem engedi, hogy egy script kozvetlenul atirja a felhasznalo
-echo    alapertelmezett alkalmazasait. A Microsoft altal tamogatott mod: egy
-echo    beallitofajlt rogzitunk, amit a Windows a bejelentkezeskor maga alkalmaz.
+echo   A Windows nem engedi, hogy egy program közvetlenül átírja a felhasználó
+echo   alapértelmezett alkalmazásait. A Microsoft által támogatott mód: egy
+echo   beállítófájlt rögzítünk, amelyet a Windows bejelentkezéskor maga alkalmaz.
 echo.
 if "%ADMIN%"=="1" (
     set "AA_MOD=beallit"
-    echo    !C_ZOLD!Rendszergazdakent fut:!C_0! a beallitofajl elkeszul es rogzitesre kerul.
-    echo    Utana a felhasznalo jelentkezzen ki es be, majd ellenorizd ugyanitt,
-    echo    a script sima inditasaval, az 5-os menuponttal.
+    echo   !C_ZOLD!Rendszergazdaként fut:!C_0! a beállítófájl elkészül és rögzítésre kerül.
+    echo   Utána a felhasználónak ki és be kell jelentkeznie, majd ellenőrizd ugyanitt,
+    echo   a segédlet sima indításával, az 5. menüponttal.
 ) else (
     set "AA_MOD=ellenoriz"
-    echo    !C_SARGA!Felhasznalokent fut:!C_0! most csak ellenorzom a jelenlegi beallitasokat.
-    echo    A beallitashoz: jobb klikk a scripten - Futtatas rendszergazdakent - 5-os menu.
+    echo   !C_SARGA!Felhasználóként fut:!C_0! most csak ellenőrzöm a jelenlegi beállításokat.
+    echo   A beállításhoz: jobb kattintás a segédleten – Futtatás rendszergazdaként –
+    echo   5. menüpont.
 )
 echo.
-%UI% :VALASZT IN "   Indulhat"
+%UI% :VALASZT IN "Indulhat?"
 if errorlevel 2 goto :MEGSZAKITVA
 
 set /a OSSZES=1
-set "LOG=%TEMP%\alapertelmezett_alk_log.txt"
->>"%LOG%" echo ===== ALAPERTELMEZETT ALKALMAZASOK %date% %time% - %USERNAME% / %COMPUTERNAME% =====
+set "LOG=%TEMP%\alapertelmezett_alk_naplo.txt"
+>>"%LOG%" echo ===== ALAPÉRTELMEZETT ALKALMAZÁSOK %date% %time% – %USERNAME% / %COMPUTERNAME% =====
 
 %UI% :IDO START_MP
 cls
-%UI% :CIM "ALAPERTELMEZETT ALKALMAZASOK"
+%UI% :CIM "Alapértelmezett alkalmazások folyamatban"
 if "%AA_MOD%"=="beallit" (
-    %UI% :FEJLEC "Alapertelmezett alkalmazasok beallitasa"
+    %UI% :FEJLEC "Társítások beállítása"
     %ALAPALK% :BEALLIT
 ) else (
-    %UI% :FEJLEC "Alapertelmezett alkalmazasok ellenorzese"
+    %UI% :FEJLEC "Társítások ellenőrzése"
     %ALAPALK% :ELLENORIZ
 )
 exit /b 0

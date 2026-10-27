@@ -2,42 +2,119 @@
 @exit /b
 
 rem ==========================================================
-rem  Kepernyo, lepesek es eredmenyek
+rem  Kepernyo, lepesek es eredmenyek - minden rajzolas itt tortenik,
+rem  a modulok csak a szoveget adjak.
 rem  Hivas: %UI% :CIMKE parameterek
+rem
+rem  Elrendezes: 2 szokoz behuzas, a keretek es vonalak 70 oszlop szelesek,
+rem  egy sor sem hosszabb 76 oszlopnal. Az allapotjelek mindig 10 karakteresek.
+rem  A fajl UTF-8: a futas a 65001 kodlapon megy.
 rem ==========================================================
 
+:NYITO
+rem A kezdokepernyo kerete: nev, verzio, egy soros leiras
+set "_l=   ESZKÖZCSERE SEGÉDLET"
+set "_r=Verzió: %VERZIO%  "
+call :HOSSZ _r _rh
+set /a _lh=68-_rh
+call :PAD _l %_lh%
+echo.
+echo   !C_KEK!╔════════════════════════════════════════════════════════════════════╗!C_0!
+echo   !C_KEK!║!C_0!                                                                    !C_KEK!║!C_0!
+echo   !C_KEK!║!C_0!!C_FEHER!!_l!!C_0!!_r!!C_KEK!║!C_0!
+echo   !C_KEK!║!C_0!   Felhasználói adatok mentése és visszaállítása eszközcseréhez     !C_KEK!║!C_0!
+echo   !C_KEK!║!C_0!                                                                    !C_KEK!║!C_0!
+echo   !C_KEK!╚════════════════════════════════════════════════════════════════════╝!C_0!
+echo.
+set "UI_BEHUZAS=  "
+goto :eof
+
 :CIM
+rem %1 = a kepernyo cime - minden kepernyo teteje a kezdokepernyon kivul
 echo.
-echo  !C_KEK!==========================================================!C_0!
-echo  !C_FEHER!  %~1!C_0!
-echo  !C_KEK!==========================================================!C_0!
+echo   !C_FEHER!ESZKÖZCSERE SEGÉDLET!C_0!  ›  !C_FEHER!%~1!C_0!
+echo   !C_KEK!══════════════════════════════════════════════════════════════════════!C_0!
 echo.
+set "UI_BEHUZAS=  "
+goto :eof
+
+:SZAKASZ
+rem %1 = szakaszcim - vonal a cimmel, 70 oszlop
+set "_s=── %~1 ──────────────────────────────────────────────────────────────────────"
+set "_s=!_s:~0,70!"
+echo   !C_KEK!!_s!!C_0!
+goto :eof
+
+:VONAL
+echo   !C_KEK!──────────────────────────────────────────────────────────────────────!C_0!
+goto :eof
+
+:ADAT
+rem %1 = cimke, %2 = ertek, %3 = SARGA: az ertek sargan
+set "_c=%~1"
+set "_e=%~2"
+call :PAD _c 16
+if /I "%~3"=="SARGA" (echo      !_c!!C_SARGA!!_e!!C_0!) else (echo      !_c!!C_FEHER!!_e!!C_0!)
+goto :eof
+
+:MENU
+rem %1 = billentyu, %2 = menupont neve, %3 = rovid leiras
+set "_m=%~2"
+call :PAD _m 30
+echo      !C_FEHER!%~1!C_0!   !_m!!C_SZURKE!%~3!C_0!
+goto :eof
+
+:LABLEC
+rem %1 = NYITO: csak a keszito; TELJES: nev, verzio es keszito
+call :VONAL
+if /I "%~1"=="TELJES" (
+    echo      !C_SZURKE!Eszközcsere segédlet %VERZIO%  ·  Készítette: %SZERZO%!C_0!
+) else (
+    echo      !C_SZURKE!Készítette: %SZERZO%!C_0!
+)
 goto :eof
 
 :FEJLEC
-rem Uj lepes kezdete: sorszam, ablakcim, log
+rem Uj lepes kezdete: sorszam, ablakcim, naplo
 set /a LEPES+=1
 set "NEV_%LEPES%=%~1"
-title [%LEPES%/%OSSZES%] %~1 - %MOD_NEV%
+set "_n= %LEPES%"
+set "_n=!_n:~-2!"
+title [%LEPES%/%OSSZES%] %~1 – %MOD_NEV%
 echo.
-echo  !C_KEK![%LEPES%/%OSSZES%]!C_0! !C_FEHER!%~1!C_0!
-echo        folyamatban...
+echo   !C_KEK![!_n!/%OSSZES%]!C_0!  !C_FEHER!%~1!C_0!
+set "UI_BEHUZAS=           "
 >>"%LOG%" echo.
 >>"%LOG%" echo [%time%] [%LEPES%/%OSSZES%] %~1
 goto :eof
 
+:RESZLET
+rem %1 = reszletezo sor a lepes alatt, szurken - a naploba is
+echo !UI_BEHUZAS!!C_SZURKE!%~1!C_0!
+>>"%LOG%" echo        %~1
+goto :eof
+
 :JELOL
-rem %1 = OK / HIBA / KIHAGYVA / NEMKERT, %2 = uzenet
+rem %1 = OK / HIBA / KIHAGYVA / NEMKERT, %2 = uzenet, %3 = reszlet, kulon sorban
 set "E_%LEPES%=%~1"
 set "M_%LEPES%=%~2"
+set "D_%LEPES%=%~3"
 if "%~1"=="OK" set /a DB_OK+=1
 if "%~1"=="HIBA" set /a DB_HIBA+=1
 if "%~1"=="KIHAGYVA" set /a DB_KIHAGY+=1
-if "%~1"=="OK" echo        !C_ZOLD![OK]!C_0! %~2
-if "%~1"=="HIBA" echo        !C_PIROS![HIBA]!C_0! %~2
-if "%~1"=="KIHAGYVA" echo        !C_SARGA![KIHAGYVA]!C_0! %~2
-if "%~1"=="NEMKERT" echo        !C_SZURKE![ - ]!C_0! %~2
->>"%LOG%" echo        Eredmeny: %~1 - %~2
+call :JEL "%~1"
+echo            !_jel!  %~2
+if not "%~3"=="" call :RESZLET "%~3"
+>>"%LOG%" echo        Eredmény: %~1 – %~2
+if not "%~3"=="" >>"%LOG%" echo        %~3
+goto :eof
+
+:JEL
+rem %1 = allapot. Kimenet: _jel - a 10 karakteres, szines allapotjel
+set "_jel=!C_SZURKE![   –    ]!C_0!"
+if "%~1"=="OK" set "_jel=!C_ZOLD![   OK   ]!C_0!"
+if "%~1"=="HIBA" set "_jel=!C_PIROS![  HIBA  ]!C_0!"
+if "%~1"=="KIHAGYVA" set "_jel=!C_SARGA![KIHAGYVA]!C_0!"
 goto :eof
 
 :OSSZ_SOR
@@ -45,13 +122,66 @@ rem %1 = lepes sorszama - egy sor az osszegzesben, a kepernyon es a fajlban
 set "_st=!E_%~1!"
 set "_nv=!NEV_%~1!"
 set "_ms=!M_%~1!"
-set "_pad=!_nv!                              "
-set "_pad=!_pad:~0,24!"
-if "!_st!"=="OK" echo    !C_ZOLD![OK]      !C_0!!_pad! !_ms!
-if "!_st!"=="HIBA" echo    !C_PIROS![HIBA]    !C_0!!_pad! !_ms!
-if "!_st!"=="KIHAGYVA" echo    !C_SARGA![KIHAGYVA]!C_0!!_pad! !_ms!
-if "!_st!"=="NEMKERT" echo    !C_SZURKE![ - ]     !C_0!!_pad! !_ms!
->>"%OSSZ_FAJL%" echo [!_st!] !_nv! - !_ms!
+set "_dt=!D_%~1!"
+call :JEL "!_st!"
+call :VAG _nv 26
+call :PAD _nv 26
+call :VAG _ms 33
+echo     !_jel!  !_nv! !_ms!
+if defined _dt (
+    >>"%OSSZ_FAJL%" echo [!_st!] !NEV_%~1! – !M_%~1! – !_dt!
+) else (
+    >>"%OSSZ_FAJL%" echo [!_st!] !NEV_%~1! – !M_%~1!
+)
+goto :eof
+
+:SAV
+rem %1 = OK / HIBA / FIGYEL, %2 = szoveg. OK es HIBA: 70 oszlopos szines sav,
+rem FIGYEL: sarga sor. Szinek nelkul sima szoveg.
+set "_t=   %~2"
+if /I "%~1"=="FIGYEL" (
+    echo   !C_SARGA!!_t!!C_0!
+    goto :eof
+)
+call :VAG _t 70
+call :PAD _t 70
+if /I "%~1"=="OK" (echo   !C_ZOLD_HATTER!!_t!!C_0!) else (echo   !C_PIROS_HATTER!!_t!!C_0!)
+goto :eof
+
+:BEKER
+rem %1 = valtozo neve, %2 = kerdes - szabad szoveges valasz Enterrel, pl. meghajto betuje
+set "%~1="
+if not defined _vbs for /f %%b in ('"prompt $H & for %%c in (1) do rem"') do set "_vbs=%%b"
+<nul set /p "=.!_vbs!!UI_BEHUZAS!› %~2 "
+set /p "%~1="
+rem Automatikus futtatasnal a valasz nem latszik - kiirjuk, hogy az atirat olvashato legyen.
+rem Ha elfogytak a valaszok, 255-tel ter vissza, hogy a hivo ne kerdezzen a vegtelensegig.
+if "%VALASZ_SORBOL%"=="1" (
+    if not defined %~1 exit /b 255
+    echo !%~1!
+)
+exit /b 0
+
+:PAD
+rem %1 = valtozo neve, %2 = hossz - szokozokkel feltolti, ha rovidebb
+set "_p=!%~1!                                                                                "
+set "%~1=!_p:~0,%~2!"
+goto :eof
+
+:VAG
+rem %1 = valtozo neve, %2 = hossz - ha hosszabb, levagja, a vegen ... jellel
+set "_v=!%~1!"
+if "!_v:~%~2!"=="" goto :eof
+set /a _vn=%~2-1
+set "_v=!_v:~0,%_vn%!…"
+set "%~1=!_v!"
+goto :eof
+
+:HOSSZ
+rem %1 = valtozo neve, %2 = kimeneti valtozo - a szoveg hossza karakterben
+set "_h=!%~1!"
+set "%~2=0"
+for /l %%i in (0,1,199) do if not "!_h:~%%i,1!"=="" set /a %~2=%%i+1
 goto :eof
 
 :MB_GB
@@ -63,16 +193,18 @@ goto :eof
 :VALASZT
 rem Csendes valasztas a choice helyett - a choice minden rossz billentyunel sipol,
 rem ez csak var tovabb. Egy billentyu, Enter nelkul, kis- es nagybetu is jo.
-rem %1 = a lehetseges betuk, pl. IN, %2 = kerdes, %3 = N: ne irja utana a [I,N]? reszt
+rem %1 = a lehetseges betuk, pl. IN, %2 = kerdes, %3 = N: ne irja utana az [I/N] reszt
+rem A kerdes elott a behuzas es a › jel, utana a lehetosegek: › Indulhat? [I/N]
 rem Kimenet: errorlevel = a valasztott betu sorszama, mint a choice-nal: I = 1, N = 2
 rem VALASZ_SORBOL=1: a valaszt soronkent olvassa a bemenetrol - automatikus futtatashoz
 set "_vb=%~1"
-set "_vk=%~2"
+set "_vk=!UI_BEHUZAS!› %~2"
 if /I not "%~3"=="N" (
     set "_vl="
-    for /l %%i in (0,1,9) do if not "!_vb:~%%i,1!"=="" set "_vl=!_vl!,!_vb:~%%i,1!"
-    set "_vk=!_vk! [!_vl:~1!]?"
+    for /l %%i in (0,1,9) do if not "!_vb:~%%i,1!"=="" set "_vl=!_vl!/!_vb:~%%i,1!"
+    set "_vk=!_vk! [!_vl:~1!]"
 )
+set "_vk=!_vk! "
 rem Pont, majd visszatorles - kulonben a set /p levagja a sor eleji szokozoket
 if not defined _vbs for /f %%b in ('"prompt $H & for %%c in (1) do rem"') do set "_vbs=%%b"
 <nul set /p "=.!_vbs!!_vk!"

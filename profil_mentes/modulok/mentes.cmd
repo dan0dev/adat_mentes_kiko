@@ -1,6 +1,6 @@
 rem ==========================================================
-rem  1. Adatok mentese (eszkozcsere regi)
-rem  4. Teszt futtatas - TESZTMOD=1: vegigellenoriz, de nem masol
+rem  1. Adatok mentese (a regi gepen)
+rem  2. Probafuttatas - TESZTMOD=1: vegigellenoriz, de nem masol
 rem
 rem  A mentendo tetelek: config\tetelek.cmd
 rem  Kilepesi kod: 0 = vegigment, osszegzes jon; 1 = megszakitva
@@ -9,28 +9,31 @@ rem ==========================================================
 %ELLENORZES% :FELHASZNALO
 if errorlevel 1 goto :MEGSZAKITVA
 if "%TESZTMOD%"=="1" (%ELLENORZES% :MEGHAJTO JELEZ) else (%ELLENORZES% :MEGHAJTO KELL)
+if errorlevel 1 goto :MEGSZAKITVA
 
 %TETELEK% :BETOLT
-rem Lepesek: a tetelek, a programlista, a talca es az Outlook lista, tesztnel a kornyezet is
+rem Lepesek: a tetelek, a programlista, a talca es az Outlook-lista, probafuttatasnal a kornyezet is
 set /a OSSZES=T_DB+3+TESZTMOD
 set "CEL=%ROOT%\%USERNAME%_%COMPUTERNAME%"
 
 rem ---------- Elokeszites ----------
 cls
 if "%TESZTMOD%"=="1" (
-    %UI% :CIM "TESZT FUTTATAS - a mentes probaja"
-    echo    !C_SARGA!Teszt mod: minden lepest vegigellenoriz, de semmit nem masol es nem hoz letre.!C_0!
+    %UI% :CIM "Próbafuttatás – előkészítés"
+    echo   !C_SARGA!Próbafuttatás: minden lépést ellenőrzök, de nem másolok semmit,!C_0!
+    echo   !C_SARGA!és a külső meghajtón sem hozok létre semmit.!C_0!
     echo.
 ) else (
-    %UI% :CIM "ADATOK MENTESE - ELOKESZITES"
+    %UI% :CIM "Adatok mentése – előkészítés"
 )
-echo    Cel mappa  : %CEL%
+%UI% :ADAT "Mentés helye" "%CEL%"
 echo.
-echo    Mentendo tetelek:
-%TETELEK% :LISTA "Telepitett programok listaja" "Talca ikonjai - lista" "Outlook lista - csatolt PST-k"
+echo   Mentendő tételek:
+%TETELEK% :LISTA "Programlista" "Tálcaikonok listája" "Outlook-lista"
 if exist "%CEL%\" (
     echo.
-    echo    !C_SARGA!Mar letezik mentes ennek a gepnek. A meglevo fajlok frissulnek, semmi nem torlodik.!C_0!
+    echo   !C_SARGA!Ennek a gépnek már van mentése: a meglévő fájlok frissülnek,!C_0!
+    echo   !C_SARGA!semmi nem törlődik.!C_0!
 )
 
 %OUTLOOK% :LISTA_KESZIT
@@ -39,7 +42,7 @@ if "%OL_STOP%"=="1" goto :MEGSZAKITVA
 %ATNEZENDO% :KERES
 
 echo.
-echo    Hely ellenorzese, egy pillanat...
+echo   Helyellenőrzés, egy pillanat...
 %TETELEK% :FORRASOK
 set "PS_BETU=%DRIVE%:"
 %ELLENORZES% :HELY
@@ -49,40 +52,40 @@ if "%HELY_STOP%"=="1" goto :MEGSZAKITVA
 
 echo.
 if "%TESZTMOD%"=="1" goto :TESZT_INDUL
-%UI% :VALASZT IN "   Indulhat a mentes"
+%UI% :VALASZT IN "Indulhat a mentés?"
 if errorlevel 2 goto :MEGSZAKITVA
 
 mkdir "%CEL%" 2>nul
 if not exist "%CEL%\" (
-    echo    !C_PIROS!Nem sikerult letrehozni a mentes mappat: !CEL!!C_0!
+    echo   !C_PIROS!A mentés mappája nem hozható létre: !CEL!!C_0!
     goto :MEGSZAKITVA
 )
-set "LOG=%CEL%\mentes_log.txt"
->>"%LOG%" echo ===== MENTES %date% %time% - %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\mentes_log.txt"
+set "LOG=%CEL%\mentes_naplo.txt"
+>>"%LOG%" echo ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\mentes_naplo.txt"
 
 %UI% :IDO START_MP
 cls
-%UI% :CIM "ADATOK MENTESE FOLYAMATBAN"
-echo    Ne huzd ki a kulso meghajtot, amig a script fut.
+%UI% :CIM "Adatok mentése folyamatban"
+echo   A folyamat végéig ne húzd ki a külső meghajtót.
 goto :LEPESEK
 
 :TESZT_INDUL
-%UI% :VALASZT IN "   Indulhat a teszt"
+%UI% :VALASZT IN "Indulhat a próbafuttatás?"
 if errorlevel 2 goto :MEGSZAKITVA
-set "LOG=%TEMP%\teszt_log.txt"
+set "LOG=%TEMP%\probafuttatas_naplo.txt"
 del /q "%LOG%" >nul 2>&1
->>"%LOG%" echo ===== TESZT %date% %time% - %USERNAME% / %COMPUTERNAME% =====
+>>"%LOG%" echo ===== PRÓBAFUTTATÁS %date% %time% – %USERNAME% / %COMPUTERNAME% =====
 %UI% :IDO START_MP
 cls
-%UI% :CIM "TESZT FUTTATAS FOLYAMATBAN - semmi nem masolodik"
-%UI% :FEJLEC "Kornyezet"
+%UI% :CIM "Próbafuttatás folyamatban – semmi nem másolódik"
+%UI% :FEJLEC "Környezet"
 %ELLENORZES% :KORNYEZET
 
 rem ---------- Lepesek ----------
 :LEPESEK
 %TETELEK% :FUTTAT MENT
 
-%UI% :FEJLEC "Telepitett programok"
+%UI% :FEJLEC "Programlista"
 if "%TESZTMOD%"=="1" (
     %PROGRAMLISTA% :KESZIT "%TEMP%\_teszt_apps.txt"
     del /q "%TEMP%\_teszt_apps.txt" >nul 2>&1
@@ -90,7 +93,7 @@ if "%TESZTMOD%"=="1" (
     %PROGRAMLISTA% :KESZIT "%CEL%\apps.txt"
 )
 
-%UI% :FEJLEC "Talca ikonjai"
+%UI% :FEJLEC "Tálcaikonok listája"
 if "%TESZTMOD%"=="1" (
     %TALCA% :LISTA "%TEMP%\_teszt_talca.txt"
     del /q "%TEMP%\_teszt_talca.txt" >nul 2>&1
@@ -98,7 +101,7 @@ if "%TESZTMOD%"=="1" (
     %TALCA% :LISTA "%CEL%\talca.txt"
 )
 
-%UI% :FEJLEC "Outlook lista"
+%UI% :FEJLEC "Outlook-lista"
 %OUTLOOK% :LISTA_MENT
 exit /b 0
 

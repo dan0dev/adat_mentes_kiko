@@ -63,7 +63,7 @@ function MerdMind($utak) {
             if ($futo.Count -or $sor.Count) { $allapot.lekeses = $true }
             break
         }
-        Halad ('   Meres: {0}/{1} mappa kesz, {2}/{3} mp' -f $kesz, $ossz, [int]$ora.Elapsed.TotalSeconds, $korlat)
+        Halad ('   Mérés: {0}/{1} mappa kész, {2}/{3} mp' -f $kesz, $ossz, [int]$ora.Elapsed.TotalSeconds, $korlat)
         Start-Sleep -Milliseconds 100
     }
     Halad ''
@@ -76,9 +76,9 @@ function Szoveg($b) {
     return '< 1 MB'
 }
 function Sor($b, $ut, $megj) {
-    if ($b -eq -1) { $megj += ', merete nem merheto - nincs jog' }
-    if ($b -eq -2) { $megj += ', merete nem ismert - idokorlat' }
-    '{0,8}   {1}   - {2}' -f (Szoveg $b), $ut, $megj
+    if ($b -eq -1) { $megj += ', mérete nem mérhető – nincs jogosultság' }
+    if ($b -eq -2) { $megj += ', mérete nem ismert – időkorlát' }
+    '{0,8}   {1}   – {2}' -f (Szoveg $b), $ut, $megj
 }
 function VanPst($ut) {
     $e = $ut.TrimEnd('\') + '\'
@@ -93,11 +93,11 @@ function Kihagy($nev, $lista) {
 # 1. Szabvanyos mappak: nev, registry ertek, alap mappa, mindig kiirja-e
 $usf = Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
 $ismert = @(
-    @('Letoltesek',   '{374DE290-123F-4565-9164-39C4925E467B}', 'Downloads', $true),
+    @('Letöltések',   '{374DE290-123F-4565-9164-39C4925E467B}', 'Downloads', $true),
     @('Asztal',       'Desktop',     'Desktop',   $true),
     @('Dokumentumok', 'Personal',    'Documents', $true),
-    @('Kepek',        'My Pictures', 'Pictures',  $false),
-    @('Videok',       'My Video',    'Videos',    $false),
+    @('Képek',        'My Pictures', 'Pictures',  $false),
+    @('Videók',       'My Video',    'Videos',    $false),
     @('Zene',         'My Music',    'Music',     $false)
 )
 # Elobb osszegyujti a mappakat, a vegen egyszerre meri le oket
@@ -106,14 +106,14 @@ foreach ($k in $ismert) {
     $ut = $usf.($k[1])
     if ($ut) { $ut = [Environment]::ExpandEnvironmentVariables($ut) } else { $ut = Join-Path $env:USERPROFILE $k[2] }
     $hely = 'helyi'
-    if ($ut.StartsWith('\\')) { $hely = 'halozaton' }
+    if ($ut.StartsWith('\\')) { $hely = 'hálózaton' }
     elseif ($ut -match '^[A-Za-z]:') {
         $d = New-Object IO.DriveInfo($ut.Substring(0, 2))
-        if ($d.DriveType -eq 'Network') { $hely = 'halozati meghajton' }
+        if ($d.DriveType -eq 'Network') { $hely = 'hálózati meghajtón' }
     }
-    if ($hely -eq 'helyi' -and $ut -match '\\OneDrive') { $hely = 'OneDrive - szinkronizalt' }
+    if ($hely -eq 'helyi' -and $ut -match '\\OneDrive') { $hely = 'OneDrive – szinkronizált' }
     if ($hely -ne 'helyi') {
-        if ($k[3]) { $szabvanyos += @{ ut = $ut; sor = ('{0,8}   {1}   - {2}' -f '-', $ut, ($k[0] + ', ' + $hely + ' - nem kell kezzel menteni')) } }
+        if ($k[3]) { $szabvanyos += @{ ut = $ut; sor = ('{0,8}   {1}   – {2}' -f '-', $ut, ($k[0] + ', ' + $hely + ' – nem kell kézzel menteni')) } }
         continue
     }
     if (-not (Test-Path -LiteralPath $ut)) { continue }
@@ -143,7 +143,7 @@ foreach ($s in $szabvanyos) {
     if ($s.sor) { $kimenet.Add($s.sor); continue }
     $b = $meret[$s.ut]
     if ($b -eq 0 -and -not $s.mindig) { continue }
-    $megj = $s.nev + ', helyi - nincs a halozaton'
+    $megj = $s.nev + ', helyi – nincs a hálózaton'
     if (VanPst $s.ut) { $megj += ', csatolt PST van benne' }
     $listazott.Add($s.ut)
     $kimenet.Add((Sor $b $s.ut $megj))
@@ -151,7 +151,7 @@ foreach ($s in $szabvanyos) {
 # A lemert mappak meret szerint csokkenoen, a nem lemertek a vegen
 $talalat = @($egyeb | Where-Object { $meret[$_] -ne 0 } | ForEach-Object { New-Object PSObject -Property @{ ut = $_; meret = $meret[$_] } })
 foreach ($t in ($talalat | Sort-Object @{ e = { if ($_.meret -lt 0) { 0 } else { 1 } }; Descending = $true }, @{ e = 'meret'; Descending = $true })) {
-    $megj = 'nem szabvanyos mappa'
+    $megj = 'nem szabványos mappa'
     if (VanPst $t.ut) { $megj += ', csatolt PST van benne' }
     $listazott.Add($t.ut)
     $kimenet.Add((Sor $t.meret $t.ut $megj))
@@ -162,9 +162,9 @@ $pstMappak = $psts | ForEach-Object { Split-Path $_ -Parent } | Select-Object -U
 foreach ($m in $pstMappak) {
     $benne = $false
     foreach ($l in $listazott) { if (($m.TrimEnd('\') + '\').StartsWith($l.TrimEnd('\') + '\', [StringComparison]::OrdinalIgnoreCase)) { $benne = $true } }
-    if (-not $benne) { $kimenet.Add(('{0,8}   {1}   - {2}' -f '-', $m, 'csatolt PST mappaja')) }
+    if (-not $benne) { $kimenet.Add(('{0,8}   {1}   – {2}' -f '-', $m, 'csatolt PST mappája')) }
 }
-if ($allapot.lekeses) { $kimenet.Add('         A meres ' + $korlat + ' mp utan leallt - a tobbi mappa meretet nem merte.') }
+if ($allapot.lekeses) { $kimenet.Add('         A mérés ' + $korlat + ' mp után leállt – a többi mappa méretét nem mértem.') }
 
 foreach ($s in $kimenet) { '   ' + $s }
 # A cmd a konzol kodlapjan olvassa vissza - UTF-8 eseten BOM nelkul

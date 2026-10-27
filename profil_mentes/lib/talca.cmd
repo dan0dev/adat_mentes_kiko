@@ -14,10 +14,10 @@ set "TALCA_DB="
 set "PS_FAJL=%PSDIR%\talca.ps1"
 for /f %%c in ('%PS_FUTTAT% 2^>nul') do set "TALCA_DB=%%c"
 if defined TALCA_DB if exist "%TALCA_FAJL%" goto :KESZ
-echo        PowerShell nem elerheto, csak az asztali programok kerulnek a listara...
+%UI% :RESZLET "a PowerShell nem elérhető, csak az asztali programok kerülnek a listára"
 set /a TALCA_DB=0
 set "_tb=%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar"
->"%TALCA_FAJL%" echo TALCA ROGZITETT IKONJAI - %USERNAME% / %COMPUTERNAME%
+>"%TALCA_FAJL%" echo A TÁLCÁRA RÖGZÍTETT IKONOK – %USERNAME% / %COMPUTERNAME%
 >>"%TALCA_FAJL%" echo.
 for %%f in ("%_tb%\*.lnk") do (
     >>"%TALCA_FAJL%" echo    - %%~nf
@@ -25,12 +25,12 @@ for %%f in ("%_tb%\*.lnk") do (
 )
 :KESZ
 if "%TALCA_DB%"=="0" (
-    %UI% :JELOL KIHAGYVA "nincs rogzitett ikon a talcan"
+    %UI% :JELOL KIHAGYVA "nincs rögzített ikon a tálcán"
     goto :eof
 )
 if "%TESZTMOD%"=="1" (
-    %UI% :JELOL OK "%TALCA_DB% ikon - listazhato"
+    %UI% :JELOL OK "%TALCA_DB% ikon – listázható"
 ) else (
-    %UI% :JELOL OK "%TALCA_DB% ikon - talca.txt"
+    %UI% :JELOL OK "%TALCA_DB% ikon – talca.txt"
 )
 goto :eof

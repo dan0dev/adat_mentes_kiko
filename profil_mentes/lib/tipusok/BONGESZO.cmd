@@ -12,7 +12,7 @@ rem ==========================================================
 :MENT
 set "B_FAJLOK=!%T_P2%!"
 if not exist "%T_FORRAS%\" (
-    %UI% :JELOL KIHAGYVA "a bongeszo nincs hasznalva ezen a gepen"
+    %UI% :JELOL KIHAGYVA "a böngésző nincs ezen a gépen"
     goto :eof
 )
 set /a B_DB=0, B_HIBA=0
@@ -21,7 +21,6 @@ for /d %%P in ("%T_FORRAS%\Default" "%T_FORRAS%\Profile *") do (
     if exist "%%~fP\Preferences" (
         set /a B_DB+=1
         if defined B_NEVEK (set "B_NEVEK=!B_NEVEK!, %%~nxP") else (set "B_NEVEK=%%~nxP")
-        echo        - %%~nxP
         set "R_SRC=%%~fP"
         set "R_DST=%CEL%\%T_MAPPA%\%%~nxP"
         set "R_OPT=!B_FAJLOK!"
@@ -29,19 +28,20 @@ for /d %%P in ("%T_FORRAS%\Default" "%T_FORRAS%\Profile *") do (
         %MASOLAS% :ROBO
         if not "!R_ALLAPOT!"=="OK" (
             set /a B_HIBA+=1
-            echo          !C_PIROS!!R_UZENET!!C_0!
+            echo            !C_PIROS!%%~nxP: !R_UZENET!!C_0!
         )
     )
 )
 if %B_DB%==0 (
-    %UI% :JELOL KIHAGYVA "nincs bongeszo profil"
+    %UI% :JELOL KIHAGYVA "nincs böngészőprofil"
     goto :eof
 )
+%UI% :RESZLET "!B_NEVEK!"
 if exist "%T_FORRAS%\Local State" call :PROFILLISTA_MENT "%T_FORRAS%\Local State" "%CEL%\%T_MAPPA%\profilok.json"
 if %B_HIBA% GTR 0 (
-    %UI% :JELOL HIBA "%B_HIBA% profil hibaval - %B_NEVEK%"
+    %UI% :JELOL HIBA "%B_HIBA% profil hibával"
 ) else (
-    %UI% :JELOL OK "%B_DB% profil: %B_NEVEK% - ellenorizve"
+    %UI% :JELOL OK "%B_DB% profil, ellenőrizve"
 )
 goto :eof
 
@@ -49,7 +49,7 @@ goto :eof
 set "B_FAJLOK=!%T_P2%!"
 set "B_MENTES=%FORRAS%\%T_MAPPA%"
 if not exist "%B_MENTES%\" (
-    %UI% :JELOL KIHAGYVA "nincs a mentesben"
+    %UI% :JELOL KIHAGYVA "nincs a mentésben"
     goto :eof
 )
 set "VOLT_LS=0"
@@ -59,7 +59,6 @@ set "B_NEVEK="
 for /d %%P in ("%B_MENTES%\*") do (
     set /a B_DB+=1
     if defined B_NEVEK (set "B_NEVEK=!B_NEVEK!, %%~nxP") else (set "B_NEVEK=%%~nxP")
-    echo        - %%~nxP
     set "R_SRC=%%~fP"
     set "R_DST=%T_FORRAS%\%%~nxP"
     set "R_OPT=!B_FAJLOK!"
@@ -67,18 +66,19 @@ for /d %%P in ("%B_MENTES%\*") do (
     %MASOLAS% :ROBO
     if not "!R_ALLAPOT!"=="OK" (
         set /a B_HIBA+=1
-        echo          !C_PIROS!!R_UZENET!!C_0!
+        echo            !C_PIROS!%%~nxP: !R_UZENET!!C_0!
     )
 )
 if %B_DB%==0 (
-    %UI% :JELOL KIHAGYVA "a mentes ures"
+    %UI% :JELOL KIHAGYVA "a mentés üres"
     goto :eof
 )
+%UI% :RESZLET "!B_NEVEK!"
 call :PROFILLISTA_VISSZA "%B_MENTES%" "%T_FORRAS%" "%T_P1%"
 if %B_HIBA% GTR 0 (
-    %UI% :JELOL HIBA "%B_HIBA% hiba - %B_NEVEK%"
+    %UI% :JELOL HIBA "%B_HIBA% profil hibával"
 ) else (
-    %UI% :JELOL OK "%B_DB% profil: %B_NEVEK% - ellenorizve"
+    %UI% :JELOL OK "%B_DB% profil, ellenőrizve"
 )
 goto :eof
 
@@ -92,9 +92,9 @@ if "%TESZTMOD%"=="0" if not exist "%~dp2" mkdir "%~dp2" 2>nul
 set "PS_FAJL=%PSDIR%\profillista_ment.ps1"
 %PS_FUTTAT% >nul 2>&1
 if errorlevel 1 (
-    echo        !C_SARGA!- a profillista nem mentheto, a Default profil igy is visszaall!C_0!
+    echo            !C_SARGA!a profillista nem menthető – a Default profil így is visszaáll!C_0!
 ) else (
-    echo        - profillista rendben, titkositokulcs nelkul
+    %UI% :RESZLET "profillista mentve, titkosítókulcs nélkül"
 )
 if "%TESZTMOD%"=="1" del /q "%LS_DST%" >nul 2>&1
 goto :eof
@@ -105,9 +105,10 @@ rem %1 = mentes mappa, %2 = User Data cel, %3 = bongeszo neve
 if not exist "%~1\profilok.json" goto :eof
 if not exist "%~1\Profile *" goto :eof
 if "%VOLT_LS%"=="1" (
-    echo        !C_SARGA!A %~3 mar futott ezen a gepen. A tobbi profil megjelenitesehez uj profillistat irok,!C_0!
-    echo        !C_SARGA!ekkor az ezen a gepen eddig mentett bongeszo jelszavak es sutik elveszhetnek.!C_0!
-    %UI% :VALASZT IN "       Irjam at a profillistat? A regit Local State.regi neven megtartom"
+    echo            !C_SARGA!%~3 ezen a gépen már futott. A többi profil megjelenítéséhez!C_0!
+    echo            !C_SARGA!új profillistát írok – az itt eddig mentett böngészőjelszavak!C_0!
+    echo            !C_SARGA!és sütik elveszhetnek. A régit Local State.regi néven megtartom.!C_0!
+    %UI% :VALASZT IN "Átírjam a profillistát?"
     if errorlevel 2 goto :eof
     copy /Y "%~2\Local State" "%~2\Local State.regi" >nul
 )
@@ -118,8 +119,8 @@ set "PS_FAJL=%PSDIR%\profillista_vissza.ps1"
 %PS_FUTTAT% >nul 2>&1
 if errorlevel 1 (
     set /a B_HIBA+=1
-    echo          !C_PIROS!a profillista nem irhato - a tobbi profilt kezzel kell hozzaadni!C_0!
+    echo            !C_PIROS!a profillista nem írható – a többi profilt kézzel kell hozzáadni!C_0!
 ) else (
-    echo        - profillista visszaallitva, titkositokulcs nelkul
+    %UI% :RESZLET "profillista visszaállítva, titkosítókulcs nélkül"
 )
 goto :eof

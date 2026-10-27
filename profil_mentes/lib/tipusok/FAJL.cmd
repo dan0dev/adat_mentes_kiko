@@ -20,25 +20,27 @@ call :UTANA_%T_P2%
 goto :eof
 
 :UTANA_EXPLORER
-%UI% :VALASZT IN "       Ujrainditsam az Intezot, hogy betoltse: %T_NEV%"
+%UI% :VALASZT IN "Újraindítsam a Fájlkezelőt a Gyorselérés betöltéséhez?"
 if errorlevel 2 goto :eof
 taskkill /F /IM explorer.exe >nul 2>&1
 start "" explorer.exe
-echo        Intezo ujrainditva.
+%UI% :RESZLET "Fájlkezelő újraindítva."
 goto :eof
 
 :UTANA_STARTMENU
 rem A Start menu a start2.bin-t csak indulaskor olvassa be. Leallitva a Windows magatol ujrainditja.
-%UI% :VALASZT IN "       Ujrainditsam a Start menut, hogy betoltse: %T_NEV%"
+%UI% :VALASZT IN "Újraindítsam a Start menüt a rögzítések betöltéséhez?"
 if errorlevel 2 goto :eof
 taskkill /F /IM StartMenuExperienceHost.exe >nul 2>&1
-echo        Start menu ujrainditva. Ami ezen a gepen nincs telepitve, annak a rogzitese kimarad.
+%UI% :RESZLET "Start menü újraindítva."
+%UI% :RESZLET "Ami ezen a gépen nincs telepítve, annak a rögzítése kimarad."
 goto :eof
 
 :FAJL
 rem %1 = forras mappa, %2 = cel mappa, %3 = fajlnev
 if not exist "%~1\%~3" (
-    %UI% :JELOL KIHAGYVA "nincs mentheto fajl ezen a gepen"
+    >>"%LOG%" echo        nincs ilyen fájl: %~1\%~3
+    %UI% :JELOL KIHAGYVA "ezen a gépen nincs ilyen fájl"
     goto :eof
 )
 set "R_SRC=%~1"
@@ -46,5 +48,5 @@ set "R_DST=%~2"
 set "R_OPT=%~3"
 set "R_PROG=0"
 %MASOLAS% :ROBO
-%UI% :JELOL %R_ALLAPOT% "%R_UZENET%"
+%UI% :JELOL %R_ALLAPOT% "%R_UZENET%" "%R_RESZLET%"
 goto :eof

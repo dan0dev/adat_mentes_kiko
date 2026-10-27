@@ -1,0 +1,11 @@
+LEFT-TO-DO - kezi teendok az eszkozcserehez
+Felhasznalo: teszt    Regi gep: TESZT-PC    Mentes: 2026-10-01
+==========================================================
+
+1. MENTESKOR - A REGI GEPEN
+   - Outlook: ird fel a tovabbi postaladakat, a Felado lista cimeit es a tovabbi fiokokat
+   - Talca rogzitett ikonjai: a lista elkeszult - talca.txt
+   - Letoltesek: masold at kezzel, ami kell
+
+2. IMPORTNAL - AZ UJ GEPEN
+   - Futtasd a scriptet: 2. Adatok exportalasa

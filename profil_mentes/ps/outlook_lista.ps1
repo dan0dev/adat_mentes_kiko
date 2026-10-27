@@ -1,8 +1,9 @@
 # ==========================================================
-#  Outlook lista - lib\outlook.cmd futtatja
+#  Outlook-lista - lib\outlook.cmd futtatja
 #  Csak a registryt olvassa, az Outlookhoz nem nyul.
 #  Bemenet:  OL_OUT  - a kimeneti szovegfajl
 #            SRC_PST - a PST mappa, ami mentesre kerul
+#            VERZIO, SZERZO - a fajl lablecehez
 #  Kimenet:  KINT|<eleresi ut> soronkent a PST mappan kivuli PST-krol
 #            SUM|<darab> a vegen
 # ==========================================================
@@ -27,21 +28,23 @@ foreach ($r in $roots) {
 }
 
 $L = New-Object System.Collections.Generic.List[string]
-$L.Add('OUTLOOK LISTA - ' + $env:USERNAME + ' / ' + $env:COMPUTERNAME + ' - ' + (Get-Date -Format 'yyyy.MM.dd HH:mm'))
+$L.Add('OUTLOOK-LISTA – ' + $env:USERNAME + ' / ' + $env:COMPUTERNAME + ' – ' + (Get-Date -Format 'yyyy. MM. dd. HH:mm'))
 $L.Add('')
-$L.Add('1. CSATOLT ADATFAJLOK - PST, pl. archivum')
-$L.Add('   Ujra hozzaadas az uj gepen: Fajl - Megnyitas es exportalas - Outlook-adatfajl megnyitasa')
+$L.Add('1. CSATOLT ADATFÁJLOK – PST, például archívum')
+$L.Add('   Újra csatolás az új gépen: Fájl – Megnyitás és exportálás – Outlook-adatfájl megnyitása')
 $kint = 0
-if ($psts.Count -eq 0) { $L.Add('   - nincs csatolt PST') }
+if ($psts.Count -eq 0) { $L.Add('   – nincs csatolt PST') }
 foreach ($p in $psts) {
-    if ($p.StartsWith($pstDir, [StringComparison]::OrdinalIgnoreCase)) { $L.Add('   - ' + $p) }
-    else { $kint++; $L.Add('   - ' + $p + '   FIGYELEM: nem a PST mappaban van, a script nem mentette'); Write-Output ('KINT|' + $p) }
+    if ($p.StartsWith($pstDir, [StringComparison]::OrdinalIgnoreCase)) { $L.Add('   – ' + $p) }
+    else { $kint++; $L.Add('   – ' + $p + '   FIGYELEM: nem a PST-mappában van, a segédlet nem mentette'); Write-Output ('KINT|' + $p) }
 }
 $L.Add('')
-$L.Add('2. KEZZEL ELLENORIZENDO A REGI GEPEN - a script ezeket nem menti')
-$L.Add('   [ ] Tovabbi postaladak: Fajl - Fiokbeallitasok - Modositas - Tovabbi beallitasok - Specialis')
-$L.Add('       Az automatikusan csatolt postaladak maguktol visszajonnek.')
-$L.Add('   [ ] Felado mezo: uj level - Felado gomb lenyilo listaja, a tobbi cimet ird fel')
-$L.Add('   [ ] Tovabbi fiokok: Fajl - Fiokbeallitasok - E-mail lap')
+$L.Add('2. KÉZZEL ELLENŐRIZENDŐ A RÉGI GÉPEN – ezeket a segédlet nem menti')
+$L.Add('   [ ] További postaládák: Fájl – Fiókbeállítások – Módosítás – További beállítások – Speciális')
+$L.Add('       Az automatikusan csatolt postaládák maguktól visszajönnek.')
+$L.Add('   [ ] Feladó mező: új levél – a Feladó gomb lenyíló listája; a többi címet írd fel')
+$L.Add('   [ ] További fiókok: Fájl – Fiókbeállítások – E-mail lap')
+$L.Add('')
+$L.Add('Eszközcsere segédlet ' + $env:VERZIO + ' · Készítette: ' + $env:SZERZO)
 $L | Out-File -LiteralPath $out -Encoding UTF8
 Write-Output ('SUM|' + $psts.Count)

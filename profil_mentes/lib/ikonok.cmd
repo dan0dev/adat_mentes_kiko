@@ -10,11 +10,11 @@ rem ==========================================================
 
 :JAVIT
 if not exist "%DESK%\" (
-    %UI% :JELOL HIBA "az asztal mappa nem talalhato: %DESK%"
+    %UI% :JELOL HIBA "az asztal mappája nem található" "%DESK%"
     goto :eof
 )
 if not exist "%PD_START%\" (
-    %UI% :JELOL HIBA "a Start menu mappa nem talalhato"
+    %UI% :JELOL HIBA "a Start menü mappája nem található" "%PD_START%"
     goto :eof
 )
 set /a IK_HIBA=0, IK_TELEPITVE=0
@@ -25,13 +25,13 @@ set IKON_APP=call "%LIB%\ikonok.cmd" :APP
 call "%CONF%\parancsikonok.cmd"
 
 if %IK_TELEPITVE%==0 (
-    %UI% :JELOL KIHAGYVA "egyik program sincs a Start menuben"
+    %UI% :JELOL KIHAGYVA "egyik program sincs telepítve"
     goto :eof
 )
 if %IK_HIBA% GTR 0 (
-    %UI% :JELOL HIBA "!IK_UZ!"
+    %UI% :JELOL HIBA "nem minden parancsikon rendben" "!IK_UZ!"
 ) else (
-    %UI% :JELOL OK "!IK_UZ!"
+    %UI% :JELOL OK "%IK_TELEPITVE% program ellenőrizve" "!IK_UZ!"
 )
 goto :eof
 
@@ -50,33 +50,33 @@ goto :APP_MINTAK
 set "IK_S="
 for %%m in (%IK_MINTA%) do if not defined IK_S for /f "delims=" %%f in ('dir /b /s /a-d "%PD_START%\%%~m" 2^>nul') do if not defined IK_S set "IK_S=%%f"
 if not defined IK_S (
-    echo        - %IK_NEV%: nincs a Start menuben, kihagyva
-    call :IK_UZ_ADD "%IK_NEV% nincs telepitve"
+    %UI% :RESZLET "%IK_NEV%: nincs a Start menüben, kihagyva"
+    call :IK_UZ_ADD "%IK_NEV% nincs telepítve"
     goto :eof
 )
 set /a IK_TELEPITVE+=1
 for %%x in ("!IK_S!") do set "IK_SNEV=%%~nxx"
->>"%LOG%" echo        %IK_NEV% forras: !IK_S!
+>>"%LOG%" echo        %IK_NEV% forrás: !IK_S!
 set "IK_OK=0"
 set "IK_JAV=0"
 call :IKON_DIR "%DESK%"
 call :IKON_DIR "%PUBLIC%\Desktop"
 if "!IK_OK!"=="1" (
-    if "!IK_JAV!"=="1" (call :IK_UZ_ADD "%IK_NEV% javitva") else (call :IK_UZ_ADD "%IK_NEV% rendben")
+    if "!IK_JAV!"=="1" (call :IK_UZ_ADD "%IK_NEV% javítva") else (call :IK_UZ_ADD "%IK_NEV% rendben")
     goto :eof
 )
 if exist "%DESK%\!IK_SNEV!" (
-    echo        - %IK_NEV%: !C_SARGA!az asztalon mar van !IK_SNEV! mas cellal, meghagyom - ellenorizd kezzel!C_0!
-    call :IK_UZ_ADD "%IK_NEV% ellenorizendo"
+    echo            !C_SARGA!%IK_NEV%: az asztalon már van más célú !IK_SNEV!, meghagyom – ellenőrizd kézzel!C_0!
+    call :IK_UZ_ADD "%IK_NEV% ellenőrizendő"
     goto :eof
 )
 copy /Y "!IK_S!" "%DESK%\" >nul 2>&1
 if exist "%DESK%\!IK_SNEV!" (
-    echo        - %IK_NEV%: !C_ZOLD!parancsikon kirakva az asztalra!C_0!
+    echo            !C_ZOLD!%IK_NEV%: parancsikon kirakva az asztalra!C_0!
     >>"%LOG%" echo        %IK_NEV% kirakva: %DESK%\!IK_SNEV!
     call :IK_UZ_ADD "%IK_NEV% kirakva"
 ) else (
-    echo        - %IK_NEV%: !C_PIROS!nem sikerult kirakni az asztalra!C_0!
+    echo            !C_PIROS!%IK_NEV%: nem sikerült kirakni az asztalra!C_0!
     set /a IK_HIBA+=1
     call :IK_UZ_ADD "%IK_NEV% HIBA"
 )
@@ -98,26 +98,26 @@ rem 1. Ha megegyezik a Start menus parancsikonnal, biztosan jo
 fc /b "!IK_F!" "!IK_S!" >nul 2>&1
 if not errorlevel 1 (
     set "IK_OK=1"
-    echo        - !IK_NEV!: !IK_FNEV! rendben
+    %UI% :RESZLET "!IK_NEV!: !IK_FNEV! rendben"
     goto :eof
 )
 rem 2. Kulonben kiolvassuk, hova mutat
 set "IK_LNK=!IK_F!"
 set "IK_CEL="
-for /f "delims=" %%t in ('powershell -NoProfile -NonInteractive -Command "(New-Object -ComObject WScript.Shell).CreateShortcut($env:IK_LNK).TargetPath" 2^>nul') do set "IK_CEL=%%t"
+for /f "delims=" %%t in ('powershell -NoProfile -NonInteractive -Command "[Console]::OutputEncoding=[Text.Encoding]::UTF8; (New-Object -ComObject WScript.Shell).CreateShortcut($env:IK_LNK).TargetPath" 2^>nul') do set "IK_CEL=%%t"
 if not defined IK_CEL (
-    echo        - !IK_NEV!: !IK_FNEV! celja nem olvashato, meghagyom
+    %UI% :RESZLET "!IK_NEV!: !IK_FNEV! célja nem olvasható, meghagyom"
     goto :eof
 )
 rem 3. Ha a cel nem letezik, hibas - toroljuk
 if not exist "!IK_CEL!" (
-    >>"%LOG%" echo        Hibas parancsikon: !IK_F! -^> !IK_CEL!
+    >>"%LOG%" echo        Hibás parancsikon: !IK_F! -^> !IK_CEL!
     del /q "!IK_F!" >nul 2>&1
     if exist "!IK_F!" (
-        echo        - !IK_NEV!: !C_PIROS!!IK_FNEV! hibas, de nem torolheto - nincs jog!C_0!
+        echo            !C_PIROS!!IK_NEV!: !IK_FNEV! hibás, de nem törölhető – nincs jogosultság!C_0!
         set /a IK_HIBA+=1
     ) else (
-        echo        - !IK_NEV!: !IK_FNEV! hibas eleresi ut, torolve
+        %UI% :RESZLET "!IK_NEV!: !IK_FNEV! hibás elérési út, törölve"
         set "IK_JAV=1"
     )
     goto :eof
@@ -131,9 +131,9 @@ set "_t=!IK_CEL:%WIN_INST%=!"
 if not "!_t!"=="!IK_CEL!" set "IK_JO=1"
 if "!IK_JO!"=="1" (
     set "IK_OK=1"
-    echo        - !IK_NEV!: !IK_FNEV! rendben
+    %UI% :RESZLET "!IK_NEV!: !IK_FNEV! rendben"
 ) else (
-    echo        - !IK_NEV!: !IK_FNEV! mas programra mutat, meghagyom
+    %UI% :RESZLET "!IK_NEV!: !IK_FNEV! más programra mutat, meghagyom"
 )
 goto :eof
 
