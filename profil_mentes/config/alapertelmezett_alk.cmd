@@ -38,11 +38,15 @@ rem ==========================================================
 %AA_PROGRAM% "PDF – Acrobat Reader"
 %AA_TIPUS%   ".pdf"   "%PDF_ID%"                          "Adobe Acrobat Reader"
 
+rem Alapertelmezett bongeszo: a Windows a http es https alapjan dont, a tobbi a weboldal-fajlok
 %AA_PROGRAM% "Chrome"
 %AA_TIPUS%   "http"   "%CHROME_ID%"                       "Google Chrome"
 %AA_TIPUS%   "https"  "%CHROME_ID%"                       "Google Chrome"
 %AA_TIPUS%   ".htm"   "%CHROME_ID%"                       "Google Chrome"
 %AA_TIPUS%   ".html"  "%CHROME_ID%"                       "Google Chrome"
+%AA_TIPUS%   ".shtml" "%CHROME_ID%"                       "Google Chrome"
+%AA_TIPUS%   ".xht"   "%CHROME_ID%"                       "Google Chrome"
+%AA_TIPUS%   ".xhtml" "%CHROME_ID%"                       "Google Chrome"
 
 rem             Megnevezes           Tipus    F/U  Vart ProgId resz
 %AA_ELLENORIZ%  "Word"               ".docx"  F    "Word."
@@ -51,4 +55,5 @@ rem             Megnevezes           Tipus    F/U  Vart ProgId resz
 %AA_ELLENORIZ%  "PDF"                ".pdf"   F    "Acro"
 %AA_ELLENORIZ%  "Böngésző – http"    "http"   U    "ChromeHTML"
 %AA_ELLENORIZ%  "Böngésző – https"   "https"  U    "ChromeHTML"
+%AA_ELLENORIZ%  "Weboldal – .htm"    ".htm"   F    "ChromeHTML"
 %AA_ELLENORIZ%  "Weboldal – .html"   ".html"  F    "ChromeHTML"

@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 10. 27. – 398 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 10. 27. – 399 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -9,14 +9,15 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\alapertelmezett_alk.cmd:24` | Excel |
 | `config\alapertelmezett_alk.cmd:31` | PowerPoint |
 | `config\alapertelmezett_alk.cmd:38` | PDF – Acrobat Reader |
-| `config\alapertelmezett_alk.cmd:41` | Chrome |
-| `config\alapertelmezett_alk.cmd:48` | Word |
-| `config\alapertelmezett_alk.cmd:49` | Excel |
-| `config\alapertelmezett_alk.cmd:50` | PowerPoint |
-| `config\alapertelmezett_alk.cmd:51` | PDF |
-| `config\alapertelmezett_alk.cmd:52` | Böngésző – http |
-| `config\alapertelmezett_alk.cmd:53` | Böngésző – https |
-| `config\alapertelmezett_alk.cmd:54` | Weboldal – .html |
+| `config\alapertelmezett_alk.cmd:42` | Chrome |
+| `config\alapertelmezett_alk.cmd:52` | Word |
+| `config\alapertelmezett_alk.cmd:53` | Excel |
+| `config\alapertelmezett_alk.cmd:54` | PowerPoint |
+| `config\alapertelmezett_alk.cmd:55` | PDF |
+| `config\alapertelmezett_alk.cmd:56` | Böngésző – http |
+| `config\alapertelmezett_alk.cmd:57` | Böngésző – https |
+| `config\alapertelmezett_alk.cmd:58` | Weboldal – .htm |
+| `config\alapertelmezett_alk.cmd:59` | Weboldal – .html |
 | `config\parancsikonok.cmd:12` | Outlook |
 | `config\parancsikonok.cmd:13` | Word |
 | `config\parancsikonok.cmd:14` | Excel |
