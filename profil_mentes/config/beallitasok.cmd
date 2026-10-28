@@ -16,7 +16,7 @@ rem A C:\TEMP mappa helye
 set "C_TEMP_FORRAS=%SystemDrive%\TEMP"
 
 rem Tanusitvany tarolok (certmgr.msc - Aktualis felhasznalo), szokozzel elvalasztva:
-rem My = Szemelyes, AddressBook = Masok. A kulcsosak jelszoval vedett .pfx-be kerulnek.
+rem My = Szemelyes, AddressBook = Masok. Csak a kulcs nelkuli tanusitvanyok kerulnek at.
 set "TAN_TAROLOK=My AddressBook"
 
 rem Ezek a programok zarolhatjak a fajlokat, mentes es exportalas elott ellenorizzuk

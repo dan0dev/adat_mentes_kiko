@@ -23,7 +23,6 @@ set CHROME_FAJLOK=Bookmarks History "History Provider Cache" Preferences
 set EDGE_FAJLOK=Bookmarks
 
 rem     Tipus     Nev                           Forras                                                                         Mappa          Parameterek
-rem A tanusitvanyok elol: jelszot kerhet, igy a kerdes a futas elejen jon, nem egy hosszu masolas utan
 %TETEL% TANUSITVANY "Tanúsítványok (certmgr)"   "%TAN_TAROLOK%"                                                               Tanusitvanyok
 %TETEL% MAPPA     "Outlook-aláírások"           "%APPDATA%\Microsoft\Signatures"                                              Signatures
 %TETEL% MAPPA     "Office-sablonok"             "%APPDATA%\Microsoft\Templates"                                               Templates

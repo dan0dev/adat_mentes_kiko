@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 10. 27. – 399 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 10. 28. – 389 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -23,23 +23,23 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\parancsikonok.cmd:14` | Excel |
 | `config\parancsikonok.cmd:15` | PowerPoint |
 | `config\parancsikonok.cmd:16` | Skype |
-| `config\tetelek.cmd:27` | Tanúsítványok (certmgr) |
-| `config\tetelek.cmd:28` | Outlook-aláírások |
-| `config\tetelek.cmd:29` | Office-sablonok |
-| `config\tetelek.cmd:30` | Office egyéni szótárai |
-| `config\tetelek.cmd:31` | Excel XLSTART mappa |
-| `config\tetelek.cmd:32` | Indítópult mappa |
-| `config\tetelek.cmd:33` | PST-mappa (Outlook) |
-| `config\tetelek.cmd:34` | Chrome-profilok |
-| `config\tetelek.cmd:35` | Edge-kedvencek |
-| `config\tetelek.cmd:36` | Kedvencek mappa |
-| `config\tetelek.cmd:37` | Sticky Notes-jegyzetek |
-| `config\tetelek.cmd:38` | Fájlkezelő – Gyorselérés |
-| `config\tetelek.cmd:39` | Start menü rögzítései |
-| `config\tetelek.cmd:40` | C:\TEMP mappa |
-| `Eszkozcsere_segedlet.bat:109` | Válassz menüpontot [1–5]: |
-| `Eszkozcsere_segedlet.bat:133` | Megszakítva – nem történt változtatás. |
-| `Eszkozcsere_segedlet.bat:135` | Kilépéshez nyomj meg egy billentyűt... |
+| `config\tetelek.cmd:26` | Tanúsítványok (certmgr) |
+| `config\tetelek.cmd:27` | Outlook-aláírások |
+| `config\tetelek.cmd:28` | Office-sablonok |
+| `config\tetelek.cmd:29` | Office egyéni szótárai |
+| `config\tetelek.cmd:30` | Excel XLSTART mappa |
+| `config\tetelek.cmd:31` | Indítópult mappa |
+| `config\tetelek.cmd:32` | PST-mappa (Outlook) |
+| `config\tetelek.cmd:33` | Chrome-profilok |
+| `config\tetelek.cmd:34` | Edge-kedvencek |
+| `config\tetelek.cmd:35` | Kedvencek mappa |
+| `config\tetelek.cmd:36` | Sticky Notes-jegyzetek |
+| `config\tetelek.cmd:37` | Fájlkezelő – Gyorselérés |
+| `config\tetelek.cmd:38` | Start menü rögzítései |
+| `config\tetelek.cmd:39` | C:\TEMP mappa |
+| `Eszkozcsere_segedlet.bat:108` | Válassz menüpontot [1–5]: |
+| `Eszkozcsere_segedlet.bat:132` | Megszakítva – nem történt változtatás. |
+| `Eszkozcsere_segedlet.bat:134` | Kilépéshez nyomj meg egy billentyűt... |
 | `lib\alapalk.cmd:22` | a gép nincs tartományban |
 | `lib\alapalk.cmd:22` | A Windows ezt a beállítást csak tartományi gépen alkalmazza. |
 | `lib\alapalk.cmd:25` | a tartománytagság nem ellenőrizhető, folytatom |
@@ -229,22 +229,22 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\teendok.cmd:26` | [ ] Outlook: további postaládák, Feladó címek, további fiókok – outlook_lista.txt |
 | `lib\teendok.cmd:27` | [ ] Tálca ikonjai – talca.txt |
 | `lib\teendok.cmd:28` | [ ] Böngészőben mentett jelszavak |
-| `lib\teendok.cmd:38` | ÚJ GÉP |
-| `lib\teendok.cmd:39` | [ ] 3 Visszaállítás, laptopnál 4 Laptop |
-| `lib\teendok.cmd:40` | [ ] 5 Alapértelmezett alkalmazások, ki- és bejelentkezés, 5 ellenőrzés |
-| `lib\teendok.cmd:41` | [ ] Tanúsítványok: certmgr.msc – Személyes, ellenőrzés |
-| `lib\teendok.cmd:42` | [ ] Outlook: PST-k csatolása – outlook_lista.txt |
-| `lib\teendok.cmd:43` | [ ] Outlook: postaládák, feladók, fiókok |
-| `lib\teendok.cmd:44` | [ ] Outlook: alapértelmezett aláírás |
-| `lib\teendok.cmd:45` | [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés |
-| `lib\teendok.cmd:46` | [ ] Sticky Notes |
-| `lib\teendok.cmd:47` | [ ] Programok: apps.txt összevetése, hiányzók telepítése |
-| `lib\teendok.cmd:48` | [ ] Tálca ikonjai újra – talca.txt |
-| `lib\teendok.cmd:49` | [ ] Start menü: hiányzó rögzítések kézzel |
-| `lib\teendok.cmd:50` | [ ] Minden rendben: mentés törlése a meghajtóról |
-| `lib\teendok.cmd:67` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\teendok.cmd:76` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
-| `lib\teendok.cmd:78` | Minden tétel rendben |
+| `lib\teendok.cmd:37` | ÚJ GÉP |
+| `lib\teendok.cmd:38` | [ ] 3 Visszaállítás, laptopnál 4 Laptop |
+| `lib\teendok.cmd:39` | [ ] 5 Alapértelmezett alkalmazások, ki- és bejelentkezés, 5 ellenőrzés |
+| `lib\teendok.cmd:40` | [ ] Tanúsítványok: certmgr.msc – Személyes, ellenőrzés |
+| `lib\teendok.cmd:41` | [ ] Outlook: PST-k csatolása – outlook_lista.txt |
+| `lib\teendok.cmd:42` | [ ] Outlook: postaládák, feladók, fiókok |
+| `lib\teendok.cmd:43` | [ ] Outlook: alapértelmezett aláírás |
+| `lib\teendok.cmd:44` | [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés |
+| `lib\teendok.cmd:45` | [ ] Sticky Notes |
+| `lib\teendok.cmd:46` | [ ] Programok: apps.txt összevetése, hiányzók telepítése |
+| `lib\teendok.cmd:47` | [ ] Tálca ikonjai újra – talca.txt |
+| `lib\teendok.cmd:48` | [ ] Start menü: hiányzó rögzítések kézzel |
+| `lib\teendok.cmd:49` | [ ] Minden rendben: mentés törlése a meghajtóról |
+| `lib\teendok.cmd:66` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
+| `lib\teendok.cmd:75` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
+| `lib\teendok.cmd:77` | Minden tétel rendben |
 | `lib\tetelek.cmd:23` | config\tetelek.cmd: ismeretlen típus: %~1 – %~2 |
 | `lib\tetelek.cmd:88` | !_nb!. !L_%_b%! |
 | `lib\tetelek.cmd:90` | !_nb!. !_bal!!_nj!. !L_%_j%! |
@@ -276,8 +276,8 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\tipusok\MAPPA.cmd:43` | %FDB% fájl, elérhető – menthető |
 | `lib\tipusok\MAPPA.cmd:45` | %FDB% fájl, ellenőrizve |
 | `lib\tipusok\TANUSITVANY.cmd:27` | nincs a mentésben |
-| `lib\tipusok\TANUSITVANY.cmd:52` | a tanúsítványok nem kezelhetők |
-| `lib\tipusok\TANUSITVANY.cmd:52` | A PowerShell nem futott le. |
+| `lib\tipusok\TANUSITVANY.cmd:51` | a tanúsítványok nem kezelhetők |
+| `lib\tipusok\TANUSITVANY.cmd:51` | A PowerShell nem futott le. |
 | `lib\ui.cmd:24` | ╔════════════════════════════════════════════════════════════════════╗ |
 | `lib\ui.cmd:25` | ║                                                                    ║ |
 | `lib\ui.cmd:26` | ║!_l!!_r!║ |
@@ -388,19 +388,9 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `ps\talca.ps1:14` | Újra: Start › program › jobb klikk › Rögzítés a tálcára |
 | `ps\talca.ps1:40` | Eszközcsere segédlet  |
 | `ps\talca.ps1:40` |  · Készítette:  |
-| `ps\tanusitvany.ps1:66` | a mentésben nincs tanúsítvány |
-| `ps\tanusitvany.ps1:69` | A kulcsos tanúsítványokhoz a mentéskor megadott jelszó kell. |
-| `ps\tanusitvany.ps1:71` | A tanúsítványok jelszava: |
-| `ps\tanusitvany.ps1:74` | Hibás jelszó. |
-| `ps\tanusitvany.ps1:94` |  – nem importálható |
-| `ps\tanusitvany.ps1:109` | nincs tanúsítvány |
-| `ps\tanusitvany.ps1:118` | Kulcsos tanúsítványok: jelszóval védem, visszaállításkor kell. |
-| `ps\tanusitvany.ps1:120` | Jelszó a tanúsítványokhoz: |
-| `ps\tanusitvany.ps1:122` | Jelszó újra: |
-| `ps\tanusitvany.ps1:123` | A két jelszó nem egyezik. |
-| `ps\tanusitvany.ps1:125` | Jelszó nélkül a kulcsos tanúsítványokat nem mentem. |
-| `ps\tanusitvany.ps1:141` | kulcs nem menthető |
-| `ps\tanusitvany.ps1:144` | nyilvános |
-| `ps\tanusitvany.ps1:155` | Eszközcsere segédlet  |
-| `ps\tanusitvany.ps1:155` |  · Készítette:  |
-| `ps\tanusitvany.ps1:167` | ) { Ki $allapot "$db tanúsítvány – menthető" ($r -join  |
+| `ps\tanusitvany.ps1:37` | a mentésben nincs tanúsítvány |
+| `ps\tanusitvany.ps1:50` |  – nem importálható |
+| `ps\tanusitvany.ps1:64` | nincs tanúsítvány |
+| `ps\tanusitvany.ps1:81` |  – nem menthető |
+| `ps\tanusitvany.ps1:87` | Eszközcsere segédlet  |
+| `ps\tanusitvany.ps1:87` |  · Készítette:  |
