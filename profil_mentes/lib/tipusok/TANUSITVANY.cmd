@@ -5,8 +5,8 @@ rem ==========================================================
 rem  Tetel tipus: TANUSITVANY - a felhasznalo tanusitvanyai (certmgr.msc)
 rem  T_FORRAS = a tarolok nevei szokozzel, pl. My AddressBook
 rem  T_MAPPA  = almappa a mentesben, benne taroloonkent egy mappa
-rem  A kulcsos tanusitvanyok jelszoval vedett .pfx fajlba kerulnek, a tobbi .cer.
-rem  A munka: ps\tanusitvany.ps1. Kimenet a teendokhoz: TAN_NEMEXP
+rem  Csak a kulcs nelkuli tanusitvanyok kerulnek at, .cer fajlban.
+rem  A munka: ps\tanusitvany.ps1
 rem ==========================================================
 
 :MENT
@@ -43,7 +43,6 @@ for /f "usebackq delims=" %%a in ("%TAN_KI%") do (
     set "_t!_tn!=%%a"
 )
 del /q "%TAN_KI%" >nul 2>&1
-if not "!_t4!"=="0" set "TAN_NEMEXP=!_t4!"
 if "!_t3!"=="-" set "_t3="
 %UI% :JELOL !_t1! "!_t2!" "!_t3!"
 goto :eof

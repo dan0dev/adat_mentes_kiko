@@ -28,7 +28,6 @@ if not exist "%TODO%" (
     echo [ ] Böngészőben mentett jelszavak
 )
 for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
-if defined TAN_NEMEXP >>"%TODO%" echo [ ] Tanúsítványok: %TAN_NEMEXP% kulcs nem menthető – IT-tól újra igényelni, lista: Tanusitvanyok\lista.txt
 call :IMPORT_RESZ
 goto :eof
 

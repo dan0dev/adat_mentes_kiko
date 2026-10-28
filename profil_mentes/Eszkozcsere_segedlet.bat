@@ -97,7 +97,6 @@ set "CEL="
 set "FORRAS="
 set "DRIVE="
 set "OL_PST="
-set "TAN_NEMEXP="
 
 set "ADMIN=0"
 net session >nul 2>&1 && set "ADMIN=1"

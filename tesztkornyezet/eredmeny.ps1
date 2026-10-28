@@ -20,7 +20,7 @@ if ($Mentes -and (Test-Path -LiteralPath $Mentes)) {
         $r = $r -replace '_LEFT-TO-DO\.txt$', '_TEENDOK.txt' -replace '_log\.txt$', '_naplo.txt' -replace '^teszt_', 'probafuttatas_'
         $r = $r -replace '^_MENTES_.*\.txt$', '_MENTES.txt' -replace '^_(EXPORT|VISSZAALLITAS)_.*\.txt$', '_VISSZAALLITAS.txt'
         # A tanusitvanyfajlok neve az ujjlenyomat - minden futasnal mas
-        $r = $r -replace '^(Tanusitvanyok\\[^\\]+\\)[0-9A-F]{40}\.(pfx|cer)$', '$1X.$2'
+        $r = $r -replace '^(Tanusitvanyok\\[^\\]+\\)[0-9A-F]{40}\.cer$', '$1X.cer'
         $r
     } | Sort-Object -Unique)
 }

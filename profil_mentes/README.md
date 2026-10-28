@@ -16,7 +16,7 @@ A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új g
 
 **Amit ment és visszaállít:**
 
-- Tanúsítványok (certmgr.msc – Személyes, Mások) – a kulcsosakat jelszóval védve
+- Tanúsítványok (certmgr.msc – Személyes, Mások)
 - Outlook-aláírások, a `%USERPROFILE%\PST` mappa
 - Office-sablonok, egyéni szótárak, Excel XLSTART
 - Chrome: könyvjelzők, előzmények, beállítások – minden profil
@@ -35,18 +35,16 @@ csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
 1. Dupla kattintás: `Eszkozcsere_segedlet.bat`
 2. Ha akarod, előbb **2 Próbafuttatás** – megmutatja, menthető-e minden.
 3. **1 Adatok mentése** → a külső meghajtó betűjele (pl. `E`) → **Indulhat a mentés? I**
-4. **Tanúsítványok jelszava** – kétszer kéri. **Jegyezd meg**, a visszaállításnál kell! Sehová nem kerül leírásra.
-5. Megvárod a végét, átnézed az összegzést.
+4. Megvárod a végét, átnézed az összegzést.
 
 **Az új gépen**
 
 1. A felhasználó jelentkezzen be (a Chrome-ot és az Edge-et még ne indítsa el).
-2. Dupla kattintás: `Eszkozcsere_segedlet.bat` → **3 Adatok visszaállítása** → a mentés sorszáma
-3. Tanúsítványok jelszava → megvárod a végét.
-4. Laptopnál: **4 Laptop beállítása**.
-5. Jobb kattintás → *Futtatás rendszergazdaként* → **5** (beállítás).
+2. Dupla kattintás: `Eszkozcsere_segedlet.bat` → **3 Adatok visszaállítása** → a mentés sorszáma → megvárod a végét.
+3. Laptopnál: **4 Laptop beállítása**.
+4. Jobb kattintás → *Futtatás rendszergazdaként* → **5** (beállítás).
    Utána a felhasználó jelentkezzen ki és be, majd sima indítással **5** (ellenőrzés).
-6. A `_TEENDOK.txt` alapján a kézi lépések – lásd lent.
+5. A `_TEENDOK.txt` alapján a kézi lépések – lásd lent.
 
 ## Mire számíts
 
