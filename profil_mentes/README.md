@@ -2,8 +2,7 @@
 
 **Verzió: 1.0** · **Készítette: Kakuk Dániel**
 
-A felhasználó adatait a régi gépen elmenti egy külső meghajtóra, az új gépen pedig visszaállítja.
-Telepíteni nem kell semmit, csak a Windows saját eszközeit használja.
+A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új gépen pedig visszaállítja.
 
 ## Mit tud
 
