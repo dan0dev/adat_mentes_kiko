@@ -28,13 +28,6 @@ A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új g
 **Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`),
 csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
 
-## Ami kell hozzá
-
-- Külső meghajtó. Ha 4 GB-nál nagyobb fájl is van (pl. PST), **NTFS vagy exFAT** legyen, ne FAT32.
-- A **`profil_mentes` mappa** a meghajtón – egészben, a benne lévő fájlok együtt működnek.
-- A **felhasználó saját fiókja**. Az 1–4. menüt sima dupla kattintással indítsd, ne rendszergazdaként.
-  Az 5. menü beállításához kell a *Futtatás rendszergazdaként*.
-
 ## Használat
 
 **A régi gépen**
