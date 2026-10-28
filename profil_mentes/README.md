@@ -79,7 +79,7 @@ A `_TEENDOK.txt` ezeket pipálható listában adja:
 - **Outlook**: PST-k csatolása (`outlook_lista.txt`), további postaládák, feladócímek, fiókok, alapértelmezett aláírás.
 - **Archive PST-k** mentése.
 - **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
-- **Böngészőben mentett jelszavak**, újra bejelentkezés a weboldalakra.
+- **Böngészőben mentett jelszavak**
 - **Programok** telepítése az `apps.txt` alapján.
 - **Nem exportálható kulcsú tanúsítványok** – az IT-tól kell újra igényelni.
 - A végén: **a mentés törlése** a külső meghajtóról – személyes adatok vannak benne.
