@@ -81,7 +81,6 @@ A `_TEENDOK.txt` ezeket pipálható listában adja:
 - **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
 - **Böngészőben mentett jelszavak**
 - **Programok** telepítése az `apps.txt` alapján.
-- **Nem exportálható kulcsú tanúsítványok** – az IT-tól kell újra igényelni.
 - A végén: **a mentés törlése** a külső meghajtóról – személyes adatok vannak benne.
 
 ## Tudnivalók
