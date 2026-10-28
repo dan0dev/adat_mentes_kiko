@@ -71,7 +71,7 @@ A mentés mappája: `<meghajtó>:\Mentes\<felhasználó>_<gép>\`
 | `apps.txt`, `talca.txt`, `outlook_lista.txt` | listák a kézi lépésekhez |
 | `Tanusitvanyok\lista.txt` | a mentett tanúsítványok |
 
-## Ami kézzel marad
+## Ami továbbra is manuális
 
 A `_TEENDOK.txt` ezeket pipálható listában adja:
 
