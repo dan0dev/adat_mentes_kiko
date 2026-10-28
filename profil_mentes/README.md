@@ -2,8 +2,7 @@
 
 **Verzió: 1.0** · **Készítette: Kakuk Dániel**
 
-A felhasználó adatait a régi gépen elmenti egy külső meghajtóra, az új gépen pedig visszaállítja.
-Telepíteni nem kell semmit, csak a Windows saját eszközeit használja.
+A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új gépen pedig visszaállítja.
 
 ## Mit tud
 
@@ -28,13 +27,6 @@ Telepíteni nem kell semmit, csak a Windows saját eszközeit használja.
 
 **Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`),
 csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
-
-## Ami kell hozzá
-
-- Külső meghajtó. Ha 4 GB-nál nagyobb fájl is van (pl. PST), **NTFS vagy exFAT** legyen, ne FAT32.
-- A **`profil_mentes` mappa** a meghajtón – egészben, a benne lévő fájlok együtt működnek.
-- A **felhasználó saját fiókja**. Az 1–4. menüt sima dupla kattintással indítsd, ne rendszergazdaként.
-  Az 5. menü beállításához kell a *Futtatás rendszergazdaként*.
 
 ## Használat
 
@@ -79,21 +71,14 @@ A mentés mappája: `<meghajtó>:\Mentes\<felhasználó>_<gép>\`
 | `apps.txt`, `talca.txt`, `outlook_lista.txt` | listák a kézi lépésekhez |
 | `Tanusitvanyok\lista.txt` | a mentett tanúsítványok |
 
-## Ami kézzel marad
+## Ami továbbra is manuális
 
 A `_TEENDOK.txt` ezeket pipálható listában adja:
 
 - **Tálcaikonok** újrarögzítése – `talca.txt` alapján (Windows 11 nem engedi scriptből).
 - **Outlook**: PST-k csatolása (`outlook_lista.txt`), további postaládák, feladócímek, fiókok, alapértelmezett aláírás.
-- **PST-k a `%USERPROFILE%\PST` mappán kívül** – a helyük az `outlook_lista.txt`-ben, ezeket kézzel vidd át.
+- **Archive PST-k** mentése.
 - **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
-- **Böngészőben mentett jelszavak**, újra bejelentkezés a weboldalakra.
+- **Böngészőben mentett jelszavak**
 - **Programok** telepítése az `apps.txt` alapján.
-- **Nem exportálható kulcsú tanúsítványok** – az IT-tól kell újra igényelni.
-- A végén: **a mentés törlése** a külső meghajtóról – személyes adatok vannak benne.
-
-## Tudnivalók
-
-- Az **5. menü** beállítása csak **tartományi** gépen él (a Windows így működik), ki- és bejelentkezés után.
-- A **kulcsos tanúsítványok** jelszóval védett fájlban vannak (AES-256); jelszó nélkül nem állíthatók vissza.
-- A fejlesztői leírás (bővítés, tesztelés): `docs\FEJLESZTES.md` a projekt mappájában.
+- A végén: **a mentés törlése** a külső meghajtóról
