@@ -77,7 +77,7 @@ A `_TEENDOK.txt` ezeket pipálható listában adja:
 
 - **Tálcaikonok** újrarögzítése – `talca.txt` alapján (Windows 11 nem engedi scriptből).
 - **Outlook**: PST-k csatolása (`outlook_lista.txt`), további postaládák, feladócímek, fiókok, alapértelmezett aláírás.
-- **PST-k a `%USERPROFILE%\PST` mappán kívül** – a helyük az `outlook_lista.txt`-ben, ezeket kézzel vidd át.
+- **Archive PST-k** mentése.
 - **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
 - **Böngészőben mentett jelszavak**, újra bejelentkezés a weboldalakra.
 - **Programok** telepítése az `apps.txt` alapján.
