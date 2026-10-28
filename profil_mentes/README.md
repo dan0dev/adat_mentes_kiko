@@ -82,9 +82,3 @@ A `_TEENDOK.txt` ezeket pipálható listában adja:
 - **Böngészőben mentett jelszavak**
 - **Programok** telepítése az `apps.txt` alapján.
 - A végén: **a mentés törlése** a külső meghajtóról
-
-## Tudnivalók
-
-- Az **5. menü** beállítása csak **tartományi** gépen él (a Windows így működik), ki- és bejelentkezés után.
-- A **kulcsos tanúsítványok** jelszóval védett fájlban vannak (AES-256); jelszó nélkül nem állíthatók vissza.
-- A fejlesztői leírás (bővítés, tesztelés): `docs\FEJLESZTES.md` a projekt mappájában.
