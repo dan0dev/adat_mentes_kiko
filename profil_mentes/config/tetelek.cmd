@@ -40,7 +40,6 @@ rem     Tipus     Nev                           Forras                          
 %TETEL% MAPPA     "Indítópult mappa"            "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"                     Startup
 %TETEL% BONGESZO  "Chrome-profilok"             "%LOCALAPPDATA%\Google\Chrome\User Data"                                      Chrome_mentes  Chrome  CHROME_FAJLOK
 %TETEL% BONGESZO  "Edge-kedvencek"              "%LOCALAPPDATA%\Microsoft\Edge\User Data"                                     Edge_mentes    Edge    EDGE_FAJLOK
-%TETEL% MAPPA     "Teams-hátterek"              "%LOCALAPPDATA%\Packages\MSTeams_8wekyb3d8bbwe\LocalCache\Microsoft\MSTeams\Backgrounds\Uploads"  TeamsHatterek
 %TETEL% MAPPA     "Kedvencek mappa"             "%USERPROFILE%\Favorites"                                                     Favorites
 %TETEL% MAPPA     "Sticky Notes-jegyzetek"      "%LOCALAPPDATA%\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState"  StickyNotes
 %TETEL% FAJL      "Fájlkezelő – Gyorselérés"    "%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations"                    Gyorseleres    f01b4d95cf55d32a.automaticDestinations-ms  EXPLORER

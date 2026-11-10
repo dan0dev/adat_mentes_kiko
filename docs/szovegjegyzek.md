@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 519 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 518 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -28,13 +28,12 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\tetelek.cmd:40` | Indítópult mappa |
 | `config\tetelek.cmd:41` | Chrome-profilok |
 | `config\tetelek.cmd:42` | Edge-kedvencek |
-| `config\tetelek.cmd:43` | Teams-hátterek |
-| `config\tetelek.cmd:44` | Kedvencek mappa |
-| `config\tetelek.cmd:45` | Sticky Notes-jegyzetek |
-| `config\tetelek.cmd:46` | Fájlkezelő – Gyorselérés |
-| `config\tetelek.cmd:47` | Fájlkezelő – Legutóbbiak |
-| `config\tetelek.cmd:48` | Start menü rögzítései |
-| `config\tetelek.cmd:49` | C:\TEMP mappa |
+| `config\tetelek.cmd:43` | Kedvencek mappa |
+| `config\tetelek.cmd:44` | Sticky Notes-jegyzetek |
+| `config\tetelek.cmd:45` | Fájlkezelő – Gyorselérés |
+| `config\tetelek.cmd:46` | Fájlkezelő – Legutóbbiak |
+| `config\tetelek.cmd:47` | Start menü rögzítései |
+| `config\tetelek.cmd:48` | C:\TEMP mappa |
 | `lib\bitlocker.cmd:12` | nincs MBAM kliens |
 | `lib\bitlocker.cmd:12` | Keresett hely: %MBAM_DIR% |
 | `lib\bitlocker.cmd:16` | nincs MBAM kliens |

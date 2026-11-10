@@ -21,7 +21,6 @@ ahonnan mentette.
 | Indítópult mappa | `%APPDATA%\…\Start Menu\Programs\Startup` | bejelentkezéskor induló programok |
 | Chrome-profilok | `%LOCALAPPDATA%\Google\Chrome\User Data` | minden profilból: könyvjelzők, előzmények, beállítások – és a profillista; a könyvjelzők ikonjai, az új lap csempéi, a címsor javaslatai, a saját helyesírási szavak (tesztelés alatt) |
 | Edge-kedvencek | `%LOCALAPPDATA%\Microsoft\Edge\User Data` | minden profil kedvencei, a profillista |
-| Teams-hátterek (tesztelés alatt) | `…\Packages\MSTeams_8wekyb3d8bbwe\…\Backgrounds\Uploads` | feltöltött háttérképek (új Teams) |
 | Kedvencek mappa | `%USERPROFILE%\Favorites` | a régi Internet Explorer / Edge kedvencek |
 | Sticky Notes-jegyzetek | `%LOCALAPPDATA%\Packages\Microsoft.MicrosoftStickyNotes_…` | a cetlik |
 | Fájlkezelő – Gyorselérés | `%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations` | a rögzített mappák |

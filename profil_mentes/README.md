@@ -26,7 +26,7 @@ címsorában látszik.
   a Word, az Excel és a PowerPoint legutóbbi fájljai
 - Chrome: könyvjelzők és ikonjaik, előzmények, beállítások, új lap csempéi, címsor-javaslatok, saját
   helyesírási szavak – minden profil
-- Edge-kedvencek, Kedvencek mappa, Teams-hátterek
+- Edge-kedvencek, Kedvencek mappa
 - Sticky Notes-jegyzetek
 - Fájlkezelő – Gyorselérés és legutóbbi fájlok, Start menü rögzítései
 - Indítópult mappa, C:\TEMP
