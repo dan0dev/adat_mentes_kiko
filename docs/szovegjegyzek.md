@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 518 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 524 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -53,39 +53,39 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ellenorzes.cmd:23` | Rendszergazdai fiók:  %USERNAME% |
 | `lib\ellenorzes.cmd:24` | Bejelentkezve:        !BEJ! |
 | `lib\ellenorzes.cmd:26` | Így a rendszergazda adataival dolgozna – indítsd sima dupla kattintással. |
-| `lib\ellenorzes.cmd:47` | címke nélkül |
-| `lib\ellenorzes.cmd:49` | , már van rajta mentés |
-| `lib\ellenorzes.cmd:57` | A külső meghajtó betűjele: |
-| `lib\ellenorzes.cmd:69` | Csak egy betűt adj meg, pl. E. |
-| `lib\ellenorzes.cmd:74` | A rendszermeghajtó nem lehet a külső meghajtó. |
-| `lib\ellenorzes.cmd:78` | Nincs ilyen meghajtó: !DRIVE!: – csatlakoztatva van a külső meghajtó? |
-| `lib\ellenorzes.cmd:88` | A kiválasztott meghajtó nem írható: !DRIVE!: |
-| `lib\ellenorzes.cmd:89` | Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót. |
-| `lib\ellenorzes.cmd:95` | A %DRIVE%: nem külső meghajtó – belső lemez vagy hálózat. |
-| `lib\ellenorzes.cmd:96` | Biztosan erre mentsek? |
-| `lib\ellenorzes.cmd:116` | Még fut:!FUTO! |
-| `lib\ellenorzes.cmd:117` | A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes |
-| `lib\ellenorzes.cmd:118` | a háttérben is futhat. |
-| `lib\ellenorzes.cmd:120` | U – újraellenőrzés    B – bezárás    F – folytatás így |
-| `lib\ellenorzes.cmd:121` | Válassz: |
-| `lib\ellenorzes.cmd:127` | Bezárás… Ha az Outlook, a Word vagy az Excel kérdez, válaszolj. |
-| `lib\ellenorzes.cmd:141` | Nem zárult be mind. Ha valamelyik kérdez, például |
-| `lib\ellenorzes.cmd:142` | mentést, válaszolj, majd U. |
-| `lib\ellenorzes.cmd:143` | Kényszerített bezárásnál a nem mentett munka elvész. Az Outlookot csak |
-| `lib\ellenorzes.cmd:144` | végső esetben zárd be így. |
-| `lib\ellenorzes.cmd:145` | U – újraellenőrzés    K – kényszerített bezárás    F – folytatás így |
-| `lib\ellenorzes.cmd:146` | Válassz: |
-| `lib\ellenorzes.cmd:173` | A helyellenőrzés nem futott le, folytatom nélküle. |
-| `lib\ellenorzes.cmd:179` | Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: !H_FS! |
-| `lib\ellenorzes.cmd:182` | !K_NEV!: !H_KDB! fájl, !H_KMERET! – másolás közben K-val átugorható. |
-| `lib\ellenorzes.cmd:186` | Nincs elég hely ezen a meghajtón: !PS_BETU! |
-| `lib\ellenorzes.cmd:187` | M – megszakítás    F – folytatás így |
-| `lib\ellenorzes.cmd:188` | Válassz: |
-| `lib\ellenorzes.cmd:195` | Van 4 GB-nál nagyobb fájl – FAT32-re nem másolható. |
-| `lib\ellenorzes.cmd:196` | Formázd exFAT-ra vagy NTFS-re, vagy válassz másik meghajtót. |
-| `lib\ellenorzes.cmd:197` | M – megszakítás    F – folytatás így |
-| `lib\ellenorzes.cmd:198` | Válassz: |
-| `lib\ellenorzes.cmd:203` | Hely rendben. |
+| `lib\ellenorzes.cmd:49` | címke nélkül |
+| `lib\ellenorzes.cmd:51` | , már van rajta mentés |
+| `lib\ellenorzes.cmd:71` | A külső meghajtó betűjele: |
+| `lib\ellenorzes.cmd:83` | Csak egy betűt adj meg, pl. E. |
+| `lib\ellenorzes.cmd:88` | A rendszermeghajtó nem lehet a külső meghajtó. |
+| `lib\ellenorzes.cmd:92` | Nincs ilyen meghajtó: !DRIVE!: – csatlakoztatva van a külső meghajtó? |
+| `lib\ellenorzes.cmd:102` | A kiválasztott meghajtó nem írható: !DRIVE!: |
+| `lib\ellenorzes.cmd:103` | Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót. |
+| `lib\ellenorzes.cmd:109` | A %DRIVE%: nem külső meghajtó – belső lemez vagy hálózat. |
+| `lib\ellenorzes.cmd:110` | Biztosan erre mentsek? |
+| `lib\ellenorzes.cmd:130` | Még fut:!FUTO! |
+| `lib\ellenorzes.cmd:131` | A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes |
+| `lib\ellenorzes.cmd:132` | a háttérben is futhat. |
+| `lib\ellenorzes.cmd:134` | U – újraellenőrzés    B – bezárás    F – folytatás így |
+| `lib\ellenorzes.cmd:135` | Válassz: |
+| `lib\ellenorzes.cmd:141` | Bezárás… Ha az Outlook, a Word vagy az Excel kérdez, válaszolj. |
+| `lib\ellenorzes.cmd:155` | Nem zárult be mind. Ha valamelyik kérdez, például |
+| `lib\ellenorzes.cmd:156` | mentést, válaszolj, majd U. |
+| `lib\ellenorzes.cmd:157` | Kényszerített bezárásnál a nem mentett munka elvész. Az Outlookot csak |
+| `lib\ellenorzes.cmd:158` | végső esetben zárd be így. |
+| `lib\ellenorzes.cmd:159` | U – újraellenőrzés    K – kényszerített bezárás    F – folytatás így |
+| `lib\ellenorzes.cmd:160` | Válassz: |
+| `lib\ellenorzes.cmd:187` | A helyellenőrzés nem futott le, folytatom nélküle. |
+| `lib\ellenorzes.cmd:193` | Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: !H_FS! |
+| `lib\ellenorzes.cmd:196` | !K_NEV!: !H_KDB! fájl, !H_KMERET! – másolás közben K-val átugorható. |
+| `lib\ellenorzes.cmd:200` | Nincs elég hely ezen a meghajtón: !PS_BETU! |
+| `lib\ellenorzes.cmd:201` | M – megszakítás    F – folytatás így |
+| `lib\ellenorzes.cmd:202` | Válassz: |
+| `lib\ellenorzes.cmd:209` | Van 4 GB-nál nagyobb fájl – FAT32-re nem másolható. |
+| `lib\ellenorzes.cmd:210` | Formázd exFAT-ra vagy NTFS-re, vagy válassz másik meghajtót. |
+| `lib\ellenorzes.cmd:211` | M – megszakítás    F – folytatás így |
+| `lib\ellenorzes.cmd:212` | Válassz: |
+| `lib\ellenorzes.cmd:217` | Hely rendben. |
 | `lib\eszkozok.cmd:19` | A rendszergazdai ablak nem nyílt meg. |
 | `lib\eszkozok.cmd:22` | Tesztkörnyezet – a rendszergazdai ablak nem nyílik meg. |
 | `lib\eszkozok.cmd:62` | !_en! (!_ep!) – ezen a gépen nincs meg. |
@@ -199,25 +199,26 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\osszegzes.cmd:22` | Fájlok helye |
 | `lib\osszegzes.cmd:25` | Mentés helye |
 | `lib\osszegzes.cmd:27` | Mentés helye |
-| `lib\osszegzes.cmd:44` | %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP% %time:~0,5% · %MOD_NEV% |
-| `lib\osszegzes.cmd:53` | Összegzés – %MOD_NEV% |
-| `lib\osszegzes.cmd:56` | Sikeres: %DB_OK%     Hibás: %DB_HIBA%     Kihagyva: %DB_KIHAGY%     Időtartam: %E_PERC% perc %E_MP% mp |
-| `lib\osszegzes.cmd:58` | Sikeres %DB_OK% · Hibás %DB_HIBA% · Kihagyva %DB_KIHAGY% · %E_PERC% perc %E_MP% mp |
-| `lib\osszegzes.cmd:61` | FIGYELEM: %DB_HIBA% tétel hibával zárult – nézd át a listát és a naplót. |
-| `lib\osszegzes.cmd:63` | KÉSZ – minden tétel rendben. |
-| `lib\osszegzes.cmd:65` | KÉSZ – minden tétel rendben. |
-| `lib\osszegzes.cmd:69` | Összegzés |
-| `lib\osszegzes.cmd:70` | Teendők |
-| `lib\osszegzes.cmd:70` | %%~nxx |
-| `lib\osszegzes.cmd:72` | Napló |
-| `lib\osszegzes.cmd:77` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\osszegzes.cmd:82` | a teendőket és a mappát |
-| `lib\osszegzes.cmd:83` | a teendőket, a mappát és a naplót |
-| `lib\osszegzes.cmd:84` | a mappát |
-| `lib\osszegzes.cmd:85` | Megnyissam %_mit%? |
-| `lib\osszegzes.cmd:98` | Nem sikerült – az okát fent látod. |
-| `lib\osszegzes.cmd:100` | Kész. |
-| `lib\osszegzes.cmd:103` | Vissza a menübe: nyomj meg egy billentyűt… |
+| `lib\osszegzes.cmd:45` | %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP% %time:~0,5% · %MOD_NEV% |
+| `lib\osszegzes.cmd:54` | Összegzés – %MOD_NEV% |
+| `lib\osszegzes.cmd:57` | Sikeres: %DB_OK%     Hibás: %DB_HIBA%     Kihagyva: %DB_KIHAGY%     Időtartam: %E_PERC% perc %E_MP% mp |
+| `lib\osszegzes.cmd:59` | Sikeres %DB_OK% · Hibás %DB_HIBA% · Kihagyva %DB_KIHAGY% · %E_PERC% perc %E_MP% mp |
+| `lib\osszegzes.cmd:64` | FIGYELEM: %DB_HIBA% tétel hibával zárult – nézd át a listát és a naplót. |
+| `lib\osszegzes.cmd:66` | FIGYELEM: egy tétel sem készült el – nézd át a listát és a naplót. |
+| `lib\osszegzes.cmd:68` | KÉSZ – %DB_ATUGORVA% tétel átugorva, ezt kézzel nézd át. |
+| `lib\osszegzes.cmd:70` | KÉSZ – minden tétel rendben. |
+| `lib\osszegzes.cmd:74` | Összegzés |
+| `lib\osszegzes.cmd:75` | Teendők |
+| `lib\osszegzes.cmd:75` | %%~nxx |
+| `lib\osszegzes.cmd:77` | Napló |
+| `lib\osszegzes.cmd:82` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
+| `lib\osszegzes.cmd:87` | a teendőket és a mappát |
+| `lib\osszegzes.cmd:88` | a teendőket, a mappát és a naplót |
+| `lib\osszegzes.cmd:89` | a mappát |
+| `lib\osszegzes.cmd:90` | Megnyissam %_mit%? |
+| `lib\osszegzes.cmd:103` | Nem sikerült – az okát fent látod. |
+| `lib\osszegzes.cmd:105` | Kész. |
+| `lib\osszegzes.cmd:108` | Vissza a menübe: nyomj meg egy billentyűt… |
 | `lib\outlook.cmd:19` | Outlook-lista – csatolt PST-fájlok keresése… |
 | `lib\outlook.cmd:26` | A PST-lista nem készült el – a PowerShell nem elérhető. |
 | `lib\outlook.cmd:29` | Kész: %OL_PST% csatolt PST |
@@ -264,8 +265,10 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\teendok.cmd:80` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
 | `lib\teendok.cmd:83` | Minden tétel rendben |
 | `lib\tetelek.cmd:23` | config\tetelek.cmd: ismeretlen típus: %~1 – %~2 |
-| `lib\tetelek.cmd:97` | !_nb!. !L_%_b%! |
-| `lib\tetelek.cmd:99` | !_nb!. !_bal!!_nj!. !L_%_j%! |
+| `lib\tetelek.cmd:56` | a mentés nem érhető el |
+| `lib\tetelek.cmd:56` | A külső meghajtó lecsatlakozott? |
+| `lib\tetelek.cmd:104` | !_nb!. !L_%_b%! |
+| `lib\tetelek.cmd:106` | !_nb!. !_bal!!_nj!. !L_%_j%! |
 | `lib\tipusok\BONGESZO.cmd:15` | a böngésző nincs ezen a gépen |
 | `lib\tipusok\BONGESZO.cmd:36` | nincs böngészőprofil |
 | `lib\tipusok\BONGESZO.cmd:42` | %B_HIBA% profil hibával |
@@ -274,11 +277,12 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\tipusok\BONGESZO.cmd:73` | a mentés üres |
 | `lib\tipusok\BONGESZO.cmd:79` | %B_HIBA% profil hibával |
 | `lib\tipusok\BONGESZO.cmd:81` | %B_DB% profil, ellenőrizve |
-| `lib\tipusok\BONGESZO.cmd:94` | a profillista nem menthető – a Default profil így is visszaáll |
-| `lib\tipusok\BONGESZO.cmd:96` | profillista mentve, jelszavak nélkül |
-| `lib\tipusok\BONGESZO.cmd:108` | profillista nem átírva – kérésedre |
-| `lib\tipusok\BONGESZO.cmd:120` | a profillista nem írható – a többi profilt kézzel kell hozzáadni |
-| `lib\tipusok\BONGESZO.cmd:122` | profillista visszaállítva, jelszavak nélkül |
+| `lib\tipusok\BONGESZO.cmd:97` | a profillista nem menthető – a többi profil nem fog látszani |
+| `lib\tipusok\BONGESZO.cmd:99` | a profillista nem menthető – a Default profil így is visszaáll |
+| `lib\tipusok\BONGESZO.cmd:102` | profillista mentve, jelszavak nélkül |
+| `lib\tipusok\BONGESZO.cmd:114` | profillista nem átírva – kérésedre |
+| `lib\tipusok\BONGESZO.cmd:126` | a profillista nem írható – a többi profilt kézzel kell hozzáadni |
+| `lib\tipusok\BONGESZO.cmd:128` | profillista visszaállítva, jelszavak nélkül |
 | `lib\tipusok\FAJL.cmd:12` | ezen a gépen nincs ilyen fájl |
 | `lib\tipusok\FAJL.cmd:17` | nincs a mentésben |
 | `lib\tipusok\FAJL.cmd:27` | a Fájlkezelő a végén újraindul |
@@ -328,8 +332,8 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ui.cmd:134` | [!_st!] !NEV_%~1! – !M_%~1! – !_dt! |
 | `lib\ui.cmd:136` | [!_st!] !NEV_%~1! – !M_%~1! |
 | `lib\ui.cmd:145` | !_t! |
-| `lib\ui.cmd:174` | !%~1! |
-| `lib\ui.cmd:210` | %~1 |
+| `lib\ui.cmd:177` | !%~1! |
+| `lib\ui.cmd:213` | %~1 |
 | `modulok\bitlocker.cmd:9` | BitLocker beállítása |
 | `modulok\bitlocker.cmd:13` | ===== BITLOCKER BEÁLLÍTÁSA %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
 | `modulok\bitlocker.cmd:16` | BitLocker (MBAM) |
@@ -388,41 +392,42 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\mentes.cmd:24` | Mentendő tételek: |
 | `modulok\mentes.cmd:27` | A tanúsítványokat és a PST-ket kézzel vidd át. |
 | `modulok\mentes.cmd:30` | Erről a gépről már van mentés – frissítem, nem törlök belőle. |
-| `modulok\mentes.cmd:37` | Helyellenőrzés, egy pillanat… |
-| `modulok\mentes.cmd:46` | Indulhat a mentés? |
-| `modulok\mentes.cmd:51` | A mentés mappája nem hozható létre: !CEL! |
-| `modulok\mentes.cmd:55` | ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== \|\| set "LOG=%TEMP%\mentes_naplo.txt" |
-| `modulok\mentes.cmd:59` | Adatok mentése folyamatban |
-| `modulok\mentes.cmd:60` | A folyamat végéig ne húzd ki a külső meghajtót. |
-| `modulok\mentes.cmd:65` | Programlista |
-| `modulok\mentes.cmd:70` | Tálcaikonok listája |
-| `modulok\mentes.cmd:73` | Outlook-lista |
-| `modulok\mentes.cmd:76` | Nyomtatók, meghajtók |
+| `modulok\mentes.cmd:39` | A profil egy része most nem érhető el – a mentés hiányos lenne: |
+| `modulok\mentes.cmd:40` | !PROFIL_HIANY! |
+| `modulok\mentes.cmd:48` | Helyellenőrzés, egy pillanat… |
+| `modulok\mentes.cmd:57` | Indulhat a mentés? |
+| `modulok\mentes.cmd:62` | A mentés mappája nem hozható létre: !CEL! |
+| `modulok\mentes.cmd:66` | ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== \|\| set "LOG=%TEMP%\mentes_naplo.txt" |
+| `modulok\mentes.cmd:70` | Adatok mentése folyamatban |
+| `modulok\mentes.cmd:71` | A folyamat végéig ne húzd ki a külső meghajtót. |
+| `modulok\mentes.cmd:76` | Programlista |
+| `modulok\mentes.cmd:81` | Tálcaikonok listája |
+| `modulok\mentes.cmd:84` | Outlook-lista |
+| `modulok\mentes.cmd:87` | Nyomtatók, meghajtók |
 | `modulok\visszaallitas.cmd:19` | Ezen a meghajtón nincs mentés: !DRIVE!:\%MAPPA_NEV% |
 | `modulok\visszaallitas.cmd:23` | Adatok visszaállítása – mentés kiválasztása |
-| `modulok\visszaallitas.cmd:29` | !N!   %%~nxF   [%%~tF] |
-| `modulok\visszaallitas.cmd:37` | Melyik mentést állítsam vissza? |
-| `modulok\visszaallitas.cmd:44` | Csak számot adj meg. |
-| `modulok\visszaallitas.cmd:48` | Nincs ilyen sorszám. |
-| `modulok\visszaallitas.cmd:55` | %F_NEV%\| findstr /B /I /L /C:"%USERNAME%_" >nul |
-| `modulok\visszaallitas.cmd:58` | Ez a mentés nem ennek a felhasználónak készült: !F_NEV! |
-| `modulok\visszaallitas.cmd:59` | Biztosan ezt állítsam vissza? |
-| `modulok\visszaallitas.cmd:66` | Adatok visszaállítása – előkészítés |
-| `modulok\visszaallitas.cmd:67` | Felhasználó |
-| `modulok\visszaallitas.cmd:68` | Forrás |
-| `modulok\visszaallitas.cmd:70` | Az azonos nevű fájlok felülíródnak. |
-| `modulok\visszaallitas.cmd:72` | A külső meghajtó nem írható, a napló ide kerül: !TEMP! |
-| `modulok\visszaallitas.cmd:86` | !B_FUTOTT!: ezen a gépen már futott. A többi profilhoz új profillistát |
-| `modulok\visszaallitas.cmd:87` | írok – az itt mentett jelszavak és sütik elveszhetnek, a régit megtartom. |
-| `modulok\visszaallitas.cmd:88` | Átírjam a profillistát? |
-| `modulok\visszaallitas.cmd:91` | A Chrome-ot és az Edge-et a visszaállítás előtt ne indítsd el. |
-| `modulok\visszaallitas.cmd:95` | Helyellenőrzés, egy pillanat… |
-| `modulok\visszaallitas.cmd:104` | Indulhat a visszaállítás? |
-| `modulok\visszaallitas.cmd:110` | ===== VISSZAÁLLÍTÁS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== \|\| set "LOG=%TEMP%\visszaallitas_naplo.txt" |
-| `modulok\visszaallitas.cmd:114` | Adatok visszaállítása folyamatban |
-| `modulok\visszaallitas.cmd:115` | A folyamat végéig ne húzd ki a külső meghajtót. |
-| `modulok\visszaallitas.cmd:124` | Office-parancsikonok |
-| `modulok\visszaallitas.cmd:130` | A Fájlkezelő újraindul, egy pillanat… |
+| `modulok\visszaallitas.cmd:33` | !N!   %%~nxF   [%%~tF] |
+| `modulok\visszaallitas.cmd:42` | Melyik mentést állítsam vissza? |
+| `modulok\visszaallitas.cmd:49` | Csak számot adj meg. |
+| `modulok\visszaallitas.cmd:53` | Nincs ilyen sorszám. |
+| `modulok\visszaallitas.cmd:62` | Ez a mentés nem ennek a felhasználónak készült: !F_NEV! |
+| `modulok\visszaallitas.cmd:63` | Biztosan ezt állítsam vissza? |
+| `modulok\visszaallitas.cmd:70` | Adatok visszaállítása – előkészítés |
+| `modulok\visszaallitas.cmd:71` | Felhasználó |
+| `modulok\visszaallitas.cmd:72` | Forrás |
+| `modulok\visszaallitas.cmd:74` | Az azonos nevű fájlok felülíródnak. |
+| `modulok\visszaallitas.cmd:76` | A külső meghajtó nem írható, a napló ide kerül: !TEMP! |
+| `modulok\visszaallitas.cmd:90` | !B_FUTOTT!: ezen a gépen már futott. A többi profilhoz új profillistát |
+| `modulok\visszaallitas.cmd:91` | írok – az itt mentett jelszavak és sütik elveszhetnek, a régit megtartom. |
+| `modulok\visszaallitas.cmd:92` | Átírjam a profillistát? |
+| `modulok\visszaallitas.cmd:95` | A Chrome-ot és az Edge-et a visszaállítás előtt ne indítsd el. |
+| `modulok\visszaallitas.cmd:99` | Helyellenőrzés, egy pillanat… |
+| `modulok\visszaallitas.cmd:108` | Indulhat a visszaállítás? |
+| `modulok\visszaallitas.cmd:114` | ===== VISSZAÁLLÍTÁS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== \|\| set "LOG=%TEMP%\visszaallitas_naplo.txt" |
+| `modulok\visszaallitas.cmd:118` | Adatok visszaállítása folyamatban |
+| `modulok\visszaallitas.cmd:119` | A folyamat végéig ne húzd ki a külső meghajtót. |
+| `modulok\visszaallitas.cmd:128` | Office-parancsikonok |
+| `modulok\visszaallitas.cmd:134` | A Fájlkezelő újraindul, egy pillanat… |
 | `segedlet.bat:17` | Kakuk Dániel |
 | `segedlet.bat:120` | Válassz menüpontot [1–6], kilépés: X |
 | `segedlet.bat:129` | Adatok mentése |
@@ -459,8 +464,9 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `ps\chrome.ps1:114` | Másik Chrome van fent – távolítsd el (Alkalmazások), majd újra. |
 | `ps\chrome.ps1:115` | részletek a naplóban:  |
 | `ps\chrome.ps1:117` | sikertelen telepítés (kód: $kod) |
-| `ps\emeles.ps1:16` | NEM\|A jelszókérő ablakot bezártad – a rendszergazdai ablak nem nyílt meg. |
-| `ps\emeles.ps1:18` | NEM\|A rendszergazdai ablak nem nyílt meg:  |
+| `ps\emeles.ps1:13` | NEM\|Hálózati meghajtóról nem megy – másold a segédletet helyi lemezre vagy pendrive-ra. |
+| `ps\emeles.ps1:20` | NEM\|A jelszókérő ablakot bezártad – a rendszergazdai ablak nem nyílt meg. |
+| `ps\emeles.ps1:22` | NEM\|A rendszergazdai ablak nem nyílt meg:  |
 | `ps\frissites.ps1:22` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
 | `ps\frissites.ps1:41` | Még nincs kiadás a GitHubon. |
 | `ps\frissites.ps1:46` | A kiadásban nincs letölthető csomag. |
@@ -507,9 +513,9 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `ps\nyomtatok.ps1:30` | HÁLÓZATI MEGHAJTÓK – újra: Fájlkezelő › Ez a gép › Hálózati meghajtó csatlakoztatása |
 | `ps\nyomtatok.ps1:34` | Eszközcsere segédlet  |
 | `ps\nyomtatok.ps1:34` |  · Készítette:  |
-| `ps\office_ikonok.ps1:107` | HIBA\|nem sikerült automatikusan\|Tedd ki kézzel:  |
-| `ps\office_ikonok.ps1:112` | Régi törölve:  |
-| `ps\office_ikonok.ps1:114` |  ikon beállítva\| |
+| `ps\office_ikonok.ps1:113` | HIBA\|nem sikerült automatikusan\|Tedd ki kézzel:  |
+| `ps\office_ikonok.ps1:118` | Régi törölve:  |
+| `ps\office_ikonok.ps1:120` |  ikon beállítva\| |
 | `ps\outlook_lista.ps1:34` | PST – újra csatolni: Fájl › Megnyitás és exportálás › Outlook-adatfájl megnyitása |
 | `ps\outlook_lista.ps1:41` | KÉZZEL – régi gépen |
 | `ps\outlook_lista.ps1:42` | [ ] További postaládák (az automatikusak maguktól jönnek): Fiókbeállítások › Módosítás › További beállítások › Speciális |

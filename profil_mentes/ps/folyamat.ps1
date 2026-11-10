@@ -67,7 +67,7 @@ function Atugras {
     $cel = $env:R_DST.TrimEnd('\'); $forras = $env:R_SRC.TrimEnd('\')
     if (-not (Test-Path -LiteralPath $cel)) { return }
     $felbe = @(Get-ChildItem -LiteralPath $cel -Recurse -File -Force -ErrorAction SilentlyContinue |
-        Where-Object { $_.LastWriteTime -ge $kezdes } | Where-Object {
+        Where-Object { $_.LastWriteTime -ge $kezdes -or $_.LastWriteTime.Year -le 1980 } | Where-Object {
             $f = Get-Item -LiteralPath ($forras + $_.FullName.Substring($cel.Length)) -Force -ErrorAction SilentlyContinue
             $f -and $f.LastWriteTime -ne $_.LastWriteTime
         })

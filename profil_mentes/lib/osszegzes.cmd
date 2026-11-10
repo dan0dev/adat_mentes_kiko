@@ -28,6 +28,7 @@ if "%MODUL%"=="visszaallitas" set "HELY_CIMKE=Mentés helye"
 if "%MODUL%"=="visszaallitas" if "%IRHATO%"=="1" set "OSSZ_HELY=%FORRAS%"
 if %DB_HIBA%==0 (
     set "OSSZ_NEV=%OSSZ_ELO%_OK_%DATUM%.txt"
+    if %DB_OK%==0 set "OSSZ_NEV=%OSSZ_ELO%_URES_%DATUM%.txt"
 ) else (
     set "OSSZ_NEV=%OSSZ_ELO%_%DB_HIBA%_HIBA_%DATUM%.txt"
 )
@@ -57,10 +58,14 @@ echo     Sikeres: %DB_OK%     Hibás: %DB_HIBA%     Kihagyva: %DB_KIHAGY%     Id
 >>"%OSSZ_FAJL%" echo.
 >>"%OSSZ_FAJL%" echo Sikeres %DB_OK% · Hibás %DB_HIBA% · Kihagyva %DB_KIHAGY% · %E_PERC% perc %E_MP% mp
 echo.
+rem Zold sav csak akkor, ha tenyleg keszult valami: ha egy tetel sem sikerult (minden
+rem kihagyva), az nem "rendben" - es az atugrott tetel is latsszon
 if %DB_HIBA% GTR 0 (
     %UI% :SAV HIBA "FIGYELEM: %DB_HIBA% tétel hibával zárult – nézd át a listát és a naplót."
-) else if %DB_KIHAGY% GTR 0 (
-    %UI% :SAV OK "KÉSZ – minden tétel rendben."
+) else if %DB_OK%==0 (
+    %UI% :SAV HIBA "FIGYELEM: egy tétel sem készült el – nézd át a listát és a naplót."
+) else if %DB_ATUGORVA% GTR 0 (
+    %UI% :SAV FIGYEL "KÉSZ – %DB_ATUGORVA% tétel átugorva, ezt kézzel nézd át."
 ) else (
     %UI% :SAV OK "KÉSZ – minden tétel rendben."
 )

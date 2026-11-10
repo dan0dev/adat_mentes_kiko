@@ -30,6 +30,17 @@ if exist "%CEL%\" (
     echo   !C_SARGA!Erről a gépről már van mentés – frissítem, nem törlök belőle.!C_0!
 )
 
+rem A profil mappainak elerhetonek kell lenniuk: ha pl. az atiranyitott AppData megosztasa
+rem nem erheto el, a tetelek "nincs ilyen mappa" miatt kimaradnanak, es a mentes hianyos lenne
+set "PROFIL_HIANY="
+for %%p in ("%USERPROFILE%" "%APPDATA%" "%LOCALAPPDATA%") do if not exist "%%~p\" set "PROFIL_HIANY=%%~p"
+if defined PROFIL_HIANY (
+    echo.
+    echo   !C_PIROS!A profil egy része most nem érhető el – a mentés hiányos lenne:!C_0!
+    echo   !C_PIROS!!PROFIL_HIANY!!C_0!
+    goto :NEM_INDULT
+)
+
 %OUTLOOK% :LISTA_KESZIT
 if "%OL_STOP%"=="1" goto :MEGSZAKITVA
 

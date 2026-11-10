@@ -46,7 +46,14 @@ set "T_MAPPA=!T_MAPPA_%~1!"
 set "T_P1=!T_P1_%~1!"
 set "T_P2=!T_P2_%~1!"
 %UI% :FEJLEC "%T_NEV%"
+rem Ha a kulso meghajto kozben lecsatlakozott: az HIBA, nem "nincs a mentesben" - kulonben
+rem a hatralevo tetelek mind KIHAGYVA lennenek, es a vegen zold sav allna
+if /I "%~2"=="VISSZA" if not exist "%FORRAS%\" goto :EGY_NINCS_MENTES
+if /I "%~2"=="MENT" if not exist "%CEL%\" goto :EGY_NINCS_MENTES
 call "%LIB%\tipusok\%T_TIPUS%.cmd" :%~2
+goto :eof
+:EGY_NINCS_MENTES
+%UI% :JELOL HIBA "a mentés nem érhető el" "A külső meghajtó lecsatlakozott?"
 goto :eof
 
 :FORRASOK

@@ -156,6 +156,9 @@ rem %3 = alapertek (nem kotelezo): szurkén a kurzor alatt all, Enterre ez lesz 
 rem      barmit beirva felulirodik - Backspace nem kell. A kurzor a visszatorlo jelekkel all vissza.
 set "%~1="
 set "_ba=%~3"
+rem Az elore leutott billentyuk eldobasa: az egybillentyus kerdes (VALASZT) utan megszokasbol
+rem nyomott Enter kulonben itt rogton elfogadna az alaperteket - pl. a meghajto betujelet
+if not "%VALASZ_SORBOL%"=="1" powershell -NoProfile -Command "try{while([Console]::KeyAvailable){[void][Console]::ReadKey($true)}}catch{}" >nul 2>&1
 if not defined _vbs for /f %%b in ('"prompt $H & for %%c in (1) do rem"') do set "_vbs=%%b"
 <nul set /p "=.!_vbs!!UI_BEHUZAS!› %~2 "
 if defined _ba if not "%VALASZ_SORBOL%"=="1" (

@@ -23,12 +23,17 @@ cls
 %UI% :CIM "Adatok visszaállítása – mentés kiválasztása"
 set /a N=0
 set "M_SZAM="
+rem A sajat mentes neve igy kezdodik: felhasznalo_ . Az osszevetes findstr es cso nelkul megy:
+rem igy az ekezetes nev is egyezik, es a mappa neveben levo ^& sem fut le parancskent.
+set "_u=%USERNAME%_"
+%UI% :HOSSZ _u _uh
 for /d %%F in ("%ROOT%\*") do (
     set /a N+=1
     set "MENTES_!N!=%%~fF"
     echo      !N!   %%~nxF   [%%~tF]
     rem A felhasznalo sajat mentese az alapertek - Enterrel elfogadhato
-    if not defined M_SZAM echo %%~nxF| findstr /B /I /L /C:"%USERNAME%_" >nul && set "M_SZAM=!N!"
+    set "_fn=%%~nxF"
+    if not defined M_SZAM if /I "!_fn:~0,%_uh%!"=="!_u!" set "M_SZAM=!N!"
 )
 if not defined M_SZAM if %N%==1 set "M_SZAM=1"
 
@@ -52,8 +57,7 @@ set "FORRAS=!MENTES_%SZAM%!"
 
 rem Ellenorzes: a mentes ennek a felhasznalonak keszult-e
 for %%x in ("!FORRAS!") do set "F_NEV=%%~nxx"
-echo %F_NEV%| findstr /B /I /L /C:"%USERNAME%_" >nul
-if errorlevel 1 (
+if /I not "!F_NEV:~0,%_uh%!"=="!_u!" (
     echo.
     echo   !C_PIROS!Ez a mentés nem ennek a felhasználónak készült: !F_NEV!!C_0!
     %UI% :VALASZT IN "Biztosan ezt állítsam vissza?"

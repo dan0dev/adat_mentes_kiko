@@ -58,7 +58,7 @@ function Mukodik($c) { return [bool]($c.TargetPath -and (Test-Path -LiteralPath 
 function AsztaliIkonok {
     foreach ($d in $asztal, $kozos) {
         if ($d -and (Test-Path -LiteralPath $d)) {
-            foreach ($f in Get-ChildItem -LiteralPath $d -Filter '*.lnk' -File) { $m = Melyik $f; if ($m) { [pscustomobject]@{ Fajl = $f.FullName; App = $m.App; Mukodik = (Mukodik $m.Lnk) } } }
+            foreach ($f in Get-ChildItem -LiteralPath $d -Filter '*.lnk' -File) { $m = Melyik $f; if ($m) { [pscustomobject]@{ Fajl = $f.FullName; App = $m.App; Mukodik = (Mukodik $m.Lnk); Cel = [string]$m.Lnk.TargetPath; Arg = [string]$m.Lnk.Arguments } } }
         }
     }
 }
@@ -74,7 +74,13 @@ if ($env:IK_MOD -eq 'MENT') {
 # ---------- Terv: mi kell, mi van, mi rossz ----------
 $regi = @(); if ($env:IK_FAJL -and (Test-Path -LiteralPath $env:IK_FAJL)) { $regi = @(Get-Content -LiteralPath $env:IK_FAJL | Where-Object { $_ }) }
 $ikonok = @(AsztaliIkonok)
-$torol = @($ikonok | Where-Object { -not $_.Mukodik })
+# Torolni csak a biztosan regi programikont szabad: aminek a celja egy helyi, mar nem letezo
+# fajl, es nincs parametere. A parameteres ikon a felhasznalo sajatja lehet (pl. az Excel egy
+# adott fajllal), a halozati cel csak eppen nem erheto el, az ures celut nem ismerjuk - ezek
+# maradnak. Kivetel a regi Teams ikonja: annak mindig van parametere.
+$torol = @($ikonok | Where-Object {
+    -not $_.Mukodik -and $_.Cel -and $_.Cel -notlike '\\*' -and (-not $_.Arg -or $_.App.Exe -eq 'TEAMS')
+})
 $kirak = @()
 foreach ($a in $appok) {
     if (-not ($a.Alap -or $regi -contains $a.Exe)) { continue }

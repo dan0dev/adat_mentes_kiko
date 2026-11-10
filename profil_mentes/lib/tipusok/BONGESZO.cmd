@@ -91,7 +91,13 @@ if not exist "%~dp2" mkdir "%~dp2" 2>nul
 set "PS_FAJL=%PSDIR%\profillista_ment.ps1"
 %PS_FUTTAT% >nul 2>&1
 if errorlevel 1 (
-    echo            !C_SARGA!a profillista nem menthető – a Default profil így is visszaáll!C_0!
+    rem Tobb profilnal a lista nelkul a tobbi profil nem latszana a bongeszoben - ez hiba
+    if exist "%T_FORRAS%\Profile *" (
+        set /a B_HIBA+=1
+        echo            !C_PIROS!a profillista nem menthető – a többi profil nem fog látszani!C_0!
+    ) else (
+        echo            !C_SARGA!a profillista nem menthető – a Default profil így is visszaáll!C_0!
+    )
 ) else (
     %UI% :RESZLET "profillista mentve, jelszavak nélkül"
 )
