@@ -2,11 +2,11 @@ rem ==========================================================
 rem  1. Adatok mentese (a regi gepen)
 rem
 rem  A mentendo tetelek: config\tetelek.cmd
-rem  Kilepesi kod: 0 = vegigment, osszegzes jon; 1 = megszakitva
+rem  Kilepesi kod: 0 = vegigment, osszegzes jon; 1 = a felhasznalo nem kerte; 2 = nem indult el
 rem ==========================================================
 
 %ELLENORZES% :FELHASZNALO
-if errorlevel 1 goto :MEGSZAKITVA
+if errorlevel 1 goto :NEM_INDULT
 %ELLENORZES% :MEGHAJTO KELL
 if errorlevel 1 goto :MEGSZAKITVA
 
@@ -18,23 +18,23 @@ set "CEL=%ROOT%\%USERNAME%_%COMPUTERNAME%"
 rem ---------- Elokeszites ----------
 cls
 %UI% :CIM "Adatok mentése – előkészítés"
+%UI% :ADAT "Felhasználó" "%USERNAME%" SARGA
 %UI% :ADAT "Mentés helye" "%CEL%"
 echo.
 echo   Mentendő tételek:
 %TETELEK% :LISTA "Programlista" "Tálcaikonok listája" "Outlook-lista"
 echo.
-echo   !C_SARGA!A tanúsítványokat és a PST-ket a segédlet nem menti – kézzel intézd.!C_0!
+echo   !C_SARGA!A tanúsítványokat és a PST-ket kézzel vidd át.!C_0!
 if exist "%CEL%\" (
     echo.
-    echo   !C_SARGA!Ennek a gépnek már van mentése: a meglévő fájlok frissülnek,!C_0!
-    echo   !C_SARGA!semmi nem törlődik.!C_0!
+    echo   !C_SARGA!Erről a gépről már van mentés – frissítem, nem törlök belőle.!C_0!
 )
 
 %OUTLOOK% :LISTA_KESZIT
 if "%OL_STOP%"=="1" goto :MEGSZAKITVA
 
 echo.
-echo   Helyellenőrzés, egy pillanat...
+echo   Helyellenőrzés, egy pillanat…
 %TETELEK% :FORRASOK
 set "PS_BETU=%DRIVE%:"
 %ELLENORZES% :HELY
@@ -49,7 +49,7 @@ if errorlevel 2 goto :MEGSZAKITVA
 mkdir "%CEL%" 2>nul
 if not exist "%CEL%\" (
     echo   !C_PIROS!A mentés mappája nem hozható létre: !CEL!!C_0!
-    goto :MEGSZAKITVA
+    goto :NEM_INDULT
 )
 set "LOG=%CEL%\mentes_naplo.txt"
 >>"%LOG%" echo ===== MENTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== || set "LOG=%TEMP%\mentes_naplo.txt"
@@ -64,6 +64,8 @@ rem ---------- Lepesek ----------
 
 %UI% :FEJLEC "Programlista"
 %PROGRAMLISTA% :KESZIT "%CEL%\apps.txt"
+rem A regi gep asztali Office-ikonjai - visszaallitaskor ezek is kikerulnek
+%IKONOK% :MENT "%CEL%\asztal_office.txt"
 
 %UI% :FEJLEC "Tálcaikonok listája"
 %TALCA% :LISTA "%CEL%\talca.txt"
@@ -74,3 +76,6 @@ exit /b 0
 
 :MEGSZAKITVA
 exit /b 1
+
+:NEM_INDULT
+exit /b 2

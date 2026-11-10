@@ -56,7 +56,7 @@ set "R_UZENET=átmásolva, ellenőrizve"
 if %R_RC% GEQ 16 (
     set "R_ALLAPOT=HIBA"
     set "R_UZENET=nem másolható"
-    set "R_RESZLET=Az elérési út vagy a jogosultság nem megfelelő – részletek a naplóban."
+    set "R_RESZLET=Hibás elérési út vagy nincs jog – részletek a naplóban."
     goto :eof
 )
 if %R_RC% GEQ 8 (

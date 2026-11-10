@@ -17,6 +17,11 @@ rem ==========================================================
 rem Kimenet: ES_EMELVE = 1, ha az uj ablak elindult, kulonben ES_EMELES_UZENET az ok
 set "ES_EMELVE=0"
 set "ES_EMELES_UZENET=A rendszergazdai ablak nem nyílt meg."
+rem Tesztkornyezet: jelszokero nelkul
+if defined PM_TESZT_NINCS_EMELES (
+    set "ES_EMELES_UZENET=Tesztkörnyezet – a rendszergazdai ablak nem nyílik meg."
+    goto :eof
+)
 set "ES_INDITO=%APP%\..\Eszkozcsere_segedlet.bat"
 if not exist "%ES_INDITO%" set "ES_INDITO=%APP%\segedlet.bat"
 for %%f in ("%ES_INDITO%") do set "ES_INDITO=%%~ff"
@@ -60,7 +65,7 @@ if errorlevel 1 (
     goto :eof
 )
 start "" "!_ep!"
->>"%LOG%" echo [%date% %time%] elinditva: !_ep!
+>>"%LOG%" echo [%date% %time%] elindítva: !_ep!
 echo   !C_ZOLD!Megnyitva:!C_0! !_en! – !_ep!
 timeout /t 1 >nul
 goto :eof
@@ -74,7 +79,10 @@ set "HT_NAPLO=%ES_NAPLOK%\halozat_teszt.txt"
 set "PS_FAJL=%PSDIR%\halozat_teszt.ps1"
 %PS_FUTTAT%
 echo.
-echo   Napló: !C_FEHER!!HT_NAPLO!!C_0!
+rem A naplo helye roviden, ha a segedlet melletti naplok mappaban van
+set "_hn=!HT_NAPLO!"
+if /I not "%ES_NAPLOK%"=="%TEMP%" set "_hn=naplok\halozat_teszt.txt – a segédlet mellett"
+echo   Napló: !C_FEHER!!_hn!!C_0!
 call :VISSZA
 goto :eof
 
@@ -92,16 +100,15 @@ goto :eof
 :HALOZAT
 cls
 %UI% :CIM "Hálózat helyreállítása"
-echo   Ha a gép nem kap IP-címet, nem tölt be oldalakat, vagy a hálózat
-echo   furcsán viselkedik. Egyenként is futtathatók, vagy mind az öt sorban.
+echo   Egyenként, vagy mind az öt sorban (M).
 echo.
 %UI% :MENU 1 "ipconfig /release" "elengedi a gép IP-címét"
 %UI% :MENU 2 "ipconfig /flushdns" "törli a névfeloldási (DNS) tárat"
 %UI% :MENU 3 "ipconfig /renew" "új IP-címet kér a hálózattól"
-%UI% :MENU 4 "netsh winsock reset" "alaphelyzetbe a hálózati réteget"
-%UI% :MENU 5 "netsh int ip reset" "alaphelyzetbe a TCP/IP-beállításokat"
+%UI% :MENU 4 "netsh winsock reset" "alaphelyzetbe állítja a Winsockot"
+%UI% :MENU 5 "netsh int ip reset" "alaphelyzetbe állítja a TCP/IP-t"
 echo.
-%UI% :MENU M "Mind az öt, sorban" "utána újraindítás kell"
+%UI% :MENU M "Mind az öt sorban" "utána újraindítás kell"
 %UI% :MENU X "Vissza" ""
 %UI% :VONAL
 echo   !C_SARGA!A release és a renew között pár másodpercig nincs hálózat.!C_0!
@@ -136,7 +143,7 @@ goto :eof
 
 :PARANCS
 rem %1 = a parancs, ahogy a kepernyon latszik, %2 = a futtatott parancs. A kimenet a naplobe megy.
-<nul set /p "=  !C_FEHER!%~1!C_0! ... "
+<nul set /p "=  !C_FEHER!%~1!C_0! … "
 >>"%LOG%" echo [%date% %time%] %~2
 %~2 >>"%LOG%" 2>&1
 if errorlevel 1 (
@@ -149,8 +156,8 @@ goto :eof
 :JAVITAS
 cls
 %UI% :CIM "Rendszerfájlok javítása"
-%UI% :MENU 1 "DISM /RestoreHealth" "a Windows-kép javítása a Windows" "Update-ből, internettel – 10–30 perc"
-%UI% :MENU 2 "sfc /scannow" "a rendszerfájlok ellenőrzése, a" "sérültek cseréje – 10–20 perc"
+%UI% :MENU 1 "DISM /RestoreHealth" "Windows-kép javítása (internet kell)" "10–30 perc"
+%UI% :MENU 2 "sfc /scannow" "rendszerfájlok ellenőrzése, cseréje" "10–20 perc"
 echo.
 %UI% :MENU M "Mindkettő" "előbb a DISM, utána az sfc"
 %UI% :MENU X "Vissza" ""
@@ -166,8 +173,7 @@ if "%_jv%"=="3" (
     call :HOSSZU "sfc /scannow"
 )
 echo.
-echo   Kész – az eredményt fent látod. Ha az sfc javított valamit,
-echo   indítsd újra a gépet.
+echo   Kész. Ha az sfc javított valamit, indítsd újra a gépet.
 call :VISSZA
 goto :eof
 
@@ -183,12 +189,8 @@ goto :eof
 :LEMEZ
 cls
 %UI% :CIM "Lemezellenőrzés"
-echo   chkdsk %SystemDrive% /f /r – javítja a fájlrendszer hibáit ^(/f^), és megkeresi
-echo   a hibás szektorokat ^(/r^). A rendszermeghajtót csak induláskor tudja
-echo   ellenőrizni: most beütemezem, és a következő újraindításkor fut le.
-echo.
-echo   !C_SARGA!Induláskor a lemez méretétől függően akár 1–2 óráig is tarthat –!C_0!
-echo   !C_SARGA!közben ne kapcsold ki a gépet.!C_0!
+echo   chkdsk %SystemDrive% /f /r – a következő újraindításkor fut, akár 1–2 óráig.
+echo   !C_SARGA!Közben ne kapcsold ki a gépet.!C_0!
 echo.
 %UI% :VALASZT IN "Beütemezzem a lemezellenőrzést?"
 if errorlevel 2 goto :eof
@@ -206,6 +208,25 @@ if not "!_cr!"=="!_cb!" (
 )
 echo   !C_PIROS!Nem sikerült beütemezni – részletek: %LOG%!C_0!
 call :VISSZA
+goto :eof
+
+:SPECIALIS
+rem shutdown /r /o: ujrainditas a Windows helyreallitasi lehetosegeibe (javitas, csokkentett mod, BIOS)
+cls
+%UI% :CIM "Speciális indítás"
+echo   shutdown /r /o /t 0 – a gép azonnal újraindul a helyreállítási menübe:
+echo   indítási javítás, csökkentett mód, rendszer-visszaállítás, UEFI-beállítások.
+echo.
+echo   !C_SARGA!A nem mentett munka elvész.!C_0!
+echo.
+%UI% :VALASZT IN "Újraindítsam most?"
+if errorlevel 2 goto :eof
+>>"%LOG%" echo [%date% %time%] shutdown /r /o /t 0
+shutdown /r /o /t 0
+if errorlevel 1 (
+    echo   !C_PIROS!Nem sikerült – részletek: %LOG%!C_0!
+    call :VISSZA
+)
 goto :eof
 
 :UJRAINDITAS
@@ -227,7 +248,7 @@ goto :eof
 
 :VISSZA
 echo.
-echo   Visszalépéshez nyomj meg egy billentyűt...
+echo   Visszalépéshez nyomj meg egy billentyűt…
 rem Automatikus futtatasnal pontosan egy sort olvasunk - a pause tobb valaszt is elnyelne
 if "%VALASZ_SORBOL%"=="1" (set /p "_x=") else (pause >nul)
 goto :eof

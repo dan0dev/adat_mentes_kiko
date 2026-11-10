@@ -25,7 +25,9 @@ $valaszFajl = Join-Path $itt "valaszok\$Valaszok.txt"
 if (-not (Test-Path -LiteralPath $valaszFajl)) { throw "Nincs ilyen valaszfajl: $valaszFajl" }
 
 $alap = Join-Path $env:TEMP 'pm_teszt'
-$profil = "$alap\profil"; $kulso = "$alap\kulso"; $tmp = "$alap\tmp"
+$profil = "$alap\profil"; $tmp = "$alap\tmp"
+# A hamis kulso meghajto: az E: meghajton (kulso.ps1), nem a rendszerlemezen
+$kulso = & "$itt\kulso.ps1"
 if ($Tiszta -and (Test-Path $kulso)) { Remove-Item -LiteralPath $kulso -Recurse -Force }
 foreach ($d in $profil, $kulso, $tmp) { New-Item -ItemType Directory -Force -Path $d | Out-Null }
 if (-not (Test-Path "$profil\PST")) { & "$itt\profil_feltolt.ps1" -Cel $profil | Out-Null }
@@ -53,9 +55,17 @@ if (Test-Path $mentesGyoker) {
     }
 }
 
-$betu = 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' | Where-Object { -not (Test-Path "${_}:\") } | Select-Object -First 1
-if (-not $betu) { throw 'Nincs szabad meghajtobetu T-Z kozott.' }
-subst "${betu}:" $kulso | Out-Null
+# A meghajto betuje: ha mar csatolva van (pl. T: egy korabbi tesztbol), azt hasznaljuk;
+# kulonben az elso szabad T-Z kozott. A teszt utan csatolva marad - ujraindulasig.
+$betu = $null
+foreach ($s in @(subst)) {
+    if ($s -match '^([A-Z]):\\: => (.+)$' -and $Matches[2].TrimEnd('\') -ieq $kulso.TrimEnd('\')) { $betu = $Matches[1]; break }
+}
+if (-not $betu) {
+    $betu = 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' | Where-Object { -not (Test-Path "${_}:\") } | Select-Object -First 1
+    if (-not $betu) { throw 'Nincs szabad meghajtobetu T-Z kozott.' }
+    subst "${betu}:" $kulso | Out-Null
+}
 
 $sorok = (Get-Content -LiteralPath $valaszFajl -Encoding UTF8) -replace '\{BETU\}', $betu -replace '\{MENTES\}', $mentesSzam
 $beFajl = "$tmp\_valaszok.txt"
@@ -78,7 +88,6 @@ try {
 }
 finally {
     foreach ($k in $regi.Keys) { [Environment]::SetEnvironmentVariable($k, $regi[$k]) }
-    subst "${betu}:" /d | Out-Null
 }
 
 $szoveg = [Text.Encoding]::GetEncoding($AtiratKodlap).GetString([IO.File]::ReadAllBytes($kiFajl))

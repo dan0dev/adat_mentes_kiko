@@ -2,8 +2,9 @@
 @exit /b
 
 rem ==========================================================
-rem  Osszegzes es vegso megerosites - minden menupont vegen
-rem  Hivas: %OSSZEGZES% :OSSZEGZES
+rem  Osszegzes - a mentes es a visszaallitas vegen (:OSSZEGZES), az egylepeses
+rem  menupontoknal rovid zaras (:ROVID)
+rem  Hivas: %OSSZEGZES% :OSSZEGZES  vagy  %OSSZEGZES% :ROVID
 rem ==========================================================
 
 :OSSZEGZES
@@ -59,10 +60,9 @@ echo.
 if %DB_HIBA% GTR 0 (
     %UI% :SAV HIBA "FIGYELEM: %DB_HIBA% tétel hibával zárult – nézd át a listát és a naplót."
 ) else if %DB_KIHAGY% GTR 0 (
-    %UI% :SAV OK "KÉSZ – minden elérhető tétel rendben."
-    echo   !C_SZURKE!A kihagyott tételek ezen a gépen nem léteztek; ez általában rendben van.!C_0!
+    %UI% :SAV OK "KÉSZ – minden tétel rendben."
 ) else (
-    %UI% :SAV OK "KÉSZ – minden tétel sikeresen lefutott."
+    %UI% :SAV OK "KÉSZ – minden tétel rendben."
 )
 echo.
 %UI% :ADAT "%HELY_CIMKE%" "%OSSZ_HELY%"
@@ -71,36 +71,37 @@ if defined TODO for %%x in ("!TODO!") do %UI% :ADAT "Teendők" "%%~nxx"
 call :NAPLO_NEV
 %UI% :ADAT "Napló" "!NAPLO_NEV!"
 
-if "%DO_BL%"=="1" (
-    echo.
-    echo   !C_FEHER!Teendő:!C_0! kövesd az MBAM ablakot, a titkosítás utána a háttérben fut.
-)
-
 echo.
 %UI% :LABLEC TELJES
 >>"%OSSZ_FAJL%" echo.
 >>"%OSSZ_FAJL%" echo Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO%
 
+rem Egyetlen kerdes a vegen: a teendok, a mentes mappaja - es hiba eseten a naplo -
+rem megnyitasa. Barmelyik valasz utan vissza a menube.
+echo.
+set "_mit=a teendőket és a mappát"
+if %DB_HIBA% GTR 0 set "_mit=a teendőket, a mappát és a naplót"
+if not defined TODO set "_mit=a mappát"
+%UI% :VALASZT IN "Megnyissam %_mit%?"
+if errorlevel 2 goto :eof
+if defined TODO start "" notepad "%TODO%"
+if %DB_HIBA% GTR 0 start "" notepad "%LOG%"
+if "%MODUL%"=="mentes" start "" explorer "%CEL%"
+if "%MODUL%"=="visszaallitas" start "" explorer "%FORRAS%"
+goto :eof
+
+:ROVID
+rem Egylepeses menupont (BitLocker, Chrome, frissites) vege: egy sav, egy billentyu.
+rem ROVID_SZOVEG: a billentyu-varas szovege, ha nem a menube megy vissza
 echo.
 if %DB_HIBA% GTR 0 (
-    %UI% :VALASZT IN "Megnyissam a naplót?"
-    if not errorlevel 2 start "" notepad "%LOG%"
-)
-if defined TODO (
-    %UI% :VALASZT IN "Megnyissam a teendők listáját?"
-    if not errorlevel 2 start "" notepad "%TODO%"
-)
-if "%MODUL%"=="mentes" (
-    %UI% :VALASZT IN "Megnyissam a mentés mappáját ellenőrzésre?"
-    if not errorlevel 2 start "" explorer "%CEL%"
-)
-if "%MODUL%"=="visszaallitas" (
-    %UI% :VALASZT IN "Megnyissam a mentés mappáját a listákkal?"
-    if not errorlevel 2 start "" explorer "%FORRAS%"
+    %UI% :SAV HIBA "Nem sikerült – az okát fent látod."
+) else (
+    %UI% :SAV OK "Kész."
 )
 echo.
-echo   Kész. Kilépéshez nyomj meg egy billentyűt...
-pause >nul
+if not defined ROVID_SZOVEG set "ROVID_SZOVEG=Vissza a menübe: nyomj meg egy billentyűt…"
+%UI% :BILLENTYU "!ROVID_SZOVEG!"
 goto :eof
 
 :NAPLO_NEV

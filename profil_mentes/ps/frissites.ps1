@@ -73,7 +73,7 @@ if ($env:FR_MOD -eq 'LETOLT') {
           Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'segedlet.bat') } | Select-Object -First 1 -ExpandProperty FullName
     $kell = 'segedlet.bat', 'verzio.txt', 'lib\ui.cmd', 'lib\tetelek.cmd', 'config\tetelek.cmd', 'modulok\mentes.cmd'
     if (-not $uj -or @($kell | Where-Object { -not (Test-Path -LiteralPath (Join-Path $uj $_)) }).Count) {
-        Ki @('HIBA', 'a letöltés nem teljes', 'A letöltött változatból hiányzik a segédlet egy része – nem cserélem le.')
+        Ki @('HIBA', 'a letöltés nem teljes', 'Hiányos csomag – nem cserélem le.')
     }
     $v = ([IO.File]::ReadAllLines((Join-Path $uj 'verzio.txt'))[0]).Trim()
     if ($v -ne $env:FR_UJ_VERZIO) { Ki @('HIBA', 'a verzió nem egyezik', "A csomagban $v van, a kiadás $($env:FR_UJ_VERZIO) – nem cserélem le.") }

@@ -46,7 +46,7 @@ másolás nagy fájloknál (robocopy `/J`), `A` = átugorható – pl. `PJA` a C
 
 **Átugorható tétel (`A`)** – másolás közben a **K** billentyű leállítja a robocopy-t (`ps\folyamat.ps1`), a
 félbemaradt fájlt törli, és a tétel `[KIHAGYVA] átugorva` lesz, egy sorral a `_TEENDOK.txt`-ben. A
-helyellenőrzés az első ilyen tételről külön fájlszámot és méretet ír ki. A felbemaradt fájlt az ideje
+helyellenőrzés az első ilyen tételről külön fájlszámot és méretet ír ki. A félbemaradt fájlt az ideje
 árulja el: a robocopy előre lefoglalja a teljes méretet, és csak a végén állítja az időt a forráséra.
 
 **Új tételtípus** – új fájl a `lib\tipusok\` alá (pl. `REGISTRY.cmd`) a többi mintájára, `:MENT` és `:VISSZA`
@@ -58,7 +58,8 @@ a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaál
 
 **Új Win+R eszköz** – egy `%ESZKOZ%` sor a `config\eszkozok.cmd`-be: billentyű, parancs, hivatalos név.
 
-**Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
+**Új Office-program az asztali ikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be: név, exe,
+`ALAP` (mindig kell, ha telepítve van) vagy üres (csak ha a régi gépen kint volt), és a régi ikon más nevei.
 
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
 egy betű a `segedlet.bat` `%UI% :VALASZT 123456` sorában, és egy sor a menüpont → modul táblába.
@@ -81,7 +82,10 @@ egy betű a `segedlet.bat` `%UI% :VALASZT 123456` sorában, és egy sor a menüp
   soronként olvassa a válaszokat a bemenetről.
 - A `lib\` fájlok első két sora (`@call %*` / `@exit /b`) teszi hívhatóvá a címkéiket kívülről. A rövidítéseket
   (`%UI%`, `%MASOLAS%`...) a `segedlet.bat` definiálja.
-- A modul `exit /b 0`-val tér vissza, ha végigment (jön az összegzés), `exit /b 1`-gyel, ha megszakították.
+- A modul kilépési kódja: `0` végigment, teljes összegzés · `1` nem kérték, vissza a menübe · `2` nem indult el
+  (az okát a modul kiírta) · `3` kilépés a programból · `4` egylépéses menüpont, rövid zárás · `5` nincs teendő
+  (`NINCS_TEENDO`). A menüpont saját `setlocal`-ban fut: a végén minden számláló visszaáll, jön a menü.
+- Billentyűre várás: `%UI% :BILLENTYU "szöveg"` – ne `pause`: automatikus futtatásnál az több választ elnyelne.
 - Minden változó közös – nincs `setlocal` a modulokban és a `lib`-ben, mert az eredmények (`E_n`, `DB_OK`...) így
   jutnak vissza.
 - PowerShell: `set "PS_FAJL=%PSDIR%\nev.ps1"`, utána `%PS_FUTTAT%`. Szövegként töltődik be, így a végrehajtási
@@ -104,7 +108,7 @@ tesztkornyezet\szovegjegyzek.ps1                      # minden szöveg egy tábl
 ```
 
 Az ellenőrzés keresi: csipogást, hibás ékezetet, 76-nál hosszabb sort, cmd hibát, ékezet nélküli és magázó
-szavakat, a "Készítette" sort, és az eredményeket az `alap\` mappában rögzített alapértékekhez hasonlítja.
+szavakat, a „Készítette” sort, és az eredményeket az `alap\` mappában rögzített alapértékekhez hasonlítja.
 A `PM_TESZT_KONFIG` környezeti változóval a tesztkörnyezet a `config\beallitasok.cmd` után felülírja a
 beállításokat (pl. hogy ne kérdezzen rá a futó programokra). A tesztek a külső indítón át futnak.
 

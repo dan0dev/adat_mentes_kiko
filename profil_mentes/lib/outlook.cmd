@@ -16,7 +16,7 @@ set "OL_STOP=0"
 set "OL_OUT=%TEMP%\outlook_lista_%RANDOM%.txt"
 set "OL_PST="
 echo.
-echo   !C_FEHER!Outlook-lista!C_0! – csatolt PST-fájlok keresése...
+echo   !C_FEHER!Outlook-lista!C_0! – csatolt PST-fájlok keresése…
 set "PS_FAJL=%PSDIR%\outlook_lista.ps1"
 for /f "tokens=1,2 delims=|" %%a in ('%PS_FUTTAT% 2^>nul') do (
     if "%%a"=="SUM" set "OL_PST=%%b"
@@ -45,5 +45,5 @@ if not exist "%CEL%\outlook_lista.txt" (
     %UI% :JELOL HIBA "nem másolható a mentésbe"
     goto :eof
 )
-%UI% :JELOL OK "%OL_PST% csatolt PST – outlook_lista.txt"
+%UI% :JELOL OK "%OL_PST% PST – outlook_lista.txt"
 goto :eof

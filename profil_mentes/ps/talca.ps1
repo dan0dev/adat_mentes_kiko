@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Stop'
 $tb = Join-Path $env:APPDATA 'Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar'
 $L = New-Object System.Collections.Generic.List[string]
 $L.Add($env:USERNAME + ' · ' + $env:COMPUTERNAME + ' · ' + (Get-Date -Format 'yyyy. MM. dd.'))
-$L.Add('Újra: Start › program › jobb klikk › Rögzítés a tálcára')
+$L.Add('Újra: Start › program › jobb kattintás › Rögzítés a tálcára')
 $L.Add('')
 $db = 0
 

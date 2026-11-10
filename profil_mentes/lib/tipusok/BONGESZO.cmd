@@ -93,7 +93,7 @@ set "PS_FAJL=%PSDIR%\profillista_ment.ps1"
 if errorlevel 1 (
     echo            !C_SARGA!a profillista nem menthető – a Default profil így is visszaáll!C_0!
 ) else (
-    %UI% :RESZLET "profillista mentve, titkosítókulcs nélkül"
+    %UI% :RESZLET "profillista mentve, jelszavak nélkül"
 )
 goto :eof
 
@@ -102,12 +102,12 @@ rem Uj Local State csak a profillistaval - a bongeszo sajat, uj kulcsot general
 rem %1 = mentes mappa, %2 = User Data cel, %3 = bongeszo neve
 if not exist "%~1\profilok.json" goto :eof
 if not exist "%~1\Profile *" goto :eof
+rem Ha a bongeszo mar futott itt, csak akkor irjuk at, ha az elokeszitesben kertek (PROFIL_IR)
 if "%VOLT_LS%"=="1" (
-    echo            !C_SARGA!%~3 ezen a gépen már futott. A többi profil megjelenítéséhez!C_0!
-    echo            !C_SARGA!új profillistát írok – az itt eddig mentett böngészőjelszavak!C_0!
-    echo            !C_SARGA!és sütik elveszhetnek. A régit Local State.regi néven megtartom.!C_0!
-    %UI% :VALASZT IN "Átírjam a profillistát?"
-    if errorlevel 2 goto :eof
+    if not "%PROFIL_IR%"=="1" (
+        %UI% :RESZLET "profillista nem átírva – kérésedre"
+        goto :eof
+    )
     copy /Y "%~2\Local State" "%~2\Local State.regi" >nul
 )
 if not exist "%~2\" mkdir "%~2" 2>nul
@@ -119,6 +119,6 @@ if errorlevel 1 (
     set /a B_HIBA+=1
     echo            !C_PIROS!a profillista nem írható – a többi profilt kézzel kell hozzáadni!C_0!
 ) else (
-    %UI% :RESZLET "profillista visszaállítva, titkosítókulcs nélkül"
+    %UI% :RESZLET "profillista visszaállítva, jelszavak nélkül"
 )
 goto :eof

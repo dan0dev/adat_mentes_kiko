@@ -16,7 +16,9 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $d = $PSScriptRoot
-$m = "$env:TEMP\pm_teszt\kulso\Mentes\$($env:USERNAME)_$($env:COMPUTERNAME)"
+# A hamis kulso meghajto mappaja (kulso.ps1): az E: meghajton, ha van
+$kulso = & "$d\kulso.ps1"
+$m = "$kulso\Mentes\$($env:USERNAME)_$($env:COMPUTERNAME)"
 $sorrend = 'mentes', 'visszaallitas', 'bitlocker_megse', 'chrome_megse', 'eszkozok_megse', 'admin_eszkozok', 'admin_masik_fiok', 'frissites_git', 'hibas_bevitel', 'visszaallitas_hibas', 'regi_mentes'
 if ($Csak) { $sorrend = $sorrend | Where-Object { $Csak -contains $_ } }
 $hibak = 0
@@ -29,10 +31,12 @@ foreach ($v in $sorrend) {
         # A regi verzio altal keszitett mentes visszaallitasa: a _LEFT-TO-DO.txt-t folytatja,
         # nem nyit ujat, es a regi _EXPORT_ osszegzest lecsereli
         $arg.Mentes = "$d\alap\mentes_regi"
-        $mappa = "$env:TEMP\pm_teszt\kulso\Mentes\mentes_regi"
+        $mappa = "$kulso\Mentes\mentes_regi"
     }
     # Rendszergazdai agak: a segedlet azt hiszi, rendszergazdakent fut (PM_TESZT_ADMIN);
     # admin_masik_fiok: egy masik fiok nevevel - a mentesnek meg kell allnia
+    # Visszaallitas elott ures teszt-asztal: az Office-ikonok lepese mindig ugyanugy fusson
+    if ($v -in 'visszaallitas', 'regi_mentes') { Remove-Item "$env:TEMP\pm_teszt\profil\Desktop\*.lnk" -Force -ErrorAction SilentlyContinue }
     $regiNev = $env:USERNAME
     if ($v -like 'admin_*') { $env:PM_TESZT_ADMIN = '1' }
     if ($v -eq 'admin_masik_fiok') { $env:USERNAME = 'masik_rendszergazda' }

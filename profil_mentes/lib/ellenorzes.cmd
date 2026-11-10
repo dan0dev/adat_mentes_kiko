@@ -8,46 +8,40 @@ rem  Hivas: %ELLENORZES% :CIMKE parameterek
 rem ==========================================================
 
 :FELHASZNALO
-rem Mentes, visszaallitas: a felhasznalo sajat profiljaval dolgozik
-rem Kilepesi kod: 0 = jo felhasznalo, 1 = megszakitas
-echo.
+rem Mentes, visszaallitas: a felhasznalo sajat profiljaval dolgozik. Kerdes nincs: a nev
+rem az elokeszito kepernyon latszik, az "Indulhat?" ezt is jovahagyja.
 rem Rendszergazdakent egy masik fiokkal: a profil, az AppData es a registry a rendszergazdae
 rem lenne - igy a mentes es a visszaallitas rossz adatokkal dolgozna. Ilyenkor nem engedjuk.
-if "%ADMIN%"=="1" (
-    set "BEJ="
-    set "PS_FAJL=%PSDIR%\bejelentkezett.ps1"
-    for /f "delims=" %%u in ('%PS_FUTTAT% 2^>nul') do set "BEJ=%%u"
-    if defined BEJ if /I not "!BEJ!"=="%USERNAME%" (
-        echo   !C_PIROS!A segédlet most egy másik, rendszergazdai fiókkal fut.!C_0!
-        echo     Rendszergazdai fiók:  !C_FEHER!%USERNAME%!C_0!
-        echo     Bejelentkezve:        !C_FEHER!!BEJ!!C_0!
-        echo.
-        echo   Így a mentés és a visszaállítás a rendszergazda adataival dolgozna, nem a
-        echo   felhasználóéval. Indítsd el a segédletet sima dupla kattintással.
-        exit /b 1
-    )
-    echo   !C_SARGA!Figyelem: a segédlet rendszergazdaként fut. A mentés és a visszaállítás!C_0!
-    echo   !C_SARGA!annak a fióknak az adataival dolgozik, amelyik elindította.!C_0!
+rem Kilepesi kod: 0 = mehet, 1 = nem
+if not "%ADMIN%"=="1" exit /b 0
+set "BEJ="
+set "PS_FAJL=%PSDIR%\bejelentkezett.ps1"
+for /f "delims=" %%u in ('%PS_FUTTAT% 2^>nul') do set "BEJ=%%u"
+if defined BEJ if /I not "!BEJ!"=="%USERNAME%" (
     echo.
+    echo   !C_PIROS!A segédlet most egy másik, rendszergazdai fiókkal fut.!C_0!
+    echo     Rendszergazdai fiók:  !C_FEHER!%USERNAME%!C_0!
+    echo     Bejelentkezve:        !C_FEHER!!BEJ!!C_0!
+    echo.
+    echo   Így a rendszergazda adataival dolgozna – indítsd sima dupla kattintással.
+    exit /b 1
 )
-echo   Ennek a felhasználónak az adataival dolgozom: !C_FEHER!%USERNAME%!C_0!
-%UI% :VALASZT IN "Ez a megfelelő felhasználó?"
-if not errorlevel 2 exit /b 0
-echo.
-echo   Indítsd el a segédletet a felhasználó saját fiókjában, rendszergazdai jog
-echo   nélkül: sima dupla kattintással, ne a Futtatás rendszergazdaként paranccsal.
-exit /b 1
+exit /b 0
 
 :MEGHAJTO
 rem Kulso meghajto betujel bekerese.  Kimenet: DRIVE, IRHATO, ROOT
-rem %1 = KELL: csak irhato meghajto fogadhato el
+rem %1 = KELL: csak irhato meghajto fogadhato el - mentesnel
 rem A felismert kulso meghajto - ps\meghajto.ps1 - alapertek: Enterre azt hasznalja, de
-rem mas betu is beirhato. Ha nem talal semmit, az alapertek D.
+rem mas betu is beirhato. Ha nem talal semmit, az alapertek D. Mentesnel, ha a valasztott
+rem meghajto nincs a felismertek kozott (belso lemez, halozat), egyszer rakerdez.
 set "M_ALAP="
 set "M_DB=0"
+rem A # miatt a lista sosem ures - ures valtozon a cmd betucsereje nem mukodik
+set "M_LISTA=#"
 set "PS_FAJL=%PSDIR%\meghajto.ps1"
 for /f "tokens=1-4 delims=|" %%a in ('%PS_FUTTAT% 2^>nul') do (
     if not defined M_ALAP set "M_ALAP=%%a"
+    set "M_LISTA=!M_LISTA!%%a"
     set /a M_DB+=1
     set "_mc=%%b"
     if "!_mc!"=="-" set "_mc=címke nélkül"
@@ -95,6 +89,13 @@ if "%IRHATO%"=="0" if /I "%~1"=="KELL" (
     echo   !C_PIROS!Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót.!C_0!
     goto :MEGHAJTO_BEKER
 )
+rem Mentes belso lemezre: egy Enterrel a regi gep sajat lemezere kerulne a mentes
+set "_ml=!M_LISTA:%DRIVE%=!"
+if /I "%~1"=="KELL" if "!_ml!"=="!M_LISTA!" (
+    echo   !C_SARGA!A %DRIVE%: nem külső meghajtó – belső lemez vagy hálózat.!C_0!
+    %UI% :VALASZT IN "Biztosan erre mentsek?"
+    if errorlevel 2 goto :MEGHAJTO_BEKER
+)
 set "ROOT=%DRIVE%:\%MAPPA_NEV%"
 exit /b 0
 
@@ -117,13 +118,13 @@ echo   A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes
 echo   a háttérben is futhat.
 if "%APP_PROBALT%"=="1" goto :APPOK_KENYSZER
 echo   U – újraellenőrzés    B – bezárás    F – folytatás így
-%UI% :VALASZT UBF "Választás"
+%UI% :VALASZT UBF "Válassz:"
 if errorlevel 3 goto :eof
 if errorlevel 2 goto :APPOK_BEZAR
 goto :APPOK_UJRA
 
 :APPOK_BEZAR
-echo   Bezárás... Az Outlook, a Word és az Excel rákérdezhet a mentésre – válaszolj.
+echo   Bezárás… Ha az Outlook, a Word vagy az Excel kérdez, válaszolj.
 set "_kb= %KENYSZER_BEZARAS% "
 for %%p in (!FUTO!) do (
     if not "!_kb: %%p =!"=="!_kb!" (
@@ -137,12 +138,12 @@ timeout /t 3 /nobreak >nul
 goto :APPOK_UJRA
 
 :APPOK_KENYSZER
-echo   A programok a bezárás után is futnak. Ha valamelyik kérdez, például
+echo   Nem zárult be mind. Ha valamelyik kérdez, például
 echo   mentést, válaszolj, majd U.
-echo   !C_SARGA!Kényszerített bezárásnál a nem mentett munka elveszik. Az Outlookot csak!C_0!
+echo   !C_SARGA!Kényszerített bezárásnál a nem mentett munka elvész. Az Outlookot csak!C_0!
 echo   !C_SARGA!végső esetben zárd be így.!C_0!
 echo   U – újraellenőrzés    K – kényszerített bezárás    F – folytatás így
-%UI% :VALASZT UKF "Választás"
+%UI% :VALASZT UKF "Válassz:"
 if errorlevel 3 goto :eof
 if errorlevel 2 (
     for %%p in (!FUTO!) do taskkill /F /IM %%p >nul 2>&1
@@ -182,20 +183,19 @@ if defined K_NEV if defined H_KDB if not "!H_KDB!"=="-" if not "!H_KDB!"=="0" (
 )
 if !H_KELL! GTR !H_SZABAD! (
     echo.
-    echo   !C_PIROS!Nincs elég hely a külső meghajtón.!C_0!
+    echo   !C_PIROS!Nincs elég hely ezen a meghajtón: !PS_BETU!!C_0!
     echo   M – megszakítás    F – folytatás így
-    %UI% :VALASZT MF "Választás"
+    %UI% :VALASZT MF "Válassz:"
     if errorlevel 2 goto :eof
     set "HELY_STOP=1"
     goto :eof
 )
 if /I "!H_FS!"=="FAT32" if !H_MAX! GEQ 4096 (
     echo.
-    echo   !C_PIROS!Van 4 GB-nál nagyobb fájl – ez FAT32 fájlrendszeren nem fér el.!C_0!
-    echo   Formázd a külső meghajtót exFAT vagy NTFS fájlrendszerre, vagy használj
-    echo   másik meghajtót.
+    echo   !C_PIROS!Van 4 GB-nál nagyobb fájl – FAT32-re nem másolható.!C_0!
+    echo   Formázd exFAT-ra vagy NTFS-re, vagy válassz másik meghajtót.
     echo   M – megszakítás    F – folytatás így
-    %UI% :VALASZT MF "Választás"
+    %UI% :VALASZT MF "Válassz:"
     if errorlevel 2 goto :eof
     set "HELY_STOP=1"
     goto :eof

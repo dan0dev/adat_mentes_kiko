@@ -14,6 +14,6 @@ echo   Nem találom a profil_mentes mappát ennek a fájlnak a mappájában:
 echo   %~dp0
 echo   Az Eszkozcsere_segedlet.bat és a profil_mentes mappa legyen egymás mellett.
 echo.
-echo   Kilépéshez nyomj meg egy billentyűt...
+echo   Kilépéshez nyomj meg egy billentyűt…
 pause >nul
 exit /b 1

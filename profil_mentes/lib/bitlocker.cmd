@@ -9,16 +9,16 @@ rem ==========================================================
 :INDIT
 rem MBAMAgent, 2 mp, MBAMClientUI, 2 mp, MBAMAgent ujra
 if not exist "%MBAM_DIR%\MBAMAgent.exe" (
-    %UI% :JELOL HIBA "MBAMAgent.exe nem található" "Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR%"
+    %UI% :JELOL HIBA "nincs MBAM kliens" "Keresett hely: %MBAM_DIR%"
     goto :eof
 )
 if not exist "%MBAM_DIR%\MBAMClientUI.exe" (
-    %UI% :JELOL HIBA "MBAMClientUI.exe nem található" "Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR%"
+    %UI% :JELOL HIBA "nincs MBAM kliens" "Hiányzik: MBAMClientUI.exe – %MBAM_DIR%"
     goto :eof
 )
 >>"%LOG%" echo        MBAM mappa: %MBAM_DIR%
 
-%UI% :RESZLET "1/3 MBAMAgent indítása..."
+%UI% :RESZLET "1/3 MBAMAgent indítása…"
 ver >nul
 start "" "%MBAM_DIR%\MBAMAgent.exe"
 if errorlevel 1 (
@@ -27,7 +27,7 @@ if errorlevel 1 (
 )
 timeout /t 2 /nobreak >nul
 
-%UI% :RESZLET "2/3 MBAMClientUI indítása..."
+%UI% :RESZLET "2/3 MBAMClientUI indítása…"
 ver >nul
 start "" "%MBAM_DIR%\MBAMClientUI.exe"
 if errorlevel 1 (
@@ -36,11 +36,11 @@ if errorlevel 1 (
 )
 timeout /t 2 /nobreak >nul
 
-%UI% :RESZLET "3/3 MBAMAgent újra..."
+%UI% :RESZLET "3/3 MBAMAgent újra…"
 ver >nul
 start "" "%MBAM_DIR%\MBAMAgent.exe"
 if errorlevel 1 (
-    %UI% :JELOL HIBA "az MBAMAgent másodszor nem indult el"
+    %UI% :JELOL HIBA "a 2. MBAMAgent nem indult el"
     goto :eof
 )
 %UI% :JELOL OK "elindítva" "Kövesd a megjelenő BitLocker ablakot."

@@ -89,6 +89,8 @@ set "DESK="
 for /f "tokens=2,*" %%a in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop 2^>nul ^| find "REG_"') do set "DESK=%%b"
 if defined DESK call set "DESK=%DESK%"
 if not defined DESK set "DESK=%USERPROFILE%\Desktop"
+rem Tesztkornyezet: a hamis profil asztala - a valodi asztalhoz a teszt nem nyul
+if defined PM_TESZT_DESK set "DESK=%PM_TESZT_DESK%"
 
 rem ---------- Szamlalok ----------
 set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0, DB_ATUGORVA=0
@@ -106,16 +108,19 @@ rem Tesztkornyezet: a rendszergazdai agak kiprobalasa rendszergazdai jog nelkul
 if defined PM_TESZT_ADMIN set "ADMIN=%PM_TESZT_ADMIN%"
 
 rem ==========================================================
-rem  Kezdokepernyo es menu
+rem  Kezdokepernyo es menu - a menupont utan ide ter vissza, X: kilepes
 rem ==========================================================
-rem ESZKOZOK parameterrel - a rendszergazdai ablak - rogton az eszkozok jonnek
+rem ESZKOZOK parameterrel - a rendszergazdai ablak - rogton az eszkozok jonnek, utana kilep
+:FOMENU
 set "MOD="
 if /I "%~1"=="ESZKOZOK" set "MOD=5"
 if defined MOD goto :MENUPONT
 %KEZDO% :MUTAT
-%UI% :VALASZT 123456 "Válassz menüpontot [1–6]:" N
+%UI% :VALASZT 123456X "Válassz menüpontot [1–6], kilépés: X" N
 set "MOD=%errorlevel%"
 :MENUPONT
+rem X (7) vagy elfogyott bemenet (255): kilepes
+if %MOD% GEQ 7 goto :KILEPES
 
 rem Menupont -> nev es modul. Uj menupontnal: lib\kezdokepernyo.cmd, egy betu a VALASZT-ba, es egy sor ide.
 rem A tovabbi kod csak a MODUL valtozot nezi, a sorszamot nem.
@@ -126,39 +131,51 @@ if "%MOD%"=="3" set "MOD_NEV=BitLocker beállítása"         & set "MODUL=bitlo
 if "%MOD%"=="4" set "MOD_NEV=Chrome telepítése"            & set "MODUL=chrome"
 if "%MOD%"=="5" set "MOD_NEV=Rendszergazdai eszközök"      & set "MODUL=eszkozok"
 if "%MOD%"=="6" set "MOD_NEV=Segédlet frissítése"          & set "MODUL=frissites"
-if not defined MODUL goto :MEGSZAKITVA
-title Eszközcsere segédlet %VERZIO% – %MOD_NEV%
-
-rem A modul 0-val ter vissza, ha vegigment, 1-gyel, ha megszakitottak, 2-vel, ha nincs teendo,
-rem 3-mal, ha osszegzes nelkul ki kell lepni (pl. a rendszergazdai eszkozok vege)
-set "NINCS_TEENDO="
-call "%MODULOK%\%MODUL%.cmd"
+if not defined MODUL goto :KILEPES
+call :MENUPONT_FUT
 if errorlevel 3 goto :KILEPES
-if errorlevel 2 goto :NINCS_TEENDO
-if errorlevel 1 goto :MEGSZAKITVA
+if /I "%~1"=="ESZKOZOK" goto :KILEPES
+title Eszközcsere segédlet %VERZIO%
+goto :FOMENU
 
-%OSSZEGZES% :OSSZEGZES
-if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
+:MENUPONT_FUT
+rem Minden menupont sajat, helyi kornyezetben fut: a szamlalok, a naplo es a tobbi
+rem eredmeny a vegen magatol visszaall - a kovetkezo menupont tisztan indul.
+rem A modul kilepesi kodja:
+rem   0 = vegigment, teljes osszegzes   1 = a felhasznalo nem kerte - vissza a menube
+rem   2 = nem indult el, az ok fent     3 = kilepes a programbol
+rem   4 = vegigment, rovid zaras (egylepeses menupont)   5 = nincs teendo (NINCS_TEENDO)
+setlocal
+set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0, DB_ATUGORVA=0, DO_IKON=0, DO_BL=0
+set "LOG=%TEMP%\profil_mentes_naplo.txt"
+set "IRHATO=1"
+set "CEL="
+set "FORRAS="
+set "DRIVE="
+set "OL_PST="
+set "NINCS_TEENDO="
+set "MOD_KILEP="
+title Eszközcsere segédlet %VERZIO% – %MOD_NEV%
+call "%MODULOK%\%MODUL%.cmd"
+set "_rc=%errorlevel%"
+if "%_rc%"=="0" %OSSZEGZES% :OSSZEGZES
+if "%_rc%"=="4" %OSSZEGZES% :ROVID
+if "%_rc%"=="2" (
+    echo.
+    %UI% :SAV FIGYEL "Nem indult el – az okát fent látod."
+    echo.
+    %UI% :BILLENTYU "Vissza a menübe: nyomj meg egy billentyűt…"
+)
+if "%_rc%"=="5" (
+    echo.
+    %UI% :SAV OK "!NINCS_TEENDO!"
+    echo.
+    %UI% :BILLENTYU "Vissza a menübe: nyomj meg egy billentyűt…"
+)
+if "%_rc%"=="3" exit /b 3
+if "%MOD_KILEP%"=="1" exit /b 3
 exit /b 0
 
 :KILEPES
 if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
 exit /b 0
-
-:NINCS_TEENDO
-echo.
-%UI% :SAV OK "!NINCS_TEENDO!"
-echo.
-echo   Kilépéshez nyomj meg egy billentyűt...
-pause >nul
-if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
-exit /b 0
-
-:MEGSZAKITVA
-echo.
-%UI% :SAV FIGYEL "Megszakítva – nem történt változtatás."
-echo.
-echo   Kilépéshez nyomj meg egy billentyűt...
-pause >nul
-if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
-exit /b 1

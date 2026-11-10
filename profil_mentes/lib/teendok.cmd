@@ -23,11 +23,11 @@ if not exist "%TODO%" (
 >>"%TODO%" (
     echo.
     echo RÉGI GÉP
-    echo [ ] Outlook: további postaládák, Feladó címek, további fiókok – outlook_lista.txt
-    echo [ ] Tálca ikonjai – talca.txt, talca.png
-    echo [ ] PST-k átmásolása kézzel – outlook_lista.txt
-    echo [ ] Tanúsítványok: certmgr.msc – Személyes, kézzel
-    echo [ ] Böngészőben mentett jelszavak
+    echo [ ] Outlook: postaládák, feladócímek, fiókok – outlook_lista.txt
+    echo [ ] Tálcaikonok – talca.txt, talca.png
+    echo [ ] PST-k átmásolása – outlook_lista.txt
+    echo [ ] Tanúsítványok: certmgr.msc – Személyes
+    echo [ ] Böngészőjelszavak: szinkron vagy export – nem kerülnek át
 )
 for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
 call :ATUGORVA_SOROK
@@ -40,16 +40,16 @@ goto :eof
     echo ÚJ GÉP
     echo [ ] 2 Visszaállítás, 3 BitLocker
     echo [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése
-    echo [ ] Alapértelmezett alkalmazások kézzel: Word, Excel, PowerPoint, PDF, Chrome
-    echo [ ] Tanúsítványok: telepítés kézzel
+    echo [ ] Alapértelmezett alkalmazások: Word, Excel, PowerPoint, PDF, Chrome
+    echo [ ] Tanúsítványok: telepítés
     echo [ ] Outlook: PST-k csatolása – outlook_lista.txt
-    echo [ ] Outlook: postaládák, feladók, fiókok
+    echo [ ] Outlook: postaládák, feladócímek, fiókok
     echo [ ] Outlook: alapértelmezett aláírás
-    echo [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés
-    echo [ ] Sticky Notes
+    echo [ ] Chrome, Edge: profilok, könyvjelzők, bejelentkezés
+    echo [ ] Sticky Notes: megvannak a jegyzetek?
     echo [ ] Programok: apps.txt összevetése, hiányzók telepítése
-    echo [ ] Tálca ikonjai újra – talca.txt, talca.png
-    echo [ ] Start menü: hiányzó rögzítések kézzel
+    echo [ ] Tálcaikonok újra – talca.txt, talca.png
+    echo [ ] Start menü: hiányzó rögzítések
     echo [ ] Minden rendben: mentés törlése a meghajtóról
 )
 goto :eof

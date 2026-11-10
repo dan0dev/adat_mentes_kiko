@@ -18,9 +18,6 @@ rem Ezek a hatterben is futnak, ezert bezaraskor kenyszerrel zarjuk oket
 set "KENYSZER_BEZARAS=msedge.exe Microsoft.Notes.exe"
 
 
-rem Office parancsikonok forrasa, es az MSI-s Office parancsikonjainak helye
-set "PD_START=%ProgramData%\Microsoft\Windows\Start Menu\Programs"
-set "WIN_INST=%WINDIR:~2%\Installer\"
 
 rem BitLocker / MBAM kliens helye - mindig a 64 bites Program Files
 if defined ProgramW6432 (set "PF64=%ProgramW6432%") else (set "PF64=%ProgramFiles%")

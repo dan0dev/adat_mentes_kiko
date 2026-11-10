@@ -39,8 +39,8 @@ foreach ($p in $psts) {
 }
 $L.Add('')
 $L.Add('KÉZZEL – régi gépen')
-$L.Add('[ ] További postaládák: Fiókbeállítások › Módosítás › További beállítások › Speciális')
-$L.Add('[ ] Feladó címek: új levél › Feladó (az automatikus postaládák maguktól jönnek vissza)')
+$L.Add('[ ] További postaládák (az automatikusak maguktól jönnek): Fiókbeállítások › Módosítás › További beállítások › Speciális')
+$L.Add('[ ] Feladócímek: új levél › Feladó')
 $L.Add('[ ] További fiókok: Fiókbeállítások › E-mail')
 $L.Add('')
 $L.Add('Eszközcsere segédlet ' + $env:VERZIO + ' · Készítette: ' + $env:SZERZO)

@@ -10,10 +10,12 @@ rem         A = atugorhato: masolas kozben a K billentyuvel kihagyhato (folyamat
 rem ==========================================================
 
 :MENT
+set "_nincs=ezen a gépen nincs ilyen mappa"
 call :MAPPA "%T_FORRAS%" "%CEL%\%T_MAPPA%" %T_P1%
 goto :eof
 
 :VISSZA
+set "_nincs=nincs a mentésben"
 call :MAPPA "%FORRAS%\%T_MAPPA%" "%T_FORRAS%" %T_P1%
 goto :eof
 
@@ -21,7 +23,7 @@ goto :eof
 rem %1 = forras mappa, %2 = cel mappa, %3 = jelzok: P, J, A, egyutt is, pl. PJA
 if not exist "%~1\" (
     >>"%LOG%" echo        nincs ilyen mappa: %~1
-    %UI% :JELOL KIHAGYVA "ezen a gépen nincs ilyen mappa"
+    %UI% :JELOL KIHAGYVA "!_nincs!"
     goto :eof
 )
 set "R_SRC=%~1"

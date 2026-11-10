@@ -56,7 +56,7 @@ if ($env:CHROME_MOD -eq 'LETOLT') {
             } else { $hibaota = $null }
             if ($job.BytesTotal -gt 0 -and $job.BytesTotal -lt [uint64]::MaxValue) {
                 Sor ('{0,3}%   {1} / {2} MB' -f [int](100 * $job.BytesTransferred / $job.BytesTotal), [int]($job.BytesTransferred / 1MB), [int]($job.BytesTotal / 1MB))
-            } else { Sor 'kapcsolódás...' }
+            } else { Sor 'kapcsolódás…' }
             Start-Sleep -Milliseconds 400
         }
         if ($job.JobState -eq 'Transferred') { Complete-BitsTransfer -BitsJob $job; $mod = 'BITS' }
@@ -67,20 +67,20 @@ if ($env:CHROME_MOD -eq 'LETOLT') {
     if (-not $mod) {
         $curl = Join-Path $env:SystemRoot 'System32\curl.exe'
         if (Test-Path -LiteralPath $curl) {
-            [Console]::WriteLine($behuz + $szurke + 'második próba...' + $nulla)
+            [Console]::WriteLine($behuz + $szurke + 'második próba…' + $nulla)
             & $curl --fail --location --silent --show-error --connect-timeout 20 --max-time 1800 --output $msi $URL 2>$null
             if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath $msi)) { $mod = 'curl' }
         }
     }
     if (-not $mod -or -not (Test-Path -LiteralPath $msi)) {
-        Ki 'HIBA' 'nem tölthető le' 'Nincs kapcsolat a dl.google.com-mal – internet vagy céges proxy/tűzfal?'
+        Ki 'HIBA' 'nem tölthető le' 'Nincs kapcsolat a dl.google.com-mal – internet, proxy, tűzfal?'
     }
     $mb = [int]((Get-Item -LiteralPath $msi).Length / 1MB)
     # Alairas: csak a Google ervenyes alairasaval futhat
     $s = Get-AuthenticodeSignature -LiteralPath $msi
     if ($s.Status -ne 'Valid' -or $s.SignerCertificate.Subject -notmatch '^CN=Google LLC,') {
         Remove-Item -LiteralPath $msi -Force -ErrorAction SilentlyContinue
-        Ki 'HIBA' 'az aláírás nem megfelelő' ('A letöltött fájl nem a Google érvényes aláírásával érkezett (' + $s.Status + ') – törölve.')
+        Ki 'HIBA' 'az aláírás nem megfelelő' ('Nem a Google érvényes aláírása (' + $s.Status + ') – törölve.')
     }
     Ki 'OK' "$mb MB, Google-aláírás rendben" ''
 }
@@ -90,13 +90,13 @@ if ($env:CHROME_MOD -eq 'TELEPIT') {
     $msi = $env:CHROME_MSI
     if (-not (Test-Path -LiteralPath $msi)) { Ki 'HIBA' 'nincs letöltött telepítő' '' }
     $regi = Verzio
-    [Console]::WriteLine($behuz + $szurke + 'A Windows most kéri a rendszergazdai jelszót...' + $nulla)
+    [Console]::WriteLine($behuz + $szurke + 'A Windows most kéri a rendszergazdai jelszót…' + $nulla)
     try {
         $arg = '/i "' + $msi + '" /qn /norestart /L*v "' + $env:CHROME_NAPLO + '"'
         $p = Start-Process -FilePath (Join-Path $env:SystemRoot 'System32\msiexec.exe') -ArgumentList $arg -Verb RunAs -Wait -PassThru
     } catch {
         Remove-Item -LiteralPath $msi -Force -ErrorAction SilentlyContinue
-        Ki 'KIHAGYVA' 'nem kaptam rendszergazdai jogot' 'A jelszókérő ablakot bezárták – a Chrome nem települt.'
+        Ki 'KIHAGYVA' 'nem kaptam rendszergazdai jogot' 'A jelszókérő ablakot bezártad – a Chrome nem települt.'
     }
     $kod = $p.ExitCode
     Remove-Item -LiteralPath $msi -Force -ErrorAction SilentlyContinue
@@ -105,13 +105,13 @@ if ($env:CHROME_MOD -eq 'TELEPIT') {
         if (-not $uj) { Ki 'HIBA' 'a Chrome nem található' ('A telepítő sikert jelzett, de a chrome.exe nincs meg. Napló: ' + $env:CHROME_NAPLO) }
         $r = ''
         if ($regi -and $regi -eq $uj) { $r = 'Ez a verzió volt fent korábban is.' } elseif ($regi) { $r = "Korábban: $regi" }
-        if ($kod -ne 0) { $r = ($r + ' Újraindítás után lesz teljes.').Trim() }
+        if ($kod -ne 0) { $r = ($r + ' Újraindítás kell.').Trim() }
         Ki 'OK' "Chrome $uj" $r
     }
     $ok = switch ($kod) {
-        1602 { 'a telepítést megszakították' }
+        1602 { 'a telepítés megszakadt' }
         1618 { 'épp fut egy másik telepítés – próbáld újra pár perc múlva' }
-        1638 { 'másik Chrome-telepítés van a gépen – az Alkalmazásokban távolítsd el, majd próbáld újra' }
+        1638 { 'Másik Chrome van fent – távolítsd el (Alkalmazások), majd újra.' }
         default { 'részletek a naplóban: ' + $env:CHROME_NAPLO }
     }
     Ki 'HIBA' "sikertelen telepítés (kód: $kod)" $ok

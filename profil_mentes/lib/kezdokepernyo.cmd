@@ -22,14 +22,14 @@ echo.
 echo.
 %UI% :SZAKASZ "AZ ÚJ GÉPEN"
 echo.
-%UI% :MENU 2 "Adatok visszaállítása" "a külső meghajtón lévő mentésből"
+%UI% :MENU 2 "Adatok visszaállítása" "a külső meghajtóról"
 %UI% :MENU 3 "BitLocker beállítása" "titkosítás indítása az MBAM klienssel"
 %UI% :MENU 4 "Chrome telepítése" "ha a Szoftverközpont nem indítja el" "a letöltést"
 echo.
 %UI% :SZAKASZ "EGYÉB"
 echo.
 %UI% :MENU 5 "Rendszergazdai eszközök" "Win+R parancsok, hálózat, javítás"
-%UI% :MENU 6 "Segédlet frissítése" "a legújabb változat a GitHubról"
+%UI% :MENU 6 "Segédlet frissítése" "a legújabb verzió a GitHubról"
 echo.
 %UI% :LABLEC NYITO
 echo.

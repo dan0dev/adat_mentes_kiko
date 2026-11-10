@@ -204,6 +204,13 @@ set /a "_g=!%~1!/1024, _t=(!%~1! %% 1024)*10/1024"
 set "%~2=!_g!,!_t! GB"
 goto :eof
 
+:BILLENTYU
+rem %1 = a szoveg, pl. Vissza a menube: nyomj meg egy billentyut...
+rem Automatikus futtatasnal pontosan egy sort olvas - a pause tobb valaszt is elnyelne
+echo   %~1
+if "%VALASZ_SORBOL%"=="1" (set /p "_x=") else (pause >nul)
+goto :eof
+
 :VALASZT
 rem Csendes valasztas a choice helyett - a choice minden rossz billentyunel sipol,
 rem ez csak var tovabb. Egy billentyu, Enter nelkul, kis- es nagybetu is jo.

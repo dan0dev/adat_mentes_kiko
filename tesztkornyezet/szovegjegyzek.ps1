@@ -17,8 +17,10 @@ function Tisztit($s) {
     $s.Trim()
 }
 
-foreach ($f in Get-ChildItem $tool -Recurse -Include *.cmd, *.bat -File | Sort-Object FullName) {
-    $rel = $f.FullName.Substring($tool.Length + 1)
+$cmdFajlok = @(Get-ChildItem $tool -Recurse -Include *.cmd, *.bat -File | Sort-Object FullName) + @(Get-Item (Join-Path $gyoker 'Eszkozcsere_segedlet.bat'))
+foreach ($f in $cmdFajlok) {
+    # A kulso indito a profil_mentes mellett van: ..\Eszkozcsere_segedlet.bat
+    $rel = if ($f.FullName.StartsWith($tool)) { $f.FullName.Substring($tool.Length + 1) } else { '..\' + $f.Name }
     $n = 0
     foreach ($l in [IO.File]::ReadAllLines($f.FullName, [Text.Encoding]::UTF8)) {
         $n++
@@ -31,11 +33,17 @@ foreach ($f in Get-ChildItem $tool -Recurse -Include *.cmd, *.bat -File | Sort-O
             continue
         }
         # UI hivasok: minden idezojeles parameter
-        if ($t -match '%UI%\s+:(CIM|FEJLEC|JELOL|RESZLET|VALASZT|BEKER|SAV|MENU|ADAT|SZAKASZ)\b') {
+        if ($t -match '%UI%\s+:(CIM|FEJLEC|JELOL|RESZLET|VALASZT|BEKER|SAV|MENU|ADAT|SZAKASZ|BILLENTYU)\b') {
             foreach ($m in [regex]::Matches($t, '"([^"]*)"')) {
                 $sz = Tisztit $m.Groups[1].Value
                 if ($sz -and $sz -notmatch '^[%!][A-Z_~0-9]+[%!]$' -and $sz -notmatch '^%~\d$') { $sorok.Add(('| `{0}:{1}` | {2} |' -f $rel, $n, ($sz -replace '\|', '\|'))) }
             }
+            continue
+        }
+        # set "X=uzenet" - a kesobb kiirt uzenetek (pl. R_UZENET, NINCS_TEENDO)
+        if ($t -match '^(?:if .+\s)?set\s+"[A-Za-z_0-9]+=([^"]*[áéíóöőúüűÁÉÍÓÖŐÚÜŰ][^"]*)"') {
+            $sz = Tisztit $Matches[1]
+            if ($sz) { $sorok.Add(('| `{0}:{1}` | {2} |' -f $rel, $n, ($sz -replace '\|', '\|'))) }
             continue
         }
         # tetelnevek es az egyeb config sorok masodik idezojeles oszlopa
@@ -49,14 +57,15 @@ foreach ($f in Get-ChildItem (Join-Path $tool 'ps') -Filter *.ps1 | Sort-Object 
     foreach ($l in [IO.File]::ReadAllLines($f.FullName, [Text.Encoding]::UTF8)) {
         $n++
         if ($l.Trim().StartsWith('#')) { continue }
-        foreach ($m in [regex]::Matches($l, "'([^']*[áéíóöőúüűÁÉÍÓÖŐÚÜŰ][^']*)'")) {
-            $sorok.Add(('| `ps\{0}:{1}` | {2} |' -f $f.Name, $n, ($m.Groups[1].Value -replace '\|', '\|')))
+        foreach ($m in [regex]::Matches($l, "'([^']*[áéíóöőúüűÁÉÍÓÖŐÚÜŰ][^']*)'|`"([^`"]*[áéíóöőúüűÁÉÍÓÖŐÚÜŰ][^`"]*)`"")) {
+            $v = $m.Groups[1].Value; if (-not $v) { $v = $m.Groups[2].Value }
+            $sorok.Add(('| `ps\{0}:{1}` | {2} |' -f $f.Name, $n, ($v -replace '\|', '\|')))
         }
     }
 }
 
 $fej = @(
-    '# Szövegjegyzék – Eszközcsere segédlet 1.0',
+    ('# Szövegjegyzék – Eszközcsere segédlet ' + ([IO.File]::ReadAllLines((Join-Path $tool 'verzio.txt'))[0]).Trim()),
     '',
     ('Generálta: `tesztkornyezet\szovegjegyzek.ps1` – ' + (Get-Date -Format 'yyyy. MM. dd.') + ' – ' + $sorok.Count + ' szöveg.'),
     'Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.',
