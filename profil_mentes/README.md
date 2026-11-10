@@ -22,12 +22,13 @@ címsorában látszik.
 **Amit ment és visszaállít** – a teljes lista helyekkel és a kézi teendőkkel: [MIT_MENT.md](MIT_MENT.md)
 
 - Outlook-aláírások, -levélpapírok
-- Office: sablonok, egyéni szótárak, automatikus javítás, menüszalag, Word-gyorsrészek, Excel XLSTART
+- Office: sablonok, egyéni szótárak, automatikus javítás, menüszalag, Word-gyorsrészek, Excel XLSTART,
+  a Word, az Excel és a PowerPoint legutóbbi fájljai
 - Chrome: könyvjelzők és ikonjaik, előzmények, beállítások, új lap csempéi, címsor-javaslatok, saját
   helyesírási szavak – minden profil
 - Edge-kedvencek, Kedvencek mappa, Teams-hátterek
 - Sticky Notes-jegyzetek
-- Fájlkezelő – Gyorselérés, Start menü rögzítései
+- Fájlkezelő – Gyorselérés és legutóbbi fájlok, Start menü rögzítései
 - Indítópult mappa, C:\TEMP
 
 **Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`, és egy kép a tálcáról: `talca.png`),

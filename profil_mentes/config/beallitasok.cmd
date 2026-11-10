@@ -13,7 +13,7 @@ rem A C:\TEMP mappa helye
 set "C_TEMP_FORRAS=%SystemDrive%\TEMP"
 
 rem Ezek a programok zarolhatjak a fajlokat, mentes es exportalas elott ellenorizzuk
-set "FIGYELT_PROGRAMOK=chrome.exe msedge.exe outlook.exe winword.exe excel.exe Microsoft.Notes.exe"
+set "FIGYELT_PROGRAMOK=chrome.exe msedge.exe outlook.exe winword.exe excel.exe powerpnt.exe Microsoft.Notes.exe"
 rem Ezek a hatterben is futnak, ezert bezaraskor kenyszerrel zarjuk oket
 set "KENYSZER_BEZARAS=msedge.exe Microsoft.Notes.exe"
 
@@ -22,6 +22,9 @@ set "KENYSZER_BEZARAS=msedge.exe Microsoft.Notes.exe"
 rem BitLocker / MBAM kliens helye - mindig a 64 bites Program Files
 if defined ProgramW6432 (set "PF64=%ProgramW6432%") else (set "PF64=%ProgramFiles%")
 set "MBAM_DIR=%PF64%\Microsoft\MDOP MBAM"
+
+rem Az Office registry-aga (Office 2016 es 365: 16.0) - a legutobbi fajlok listajahoz
+set "OFFICE_KULCS=HKCU\Software\Microsoft\Office\16.0"
 
 rem A segedlet frissitese (6. menupont): a GitHub-repo, aminek a legutolso kiadasat letolti.
 rem FR_KIADAS: ures = a legutolso kiadas; egy cimke (pl. v1.2) csak teszteleshez kell

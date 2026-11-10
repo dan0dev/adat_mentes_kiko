@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 506 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 519 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -16,23 +16,25 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\parancsikonok.cmd:26` | Publisher |
 | `config\parancsikonok.cmd:27` | Visio |
 | `config\parancsikonok.cmd:28` | Project |
-| `config\tetelek.cmd:30` | Outlook-aláírások |
-| `config\tetelek.cmd:31` | Office-sablonok |
-| `config\tetelek.cmd:32` | Office egyéni szótárai |
-| `config\tetelek.cmd:33` | Office automatikus javítás |
-| `config\tetelek.cmd:34` | Word-gyorsrészek |
-| `config\tetelek.cmd:35` | Office menüszalag |
-| `config\tetelek.cmd:36` | Outlook-levélpapírok |
-| `config\tetelek.cmd:37` | Excel XLSTART mappa |
-| `config\tetelek.cmd:38` | Indítópult mappa |
-| `config\tetelek.cmd:39` | Chrome-profilok |
-| `config\tetelek.cmd:40` | Edge-kedvencek |
-| `config\tetelek.cmd:41` | Teams-hátterek |
-| `config\tetelek.cmd:42` | Kedvencek mappa |
-| `config\tetelek.cmd:43` | Sticky Notes-jegyzetek |
-| `config\tetelek.cmd:44` | Fájlkezelő – Gyorselérés |
-| `config\tetelek.cmd:45` | Start menü rögzítései |
-| `config\tetelek.cmd:46` | C:\TEMP mappa |
+| `config\tetelek.cmd:31` | Outlook-aláírások |
+| `config\tetelek.cmd:32` | Office-sablonok |
+| `config\tetelek.cmd:33` | Office egyéni szótárai |
+| `config\tetelek.cmd:34` | Office automatikus javítás |
+| `config\tetelek.cmd:35` | Word-gyorsrészek |
+| `config\tetelek.cmd:36` | Office menüszalag |
+| `config\tetelek.cmd:37` | Outlook-levélpapírok |
+| `config\tetelek.cmd:38` | Office – legutóbbi fájlok |
+| `config\tetelek.cmd:39` | Excel XLSTART mappa |
+| `config\tetelek.cmd:40` | Indítópult mappa |
+| `config\tetelek.cmd:41` | Chrome-profilok |
+| `config\tetelek.cmd:42` | Edge-kedvencek |
+| `config\tetelek.cmd:43` | Teams-hátterek |
+| `config\tetelek.cmd:44` | Kedvencek mappa |
+| `config\tetelek.cmd:45` | Sticky Notes-jegyzetek |
+| `config\tetelek.cmd:46` | Fájlkezelő – Gyorselérés |
+| `config\tetelek.cmd:47` | Fájlkezelő – Legutóbbiak |
+| `config\tetelek.cmd:48` | Start menü rögzítései |
+| `config\tetelek.cmd:49` | C:\TEMP mappa |
 | `lib\bitlocker.cmd:12` | nincs MBAM kliens |
 | `lib\bitlocker.cmd:12` | Keresett hely: %MBAM_DIR% |
 | `lib\bitlocker.cmd:16` | nincs MBAM kliens |
@@ -291,6 +293,17 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\tipusok\MINTA.cmd:16` | nincs a mentésben |
 | `lib\tipusok\MINTA.cmd:26` | nincs ilyen fájl: %~1\%T_P1% |
 | `lib\tipusok\MINTA.cmd:39` | %_mdb% fájl, ellenőrizve |
+| `lib\tipusok\REG.cmd:20` | ezen a gépen nincs ilyen |
+| `lib\tipusok\REG.cmd:24` | %_rhiba% kulcs nem menthető |
+| `lib\tipusok\REG.cmd:24` | Részletek a naplóban. |
+| `lib\tipusok\REG.cmd:27` | %_rdb% lista, elmentve |
+| `lib\tipusok\REG.cmd:43` | nem menthető: %~1 |
+| `lib\tipusok\REG.cmd:52` | nincs a mentésben |
+| `lib\tipusok\REG.cmd:56` | %_rhiba% lista nem tölthető vissza |
+| `lib\tipusok\REG.cmd:56` | Részletek a naplóban. |
+| `lib\tipusok\REG.cmd:59` | %_rdb% lista, visszatöltve |
+| `lib\tipusok\REG.cmd:67` | nem tölthető vissza: %~1 |
+| `lib\tipusok\REG.cmd:70` | %~n1 |
 | `lib\ui.cmd:16` | ESZKÖZCSERE SEGÉDLET |
 | `lib\ui.cmd:17` | Verzió: %VERZIO% |
 | `lib\ui.cmd:21` | Készítette: %SZERZO% |

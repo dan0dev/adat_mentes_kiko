@@ -16,6 +16,7 @@ ahonnan mentette.
 | Word-gyorsrészek | `%APPDATA%\Microsoft\Document Building Blocks` | mentett szövegrészek, gyorsrészek |
 | Office menüszalag | `%LOCALAPPDATA%\Microsoft\Office\*.officeUI` | testreszabott menüszalag, gyorselérési eszköztár |
 | Outlook-levélpapírok | `%APPDATA%\Microsoft\Stationery` | levélpapírok, témák |
+| Office – legutóbbi fájlok | registry: `HKCU\…\Office\16.0\Word`, `Excel`, `PowerPoint` › `User MRU` | a legutóbb megnyitott és a rögzített fájlok listája (Office 2016 és 365). A helyi és a hálózati fájl csak akkor nyílik meg, ha az új gépen is ugyanott van; a OneDrive/SharePoint-fájlok a fiókkal amúgy is visszajönnek |
 | Excel XLSTART mappa | `%APPDATA%\Microsoft\Excel\XLSTART` | induláskor megnyíló fájlok, személyes makrófüzet |
 | Indítópult mappa | `%APPDATA%\…\Start Menu\Programs\Startup` | bejelentkezéskor induló programok |
 | Chrome-profilok | `%LOCALAPPDATA%\Google\Chrome\User Data` | minden profilból: könyvjelzők, előzmények, beállítások, a könyvjelzők ikonjai, az új lap csempéi, a címsor javaslatai, saját helyesírási szavak – és a profillista |
@@ -24,6 +25,7 @@ ahonnan mentette.
 | Kedvencek mappa | `%USERPROFILE%\Favorites` | a régi Internet Explorer / Edge kedvencek |
 | Sticky Notes-jegyzetek | `%LOCALAPPDATA%\Packages\Microsoft.MicrosoftStickyNotes_…` | a cetlik |
 | Fájlkezelő – Gyorselérés | `%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations` | a rögzített mappák |
+| Fájlkezelő – Legutóbbiak | ugyanott | a Fájlkezelő legutóbbi fájljai |
 | Start menü rögzítései | `%LOCALAPPDATA%\Packages\Microsoft.Windows.StartMenuExperienceHost_…` | a Start menübe rögzített programok |
 | C:\TEMP mappa | `C:\TEMP` | teljes mappa – másolás közben **K**-val átugorható |
 

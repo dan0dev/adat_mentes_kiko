@@ -22,6 +22,16 @@ $m = "$kulso\Mentes\$($env:USERNAME)_$($env:COMPUTERNAME)"
 $sorrend = 'mentes', 'visszaallitas', 'bitlocker_megse', 'chrome_megse', 'eszkozok_megse', 'admin_eszkozok', 'admin_masik_fiok', 'frissites_git', 'hibas_bevitel', 'visszaallitas_hibas', 'regi_mentes'
 if ($Csak) { $sorrend = $sorrend | Where-Object { $Csak -contains $_ } }
 $hibak = 0
+# Az Office legutobbi fajljai: teszt-kulcs a valodi HKCU-ban (teszt_konfig.cmd: OFFICE_KULCS)
+$tk = 'HKCU:\Software\EszkozcsereTeszt'
+function TesztKulcs {
+    Remove-Item $tk -Recurse -Force -ErrorAction SilentlyContinue
+    foreach ($app in 'Word', 'Excel') {
+        $k = New-Item "$tk\Office\16.0\$app\User MRU\LiveId_TESZT\File MRU" -Force
+        Set-ItemProperty -LiteralPath $k.PSPath -Name 'Item 1' -Value "[F00000000][T01DA0000][O00000000]*C:\Teszt\$app-fájl – ő.docx"
+    }
+}
+TesztKulcs
 foreach ($v in $sorrend) {
     $gond = New-Object System.Collections.Generic.List[string]
     $arg = @{ Valaszok = $v; AtiratKodlap = $AtiratKodlap }
@@ -37,6 +47,8 @@ foreach ($v in $sorrend) {
     # admin_masik_fiok: egy masik fiok nevevel - a mentesnek meg kell allnia
     # Visszaallitas elott ures teszt-asztal: az Office-ikonok lepese mindig ugyanugy fusson
     if ($v -in 'visszaallitas', 'regi_mentes') { Remove-Item "$env:TEMP\pm_teszt\profil\Desktop\*.lnk" -Force -ErrorAction SilentlyContinue }
+    # Visszaallitas elott ures teszt-kulcs: utana a mentesbol kell visszajonnie
+    if ($v -eq 'visszaallitas') { Remove-Item $tk -Recurse -Force -ErrorAction SilentlyContinue }
     $regiNev = $env:USERNAME
     if ($v -like 'admin_*') { $env:PM_TESZT_ADMIN = '1' }
     if ($v -eq 'admin_masik_fiok') { $env:USERNAME = 'masik_rendszergazda' }
@@ -47,6 +59,10 @@ foreach ($v in $sorrend) {
         foreach ($f in 'Bookmarks', 'History', 'History Provider Cache', 'Preferences') {
             if (-not (Test-Path -LiteralPath "$ch\$f")) { $gond.Add("Chrome: hianyzik a mentesbol: Default\$f") }
         }
+    }
+    if ($v -eq 'visszaallitas') {
+        $wk = "$tk\Office\16.0\Word\User MRU\LiveId_TESZT\File MRU"
+        if (-not (Test-Path $wk) -or -not (Get-ItemProperty $wk).'Item 1') { $gond.Add('Office legutobbi fajlok: a Word listaja nem jott vissza') }
     }
     if ($v -eq 'regi_mentes') {
         $todo = "$mappa\_LEFT-TO-DO.txt"
@@ -78,5 +94,6 @@ foreach ($v in $sorrend) {
     }
     if ($gond.Count) { $hibak++; "FAIL  $v"; $gond | ForEach-Object { "      $_" } } else { "ok    $v" }
 }
+Remove-Item $tk -Recurse -Force -ErrorAction SilentlyContinue
 "Hibas forgatokonyvek: $hibak / $($sorrend.Count)"
 exit $hibak

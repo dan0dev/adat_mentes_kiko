@@ -23,7 +23,7 @@ lib\                       a munkát végző közös rutinok
   kezdokepernyo.cmd          a kezdőképernyő és a menü
   masolas.cmd, robo_prog.cmd robocopy + ellenőrző másodfutás, folyamatjelző
   tetelek.cmd                a config\tetelek.cmd beolvasása és futtatása
-  tipusok\                   tételtípusok: MAPPA, MINTA (fájlminta, pl. *.acl), FAJL, BONGESZO
+  tipusok\                   tételtípusok: MAPPA, MINTA (fájlminta), FAJL, BONGESZO, REG (HKCU-kulcs)
   ellenorzes.cmd             felhasználó, meghajtó, futó programok, szabad hely
   talca.cmd                  a tálcára rögzített ikonok listája és képe – talca.txt, talca.png
   outlook.cmd, programlista.cmd, ikonok.cmd, bitlocker.cmd, chrome.cmd, frissites.cmd, eszkozok.cmd

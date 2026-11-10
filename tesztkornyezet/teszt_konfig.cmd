@@ -10,3 +10,5 @@ set "PM_TESZT_KOZOS_ASZTAL=%USERPROFILE%\_KozosAsztal"
 rem A Fajlkezelot es a Start menut a teszt nem inditja ujra, rendszergazdai ablakot nem nyit
 set "PM_TESZT_NE_INDITS_UJRA=1"
 set "PM_TESZT_NINCS_EMELES=1"
+rem Az Office legutobbi fajljai: kulon teszt-kulcs - a valodi Office-listahoz a teszt nem nyul
+set "OFFICE_KULCS=HKCU\Software\EszkozcsereTeszt\Office\16.0"
