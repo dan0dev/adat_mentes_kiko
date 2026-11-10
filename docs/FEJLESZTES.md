@@ -8,7 +8,11 @@ karbantartáshoz kell, a külső meghajtóra nem kerül.
 ## Felépítés
 
 ```
-Eszkozcsere_segedlet.bat   belépési pont: környezet, menü, a modul indítása, összegzés
+Eszkozcsere_segedlet.bat     indító a profil_mentes mellett – sosem változik, csak elindítja a segedlet.bat-ot
+kiadas.ps1                   új verzió kiadása a GitHubra
+profil_mentes\
+segedlet.bat               belépési pont: környezet, menü, a modul indítása, összegzés
+verzio.txt                 a verzió – a kiadas.ps1 írja, a képernyőn és a címsorban látszik
 config\                    ITT BŐVÍTS – listák és beállítások, kód nélkül
   beallitasok.cmd            mappanév, tartalék hely, figyelt programok, MBAM helye...
   tetelek.cmd                a mentendő tételek – egy sor = egy tétel
@@ -55,11 +59,11 @@ a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaál
 **Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
 
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
+egy betű a `segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
 
 ## Szabályok a kódhoz
 
-- **UTF-8 (BOM nélkül)** és **CRLF** sorvég. Az `Eszkozcsere_segedlet.bat` elején `chcp 65001` fut, a végén az
+- **UTF-8 (BOM nélkül)** és **CRLF** sorvég. A `segedlet.bat` elején `chcp 65001` fut, a végén az
   eredeti kódlap visszaáll. A felhasználónak szóló szövegek ékezetesek, tegező hangnemben; a címkék,
   változónevek, fájlnevek és a megjegyzések ékezet nélküliek.
 - A szövegekben nincs `!` (a késleltetett kiértékelés elnyelné). `( … )` blokkon belül a `)` jelet `^)`-ként kell
@@ -74,7 +78,7 @@ egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy 
   csendben vár tovább. Ugyanúgy errorlevelt ad (I = 1, N = 2). Automatikus futtatásnál `VALASZ_SORBOL=1` mellett
   soronként olvassa a válaszokat a bemenetről.
 - A `lib\` fájlok első két sora (`@call %*` / `@exit /b`) teszi hívhatóvá a címkéiket kívülről. A rövidítéseket
-  (`%UI%`, `%MASOLAS%`...) az `Eszkozcsere_segedlet.bat` definiálja.
+  (`%UI%`, `%MASOLAS%`...) a `segedlet.bat` definiálja.
 - A modul `exit /b 0`-val tér vissza, ha végigment (jön az összegzés), `exit /b 1`-gyel, ha megszakították.
 - Minden változó közös – nincs `setlocal` a modulokban és a `lib`-ben, mert az eredmények (`E_n`, `DB_OK`...) így
   jutnak vissza.
@@ -100,4 +104,18 @@ tesztkornyezet\szovegjegyzek.ps1                      # minden szöveg egy tábl
 Az ellenőrzés keresi: csipogást, hibás ékezetet, 76-nál hosszabb sort, cmd hibát, ékezet nélküli és magázó
 szavakat, a "Készítette" sort, és az eredményeket az `alap\` mappában rögzített alapértékekhez hasonlítja.
 A `PM_TESZT_KONFIG` környezeti változóval a tesztkörnyezet a `config\beallitasok.cmd` után felülírja a
-beállításokat (pl. hogy ne kérdezzen rá a futó programokra).
+beállításokat (pl. hogy ne kérdezzen rá a futó programokra). A tesztek a külső indítón át futnak.
+
+## Kiadás
+
+```powershell
+.\kiadas.ps1 1.1 "Chrome telepítése, BitLocker, frissítés a GitHubról"
+```
+
+A `master` ágról, tiszta munkakönyvtárral: lefuttatja a teszteket, átírja a `profil_mentes\verzio.txt`-t és a
+README verziószámát, commitol, címkéz (`v1.1`), pushol, a címkézett állapotból ZIP-et készít (az indító és a
+`profil_mentes` mappa – tesztek, dokumentáció és git-előzmény nélkül), és feltölti GitHub-kiadásként. A segédlet
+5. menüpontja a legutolsó kiadást tölti le, és csak akkor frissít, ha annak nagyobb a verziója.
+
+A fejlesztés közben a `verzio.txt` nem változik – több változtatás is mehet egy kiadásba.
+Próbakiadás: `-Proba` – nem lesz „legutolsó”, a segédlet csak `FR_KIADAS=v…` mellett tölti le.

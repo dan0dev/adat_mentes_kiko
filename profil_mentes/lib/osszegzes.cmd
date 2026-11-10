@@ -11,7 +11,7 @@ rem ==========================================================
 set /a ELTELT=VEGE_MP-START_MP
 if %ELTELT% LSS 0 set /a ELTELT+=86400
 set /a E_PERC=ELTELT/60, E_MP=ELTELT%%60
-title Eszközcsere segédlet – %MOD_NEV% kész
+title Eszközcsere segédlet %VERZIO% – %MOD_NEV% kész
 
 rem Osszegzes fajl - az eredmeny mar a fajlnevben latszik
 set "OSSZ_HELY=%TEMP%"

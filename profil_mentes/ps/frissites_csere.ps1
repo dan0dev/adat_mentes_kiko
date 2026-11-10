@@ -6,7 +6,6 @@
 #    FC_FORRAS  az uj profil_mentes mappa (kicsomagolva)
 #    FC_CEL     a segedlet mappaja - ide masol, tukrozve
 #    FC_MUNKA   az atmeneti mappa - a vegen torli
-#    FC_JEL     az uj valtozat azonositoja - a frissites.txt-be irja
 #    FC_UJRA    0 = ne inditsa ujra a segedletet (teszthez)
 #  Naplo: %TEMP%\eszkozcsere_frissites_naplo.txt
 # ==========================================================
@@ -31,21 +30,24 @@ if (Get-Process -Id $sz -ErrorAction SilentlyContinue) { Hiba 'a segédlet 30 pe
 Start-Sleep -Milliseconds 800
 
 # 2. Biztonsag: csak akkor tukrozunk, ha a forras es a cel is a segedlet mappaja
-$kell = 'Eszkozcsere_segedlet.bat', 'lib\ui.cmd', 'modulok\mentes.cmd'
+$kell = 'segedlet.bat', 'lib\ui.cmd', 'modulok\mentes.cmd'
 foreach ($m in $env:FC_FORRAS, $env:FC_CEL) {
     if (-not $m -or @($kell | Where-Object { -not (Test-Path -LiteralPath (Join-Path $m $_)) }).Count) { Hiba "nem a segédlet mappája: $m" }
 }
 
 # 3. Csere: a cel pontosan az uj valtozat lesz - ami a GitHubon mar nincs, az torlodik
-& robocopy.exe $env:FC_FORRAS $env:FC_CEL /MIR /R:3 /W:1 /NP /NFL /NDL /NJH /XF frissites.txt | Out-Null
+& robocopy.exe $env:FC_FORRAS $env:FC_CEL /MIR /R:3 /W:1 /NP /NFL /NDL /NJH | Out-Null
 $rc = $LASTEXITCODE
 N "robocopy kilepesi kod: $rc"
 if ($rc -ge 8) { Hiba "a fájlok nem másolhatók (robocopy: $rc) – nyitva van valami a segédlet mappájából?" }
-[IO.File]::WriteAllText((Join-Path $env:FC_CEL 'frissites.txt'), $env:FC_JEL + "`r`n" + (Get-Date -Format 'yyyy. MM. dd. HH:mm') + "`r`n", (New-Object Text.UTF8Encoding $false))
 N 'Kesz.'
 
 # 4. Takaritas es ujrainditas
 Remove-Item -LiteralPath $env:FC_MUNKA -Recurse -Force -ErrorAction SilentlyContinue
+# A kulso indito (a profil_mentes mellett) indul, ha megvan - kulonben a segedlet.bat
 if ($env:FC_UJRA -ne '0') {
-    Start-Process -FilePath 'cmd.exe' -ArgumentList ('/c "' + (Join-Path $env:FC_CEL 'Eszkozcsere_segedlet.bat') + '"') -WorkingDirectory $env:FC_CEL
+    $kulso = Split-Path -Parent $env:FC_CEL
+    $indito = Join-Path $kulso 'Eszkozcsere_segedlet.bat'
+    if (-not (Test-Path -LiteralPath $indito)) { $indito = Join-Path $env:FC_CEL 'segedlet.bat'; $kulso = $env:FC_CEL }
+    Start-Process -FilePath 'cmd.exe' -ArgumentList ('/c "' + $indito + '"') -WorkingDirectory $kulso
 }

@@ -1,13 +1,13 @@
 rem ==========================================================
-rem  5. A segedlet frissitese a GitHubrol
-rem  A repo es az ag: config\beallitasok.cmd - FR_REPO, FR_AG
+rem  5. A segedlet frissitese a GitHubrol, a legutolso kiadasbol (GitHub Release)
+rem  A repo: config\beallitasok.cmd - FR_REPO. Kiadast a kiadas.ps1 keszit.
 rem  A munka: lib\frissites.cmd, ps\frissites.ps1, ps\frissites_csere.ps1
 rem  Kilepesi kod: 0 = vegigment, osszegzes jon; 1 = megszakitva; 2 = nincs teendo
 rem ==========================================================
 
 cls
 %UI% :CIM "Segédlet frissítése"
-echo   A segédlet legújabb változata a GitHubról – internet kell hozzá.
+echo   A segédlet legújabb kiadása a GitHubról – internet kell hozzá.
 echo   A program fájljai cserélődnek, a mentésekhez nem nyúl.
 echo.
 
@@ -32,18 +32,18 @@ echo   Lekérdezés a GitHubról...
 %FRISSITES% :ELLENORIZ
 echo.
 if "%FR_ALLAPOT%"=="HIBA" (
-    echo   !C_PIROS!!FR_UJ_UZENET!!C_0!
+    echo   !C_PIROS!!FR_UJ_LEIRAS!!C_0!
     goto :MEGSZAKITVA
 )
-if defined FR_HELYI (%UI% :ADAT "Ez a változat" "!FR_HELYI:~0,7!") else (%UI% :ADAT "Ez a változat" "ismeretlen – még nem frissült innen")
-%UI% :ADAT "Legújabb" "!FR_UJ_SHA:~0,7! · !FR_UJ_DATUM!"
-%UI% :ADAT "Utolsó változás" "!FR_UJ_UZENET!"
+%UI% :ADAT "Ez a változat" "%VERZIO%"
+%UI% :ADAT "Legújabb" "!FR_UJ_VERZIO! · !FR_UJ_DATUM!"
+if defined FR_UJ_LEIRAS %UI% :ADAT "Újdonság" "!FR_UJ_LEIRAS!"
 echo.
 if "%FR_ALLAPOT%"=="AZONOS" (
     set "NINCS_TEENDO=Ez már a legújabb változat."
     exit /b 2
 )
-%UI% :VALASZT IN "Frissítsem?"
+%UI% :VALASZT IN "Frissítsem az új verzióra?"
 if errorlevel 2 goto :MEGSZAKITVA
 set /a OSSZES=2
 

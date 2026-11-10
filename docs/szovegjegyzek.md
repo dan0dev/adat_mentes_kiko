@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 357 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 355 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -22,10 +22,6 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\tetelek.cmd:36` | Fájlkezelő – Gyorselérés |
 | `config\tetelek.cmd:37` | Start menü rögzítései |
 | `config\tetelek.cmd:38` | C:\TEMP mappa |
-| `Eszkozcsere_segedlet.bat:105` | Válassz menüpontot [1–5]: |
-| `Eszkozcsere_segedlet.bat:133` | Kilépéshez nyomj meg egy billentyűt... |
-| `Eszkozcsere_segedlet.bat:140` | Megszakítva – nem történt változtatás. |
-| `Eszkozcsere_segedlet.bat:142` | Kilépéshez nyomj meg egy billentyűt... |
 | `lib\bitlocker.cmd:12` | MBAMAgent.exe nem található |
 | `lib\bitlocker.cmd:12` | Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR% |
 | `lib\bitlocker.cmd:16` | MBAMClientUI.exe nem található |
@@ -77,8 +73,8 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ellenorzes.cmd:183` | M – megszakítás    F – folytatás így |
 | `lib\ellenorzes.cmd:184` | Választás |
 | `lib\ellenorzes.cmd:189` | Hely rendben. |
-| `lib\frissites.cmd:42` | %FR_MOD%: %FR_REPO% %FR_AG% |
-| `lib\frissites.cmd:56` | Eredmény: !_f1! !_f2! !_f3! |
+| `lib\frissites.cmd:43` | %FR_MOD%: %FR_REPO% %FR_KIADAS% |
+| `lib\frissites.cmd:57` | Eredmény: !_f1! !_f2! !_f3! |
 | `lib\ikonok.cmd:13` | az asztal mappája nem található |
 | `lib\ikonok.cmd:17` | a Start menü mappája nem található |
 | `lib\ikonok.cmd:22` | Asztal: %DESK% |
@@ -255,22 +251,19 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\chrome.cmd:29` | Telepítés |
 | `modulok\chrome.cmd:33` | a letöltés nem sikerült |
 | `modulok\frissites.cmd:9` | Segédlet frissítése |
-| `modulok\frissites.cmd:10` | A segédlet legújabb változata a GitHubról – internet kell hozzá. |
+| `modulok\frissites.cmd:10` | A segédlet legújabb kiadása a GitHubról – internet kell hozzá. |
 | `modulok\frissites.cmd:11` | A program fájljai cserélődnek, a mentésekhez nem nyúl. |
 | `modulok\frissites.cmd:16` | Ez a fejlesztői példány, git-mappában – itt a git-tel frissíts. |
 | `modulok\frissites.cmd:23` | A segédlet mappája nem írható: !APP! |
 | `modulok\frissites.cmd:24` | Másold a segédletet egy írható helyre, és onnan frissíts. |
 | `modulok\frissites.cmd:30` | ===== FRISSÍTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
 | `modulok\frissites.cmd:31` | Lekérdezés a GitHubról... |
-| `modulok\frissites.cmd:35` | !FR_UJ_UZENET! |
+| `modulok\frissites.cmd:35` | !FR_UJ_LEIRAS! |
 | `modulok\frissites.cmd:38` | Ez a változat |
-| `modulok\frissites.cmd:38` | !FR_HELYI:~0,7! |
-| `modulok\frissites.cmd:38` | Ez a változat |
-| `modulok\frissites.cmd:38` | ismeretlen – még nem frissült innen |
 | `modulok\frissites.cmd:39` | Legújabb |
-| `modulok\frissites.cmd:39` | !FR_UJ_SHA:~0,7! · !FR_UJ_DATUM! |
-| `modulok\frissites.cmd:40` | Utolsó változás |
-| `modulok\frissites.cmd:46` | Frissítsem? |
+| `modulok\frissites.cmd:39` | !FR_UJ_VERZIO! · !FR_UJ_DATUM! |
+| `modulok\frissites.cmd:40` | Újdonság |
+| `modulok\frissites.cmd:46` | Frissítsem az új verzióra? |
 | `modulok\frissites.cmd:52` | Segédlet frissítése folyamatban |
 | `modulok\frissites.cmd:53` | Letöltés |
 | `modulok\frissites.cmd:55` | Csere előkészítése |
@@ -318,6 +311,10 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:103` | Adatok visszaállítása folyamatban |
 | `modulok\visszaallitas.cmd:104` | A folyamat végéig ne húzd ki a külső meghajtót. |
 | `modulok\visszaallitas.cmd:110` | Office-parancsikonok |
+| `segedlet.bat:109` | Válassz menüpontot [1–5]: |
+| `segedlet.bat:137` | Kilépéshez nyomj meg egy billentyűt... |
+| `segedlet.bat:144` | Megszakítva – nem történt változtatás. |
+| `segedlet.bat:146` | Kilépéshez nyomj meg egy billentyűt... |
 | `ps\chrome.ps1:59` | kapcsolódás... |
 | `ps\chrome.ps1:70` | második próba... |
 | `ps\chrome.ps1:76` | nem tölthető le |
@@ -337,18 +334,19 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `ps\chrome.ps1:113` | épp fut egy másik telepítés – próbáld újra pár perc múlva |
 | `ps\chrome.ps1:114` | másik Chrome-telepítés van a gépen – az Alkalmazásokban távolítsd el, majd próbáld újra |
 | `ps\chrome.ps1:115` | részletek a naplóban:  |
-| `ps\frissites.ps1:35` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
-| `ps\frissites.ps1:53` | nem tölthető le |
-| `ps\frissites.ps1:53` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
-| `ps\frissites.ps1:56` | a letöltött fájl hibás |
-| `ps\frissites.ps1:56` | A ZIP nem csomagolható ki. |
-| `ps\frissites.ps1:62` | a letöltés nem teljes |
-| `ps\frissites.ps1:62` | A letöltött változatból hiányzik a segédlet egy része – nem cserélem le. |
-| `ps\frissites.ps1:66` | , "$db fájl, ellenőrizve",  |
-| `ps\frissites.ps1:85` | bezáráskor frissül |
-| `ps\frissites.ps1:85` | Nyomj meg egy billentyűt – a segédlet bezárul, frissül és újraindul. |
-| `ps\frissites_csere.ps1:20` | Eszközcsere segédlet |
-| `ps\frissites_csere.ps1:30` | a segédlet 30 perc után sem zárult be |
+| `ps\frissites.ps1:22` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
+| `ps\frissites.ps1:41` | Még nincs kiadás a GitHubon. |
+| `ps\frissites.ps1:46` | A kiadásban nincs letölthető csomag. |
+| `ps\frissites.ps1:67` | nem tölthető le |
+| `ps\frissites.ps1:70` | a letöltött fájl hibás |
+| `ps\frissites.ps1:70` | A ZIP nem csomagolható ki. |
+| `ps\frissites.ps1:76` | a letöltés nem teljes |
+| `ps\frissites.ps1:76` | A letöltött változatból hiányzik a segédlet egy része – nem cserélem le. |
+| `ps\frissites.ps1:79` | a verzió nem egyezik |
+| `ps\frissites.ps1:100` | bezáráskor frissül |
+| `ps\frissites.ps1:100` | Nyomj meg egy billentyűt – a segédlet bezárul, frissül és újraindul. |
+| `ps\frissites_csere.ps1:19` | Eszközcsere segédlet |
+| `ps\frissites_csere.ps1:29` | a segédlet 30 perc után sem zárult be |
 | `ps\outlook_lista.ps1:34` | PST – újra csatolni: Fájl › Megnyitás és exportálás › Outlook-adatfájl megnyitása |
 | `ps\outlook_lista.ps1:41` | KÉZZEL – régi gépen |
 | `ps\outlook_lista.ps1:42` | [ ] További postaládák: Fiókbeállítások › Módosítás › További beállítások › Speciális |

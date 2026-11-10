@@ -4,6 +4,10 @@
 
 A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új gépen pedig visszaállítja.
 
+Indítás: **`Eszkozcsere_segedlet.bat`** – a `profil_mentes` mappa mellett. Az indító sosem változik,
+a frissítés (5. menüpont) csak a `profil_mentes` mappát cseréli. A verzió a kezdőképernyőn és az ablak
+címsorában látszik.
+
 ## Mit tud
 
 | Menü | Hol | Mit csinál |

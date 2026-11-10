@@ -2,19 +2,20 @@
 @exit /b
 
 rem ==========================================================
-rem  A segedlet frissitese a GitHubrol - a munka: ps\frissites.ps1
+rem  A segedlet frissitese a GitHubrol, a legutolso kiadasbol - a munka: ps\frissites.ps1
 rem  Hivas: %FRISSITES% :ELLENORIZ  vagy  :LETOLT  vagy  :INDIT
 rem ==========================================================
 
 :ELLENORIZ
-rem Kimenet: FR_ALLAPOT (UJ, AZONOS, HIBA), FR_HELYI, FR_UJ_SHA, FR_UJ_DATUM, FR_UJ_UZENET
+rem Kimenet: FR_ALLAPOT (UJ, AZONOS, HIBA), FR_UJ_VERZIO, FR_UJ_DATUM, FR_UJ_LEIRAS, FR_UJ_URL
+rem HIBA eseten az FR_UJ_LEIRAS az ok
 set "FR_MOD=ELLENORIZ"
 call :FUTTAT
 set "FR_ALLAPOT=!_f1!"
-set "FR_HELYI=!_f2!"
-set "FR_UJ_SHA=!_f3!"
+set "FR_UJ_VERZIO=!_f3!"
 set "FR_UJ_DATUM=!_f4!"
-set "FR_UJ_UZENET=!_f5!"
+set "FR_UJ_LEIRAS=!_f5!"
+set "FR_UJ_URL=!_f6!"
 goto :eof
 
 :LETOLT
@@ -36,10 +37,10 @@ rem A PowerShell eredmenye soronkent az FR_KI fajlban - a - ures erteket jelent
 set "FR_APP=%APP%"
 set "FR_MUNKA=%TEMP%\EszkozcsereFrissites"
 set "FR_KI=%TEMP%\_frissites_%RANDOM%.txt"
-for /l %%i in (1,1,5) do set "_f%%i="
+for /l %%i in (1,1,6) do set "_f%%i="
 if exist "%FR_KI%" del /q "%FR_KI%"
 set "PS_FAJL=%PSDIR%\frissites.ps1"
->>"%LOG%" echo        %FR_MOD%: %FR_REPO% %FR_AG%
+>>"%LOG%" echo        %FR_MOD%: %FR_REPO% %FR_KIADAS%
 %PS_FUTTAT%
 if not exist "%FR_KI%" (
     set "_f1=HIBA"
@@ -52,6 +53,6 @@ for /f "usebackq delims=" %%a in ("%FR_KI%") do (
     set "_f!_fn!=%%a"
 )
 del /q "%FR_KI%" >nul 2>&1
-for /l %%i in (1,1,5) do if "!_f%%i!"=="-" set "_f%%i="
+for /l %%i in (1,1,6) do if "!_f%%i!"=="-" set "_f%%i="
 >>"%LOG%" echo        Eredmény: !_f1! !_f2! !_f3!
 goto :eof

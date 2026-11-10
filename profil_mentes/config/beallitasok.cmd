@@ -26,6 +26,7 @@ rem BitLocker / MBAM kliens helye - mindig a 64 bites Program Files
 if defined ProgramW6432 (set "PF64=%ProgramW6432%") else (set "PF64=%ProgramFiles%")
 set "MBAM_DIR=%PF64%\Microsoft\MDOP MBAM"
 
-rem A segedlet frissitese (5. menupont): a GitHub-repo es az ag, ahonnan letolti
+rem A segedlet frissitese (5. menupont): a GitHub-repo, aminek a legutolso kiadasat letolti.
+rem FR_KIADAS: ures = a legutolso kiadas; egy cimke (pl. v1.2) csak teszteleshez kell
 set "FR_REPO=dan0dev/adat_mentes_kiko"
-set "FR_AG=master"
+set "FR_KIADAS="

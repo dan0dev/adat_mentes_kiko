@@ -82,7 +82,7 @@ set /a LEPES+=1
 set "NEV_%LEPES%=%~1"
 set "_n= %LEPES%"
 set "_n=!_n:~-2!"
-title [%LEPES%/%OSSZES%] %~1 – %MOD_NEV%
+title [%LEPES%/%OSSZES%] %~1 – %MOD_NEV% – Eszközcsere segédlet %VERZIO%
 echo.
 echo   !C_KEK![!_n!/%OSSZES%]!C_0!  !C_FEHER!%~1!C_0!
 set "UI_BEHUZAS=           "

@@ -7,11 +7,15 @@ set "PM_KODLAP="
 for /f "tokens=2 delims=:." %%c in ('chcp ^<nul') do set "PM_KODLAP=%%c"
 if defined PM_KODLAP set "PM_KODLAP=!PM_KODLAP: =!"
 >nul chcp 65001 <nul
-title Eszközcsere segédlet
 
 rem ---------- Nev, verzio, keszito - a kepernyokon es a fajlokban ----------
-set "VERZIO=1.0"
+rem A verziot a verzio.txt adja - a kiadas.ps1 irja at, a frissites ezt hasonlitja ossze
+set "VERZIO="
+if exist "%~dp0verzio.txt" set /p VERZIO=<"%~dp0verzio.txt"
+if defined VERZIO set "VERZIO=!VERZIO: =!"
+if not defined VERZIO set "VERZIO=?"
 set "SZERZO=Kakuk Dániel"
+title Eszközcsere segédlet %VERZIO%
 
 rem ==========================================================
 rem  Eszkozcsere segedlet: adatok mentese, exportalasa, BitLocker
@@ -114,7 +118,7 @@ if "%MOD%"=="3" set "MOD_NEV=BitLocker beállítása"         & set "MODUL=bitlo
 if "%MOD%"=="4" set "MOD_NEV=Chrome telepítése"            & set "MODUL=chrome"
 if "%MOD%"=="5" set "MOD_NEV=Segédlet frissítése"          & set "MODUL=frissites"
 if not defined MODUL goto :MEGSZAKITVA
-title Eszközcsere segédlet – %MOD_NEV%
+title Eszközcsere segédlet %VERZIO% – %MOD_NEV%
 
 rem A modul 0-val ter vissza, ha vegigment, 1-gyel, ha megszakitottak, 2-vel, ha nincs teendo
 set "NINCS_TEENDO="
