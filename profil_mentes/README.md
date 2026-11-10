@@ -19,18 +19,20 @@ címsorában látszik.
 | **5 Rendszergazdai eszközök** | bármelyik | Win+R parancsok (Eszközkezelő, Nyomtatáskezelés…), hálózati teszt naplóval, hálózat helyreállítása, rendszerfájlok javítása, lemezellenőrzés, speciális indítás – külön rendszergazdai ablakban, a jelszót egyszer kell megadni |
 | **6 Segédlet frissítése** | bármelyik | a legújabb változat a GitHubról – letölti, a segédlet bezárása után lecseréli a fájlokat, és újraindul |
 
-**Amit ment és visszaállít:**
+**Amit ment és visszaállít** – a teljes lista helyekkel és a kézi teendőkkel: [MIT_MENT.md](MIT_MENT.md)
 
-- Outlook-aláírások
-- Office-sablonok, egyéni szótárak, Excel XLSTART
-- Chrome: könyvjelzők, előzmények, beállítások – minden profil
-- Edge-kedvencek, Kedvencek mappa
+- Outlook-aláírások, -levélpapírok
+- Office: sablonok, egyéni szótárak, automatikus javítás, menüszalag, Word-gyorsrészek, Excel XLSTART
+- Chrome: könyvjelzők és ikonjaik, előzmények, beállítások, új lap csempéi, címsor-javaslatok, saját
+  helyesírási szavak – minden profil
+- Edge-kedvencek, Kedvencek mappa, Teams-hátterek
 - Sticky Notes-jegyzetek
 - Fájlkezelő – Gyorselérés, Start menü rögzítései
 - Indítópult mappa, C:\TEMP
 
 **Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`, és egy kép a tálcáról: `talca.png`),
-csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`), az asztali Office-ikonok (`asztal_office.txt`).
+csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`), a nyomtatók és a hálózati meghajtók
+(`nyomtatok_meghajtok.txt`), az asztali Office-ikonok (`asztal_office.txt`).
 
 ## Használat
 
@@ -91,6 +93,7 @@ A `_TEENDOK.txt` ezeket pipálható listában adja:
 - **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
 - **Böngészőjelszavak** – szinkronnal vagy exporttal, a segédlet nem viszi át.
 - **Programok** telepítése az `apps.txt` alapján.
+- **Nyomtatók, hálózati meghajtók** – ami nem jött vissza magától, a `nyomtatok_meghajtok.txt` alapján.
 - **Alapértelmezett alkalmazások**: Gépház › Alkalmazások › Alapértelmezett alkalmazások – Word, Excel,
   PowerPoint, PDF: Adobe Acrobat Reader, böngésző: Chrome.
 - A végén: **a mentés törlése** a külső meghajtóról

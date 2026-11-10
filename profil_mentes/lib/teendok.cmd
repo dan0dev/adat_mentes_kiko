@@ -48,6 +48,7 @@ goto :eof
     echo [ ] Chrome, Edge: profilok, könyvjelzők, bejelentkezés
     echo [ ] Sticky Notes: megvannak a jegyzetek?
     echo [ ] Programok: apps.txt összevetése, hiányzók telepítése
+    echo [ ] Nyomtatók, hálózati meghajtók: ami nem jött vissza – nyomtatok_meghajtok.txt
     echo [ ] Tálcaikonok újra – talca.txt, talca.png
     echo [ ] Start menü: hiányzó rögzítések
     echo [ ] Minden rendben: mentés törlése a meghajtóról

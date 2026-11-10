@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 484 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 506 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -16,18 +16,23 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\parancsikonok.cmd:26` | Publisher |
 | `config\parancsikonok.cmd:27` | Visio |
 | `config\parancsikonok.cmd:28` | Project |
-| `config\tetelek.cmd:27` | Outlook-aláírások |
-| `config\tetelek.cmd:28` | Office-sablonok |
-| `config\tetelek.cmd:29` | Office egyéni szótárai |
-| `config\tetelek.cmd:30` | Excel XLSTART mappa |
-| `config\tetelek.cmd:31` | Indítópult mappa |
-| `config\tetelek.cmd:32` | Chrome-profilok |
-| `config\tetelek.cmd:33` | Edge-kedvencek |
-| `config\tetelek.cmd:34` | Kedvencek mappa |
-| `config\tetelek.cmd:35` | Sticky Notes-jegyzetek |
-| `config\tetelek.cmd:36` | Fájlkezelő – Gyorselérés |
-| `config\tetelek.cmd:37` | Start menü rögzítései |
-| `config\tetelek.cmd:38` | C:\TEMP mappa |
+| `config\tetelek.cmd:30` | Outlook-aláírások |
+| `config\tetelek.cmd:31` | Office-sablonok |
+| `config\tetelek.cmd:32` | Office egyéni szótárai |
+| `config\tetelek.cmd:33` | Office automatikus javítás |
+| `config\tetelek.cmd:34` | Word-gyorsrészek |
+| `config\tetelek.cmd:35` | Office menüszalag |
+| `config\tetelek.cmd:36` | Outlook-levélpapírok |
+| `config\tetelek.cmd:37` | Excel XLSTART mappa |
+| `config\tetelek.cmd:38` | Indítópult mappa |
+| `config\tetelek.cmd:39` | Chrome-profilok |
+| `config\tetelek.cmd:40` | Edge-kedvencek |
+| `config\tetelek.cmd:41` | Teams-hátterek |
+| `config\tetelek.cmd:42` | Kedvencek mappa |
+| `config\tetelek.cmd:43` | Sticky Notes-jegyzetek |
+| `config\tetelek.cmd:44` | Fájlkezelő – Gyorselérés |
+| `config\tetelek.cmd:45` | Start menü rögzítései |
+| `config\tetelek.cmd:46` | C:\TEMP mappa |
 | `lib\bitlocker.cmd:12` | nincs MBAM kliens |
 | `lib\bitlocker.cmd:12` | Keresett hely: %MBAM_DIR% |
 | `lib\bitlocker.cmd:16` | nincs MBAM kliens |
@@ -186,6 +191,10 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\masolas.cmd:71` | Részletek a naplóban. |
 | `lib\masolas.cmd:76` | a másolat eltér az eredetitől |
 | `lib\masolas.cmd:77` | Egy fájl másolás közben megváltozott vagy zárolt volt. |
+| `lib\nyomtatok.cmd:19` | a lista nem készült el |
+| `lib\nyomtatok.cmd:19` | A PowerShell nem elérhető. |
+| `lib\nyomtatok.cmd:22` | %_ny% nyomtató, %_mh% meghajtó |
+| `lib\nyomtatok.cmd:22` | nyomtatok_meghajtok.txt |
 | `lib\osszegzes.cmd:22` | Fájlok helye |
 | `lib\osszegzes.cmd:25` | Mentés helye |
 | `lib\osszegzes.cmd:27` | Mentés helye |
@@ -246,12 +255,13 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\teendok.cmd:48` | [ ] Chrome, Edge: profilok, könyvjelzők, bejelentkezés |
 | `lib\teendok.cmd:49` | [ ] Sticky Notes: megvannak a jegyzetek? |
 | `lib\teendok.cmd:50` | [ ] Programok: apps.txt összevetése, hiányzók telepítése |
-| `lib\teendok.cmd:51` | [ ] Tálcaikonok újra – talca.txt, talca.png |
-| `lib\teendok.cmd:52` | [ ] Start menü: hiányzó rögzítések |
-| `lib\teendok.cmd:53` | [ ] Minden rendben: mentés törlése a meghajtóról |
-| `lib\teendok.cmd:70` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\teendok.cmd:79` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
-| `lib\teendok.cmd:82` | Minden tétel rendben |
+| `lib\teendok.cmd:51` | [ ] Nyomtatók, hálózati meghajtók: ami nem jött vissza – nyomtatok_meghajtok.txt |
+| `lib\teendok.cmd:52` | [ ] Tálcaikonok újra – talca.txt, talca.png |
+| `lib\teendok.cmd:53` | [ ] Start menü: hiányzó rögzítések |
+| `lib\teendok.cmd:54` | [ ] Minden rendben: mentés törlése a meghajtóról |
+| `lib\teendok.cmd:71` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
+| `lib\teendok.cmd:80` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
+| `lib\teendok.cmd:83` | Minden tétel rendben |
 | `lib\tetelek.cmd:23` | config\tetelek.cmd: ismeretlen típus: %~1 – %~2 |
 | `lib\tetelek.cmd:97` | !_nb!. !L_%_b%! |
 | `lib\tetelek.cmd:99` | !_nb!. !_bal!!_nj!. !L_%_j%! |
@@ -277,6 +287,10 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\tipusok\MAPPA.cmd:18` | nincs a mentésben |
 | `lib\tipusok\MAPPA.cmd:25` | nincs ilyen mappa: %~1 |
 | `lib\tipusok\MAPPA.cmd:51` | %FDB% fájl, ellenőrizve |
+| `lib\tipusok\MINTA.cmd:11` | ezen a gépen nincs ilyen fájl |
+| `lib\tipusok\MINTA.cmd:16` | nincs a mentésben |
+| `lib\tipusok\MINTA.cmd:26` | nincs ilyen fájl: %~1\%T_P1% |
+| `lib\tipusok\MINTA.cmd:39` | %_mdb% fájl, ellenőrizve |
 | `lib\ui.cmd:16` | ESZKÖZCSERE SEGÉDLET |
 | `lib\ui.cmd:17` | Verzió: %VERZIO% |
 | `lib\ui.cmd:21` | Készítette: %SZERZO% |
@@ -371,6 +385,7 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\mentes.cmd:65` | Programlista |
 | `modulok\mentes.cmd:70` | Tálcaikonok listája |
 | `modulok\mentes.cmd:73` | Outlook-lista |
+| `modulok\mentes.cmd:76` | Nyomtatók, meghajtók |
 | `modulok\visszaallitas.cmd:19` | Ezen a meghajtón nincs mentés: !DRIVE!:\%MAPPA_NEV% |
 | `modulok\visszaallitas.cmd:23` | Adatok visszaállítása – mentés kiválasztása |
 | `modulok\visszaallitas.cmd:29` | !N!   %%~nxF   [%%~tF] |
@@ -397,16 +412,16 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:124` | Office-parancsikonok |
 | `modulok\visszaallitas.cmd:130` | A Fájlkezelő újraindul, egy pillanat… |
 | `segedlet.bat:17` | Kakuk Dániel |
-| `segedlet.bat:119` | Válassz menüpontot [1–6], kilépés: X |
-| `segedlet.bat:128` | Adatok mentése |
-| `segedlet.bat:129` | Adatok visszaállítása |
-| `segedlet.bat:130` | BitLocker beállítása |
-| `segedlet.bat:131` | Chrome telepítése |
-| `segedlet.bat:132` | Rendszergazdai eszközök |
-| `segedlet.bat:133` | Segédlet frissítése |
-| `segedlet.bat:165` | Nem indult el – az okát fent látod. |
-| `segedlet.bat:167` | Vissza a menübe: nyomj meg egy billentyűt… |
-| `segedlet.bat:173` | Vissza a menübe: nyomj meg egy billentyűt… |
+| `segedlet.bat:120` | Válassz menüpontot [1–6], kilépés: X |
+| `segedlet.bat:129` | Adatok mentése |
+| `segedlet.bat:130` | Adatok visszaállítása |
+| `segedlet.bat:131` | BitLocker beállítása |
+| `segedlet.bat:132` | Chrome telepítése |
+| `segedlet.bat:133` | Rendszergazdai eszközök |
+| `segedlet.bat:134` | Segédlet frissítése |
+| `segedlet.bat:166` | Nem indult el – az okát fent látod. |
+| `segedlet.bat:168` | Vissza a menübe: nyomj meg egy billentyűt… |
+| `segedlet.bat:174` | Vissza a menübe: nyomj meg egy billentyűt… |
 | `..\Eszkozcsere_segedlet.bat:13` | Nem találom a profil_mentes mappát ennek a fájlnak a mappájában: |
 | `..\Eszkozcsere_segedlet.bat:14` | %~dp0 |
 | `..\Eszkozcsere_segedlet.bat:15` | Az Eszkozcsere_segedlet.bat és a profil_mentes mappa legyen egymás mellett. |
@@ -473,6 +488,13 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `ps\halozat_teszt.ps1:113` | A ping megy, a weboldal nem – céges proxy vagy tűzfal? |
 | `ps\halozat_teszt.ps1:114` | Nincs internet – a helyi hálózat működik. |
 | `ps\halozat_teszt.ps1:118` |   Eredmény:  |
+| `ps\nyomtatok.ps1:11` | Ami a céges beállításból jön, az magától visszajön – csak ami hiányzik, azt vedd fel. |
+| `ps\nyomtatok.ps1:17` | NYOMTATÓK – újra: Gépház › Bluetooth és eszközök › Nyomtatók és szkennerek |
+| `ps\nyomtatok.ps1:20` | hálózati |
+| `ps\nyomtatok.ps1:21` |  (alapértelmezett) |
+| `ps\nyomtatok.ps1:30` | HÁLÓZATI MEGHAJTÓK – újra: Fájlkezelő › Ez a gép › Hálózati meghajtó csatlakoztatása |
+| `ps\nyomtatok.ps1:34` | Eszközcsere segédlet  |
+| `ps\nyomtatok.ps1:34` |  · Készítette:  |
 | `ps\office_ikonok.ps1:107` | HIBA\|nem sikerült automatikusan\|Tedd ki kézzel:  |
 | `ps\office_ikonok.ps1:112` | Régi törölve:  |
 | `ps\office_ikonok.ps1:114` |  ikon beállítva\| |

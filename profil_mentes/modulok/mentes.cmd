@@ -11,8 +11,8 @@ if errorlevel 1 goto :NEM_INDULT
 if errorlevel 1 goto :MEGSZAKITVA
 
 %TETELEK% :BETOLT
-rem Lepesek: a tetelek, a programlista, a talca es az Outlook-lista
-set /a OSSZES=T_DB+3
+rem Lepesek: a tetelek, a programlista, a talca, az Outlook-lista, a nyomtatok es meghajtok
+set /a OSSZES=T_DB+4
 set "CEL=%ROOT%\%USERNAME%_%COMPUTERNAME%"
 
 rem ---------- Elokeszites ----------
@@ -22,7 +22,7 @@ cls
 %UI% :ADAT "Mentés helye" "%CEL%"
 echo.
 echo   Mentendő tételek:
-%TETELEK% :LISTA "Programlista" "Tálcaikonok listája" "Outlook-lista"
+%TETELEK% :LISTA "Programlista" "Tálcaikonok listája" "Outlook-lista" "Nyomtatók, meghajtók"
 echo.
 echo   !C_SARGA!A tanúsítványokat és a PST-ket kézzel vidd át.!C_0!
 if exist "%CEL%\" (
@@ -72,6 +72,9 @@ rem A regi gep asztali Office-ikonjai - visszaallitaskor ezek is kikerulnek
 
 %UI% :FEJLEC "Outlook-lista"
 %OUTLOOK% :LISTA_MENT
+
+%UI% :FEJLEC "Nyomtatók, meghajtók"
+%NYOMTATOK% :LISTA "%CEL%\nyomtatok_meghajtok.txt"
 exit /b 0
 
 :MEGSZAKITVA

@@ -40,6 +40,13 @@ Fajl "$ud\Default\History Provider Cache" 'teszt előzmény-gyorsítótár'
 Fajl "$ud\Profile 1\Preferences" '{"profile":{"name":"Munka – ő ű"}}'
 Fajl "$ud\Local State" '{"os_crypt":{"encrypted_key":"x"},"profile":{"info_cache":{"Default":{"name":"Dániel"},"Profile 1":{"name":"Munka – ő ű"}}}}'
 
+# Office: automatikus javitas, menuszalag, gyorsreszek; Chrome: konyvjelzo-ikonok, uj lap csempei
+Fajl "$roaming\Microsoft\Office\MSO1038.acl" 'automatikus javítás – teszt'
+Fajl "$local\Microsoft\Office\Word.officeUI" '<mso:customUI/>'
+Fajl "$roaming\Microsoft\Document Building Blocks\1038\16\Building Blocks.dotx" 'gyorsrész'
+Fajl "$ud\Default\Favicons" 'ikonok'
+Fajl "$ud\Default\Top Sites" 'csempék'
+
 # Start menu rogzitesek
 $sm = Mappa "$local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState"
 [IO.File]::WriteAllBytes("$sm\start2.bin", [byte[]](1..64))
