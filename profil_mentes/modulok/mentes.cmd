@@ -25,10 +25,6 @@ echo   Mentendő tételek:
 %TETELEK% :LISTA "Programlista" "Tálcaikonok listája" "Outlook-lista" "Nyomtatók, meghajtók"
 echo.
 echo   !C_SARGA!A tanúsítványokat és a PST-ket kézzel vidd át.!C_0!
-if exist "%CEL%\" (
-    echo.
-    echo   !C_SARGA!Erről a gépről már van mentés – frissítem, nem törlök belőle.!C_0!
-)
 
 rem A profil mappainak elerhetonek kell lenniuk: ha pl. az atiranyitott AppData megosztasa
 rem nem erheto el, a tetelek "nincs ilyen mappa" miatt kimaradnanak, es a mentes hianyos lenne

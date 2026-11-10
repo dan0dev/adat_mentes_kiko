@@ -41,12 +41,11 @@ echo.
 echo.
 %UI% :MENU J "Rendszerfájlok javítása" "DISM, sfc /scannow"
 %UI% :MENU L "Lemezellenőrzés" "chkdsk /f /r – újraindításkor fut"
-%UI% :MENU U "Speciális indítás" "újraindítás a helyreállítási menübe"
 echo.
 %UI% :MENU X "Kilépés" ""
 %UI% :VONAL
 echo.
-set "_kb=!ES_BETUK!PHJLUX"
+set "_kb=!ES_BETUK!PHJLX"
 %UI% :VALASZT "!_kb!" "Válassz:" N
 set /a _v=%errorlevel%-1
 if %_v% LSS 0 exit /b 3
@@ -67,10 +66,6 @@ if /I "%_k%"=="J" (
 )
 if /I "%_k%"=="L" (
     %ESZK% :LEMEZ
-    goto :ES_RAJZ
-)
-if /I "%_k%"=="U" (
-    %ESZK% :SPECIALIS
     goto :ES_RAJZ
 )
 %ESZK% :INDIT "%_k%"

@@ -1,5 +1,5 @@
 # ==========================================================
-#  Outlook-lista - lib\outlook.cmd futtatja
+#  Outlook-lista: a csatolt PST-k helye - lib\outlook.cmd futtatja
 #  Csak a registryt olvassa, az Outlookhoz nem nyul.
 #  Rovid, kulcsszavas - a fajl neve (outlook_lista.txt) mar megmondja, mi ez.
 #  Bemenet:  OL_OUT  - a kimeneti szovegfajl
@@ -37,11 +37,6 @@ foreach ($p in $psts) {
     $L.Add('  – ' + $p)
     Write-Output ('PST|' + $p)
 }
-$L.Add('')
-$L.Add('KÉZZEL – régi gépen')
-$L.Add('[ ] További postaládák (az automatikusak maguktól jönnek): Fiókbeállítások › Módosítás › További beállítások › Speciális')
-$L.Add('[ ] Feladócímek: új levél › Feladó')
-$L.Add('[ ] További fiókok: Fiókbeállítások › E-mail')
 $L.Add('')
 $L.Add('Eszközcsere segédlet ' + $env:VERZIO + ' · Készítette: ' + $env:SZERZO)
 $L | Out-File -LiteralPath $out -Encoding UTF8

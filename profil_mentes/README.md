@@ -16,7 +16,7 @@ címsorában látszik.
 | **2 Adatok visszaállítása** | új gép | visszamásolja a mentést a felhasználó profiljába, kirakja az Office-ikonokat |
 | **3 BitLocker beállítása** | új gép | a BitLocker titkosítás indítása az MBAM klienssel |
 | **4 Chrome telepítése** | új gép | ha a Szoftverközpont nem indítja el a letöltést: a legfrissebb Chrome a Google oldaláról, rendszergazdai jelszóval |
-| **5 Rendszergazdai eszközök** | bármelyik | Win+R parancsok (Eszközkezelő, Nyomtatáskezelés…), hálózati teszt naplóval, hálózat helyreállítása, rendszerfájlok javítása, lemezellenőrzés, speciális indítás – külön rendszergazdai ablakban, a jelszót egyszer kell megadni |
+| **5 Rendszergazdai eszközök** | bármelyik | Win+R parancsok (Eszközkezelő, Nyomtatáskezelés…), hálózati teszt naplóval, hálózat helyreállítása, rendszerfájlok javítása, lemezellenőrzés – külön rendszergazdai ablakban, a jelszót egyszer kell megadni |
 | **6 Segédlet frissítése** | bármelyik | a legújabb változat a GitHubról – letölti, a segédlet bezárása után lecseréli a fájlokat, és újraindul |
 
 **Amit ment és visszaállít** – a teljes lista helyekkel és a kézi teendőkkel: [MIT_MENT.md](MIT_MENT.md)
@@ -32,7 +32,7 @@ címsorában látszik.
 - Indítópult mappa, C:\TEMP
 
 **Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`, és egy kép a tálcáról: `talca.png`),
-csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`), a nyomtatók és a hálózati meghajtók
+csatolt PST-k helye (`outlook_lista.txt`), a nyomtatók és a hálózati meghajtók
 (`nyomtatok_meghajtok.txt`), az asztali Office-ikonok (`asztal_office.txt`).
 
 ## Használat

@@ -210,25 +210,6 @@ echo   !C_PIROS!Nem sikerült beütemezni – részletek: %LOG%!C_0!
 call :VISSZA
 goto :eof
 
-:SPECIALIS
-rem shutdown /r /o: ujrainditas a Windows helyreallitasi lehetosegeibe (javitas, csokkentett mod, BIOS)
-cls
-%UI% :CIM "Speciális indítás"
-echo   shutdown /r /o /t 0 – a gép azonnal újraindul a helyreállítási menübe:
-echo   indítási javítás, csökkentett mód, rendszer-visszaállítás, UEFI-beállítások.
-echo.
-echo   !C_SARGA!A nem mentett munka elvész.!C_0!
-echo.
-%UI% :VALASZT IN "Újraindítsam most?"
-if errorlevel 2 goto :eof
->>"%LOG%" echo [%date% %time%] shutdown /r /o /t 0
-shutdown /r /o /t 0
-if errorlevel 1 (
-    echo   !C_PIROS!Nem sikerült – részletek: %LOG%!C_0!
-    call :VISSZA
-)
-goto :eof
-
 :UJRAINDITAS
 rem %1 = mi utan - a gep ujrainditasa, ha kerik
 echo.

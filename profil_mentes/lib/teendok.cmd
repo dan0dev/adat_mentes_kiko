@@ -20,39 +20,35 @@ if not exist "%TODO%" (
     goto :eof
 )
 >>"%TODO%" echo Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO%
->>"%TODO%" (
-    echo.
-    echo RÉGI GÉP
-    echo [ ] Outlook: postaládák, feladócímek, fiókok – outlook_lista.txt
-    echo [ ] Tálcaikonok – talca.txt, talca.png
-    echo [ ] PST-k átmásolása – outlook_lista.txt
-    echo [ ] Tanúsítványok: certmgr.msc – Személyes
-    echo [ ] Böngészőjelszavak: szinkron vagy export – nem kerülnek át
-)
+rem Csak az kerul ide, amit a segedlet NEM tud megcsinalni - amit elvegzett (listak,
+rem talcakep), az nem teendo. A PST-sor csak akkor, ha van csatolt PST (vagy a lista nem keszult el).
+>>"%TODO%" echo.
+>>"%TODO%" echo RÉGI GÉP – kézzel, a segédlet ezeket nem tudja:
+>>"%TODO%" echo [ ] Outlook: további postaládák, feladócímek, fiókok – írd fel
+if not "%OL_PST%"=="0" >>"%TODO%" echo [ ] PST-fájlok átmásolása – a helyük: outlook_lista.txt
+>>"%TODO%" echo [ ] Tanúsítványok kimentése: certmgr.msc – Személyes
+>>"%TODO%" echo [ ] Böngészőjelszavak: szinkron vagy export – nem kerülnek át
 for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
 call :ATUGORVA_SOROK
 call :IMPORT_RESZ
 goto :eof
 
 :IMPORT_RESZ
->>"%TODO%" (
-    echo.
-    echo ÚJ GÉP
-    echo [ ] 2 Visszaállítás, 3 BitLocker
-    echo [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése
-    echo [ ] Alapértelmezett alkalmazások: Word, Excel, PowerPoint, PDF, Chrome
-    echo [ ] Tanúsítványok: telepítés
-    echo [ ] Outlook: PST-k csatolása – outlook_lista.txt
-    echo [ ] Outlook: postaládák, feladócímek, fiókok
-    echo [ ] Outlook: alapértelmezett aláírás
-    echo [ ] Chrome, Edge: profilok, könyvjelzők, bejelentkezés
-    echo [ ] Sticky Notes: megvannak a jegyzetek?
-    echo [ ] Programok: apps.txt összevetése, hiányzók telepítése
-    echo [ ] Nyomtatók, hálózati meghajtók: ami nem jött vissza – nyomtatok_meghajtok.txt
-    echo [ ] Tálcaikonok újra – talca.txt, talca.png
-    echo [ ] Start menü: hiányzó rögzítések
-    echo [ ] Minden rendben: mentés törlése a meghajtóról
-)
+>>"%TODO%" echo.
+>>"%TODO%" echo ÚJ GÉP
+>>"%TODO%" echo [ ] Segédlet: 2 Visszaállítás, 3 BitLocker
+>>"%TODO%" echo [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése
+>>"%TODO%" echo [ ] Alapértelmezett alkalmazások: Word, Excel, PowerPoint, PDF, Chrome
+>>"%TODO%" echo [ ] Tanúsítványok telepítése
+if not "%OL_PST%"=="0" >>"%TODO%" echo [ ] Outlook: PST-k csatolása – outlook_lista.txt
+>>"%TODO%" echo [ ] Outlook: további postaládák, feladócímek, fiókok
+>>"%TODO%" echo [ ] Outlook: alapértelmezett aláírás kiválasztása
+>>"%TODO%" echo [ ] Chrome, Edge: bejelentkezés, jelszavak
+>>"%TODO%" echo [ ] Programok: a hiányzók telepítése – apps.txt
+>>"%TODO%" echo [ ] Nyomtatók, hálózati meghajtók: ami nem jött vissza – nyomtatok_meghajtok.txt
+>>"%TODO%" echo [ ] Tálcaikonok rögzítése – talca.txt, talca.png
+>>"%TODO%" echo [ ] Start menü: a hiányzó rögzítések
+>>"%TODO%" echo [ ] Ha minden rendben: a mentés törlése a meghajtóról
 goto :eof
 
 :VISSZAALLITAS

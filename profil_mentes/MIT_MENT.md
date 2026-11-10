@@ -43,7 +43,7 @@ Ami a régi gépen nem létezik, az kimarad (`[KIHAGYVA]`) – ez általában re
 |---|---|
 | `apps.txt` | a telepített programok |
 | `talca.txt`, `talca.png` | a tálcára rögzített ikonok – listában és képen |
-| `outlook_lista.txt` | a csatolt PST-k helye, az Outlook kézi teendői |
+| `outlook_lista.txt` | a csatolt PST-k helye |
 | `nyomtatok_meghajtok.txt` | a nyomtatók és a hálózati meghajtók |
 | `asztal_office.txt` | a régi gép asztali Office-ikonjai |
 | `_TEENDOK.txt` | a kézi teendők pipálható listája |
@@ -54,9 +54,8 @@ A `_TEENDOK.txt` ezeket pipálható listában adja.
 
 **A régi gépen**
 
-- [ ] **Outlook:** további postaládák, feladócímek, fiókok – `outlook_lista.txt`
-- [ ] **Tálcaikonok** – `talca.txt`, `talca.png`
-- [ ] **PST-k átmásolása** – a helyük az `outlook_lista.txt`-ben
+- [ ] **Outlook:** további postaládák, feladócímek, fiókok – fel kell írni
+- [ ] **PST-k átmásolása** – a helyük az `outlook_lista.txt`-ben (csak ha van csatolt PST)
 - [ ] **Tanúsítványok:** certmgr.msc – Személyes
 - [ ] **Böngészőjelszavak:** szinkronnal vagy exporttal – nem kerülnek át (a géphez kötött kulccsal titkosítottak)
 
