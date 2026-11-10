@@ -1,5 +1,5 @@
 rem ==========================================================
-rem  Alapertelmezett alkalmazasok - 5. menupont
+rem  Alapertelmezett alkalmazasok - 4. menupont
 rem
 rem  Beallitaskor - rendszergazdakent - csak a PROGRAM es TIPUS sorok
 rem  szamitanak, ellenorzeskor - felhasznalokent - csak az ELLENORIZ sorok.

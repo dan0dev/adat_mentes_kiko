@@ -3,9 +3,9 @@
 #  lib\tipusok\TANUSITVANY.cmd futtatja.
 #  Csak a kulcs nelkuli tanusitvanyok kerulnek at, .cer fajlban.
 #  A fajlnev a tanusitvany ujjlenyomata, a taroloban a mappa neve a tarolo neve.
-#  Bemenet:  TAN_MOD     MENT | PROBA | VISSZA
+#  Bemenet:  TAN_MOD     MENT | VISSZA
 #            TAN_TAROLOK tarolonevek szokozzel, pl. My AddressBook
-#            TAN_MAPPA   a mentes Tanusitvanyok mappaja (probanal egy ideiglenes mappa)
+#            TAN_MAPPA   a mentes Tanusitvanyok mappaja
 #            TAN_KI      eredmenyfajl: 1. allapot, 2. uzenet, 3. reszlet (- ha nincs)
 # ==========================================================
 $ErrorActionPreference = 'Continue'
@@ -56,7 +56,7 @@ if ($mod -eq 'VISSZA') {
     Ki $allapot "$vissza tanúsítvány visszaállítva" ($r -join ', ')
 }
 
-# ---------- Mentes es proba ----------
+# ---------- Mentes ----------
 $lista = @()
 foreach ($t in $tarolok) {
     foreach ($c in @(Get-ChildItem "Cert:\CurrentUser\$t" -ErrorAction SilentlyContinue | Where-Object { -not $_.HasPrivateKey })) { $lista += @{ t = $t; c = $c } }
@@ -82,14 +82,11 @@ foreach ($e in $lista) {
         $jegyzek.Add($e.t + ' · ' + (Nev $c) + ' · ' + $lejar + ' · HIBA')
     }
 }
-if ($mod -ne 'PROBA') {
-    $jegyzek.Add('')
-    $jegyzek.Add('Eszközcsere segédlet ' + $env:VERZIO + ' · Készítette: ' + $env:SZERZO)
-    [IO.File]::WriteAllLines((Join-Path $env:TAN_MAPPA 'lista.txt'), $jegyzek, (New-Object Text.UTF8Encoding $false))
-}
+$jegyzek.Add('')
+$jegyzek.Add('Eszközcsere segédlet ' + $env:VERZIO + ' · Készítette: ' + $env:SZERZO)
+[IO.File]::WriteAllLines((Join-Path $env:TAN_MAPPA 'lista.txt'), $jegyzek, (New-Object Text.UTF8Encoding $false))
 
 $r = ''
 if ($hiba) { $r = "$hiba nem menthető" }
 $allapot = 'OK'; if ($hiba) { $allapot = 'HIBA' }
-if ($mod -eq 'PROBA') { Ki $allapot "$cer tanúsítvány – menthető" $r }
 Ki $allapot "$cer tanúsítvány mentve" $r

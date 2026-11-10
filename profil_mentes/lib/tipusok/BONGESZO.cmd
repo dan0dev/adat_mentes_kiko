@@ -87,8 +87,7 @@ rem Csak a profillista kerul ki a Local State-bol, a titkositokulcs nem
 rem %1 = Local State, %2 = kimeneti json
 set "LS_SRC=%~1"
 set "LS_DST=%~2"
-if "%TESZTMOD%"=="1" set "LS_DST=%TEMP%\_teszt_profilok_%RANDOM%.json"
-if "%TESZTMOD%"=="0" if not exist "%~dp2" mkdir "%~dp2" 2>nul
+if not exist "%~dp2" mkdir "%~dp2" 2>nul
 set "PS_FAJL=%PSDIR%\profillista_ment.ps1"
 %PS_FUTTAT% >nul 2>&1
 if errorlevel 1 (
@@ -96,7 +95,6 @@ if errorlevel 1 (
 ) else (
     %UI% :RESZLET "profillista mentve, titkosítókulcs nélkül"
 )
-if "%TESZTMOD%"=="1" del /q "%LS_DST%" >nul 2>&1
 goto :eof
 
 :PROFILLISTA_VISSZA

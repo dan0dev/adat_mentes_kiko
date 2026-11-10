@@ -9,10 +9,9 @@ A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új g
 | Menü | Hol | Mit csinál |
 |---|---|---|
 | **1 Adatok mentése** | régi gép | elmenti az adatokat a külső meghajtóra |
-| **2 Próbafuttatás** | régi gép | mindent ellenőriz, de semmit nem másol – éles mentés előtt ajánlott |
-| **3 Adatok visszaállítása** | új gép | visszamásolja a mentést a felhasználó profiljába |
-| **4 Laptop beállítása** | új gép | fedél lehajtásakor: Nincs művelet · BitLocker (MBAM) indítása |
-| **5 Alapértelmezett alkalmazások** | új gép | Word, Excel, PowerPoint, PDF: Adobe Acrobat Reader, böngésző: Chrome |
+| **2 Adatok visszaállítása** | új gép | visszamásolja a mentést a felhasználó profiljába |
+| **3 Laptop beállítása** | új gép | fedél lehajtásakor: Nincs művelet · BitLocker (MBAM) indítása |
+| **4 Alapértelmezett alkalmazások** | új gép | Word, Excel, PowerPoint, PDF: Adobe Acrobat Reader, böngésző: Chrome |
 
 **Amit ment és visszaállít:**
 
@@ -33,17 +32,16 @@ csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
 **A régi gépen**
 
 1. Dupla kattintás: `Eszkozcsere_segedlet.bat`
-2. Ha akarod, előbb **2 Próbafuttatás** – megmutatja, menthető-e minden.
-3. **1 Adatok mentése** → a külső meghajtó betűjele (pl. `E`) → **Indulhat a mentés? I**
-4. Megvárod a végét, átnézed az összegzést.
+2. **1 Adatok mentése** → a külső meghajtó betűjele (pl. `E`) → **Indulhat a mentés? I**
+3. Megvárod a végét, átnézed az összegzést.
 
 **Az új gépen**
 
 1. A felhasználó jelentkezzen be (a Chrome-ot és az Edge-et még ne indítsa el).
-2. Dupla kattintás: `Eszkozcsere_segedlet.bat` → **3 Adatok visszaállítása** → a mentés sorszáma → megvárod a végét.
-3. Laptopnál: **4 Laptop beállítása**.
-4. Jobb kattintás → *Futtatás rendszergazdaként* → **5** (beállítás).
-   Utána a felhasználó jelentkezzen ki és be, majd sima indítással **5** (ellenőrzés).
+2. Dupla kattintás: `Eszkozcsere_segedlet.bat` → **2 Adatok visszaállítása** → a mentés sorszáma → megvárod a végét.
+3. Laptopnál: **3 Laptop beállítása**.
+4. Jobb kattintás → *Futtatás rendszergazdaként* → **4** (beállítás).
+   Utána a felhasználó jelentkezzen ki és be, majd sima indítással **4** (ellenőrzés).
 5. A `_TEENDOK.txt` alapján a kézi lépések – lásd lent.
 
 ## Mire számíts

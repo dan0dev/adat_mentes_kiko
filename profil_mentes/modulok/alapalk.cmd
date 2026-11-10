@@ -17,12 +17,12 @@ if "%ADMIN%"=="1" (
     set "AA_MOD=beallit"
     echo   !C_ZOLD!Rendszergazdaként fut:!C_0! a beállítófájl elkészül és rögzítésre kerül.
     echo   Utána a felhasználónak ki és be kell jelentkeznie, majd ellenőrizd ugyanitt,
-    echo   a segédlet sima indításával, az 5. menüponttal.
+    echo   a segédlet sima indításával, a 4. menüponttal.
 ) else (
     set "AA_MOD=ellenoriz"
     echo   !C_SARGA!Felhasználóként fut:!C_0! most csak ellenőrzöm a jelenlegi beállításokat.
     echo   A beállításhoz: jobb kattintás a segédleten – Futtatás rendszergazdaként –
-    echo   5. menüpont.
+    echo   4. menüpont.
 )
 echo.
 %UI% :VALASZT IN "Indulhat?"

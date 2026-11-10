@@ -36,12 +36,6 @@ if not "%R_ALLAPOT%"=="OK" (
     goto :eof
 )
 set "FDB=0"
-set "_hol=%R_DST%"
-if "%TESZTMOD%"=="1" set "_hol=%R_SRC%"
-for /f %%c in ('dir /a-d /b /s "%_hol%" 2^>nul ^| find /c /v ""') do set "FDB=%%c"
-if "%TESZTMOD%"=="1" (
-    %UI% :JELOL OK "%FDB% fájl, elérhető – menthető"
-) else (
-    %UI% :JELOL OK "%FDB% fájl, ellenőrizve"
-)
+for /f %%c in ('dir /a-d /b /s "%R_DST%" 2^>nul ^| find /c /v ""') do set "FDB=%%c"
+%UI% :JELOL OK "%FDB% fájl, ellenőrizve"
 goto :eof

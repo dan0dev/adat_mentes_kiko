@@ -39,11 +39,6 @@ if not exist "%OL_OUT%" (
     %UI% :JELOL HIBA "a lista nem készült el"
     goto :eof
 )
-if "%TESZTMOD%"=="1" (
-    del /q "%OL_OUT%" >nul 2>&1
-    %UI% :JELOL OK "%OL_PST% csatolt PST megtalálva"
-    goto :eof
-)
 copy /Y "%OL_OUT%" "%CEL%\outlook_lista.txt" >nul 2>&1
 del /q "%OL_OUT%" >nul 2>&1
 if not exist "%CEL%\outlook_lista.txt" (

@@ -3,12 +3,12 @@
 
 rem ==========================================================
 rem  Ellenorzesek: felhasznalo, kulso meghajto, futo programok,
-rem  szabad hely, es a probafuttatas kornyezete
+rem  szabad hely
 rem  Hivas: %ELLENORZES% :CIMKE parameterek
 rem ==========================================================
 
 :FELHASZNALO
-rem Mentes, visszaallitas, probafuttatas: a felhasznalo sajat profiljaval dolgozik
+rem Mentes, visszaallitas: a felhasznalo sajat profiljaval dolgozik
 rem Kilepesi kod: 0 = jo felhasznalo, 1 = megszakitas
 echo.
 if "%ADMIN%"=="1" (
@@ -26,7 +26,7 @@ exit /b 1
 
 :MEGHAJTO
 rem Kulso meghajto betujel bekerese.  Kimenet: DRIVE, IRHATO, ROOT
-rem %1 = KELL: csak irhato meghajto fogadhato el, JELEZ: nem irhatonal csak figyelmeztet
+rem %1 = KELL: csak irhato meghajto fogadhato el
 :MEGHAJTO_BEKER
 echo.
 %UI% :BEKER DRIVE "A külső meghajtó betűjele (pl. E):"
@@ -59,7 +59,6 @@ set "IRHATO=1"
 set "TESZT=%DRIVE%:\_irasteszt_%RANDOM%.tmp"
 (echo teszt) >"%TESZT%" 2>nul
 if exist "%TESZT%" (del /q "%TESZT%" >nul 2>&1) else (set "IRHATO=0")
-if "%IRHATO%"=="0" if /I "%~1"=="JELEZ" echo   !C_PIROS!A kiválasztott meghajtó nem írható: %DRIVE%: – a próbafuttatás ezt hibaként jelzi.!C_0!
 if "%IRHATO%"=="0" if /I "%~1"=="KELL" (
     echo   !C_PIROS!A kiválasztott meghajtó nem írható: !DRIVE!:!C_0!
     echo   !C_PIROS!Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót.!C_0!
@@ -82,13 +81,9 @@ if not defined FUTO (
     goto :eof
 )
 echo.
-if "%TESZTMOD%"=="1" (
-    echo   !C_SARGA!Még fut:!FUTO! – éles mentés előtt be kell zárni.!C_0!
-) else (
-    echo   !C_SARGA!Még fut:!FUTO!!C_0!
-    echo   A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes
-    echo   a háttérben is futhat.
-)
+echo   !C_SARGA!Még fut:!FUTO!!C_0!
+echo   A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes
+echo   a háttérben is futhat.
 if "%APP_PROBALT%"=="1" goto :APPOK_KENYSZER
 echo   U – újraellenőrzés    B – bezárás    F – folytatás így
 %UI% :VALASZT UBF "Választás"
@@ -149,10 +144,6 @@ echo   Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: 
 if !H_KELL! GTR !H_SZABAD! (
     echo.
     echo   !C_PIROS!Nincs elég hely a külső meghajtón.!C_0!
-    if "%TESZTMOD%"=="1" (
-        set "T_HELY=nincs elég hely a külső meghajtón"
-        goto :eof
-    )
     echo   M – megszakítás    F – folytatás így
     %UI% :VALASZT MF "Választás"
     if errorlevel 2 goto :eof
@@ -164,10 +155,6 @@ if /I "!H_FS!"=="FAT32" if !H_MAX! GEQ 4096 (
     echo   !C_PIROS!Van 4 GB-nál nagyobb fájl – ez FAT32 fájlrendszeren nem fér el.!C_0!
     echo   Formázd a külső meghajtót exFAT vagy NTFS fájlrendszerre, vagy használj
     echo   másik meghajtót.
-    if "%TESZTMOD%"=="1" (
-        set "T_HELY=4 GB-nál nagyobb fájl FAT32 meghajtón"
-        goto :eof
-    )
     echo   M – megszakítás    F – folytatás így
     %UI% :VALASZT MF "Választás"
     if errorlevel 2 goto :eof
@@ -175,22 +162,4 @@ if /I "!H_FS!"=="FAT32" if !H_MAX! GEQ 4096 (
     goto :eof
 )
 echo   !C_ZOLD!Hely rendben.!C_0!
-goto :eof
-
-:KORNYEZET
-rem Csak probafuttatasnal: a futtatashoz szukseges eszkozok ellenorzese
-set "K_HIBA="
-set "K_OK="
-where robocopy >nul 2>&1
-if errorlevel 1 (set "K_HIBA=!K_HIBA! robocopy hiányzik;") else (set "K_OK=!K_OK! robocopy,")
-powershell -NoProfile -NonInteractive -Command "exit 0" >nul 2>&1
-if errorlevel 1 (set "K_HIBA=!K_HIBA! PowerShell tiltva – a listák és az ellenőrzések kimaradnak;") else (set "K_OK=!K_OK! PowerShell,")
-if "%IRHATO%"=="0" (set "K_HIBA=!K_HIBA! a külső meghajtó nem írható;") else (set "K_OK=!K_OK! írható külső meghajtó,")
-if defined T_HELY (set "K_HIBA=!K_HIBA! !T_HELY!;") else (set "K_OK=!K_OK! hely rendben")
-if "%ADMIN%"=="1" %UI% :RESZLET "rendszergazdaként fut: biztos, hogy ez a felhasználó profilja?"
-if defined K_HIBA (
-    %UI% :JELOL HIBA "nem minden feltétel teljesül" "!K_HIBA:~1!"
-) else (
-    %UI% :JELOL OK "minden feltétel teljesül" "!K_OK:~1!"
-)
 goto :eof

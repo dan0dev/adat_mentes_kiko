@@ -19,13 +19,12 @@ echo.
 %UI% :SZAKASZ "A RÉGI GÉPEN"
 echo.
 %UI% :MENU 1 "Adatok mentése" "a külső meghajtóra"
-%UI% :MENU 2 "Próbafuttatás" "a mentés ellenőrzése másolás nélkül"
 echo.
 %UI% :SZAKASZ "AZ ÚJ GÉPEN"
 echo.
-%UI% :MENU 3 "Adatok visszaállítása" "a külső meghajtón lévő mentésből"
-%UI% :MENU 4 "Laptop beállítása" "fedél lehajtása, BitLocker"
-%UI% :MENU 5 "Alapértelmezett alkalmazások" "Word, Excel, PowerPoint, PDF, Chrome"
+%UI% :MENU 2 "Adatok visszaállítása" "a külső meghajtón lévő mentésből"
+%UI% :MENU 3 "Laptop beállítása" "fedél lehajtása, BitLocker"
+%UI% :MENU 4 "Alapértelmezett alkalmazások" "Word, Excel, PowerPoint, PDF, Chrome"
 echo.
 %UI% :LABLEC NYITO
 echo.

@@ -14,7 +14,6 @@ rem uj Unicode fajlba naploz (/UNILOG:), amit a type UTF-8-kent fuz a naplohoz.
 >>"%LOG%" echo        %R_SRC% -^> %R_DST%
 set "R_LOGT=%TEMP%\_robocopy_%RANDOM%.txt"
 set "R_RESZLET="
-if "%TESZTMOD%"=="1" goto :ROBO_TESZT
 if "%R_PROG%"=="1" goto :ROBO_PROG
 robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /R:1 /W:1 /NP /UNILOG:"%R_LOGT%" >nul
 set "R_RC=%errorlevel%"
@@ -63,20 +62,6 @@ if %R_VBIT%==1 (
     set "R_UZENET=a másolat eltér az eredetitől"
     set "R_RESZLET=Egy fájl másolás közben megváltozott vagy zárolt volt."
     goto :eof
-)
-goto :eof
-
-:ROBO_TESZT
-rem Csak listazas: a robocopy vegigolvassa a forrast, de nem masol es nem hoz letre semmit
-robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /L /R:0 /W:0 /NP /UNILOG:"%R_LOGT%" >nul
-set "R_RC=%errorlevel%"
-call :ROBO_NAPLO
-set "R_ALLAPOT=OK"
-set "R_UZENET=elérhető, menthető"
-if %R_RC% GEQ 8 (
-    set "R_ALLAPOT=HIBA"
-    set "R_UZENET=nem olvasható"
-    set "R_RESZLET=Jogosultság vagy elérési út – részletek a naplóban."
 )
 goto :eof
 

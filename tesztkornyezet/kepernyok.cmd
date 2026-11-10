@@ -23,7 +23,7 @@ rem ---------- Kezdőképernyő - a valódi, lib\kezdokepernyo.cmd ----------
 set KEZDO=call "%LIB%\kezdokepernyo.cmd"
 set "ADMIN=1"
 %KEZDO% :MUTAT
-%UI% :VALASZT 12345 "Válassz menüpontot [1–5]:" N
+%UI% :VALASZT 1234 "Válassz menüpontot [1–4]:" N
 
 rem ---------- Futás ----------
 %UI% :CIM "Adatok mentése folyamatban"
@@ -47,7 +47,6 @@ rem ---------- Összegzés ----------
 for /l %%i in (1,1,6) do %UI% :OSSZ_SOR %%i
 %UI% :VONAL
 echo     Sikeres: 3     Hibás: 1     Kihagyva: 1     Időtartam: 3 perc 12 mp
-echo     Rendben: 3     Probléma: 1     Kihagyva: 1     Időtartam: 0 perc 41 mp
 echo.
 %UI% :SAV HIBA "FIGYELEM: 1 tétel hibával zárult – nézd át a listát és a naplót."
 %UI% :SAV OK "KÉSZ – minden tétel sikeresen lefutott."

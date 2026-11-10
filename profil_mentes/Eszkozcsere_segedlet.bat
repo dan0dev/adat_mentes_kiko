@@ -75,9 +75,7 @@ if not defined DATUM (
     set "DATUM=!DATUM: =!"
     if "!DATUM:~-1!"=="-" set "DATUM=!DATUM:~0,-1!"
 )
-set "TESZTMOD=0"
 set "MOD_NEV="
-set "T_HELY="
 set "FUTO="
 
 rem ---------- Asztal valodi helye, ha at van iranyitva ----------
@@ -105,17 +103,16 @@ rem ==========================================================
 rem  Kezdokepernyo es menu
 rem ==========================================================
 %KEZDO% :MUTAT
-%UI% :VALASZT 12345 "Válassz menüpontot [1–5]:" N
+%UI% :VALASZT 1234 "Válassz menüpontot [1–4]:" N
 set "MOD=%errorlevel%"
 
 rem Menupont -> nev es modul. Uj menupontnal: lib\kezdokepernyo.cmd, egy betu a VALASZT-ba, es egy sor ide.
-rem A tovabbi kod csak a MODUL es a TESZTMOD valtozot nezi, a sorszamot nem.
+rem A tovabbi kod csak a MODUL valtozot nezi, a sorszamot nem.
 set "MODUL="
 if "%MOD%"=="1" set "MOD_NEV=Adatok mentése"               & set "MODUL=mentes"
-if "%MOD%"=="2" set "MOD_NEV=Próbafuttatás"                & set "MODUL=mentes" & set "TESZTMOD=1"
-if "%MOD%"=="3" set "MOD_NEV=Adatok visszaállítása"        & set "MODUL=visszaallitas"
-if "%MOD%"=="4" set "MOD_NEV=Laptop beállítása"            & set "MODUL=laptop"
-if "%MOD%"=="5" set "MOD_NEV=Alapértelmezett alkalmazások" & set "MODUL=alapalk"
+if "%MOD%"=="2" set "MOD_NEV=Adatok visszaállítása"        & set "MODUL=visszaallitas"
+if "%MOD%"=="3" set "MOD_NEV=Laptop beállítása"            & set "MODUL=laptop"
+if "%MOD%"=="4" set "MOD_NEV=Alapértelmezett alkalmazások" & set "MODUL=alapalk"
 if not defined MODUL goto :MEGSZAKITVA
 title Eszközcsere segédlet – %MOD_NEV%
 

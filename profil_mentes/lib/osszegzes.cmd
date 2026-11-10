@@ -12,7 +12,6 @@ set /a ELTELT=VEGE_MP-START_MP
 if %ELTELT% LSS 0 set /a ELTELT+=86400
 set /a E_PERC=ELTELT/60, E_MP=ELTELT%%60
 title Eszközcsere segédlet – %MOD_NEV% kész
-if "%TESZTMOD%"=="1" goto :TESZT
 
 rem Osszegzes fajl - az eredmeny mar a fajlnevben latszik
 set "OSSZ_HELY=%TEMP%"
@@ -76,14 +75,14 @@ if "%MODUL%"=="alapalk" (
     if "!AA_MOD!"=="beallit" if "!AA_OK!"=="1" (
         echo   !C_ZOLD!Alapértelmezett alkalmazások: BEÁLLÍTVA.!C_0!
         echo   A felhasználónak ki és be kell jelentkeznie. Utána ellenőrizd: a segédlet
-        echo   sima indításával, 5. menüpont.
+        echo   sima indításával, 4. menüpont.
     )
     if "!AA_MOD!"=="beallit" if not "!AA_OK!"=="1" if "!E_1!"=="KIHAGYVA" echo   !C_SARGA!Alapértelmezett alkalmazások: nem módosítva – a céges beállítás marad.!C_0!
     if "!AA_MOD!"=="beallit" if not "!AA_OK!"=="1" if not "!E_1!"=="KIHAGYVA" echo   !C_PIROS!Alapértelmezett alkalmazások: NEM SIKERÜLT beállítani – az okát lásd fent.!C_0!
     if "!AA_MOD!"=="ellenoriz" if "!AA_OK!"=="1" echo   !C_ZOLD!Alapértelmezett alkalmazások: MINDEN RENDBEN – a kért programok az!C_0!
     if "!AA_MOD!"=="ellenoriz" if "!AA_OK!"=="1" echo   !C_ZOLD!alapértelmezettek.!C_0!
     if "!AA_MOD!"=="ellenoriz" if not "!AA_OK!"=="1" echo   !C_PIROS!Alapértelmezett alkalmazások: NEM MINDEN JÓ – lásd fent.!C_0!
-    if "!AA_MOD!"=="ellenoriz" if not "!AA_OK!"=="1" echo   !C_PIROS!Beállítás: rendszergazdaként, 5. menüpont.!C_0!
+    if "!AA_MOD!"=="ellenoriz" if not "!AA_OK!"=="1" echo   !C_PIROS!Beállítás: rendszergazdaként, 4. menüpont.!C_0!
 )
 if "%DO_FEDEL%"=="1" (
     echo.
@@ -133,38 +132,4 @@ for %%x in ("%LOG%") do (
     set "_nn=%%~nxx"
 )
 if /I "!_nd!"=="%OSSZ_HELY%\" set "NAPLO_NEV=!_nn!"
-goto :eof
-
-:TESZT
-set "OSSZ_FAJL=nul"
-echo.
-%UI% :CIM "Próbafuttatás eredménye – semmi nem lett másolva"
-for /l %%i in (1,1,%OSSZES%) do %UI% :OSSZ_SOR %%i
-%UI% :VONAL
-echo     Rendben: %DB_OK%     Probléma: %DB_HIBA%     Kihagyva: %DB_KIHAGY%     Időtartam: %E_PERC% perc %E_MP% mp
-echo.
-if %DB_HIBA% GTR 0 (
-    %UI% :SAV HIBA "PRÓBAFUTTATÁS: %DB_HIBA% probléma – javítsd ezeket az éles mentés előtt."
-) else (
-    %UI% :SAV OK "PRÓBAFUTTATÁS SIKERES – a mentés ezen a gépen lefuttatható."
-)
-if defined FUTO (
-    echo.
-    echo   !C_SARGA!Éles mentés előtt be kell zárni:!FUTO!!C_0!
-)
-echo.
-echo   !C_SZURKE!A próbafuttatás semmit nem hozott létre a külső meghajtón.!C_0!
-echo   !C_SZURKE!A megnyitott programok által zárolt fájlokat nem tudja ellenőrizni.!C_0!
-echo.
-%UI% :ADAT "Napló" "%LOG%"
-echo.
-%UI% :LABLEC TELJES
-echo.
-if %DB_HIBA% GTR 0 (
-    %UI% :VALASZT IN "Megnyissam a naplót?"
-    if not errorlevel 2 start "" notepad "%LOG%"
-)
-echo.
-echo   Kész. Kilépéshez nyomj meg egy billentyűt...
-pause >nul
 goto :eof

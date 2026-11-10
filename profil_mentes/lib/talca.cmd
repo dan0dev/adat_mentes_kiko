@@ -30,9 +30,5 @@ if "%TALCA_DB%"=="0" (
     %UI% :JELOL KIHAGYVA "nincs rögzített ikon a tálcán"
     goto :eof
 )
-if "%TESZTMOD%"=="1" (
-    %UI% :JELOL OK "%TALCA_DB% ikon – listázható"
-) else (
-    %UI% :JELOL OK "%TALCA_DB% ikon – talca.txt"
-)
+%UI% :JELOL OK "%TALCA_DB% ikon – talca.txt"
 goto :eof

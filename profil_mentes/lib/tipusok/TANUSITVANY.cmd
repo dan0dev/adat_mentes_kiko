@@ -12,12 +12,7 @@ rem ==========================================================
 :MENT
 set "TAN_MOD=MENT"
 set "TAN_MAPPA=%CEL%\%T_MAPPA%"
-if "%TESZTMOD%"=="1" (
-    set "TAN_MOD=PROBA"
-    set "TAN_MAPPA=%TEMP%\_tan_proba_%RANDOM%"
-)
 call :FUTTAT
-if "%TESZTMOD%"=="1" rd /s /q "%TAN_MAPPA%" >nul 2>&1
 goto :eof
 
 :VISSZA

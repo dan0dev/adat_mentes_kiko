@@ -37,7 +37,7 @@ ps\                        a PowerShell részek, olvasható formában
 %TETEL% MAPPA  "Letöltések"  "%USERPROFILE%\Downloads"  Downloads  P
 ```
 
-A mentés, a próbafuttatás és a visszaállítás is automatikusan viszi; a lista és a lépésszám magától frissül.
+A mentés és a visszaállítás is automatikusan viszi; a lista és a lépésszám magától frissül.
 A név legfeljebb 26 karakter. A MAPPA tétel jelzői együtt is megadhatók: `P` = folyamatjelző, `J` = gyorsabb
 másolás nagy fájloknál (robocopy `/J`), pl. `PJ` – így megy a PST-mappa és a C:\TEMP.
 
@@ -56,7 +56,7 @@ a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaál
 `config\alapertelmezett_alk.cmd`-be.
 
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
+egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 1234` sorában, és egy sor a menüpont → modul táblába.
 
 ## Szabályok a kódhoz
 
