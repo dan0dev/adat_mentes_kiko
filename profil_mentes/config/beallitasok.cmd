@@ -25,8 +25,3 @@ set "WIN_INST=%WINDIR:~2%\Installer\"
 rem BitLocker / MBAM kliens helye - mindig a 64 bites Program Files
 if defined ProgramW6432 (set "PF64=%ProgramW6432%") else (set "PF64=%ProgramFiles%")
 set "MBAM_DIR=%PF64%\Microsoft\MDOP MBAM"
-
-rem Az alapertelmezett alkalmazasok beallitofajlja es a hazirend kulcsa
-set "AA_DIR=%ProgramData%\EszkozcsereScript"
-set "AA_XML=%AA_DIR%\alapertelmezett_alkalmazasok.xml"
-set "AA_KULCS=HKLM\SOFTWARE\Policies\Microsoft\Windows\System"

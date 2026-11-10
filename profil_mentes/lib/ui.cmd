@@ -61,10 +61,12 @@ if /I "%~3"=="SARGA" (echo      !_c!!C_SARGA!!_e!!C_0!) else (echo      !_c!!C_F
 goto :eof
 
 :MENU
-rem %1 = billentyu, %2 = menupont neve, %3 = rovid leiras
+rem %1 = billentyu, %2 = menupont neve, %3 = rovid leiras, %4 = a leiras folytatasa
+rem      kulon sorban, ugyanabban az oszlopban - a leiras soronkent legfeljebb 37 karakter
 set "_m=%~2"
 call :PAD _m 30
 echo      !C_FEHER!%~1!C_0!   !_m!!C_SZURKE!%~3!C_0!
+if not "%~4"=="" echo                                        !C_SZURKE!%~4!C_0!
 goto :eof
 
 :LABLEC
@@ -150,9 +152,20 @@ goto :eof
 
 :BEKER
 rem %1 = valtozo neve, %2 = kerdes - szabad szoveges valasz Enterrel, pl. meghajto betuje
+rem %3 = alapertek (nem kotelezo): szurkén a kurzor alatt all, Enterre ez lesz a valasz,
+rem      barmit beirva felulirodik - Backspace nem kell. A kurzor a visszatorlo jelekkel all vissza.
 set "%~1="
+set "_ba=%~3"
 if not defined _vbs for /f %%b in ('"prompt $H & for %%c in (1) do rem"') do set "_vbs=%%b"
 <nul set /p "=.!_vbs!!UI_BEHUZAS!› %~2 "
+if defined _ba if not "%VALASZ_SORBOL%"=="1" (
+    rem Annyi visszatorles, ahany betu az alapertek
+    set "_bv="
+    for /l %%i in (0,1,9) do if not "!_ba:~%%i,1!"=="" set "_bv=!_bv!!_vbs!"
+    <nul set /p "=!C_SZURKE!!_ba!!C_0!!_bv!"
+)
+rem Automatikus futtatasnal a valasz nem latszik - az alapertek a kerdes utan latszik
+if defined _ba if "%VALASZ_SORBOL%"=="1" <nul set /p "=(Enter = !_ba!) "
 set /p "%~1="
 rem Automatikus futtatasnal a valasz nem latszik - kiirjuk, hogy az atirat olvashato legyen.
 rem Ha elfogytak a valaszok, 255-tel ter vissza, hogy a hivo ne kerdezzen a vegtelensegig.
@@ -160,6 +173,7 @@ if "%VALASZ_SORBOL%"=="1" (
     if not defined %~1 exit /b 255
     echo !%~1!
 )
+if not defined %~1 if defined _ba set "%~1=!_ba!"
 exit /b 0
 
 :PAD

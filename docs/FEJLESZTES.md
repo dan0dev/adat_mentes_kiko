@@ -13,7 +13,6 @@ config\                    ITT BŐVÍTS – listák és beállítások, kód né
   beallitasok.cmd            mappanév, tartalék hely, figyelt programok, MBAM helye...
   tetelek.cmd                a mentendő tételek – egy sor = egy tétel
   parancsikonok.cmd          az asztali Office-parancsikonok listája
-  alapertelmezett_alk.cmd    fájltípusok és programok a 4. menühöz
 modulok\                   menüpontonként egy fájl: képernyők, kérdések, sorrend
 lib\                       a munkát végző közös rutinok
   ui.cmd                     minden rajzolás: keretek, lépések, állapotjelek, sávok, kérdések
@@ -23,7 +22,7 @@ lib\                       a munkát végző közös rutinok
   tipusok\                   tételtípusok: MAPPA, FAJL, BONGESZO
   ellenorzes.cmd             felhasználó, meghajtó, futó programok, szabad hely
   talca.cmd                  a tálcára rögzített ikonok listája és képe – talca.txt, talca.png
-  outlook.cmd, programlista.cmd, ikonok.cmd, alapalk.cmd, laptop.cmd
+  outlook.cmd, programlista.cmd, ikonok.cmd, bitlocker.cmd, chrome.cmd
   teendok.cmd                _TEENDOK.txt
   osszegzes.cmd              a végső összegzés minden menüponthoz
 ps\                        a PowerShell részek, olvasható formában
@@ -55,11 +54,8 @@ a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaál
 
 **Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
 
-**Új alapértelmezett fájltípus** – `%AA_TIPUS%` sor (és ha kell, `%AA_ELLENORIZ%` sor) a
-`config\alapertelmezett_alk.cmd`-be.
-
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 1234` sorában, és egy sor a menüpont → modul táblába.
+egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 123` sorában, és egy sor a menüpont → modul táblába.
 
 ## Szabályok a kódhoz
 

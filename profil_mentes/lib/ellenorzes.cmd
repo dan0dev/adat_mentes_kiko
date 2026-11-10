@@ -27,9 +27,26 @@ exit /b 1
 :MEGHAJTO
 rem Kulso meghajto betujel bekerese.  Kimenet: DRIVE, IRHATO, ROOT
 rem %1 = KELL: csak irhato meghajto fogadhato el
+rem A felismert kulso meghajto - ps\meghajto.ps1 - alapertek: Enterre azt hasznalja, de
+rem mas betu is beirhato. Ha nem talal semmit, az alapertek D.
+set "M_ALAP="
+set "M_DB=0"
+set "PS_FAJL=%PSDIR%\meghajto.ps1"
+for /f "tokens=1-4 delims=|" %%a in ('%PS_FUTTAT% 2^>nul') do (
+    if not defined M_ALAP set "M_ALAP=%%a"
+    set /a M_DB+=1
+    set "_mc=%%b"
+    if "!_mc!"=="-" set "_mc=címke nélkül"
+    set "_mm="
+    if "%%d"=="1" set "_mm=, már van rajta mentés"
+    if !M_DB!==1 echo.
+    if !M_DB!==1 echo   Felismert külső meghajtó:
+    echo     !C_FEHER!%%a:!C_0!  !_mc!, %%c GB!_mm!
+)
+if not defined M_ALAP if /I not "%SystemDrive%"=="D:" set "M_ALAP=D"
 :MEGHAJTO_BEKER
 echo.
-%UI% :BEKER DRIVE "A külső meghajtó betűjele (pl. E):"
+%UI% :BEKER DRIVE "A külső meghajtó betűjele:" "%M_ALAP%"
 if errorlevel 255 exit /b 1
 if not defined DRIVE goto :MEGHAJTO_BEKER
 rem Ellenorzes pipe nelkul: pontosan egy betu, utana legfeljebb : es \

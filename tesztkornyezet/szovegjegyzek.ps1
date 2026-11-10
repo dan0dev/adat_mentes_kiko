@@ -39,7 +39,7 @@ foreach ($f in Get-ChildItem $tool -Recurse -Include *.cmd, *.bat -File | Sort-O
             continue
         }
         # tetelnevek es az egyeb config sorok masodik idezojeles oszlopa
-        if ($t -match '^%(TETEL|AA_PROGRAM|AA_ELLENORIZ|IKON_APP)%') {
+        if ($t -match '^%(TETEL|IKON_APP)%') {
             $m = [regex]::Match($t, '"([^"]*)"'); if ($m.Success) { $sorok.Add(('| `{0}:{1}` | {2} |' -f $rel, $n, $m.Groups[1].Value)) }
         }
     }

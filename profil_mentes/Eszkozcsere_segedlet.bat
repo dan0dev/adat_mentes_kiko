@@ -45,8 +45,8 @@ set OUTLOOK=call "%LIB%\outlook.cmd"
 set PROGRAMLISTA=call "%LIB%\programlista.cmd"
 set TALCA=call "%LIB%\talca.cmd"
 set IKONOK=call "%LIB%\ikonok.cmd"
-set ALAPALK=call "%LIB%\alapalk.cmd"
-set LAPTOP=call "%LIB%\laptop.cmd"
+set BITLOCKER=call "%LIB%\bitlocker.cmd"
+set CHROME=call "%LIB%\chrome.cmd"
 set TEENDOK=call "%LIB%\teendok.cmd"
 set OSSZEGZES=call "%LIB%\osszegzes.cmd"
 
@@ -86,9 +86,7 @@ if not defined DESK set "DESK=%USERPROFILE%\Desktop"
 
 rem ---------- Szamlalok ----------
 set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0, DB_ATUGORVA=0
-set /a DO_IKON=0, DO_BL=0, DO_FEDEL=0
-set "AA_MOD="
-set "AA_OK=0"
+set /a DO_IKON=0, DO_BL=0
 set "LOG=%TEMP%\profil_mentes_naplo.txt"
 set "IRHATO=1"
 set "CEL="
@@ -111,8 +109,8 @@ rem A tovabbi kod csak a MODUL valtozot nezi, a sorszamot nem.
 set "MODUL="
 if "%MOD%"=="1" set "MOD_NEV=Adatok mentése"               & set "MODUL=mentes"
 if "%MOD%"=="2" set "MOD_NEV=Adatok visszaállítása"        & set "MODUL=visszaallitas"
-if "%MOD%"=="3" set "MOD_NEV=Laptop beállítása"            & set "MODUL=laptop"
-if "%MOD%"=="4" set "MOD_NEV=Alapértelmezett alkalmazások" & set "MODUL=alapalk"
+if "%MOD%"=="3" set "MOD_NEV=BitLocker beállítása"         & set "MODUL=bitlocker"
+if "%MOD%"=="4" set "MOD_NEV=Chrome telepítése"            & set "MODUL=chrome"
 if not defined MODUL goto :MEGSZAKITVA
 title Eszközcsere segédlet – %MOD_NEV%
 

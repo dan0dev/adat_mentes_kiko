@@ -10,8 +10,8 @@ A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új g
 |---|---|---|
 | **1 Adatok mentése** | régi gép | elmenti az adatokat a külső meghajtóra |
 | **2 Adatok visszaállítása** | új gép | visszamásolja a mentést a felhasználó profiljába |
-| **3 Laptop beállítása** | új gép | fedél lehajtásakor: Nincs művelet · BitLocker (MBAM) indítása |
-| **4 Alapértelmezett alkalmazások** | új gép | Word, Excel, PowerPoint, PDF: Adobe Acrobat Reader, böngésző: Chrome |
+| **3 BitLocker beállítása** | új gép | a BitLocker titkosítás indítása az MBAM klienssel |
+| **4 Chrome telepítése** | új gép | ha a Szoftverközpont nem indítja el a letöltést: a legfrissebb Chrome a Google oldaláról, rendszergazdai jelszóval |
 
 **Amit ment és visszaállít:**
 
@@ -31,17 +31,17 @@ csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
 **A régi gépen**
 
 1. Dupla kattintás: `Eszkozcsere_segedlet.bat`
-2. **1 Adatok mentése** → a külső meghajtó betűjele (pl. `E`) → **Indulhat a mentés? I**
+2. **1 Adatok mentése** → a külső meghajtó betűjele – a felismert külső meghajtó (ha nincs, `D`) már ott áll, Enterrel elfogadod, vagy rögtön beírod a másikat → **Indulhat a mentés? I**
 3. Megvárod a végét, átnézed az összegzést.
 
 **Az új gépen**
 
 1. A felhasználó jelentkezzen be (a Chrome-ot és az Edge-et még ne indítsa el).
 2. Dupla kattintás: `Eszkozcsere_segedlet.bat` → **2 Adatok visszaállítása** → a mentés sorszáma → megvárod a végét.
-3. Laptopnál: **3 Laptop beállítása**.
-4. Jobb kattintás → *Futtatás rendszergazdaként* → **4** (beállítás).
-   Utána a felhasználó jelentkezzen ki és be, majd sima indítással **4** (ellenőrzés).
-5. A `_TEENDOK.txt` alapján a kézi lépések – lásd lent.
+3. **3 BitLocker beállítása** – utána kövesd az MBAM ablakot.
+   Ha a Szoftverközpont nem indítja el a Chrome letöltését: **4 Chrome telepítése** – a Google céges
+   telepítője (kb. 170 MB), aláírás-ellenőrzéssel; a Windows kéri a rendszergazdai jelszót, utána csendben települ.
+4. A `_TEENDOK.txt` alapján a kézi lépések – lásd lent.
 
 ## Mire számíts
 
@@ -79,4 +79,6 @@ A `_TEENDOK.txt` ezeket pipálható listában adja:
 - **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
 - **Böngészőben mentett jelszavak**
 - **Programok** telepítése az `apps.txt` alapján.
+- **Alapértelmezett alkalmazások**: Gépház › Alkalmazások › Alapértelmezett alkalmazások – Word, Excel,
+  PowerPoint, PDF: Adobe Acrobat Reader, böngésző: Chrome.
 - A végén: **a mentés törlése** a külső meghajtóról

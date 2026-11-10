@@ -38,8 +38,9 @@ goto :eof
 >>"%TODO%" (
     echo.
     echo ÚJ GÉP
-    echo [ ] 2 Visszaállítás, laptopnál 3 Laptop
-    echo [ ] 4 Alapértelmezett alkalmazások, ki- és bejelentkezés, 4 ellenőrzés
+    echo [ ] 2 Visszaállítás, 3 BitLocker
+    echo [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése
+    echo [ ] Alapértelmezett alkalmazások kézzel: Word, Excel, PowerPoint, PDF, Chrome
     echo [ ] Tanúsítványok: telepítés kézzel
     echo [ ] Outlook: PST-k csatolása – outlook_lista.txt
     echo [ ] Outlook: postaládák, feladók, fiókok

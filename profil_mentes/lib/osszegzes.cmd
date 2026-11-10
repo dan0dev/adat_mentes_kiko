@@ -15,9 +15,9 @@ title Eszközcsere segédlet – %MOD_NEV% kész
 
 rem Osszegzes fajl - az eredmeny mar a fajlnevben latszik
 set "OSSZ_HELY=%TEMP%"
-set "OSSZ_ELO=_LAPTOP"
+set "OSSZ_ELO=_BITLOCKER"
+if "%MODUL%"=="chrome" set "OSSZ_ELO=_CHROME"
 set "HELY_CIMKE=Fájlok helye"
-if "%MODUL%"=="alapalk" set "OSSZ_ELO=_ALAPALK"
 if "%MODUL%"=="mentes" set "OSSZ_HELY=%CEL%"
 if "%MODUL%"=="mentes" set "OSSZ_ELO=_MENTES"
 if "%MODUL%"=="mentes" set "HELY_CIMKE=Mentés helye"
@@ -70,28 +70,6 @@ if defined TODO for %%x in ("!TODO!") do %UI% :ADAT "Teendők" "%%~nxx"
 call :NAPLO_NEV
 %UI% :ADAT "Napló" "!NAPLO_NEV!"
 
-if "%MODUL%"=="alapalk" (
-    echo.
-    if "!AA_MOD!"=="beallit" if "!AA_OK!"=="1" (
-        echo   !C_ZOLD!Alapértelmezett alkalmazások: BEÁLLÍTVA.!C_0!
-        echo   A felhasználónak ki és be kell jelentkeznie. Utána ellenőrizd: a segédlet
-        echo   sima indításával, 4. menüpont.
-    )
-    if "!AA_MOD!"=="beallit" if not "!AA_OK!"=="1" if "!E_1!"=="KIHAGYVA" echo   !C_SARGA!Alapértelmezett alkalmazások: nem módosítva – a céges beállítás marad.!C_0!
-    if "!AA_MOD!"=="beallit" if not "!AA_OK!"=="1" if not "!E_1!"=="KIHAGYVA" echo   !C_PIROS!Alapértelmezett alkalmazások: NEM SIKERÜLT beállítani – az okát lásd fent.!C_0!
-    if "!AA_MOD!"=="ellenoriz" if "!AA_OK!"=="1" echo   !C_ZOLD!Alapértelmezett alkalmazások: MINDEN RENDBEN – a kért programok az!C_0!
-    if "!AA_MOD!"=="ellenoriz" if "!AA_OK!"=="1" echo   !C_ZOLD!alapértelmezettek.!C_0!
-    if "!AA_MOD!"=="ellenoriz" if not "!AA_OK!"=="1" echo   !C_PIROS!Alapértelmezett alkalmazások: NEM MINDEN JÓ – lásd fent.!C_0!
-    if "!AA_MOD!"=="ellenoriz" if not "!AA_OK!"=="1" echo   !C_PIROS!Beállítás: rendszergazdaként, 4. menüpont.!C_0!
-)
-if "%DO_FEDEL%"=="1" (
-    echo.
-    if "!FEDEL_OK!"=="1" (
-        echo   !C_ZOLD!Fedél lehajtása: BEÁLLÍTVA – lehajtáskor nem történik semmi.!C_0!
-    ) else (
-        echo   !C_PIROS!Fedél lehajtása: NEM SIKERÜLT beállítani – az okát lásd fent a listában.!C_0!
-    )
-)
 if "%DO_BL%"=="1" (
     echo.
     echo   !C_FEHER!Teendő:!C_0! kövesd az MBAM ablakot, a titkosítás utána a háttérben fut.

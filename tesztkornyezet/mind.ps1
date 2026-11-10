@@ -17,7 +17,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $d = $PSScriptRoot
 $m = "$env:TEMP\pm_teszt\kulso\Mentes\$($env:USERNAME)_$($env:COMPUTERNAME)"
-$sorrend = 'mentes', 'visszaallitas', 'laptop_megse', 'alapalk_ellenoriz', 'hibas_bevitel', 'visszaallitas_hibas', 'regi_mentes'
+$sorrend = 'mentes', 'visszaallitas', 'bitlocker_megse', 'chrome_megse', 'hibas_bevitel', 'visszaallitas_hibas', 'regi_mentes'
 if ($Csak) { $sorrend = $sorrend | Where-Object { $Csak -contains $_ } }
 $hibak = 0
 foreach ($v in $sorrend) {

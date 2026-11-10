@@ -1,23 +1,10 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 359 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 318 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
 |---|---|
-| `config\alapertelmezett_alk.cmd:16` | Word |
-| `config\alapertelmezett_alk.cmd:24` | Excel |
-| `config\alapertelmezett_alk.cmd:31` | PowerPoint |
-| `config\alapertelmezett_alk.cmd:38` | PDF – Acrobat Reader |
-| `config\alapertelmezett_alk.cmd:42` | Chrome |
-| `config\alapertelmezett_alk.cmd:52` | Word |
-| `config\alapertelmezett_alk.cmd:53` | Excel |
-| `config\alapertelmezett_alk.cmd:54` | PowerPoint |
-| `config\alapertelmezett_alk.cmd:55` | PDF |
-| `config\alapertelmezett_alk.cmd:56` | Böngésző – http |
-| `config\alapertelmezett_alk.cmd:57` | Böngésző – https |
-| `config\alapertelmezett_alk.cmd:58` | Weboldal – .htm |
-| `config\alapertelmezett_alk.cmd:59` | Weboldal – .html |
 | `config\parancsikonok.cmd:12` | Outlook |
 | `config\parancsikonok.cmd:13` | Word |
 | `config\parancsikonok.cmd:14` | Excel |
@@ -35,72 +22,60 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\tetelek.cmd:36` | Fájlkezelő – Gyorselérés |
 | `config\tetelek.cmd:37` | Start menü rögzítései |
 | `config\tetelek.cmd:38` | C:\TEMP mappa |
-| `Eszkozcsere_segedlet.bat:106` | Válassz menüpontot [1–4]: |
-| `Eszkozcsere_segedlet.bat:129` | Megszakítva – nem történt változtatás. |
-| `Eszkozcsere_segedlet.bat:131` | Kilépéshez nyomj meg egy billentyűt... |
-| `lib\alapalk.cmd:22` | a gép nincs tartományban |
-| `lib\alapalk.cmd:22` | A Windows ezt a beállítást csak tartományi gépen alkalmazza. |
-| `lib\alapalk.cmd:25` | a tartománytagság nem ellenőrizhető, folytatom |
-| `lib\alapalk.cmd:26` | True |
-| `lib\alapalk.cmd:26` | a gép tartományban van |
-| `lib\alapalk.cmd:32` | Már van ilyen beállítás ezen a gépen: |
-| `lib\alapalk.cmd:33` | !AA_REGI! |
-| `lib\alapalk.cmd:34` | Ez valószínűleg céges csoportházirend – ha felülírom, a következő |
-| `lib\alapalk.cmd:35` | frissítéskor visszaállhat. |
-| `lib\alapalk.cmd:36` | Felülírjam? |
-| `lib\alapalk.cmd:38` | céges beállítás, nem írtam felül |
-| `lib\alapalk.cmd:49` | PDF azonosító: %PDF_ID%   Chrome azonosító: %CHROME_ID% |
-| `lib\alapalk.cmd:55` | a beállítófájl nem írható |
-| `lib\alapalk.cmd:69` | egyik program sincs telepítve |
-| `lib\alapalk.cmd:69` | Nincs mit beállítani. |
-| `lib\alapalk.cmd:78` | a házirend nem írható |
-| `lib\alapalk.cmd:78` | Rendszergazdai jog kell. |
-| `lib\alapalk.cmd:82` | %AA_PDB% program beállítva |
-| `lib\alapalk.cmd:82` | !AA_VAN! – ki- és bejelentkezés után él. |
-| `lib\alapalk.cmd:96` | !AA_APP!: %AA_T% fájltípus |
-| `lib\alapalk.cmd:99` | !AA_APP!: nincs telepítve, kihagyva |
-| `lib\alapalk.cmd:123` | nem mindenhol a kért program |
-| `lib\alapalk.cmd:126` | %AA_DB_NEZ% típus ellenőrizve |
-| `lib\alapalk.cmd:126` | Mindenhol a kért program az alapértelmezett. |
-| `lib\alapalk.cmd:152` | %~1 – %~2: !AA_AKT! |
-| `lib\alapalk.cmd:154` | %~1: rendben – !AA_AKT!!AA_FORRAS! |
-| `lib\alapalk.cmd:156` | %~1: nem a kért program – !AA_AKT! |
+| `Eszkozcsere_segedlet.bat:104` | Válassz menüpontot [1–4]: |
+| `Eszkozcsere_segedlet.bat:127` | Megszakítva – nem történt változtatás. |
+| `Eszkozcsere_segedlet.bat:129` | Kilépéshez nyomj meg egy billentyűt... |
+| `lib\bitlocker.cmd:12` | MBAMAgent.exe nem található |
+| `lib\bitlocker.cmd:12` | Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR% |
+| `lib\bitlocker.cmd:16` | MBAMClientUI.exe nem található |
+| `lib\bitlocker.cmd:16` | Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR% |
+| `lib\bitlocker.cmd:19` | MBAM mappa: %MBAM_DIR% |
+| `lib\bitlocker.cmd:21` | 1/3 MBAMAgent indítása... |
+| `lib\bitlocker.cmd:25` | az MBAMAgent nem indult el |
+| `lib\bitlocker.cmd:30` | 2/3 MBAMClientUI indítása... |
+| `lib\bitlocker.cmd:34` | az MBAMClientUI nem indult el |
+| `lib\bitlocker.cmd:39` | 3/3 MBAMAgent újra... |
+| `lib\bitlocker.cmd:43` | az MBAMAgent másodszor nem indult el |
+| `lib\bitlocker.cmd:46` | elindítva |
+| `lib\bitlocker.cmd:46` | Kövesd a megjelenő BitLocker ablakot. |
+| `lib\chrome.cmd:38` | %CHROME_MOD%: %CHROME_MSI% |
+| `lib\chrome.cmd:42` | a PowerShell nem futott le |
 | `lib\ellenorzes.cmd:15` | Figyelem: a segédlet rendszergazdaként fut. A mentés és a visszaállítás |
 | `lib\ellenorzes.cmd:16` | annak a fióknak az adataival dolgozik, amelyik elindította. |
 | `lib\ellenorzes.cmd:19` | Ennek a felhasználónak az adataival dolgozom: %USERNAME% |
 | `lib\ellenorzes.cmd:20` | Ez a megfelelő felhasználó? |
 | `lib\ellenorzes.cmd:23` | Indítsd el a segédletet a felhasználó saját fiókjában, rendszergazdai jog |
 | `lib\ellenorzes.cmd:24` | nélkül: sima dupla kattintással, ne a Futtatás rendszergazdaként paranccsal. |
-| `lib\ellenorzes.cmd:32` | A külső meghajtó betűjele (pl. E): |
-| `lib\ellenorzes.cmd:44` | Csak egy betűt adj meg, pl. E. |
-| `lib\ellenorzes.cmd:49` | A rendszermeghajtó nem lehet a külső meghajtó. |
-| `lib\ellenorzes.cmd:53` | Nincs ilyen meghajtó: !DRIVE!: – csatlakoztatva van a külső meghajtó? |
-| `lib\ellenorzes.cmd:63` | A kiválasztott meghajtó nem írható: !DRIVE!: |
-| `lib\ellenorzes.cmd:64` | Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót. |
-| `lib\ellenorzes.cmd:84` | Még fut:!FUTO! |
-| `lib\ellenorzes.cmd:85` | A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes |
-| `lib\ellenorzes.cmd:86` | a háttérben is futhat. |
-| `lib\ellenorzes.cmd:88` | U – újraellenőrzés    B – bezárás    F – folytatás így |
-| `lib\ellenorzes.cmd:89` | Választás |
-| `lib\ellenorzes.cmd:95` | Bezárás... Az Outlook, a Word és az Excel rákérdezhet a mentésre – válaszolj. |
-| `lib\ellenorzes.cmd:109` | A programok a bezárás után is futnak. Ha valamelyik kérdez, például |
-| `lib\ellenorzes.cmd:110` | mentést, válaszolj, majd U. |
-| `lib\ellenorzes.cmd:111` | Kényszerített bezárásnál a nem mentett munka elveszik. Az Outlookot csak |
-| `lib\ellenorzes.cmd:112` | végső esetben zárd be így. |
-| `lib\ellenorzes.cmd:113` | U – újraellenőrzés    K – kényszerített bezárás    F – folytatás így |
-| `lib\ellenorzes.cmd:114` | Választás |
-| `lib\ellenorzes.cmd:141` | A helyellenőrzés nem futott le, folytatom nélküle. |
-| `lib\ellenorzes.cmd:147` | Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: !H_FS! |
-| `lib\ellenorzes.cmd:150` | !K_NEV!: !H_KDB! fájl, !H_KMERET! – másolás közben K-val átugorható. |
-| `lib\ellenorzes.cmd:154` | Nincs elég hely a külső meghajtón. |
-| `lib\ellenorzes.cmd:155` | M – megszakítás    F – folytatás így |
-| `lib\ellenorzes.cmd:156` | Választás |
-| `lib\ellenorzes.cmd:163` | Van 4 GB-nál nagyobb fájl – ez FAT32 fájlrendszeren nem fér el. |
-| `lib\ellenorzes.cmd:164` | Formázd a külső meghajtót exFAT vagy NTFS fájlrendszerre, vagy használj |
-| `lib\ellenorzes.cmd:165` | másik meghajtót. |
-| `lib\ellenorzes.cmd:166` | M – megszakítás    F – folytatás így |
-| `lib\ellenorzes.cmd:167` | Választás |
-| `lib\ellenorzes.cmd:172` | Hely rendben. |
+| `lib\ellenorzes.cmd:49` | A külső meghajtó betűjele: |
+| `lib\ellenorzes.cmd:61` | Csak egy betűt adj meg, pl. E. |
+| `lib\ellenorzes.cmd:66` | A rendszermeghajtó nem lehet a külső meghajtó. |
+| `lib\ellenorzes.cmd:70` | Nincs ilyen meghajtó: !DRIVE!: – csatlakoztatva van a külső meghajtó? |
+| `lib\ellenorzes.cmd:80` | A kiválasztott meghajtó nem írható: !DRIVE!: |
+| `lib\ellenorzes.cmd:81` | Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót. |
+| `lib\ellenorzes.cmd:101` | Még fut:!FUTO! |
+| `lib\ellenorzes.cmd:102` | A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes |
+| `lib\ellenorzes.cmd:103` | a háttérben is futhat. |
+| `lib\ellenorzes.cmd:105` | U – újraellenőrzés    B – bezárás    F – folytatás így |
+| `lib\ellenorzes.cmd:106` | Választás |
+| `lib\ellenorzes.cmd:112` | Bezárás... Az Outlook, a Word és az Excel rákérdezhet a mentésre – válaszolj. |
+| `lib\ellenorzes.cmd:126` | A programok a bezárás után is futnak. Ha valamelyik kérdez, például |
+| `lib\ellenorzes.cmd:127` | mentést, válaszolj, majd U. |
+| `lib\ellenorzes.cmd:128` | Kényszerített bezárásnál a nem mentett munka elveszik. Az Outlookot csak |
+| `lib\ellenorzes.cmd:129` | végső esetben zárd be így. |
+| `lib\ellenorzes.cmd:130` | U – újraellenőrzés    K – kényszerített bezárás    F – folytatás így |
+| `lib\ellenorzes.cmd:131` | Választás |
+| `lib\ellenorzes.cmd:158` | A helyellenőrzés nem futott le, folytatom nélküle. |
+| `lib\ellenorzes.cmd:164` | Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: !H_FS! |
+| `lib\ellenorzes.cmd:167` | !K_NEV!: !H_KDB! fájl, !H_KMERET! – másolás közben K-val átugorható. |
+| `lib\ellenorzes.cmd:171` | Nincs elég hely a külső meghajtón. |
+| `lib\ellenorzes.cmd:172` | M – megszakítás    F – folytatás így |
+| `lib\ellenorzes.cmd:173` | Választás |
+| `lib\ellenorzes.cmd:180` | Van 4 GB-nál nagyobb fájl – ez FAT32 fájlrendszeren nem fér el. |
+| `lib\ellenorzes.cmd:181` | Formázd a külső meghajtót exFAT vagy NTFS fájlrendszerre, vagy használj |
+| `lib\ellenorzes.cmd:182` | másik meghajtót. |
+| `lib\ellenorzes.cmd:183` | M – megszakítás    F – folytatás így |
+| `lib\ellenorzes.cmd:184` | Választás |
+| `lib\ellenorzes.cmd:189` | Hely rendben. |
 | `lib\ikonok.cmd:13` | az asztal mappája nem található |
 | `lib\ikonok.cmd:17` | a Start menü mappája nem található |
 | `lib\ikonok.cmd:22` | Asztal: %DESK% |
@@ -134,34 +109,11 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\kezdokepernyo.cmd:23` | AZ ÚJ GÉPEN |
 | `lib\kezdokepernyo.cmd:25` | Adatok visszaállítása |
 | `lib\kezdokepernyo.cmd:25` | a külső meghajtón lévő mentésből |
-| `lib\kezdokepernyo.cmd:26` | Laptop beállítása |
-| `lib\kezdokepernyo.cmd:26` | fedél lehajtása, BitLocker |
-| `lib\kezdokepernyo.cmd:27` | Alapértelmezett alkalmazások |
-| `lib\kezdokepernyo.cmd:27` | Word, Excel, PowerPoint, PDF, Chrome |
-| `lib\laptop.cmd:28` | Visszaolvasva: hálózat=!F_AC! akkumulátor=!F_DC! |
-| `lib\laptop.cmd:45` | a beállítás nem olvasható vissza |
-| `lib\laptop.cmd:45` | Van fedele ennek a gépnek? |
-| `lib\laptop.cmd:49` | csoportházirend felülírja |
-| `lib\laptop.cmd:49` | hálózat=!F_PAC! akkumulátor=!F_PDC! – ezt csak az IT tudja módosítani. |
-| `lib\laptop.cmd:54` | beállítva és ellenőrizve |
-| `lib\laptop.cmd:54` | Hálózatról és akkumulátorról is: Nincs művelet. |
-| `lib\laptop.cmd:58` | nem sikerült beállítani |
-| `lib\laptop.cmd:58` | Nincs jogosultság – futtasd rendszergazdaként. |
-| `lib\laptop.cmd:60` | a beállítás nem lett érvényes |
-| `lib\laptop.cmd:60` | hálózat=!F_AC! akkumulátor=!F_DC! |
-| `lib\laptop.cmd:67` | MBAMAgent.exe nem található |
-| `lib\laptop.cmd:67` | Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR% |
-| `lib\laptop.cmd:71` | MBAMClientUI.exe nem található |
-| `lib\laptop.cmd:71` | Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR% |
-| `lib\laptop.cmd:74` | MBAM mappa: %MBAM_DIR% |
-| `lib\laptop.cmd:76` | 1/3 MBAMAgent indítása... |
-| `lib\laptop.cmd:80` | az MBAMAgent nem indult el |
-| `lib\laptop.cmd:85` | 2/3 MBAMClientUI indítása... |
-| `lib\laptop.cmd:89` | az MBAMClientUI nem indult el |
-| `lib\laptop.cmd:94` | 3/3 MBAMAgent újra... |
-| `lib\laptop.cmd:98` | az MBAMAgent másodszor nem indult el |
-| `lib\laptop.cmd:101` | elindítva |
-| `lib\laptop.cmd:101` | Kövesd a megjelenő BitLocker ablakot. |
+| `lib\kezdokepernyo.cmd:26` | BitLocker beállítása |
+| `lib\kezdokepernyo.cmd:26` | titkosítás indítása az MBAM klienssel |
+| `lib\kezdokepernyo.cmd:27` | Chrome telepítése |
+| `lib\kezdokepernyo.cmd:27` | ha a Szoftverközpont nem indítja el |
+| `lib\kezdokepernyo.cmd:27` | a letöltést |
 | `lib\masolas.cmd:15` | %R_SRC% -> %R_DST% |
 | `lib\osszegzes.cmd:42` | %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP% %time:~0,5% · %MOD_NEV% |
 | `lib\osszegzes.cmd:51` | Összegzés – %MOD_NEV% |
@@ -175,18 +127,13 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\osszegzes.cmd:69` | Teendők |
 | `lib\osszegzes.cmd:69` | %%~nxx |
 | `lib\osszegzes.cmd:71` | Napló |
-| `lib\osszegzes.cmd:76` | Alapértelmezett alkalmazások: BEÁLLÍTVA. |
-| `lib\osszegzes.cmd:77` | A felhasználónak ki és be kell jelentkeznie. Utána ellenőrizd: a segédlet |
-| `lib\osszegzes.cmd:78` | sima indításával, 4. menüpont. |
-| `lib\osszegzes.cmd:90` | Fedél lehajtása: BEÁLLÍTVA – lehajtáskor nem történik semmi. |
-| `lib\osszegzes.cmd:92` | Fedél lehajtása: NEM SIKERÜLT beállítani – az okát lásd fent a listában. |
-| `lib\osszegzes.cmd:97` | Teendő: kövesd az MBAM ablakot, a titkosítás utána a háttérben fut. |
-| `lib\osszegzes.cmd:103` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\osszegzes.cmd:107` | Megnyissam a naplót? |
-| `lib\osszegzes.cmd:111` | Megnyissam a teendők listáját? |
-| `lib\osszegzes.cmd:115` | Megnyissam a mentés mappáját ellenőrzésre? |
-| `lib\osszegzes.cmd:119` | Megnyissam a mentés mappáját a listákkal? |
-| `lib\osszegzes.cmd:123` | Kész. Kilépéshez nyomj meg egy billentyűt... |
+| `lib\osszegzes.cmd:75` | Teendő: kövesd az MBAM ablakot, a titkosítás utána a háttérben fut. |
+| `lib\osszegzes.cmd:81` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
+| `lib\osszegzes.cmd:85` | Megnyissam a naplót? |
+| `lib\osszegzes.cmd:89` | Megnyissam a teendők listáját? |
+| `lib\osszegzes.cmd:93` | Megnyissam a mentés mappáját ellenőrzésre? |
+| `lib\osszegzes.cmd:97` | Megnyissam a mentés mappáját a listákkal? |
+| `lib\osszegzes.cmd:101` | Kész. Kilépéshez nyomj meg egy billentyűt... |
 | `lib\outlook.cmd:19` | Outlook-lista – csatolt PST-fájlok keresése... |
 | `lib\outlook.cmd:26` | A PST-lista nem készült el – a PowerShell nem elérhető. |
 | `lib\outlook.cmd:29` | Kész: %OL_PST% csatolt PST |
@@ -213,21 +160,22 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\teendok.cmd:29` | [ ] Tanúsítványok: certmgr.msc – Személyes, kézzel |
 | `lib\teendok.cmd:30` | [ ] Böngészőben mentett jelszavak |
 | `lib\teendok.cmd:40` | ÚJ GÉP |
-| `lib\teendok.cmd:41` | [ ] 2 Visszaállítás, laptopnál 3 Laptop |
-| `lib\teendok.cmd:42` | [ ] 4 Alapértelmezett alkalmazások, ki- és bejelentkezés, 4 ellenőrzés |
-| `lib\teendok.cmd:43` | [ ] Tanúsítványok: telepítés kézzel |
-| `lib\teendok.cmd:44` | [ ] Outlook: PST-k csatolása – outlook_lista.txt |
-| `lib\teendok.cmd:45` | [ ] Outlook: postaládák, feladók, fiókok |
-| `lib\teendok.cmd:46` | [ ] Outlook: alapértelmezett aláírás |
-| `lib\teendok.cmd:47` | [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés |
-| `lib\teendok.cmd:48` | [ ] Sticky Notes |
-| `lib\teendok.cmd:49` | [ ] Programok: apps.txt összevetése, hiányzók telepítése |
-| `lib\teendok.cmd:50` | [ ] Tálca ikonjai újra – talca.txt, talca.png |
-| `lib\teendok.cmd:51` | [ ] Start menü: hiányzó rögzítések kézzel |
-| `lib\teendok.cmd:52` | [ ] Minden rendben: mentés törlése a meghajtóról |
-| `lib\teendok.cmd:69` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\teendok.cmd:78` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
-| `lib\teendok.cmd:81` | Minden tétel rendben |
+| `lib\teendok.cmd:41` | [ ] 2 Visszaállítás, 3 BitLocker |
+| `lib\teendok.cmd:42` | [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése |
+| `lib\teendok.cmd:43` | [ ] Alapértelmezett alkalmazások kézzel: Word, Excel, PowerPoint, PDF, Chrome |
+| `lib\teendok.cmd:44` | [ ] Tanúsítványok: telepítés kézzel |
+| `lib\teendok.cmd:45` | [ ] Outlook: PST-k csatolása – outlook_lista.txt |
+| `lib\teendok.cmd:46` | [ ] Outlook: postaládák, feladók, fiókok |
+| `lib\teendok.cmd:47` | [ ] Outlook: alapértelmezett aláírás |
+| `lib\teendok.cmd:48` | [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés |
+| `lib\teendok.cmd:49` | [ ] Sticky Notes |
+| `lib\teendok.cmd:50` | [ ] Programok: apps.txt összevetése, hiányzók telepítése |
+| `lib\teendok.cmd:51` | [ ] Tálca ikonjai újra – talca.txt, talca.png |
+| `lib\teendok.cmd:52` | [ ] Start menü: hiányzó rögzítések kézzel |
+| `lib\teendok.cmd:53` | [ ] Minden rendben: mentés törlése a meghajtóról |
+| `lib\teendok.cmd:70` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
+| `lib\teendok.cmd:79` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
+| `lib\teendok.cmd:82` | Minden tétel rendben |
 | `lib\tetelek.cmd:23` | config\tetelek.cmd: ismeretlen típus: %~1 – %~2 |
 | `lib\tetelek.cmd:97` | !_nb!. !L_%_b%! |
 | `lib\tetelek.cmd:99` | !_nb!. !_bal!!_nj!. !L_%_j%! |
@@ -268,46 +216,38 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ui.cmd:39` | ══════════════════════════════════════════════════════════════════════ |
 | `lib\ui.cmd:48` | !_s! |
 | `lib\ui.cmd:52` | ────────────────────────────────────────────────────────────────────── |
-| `lib\ui.cmd:67` | %~1   !_m!%~3 |
-| `lib\ui.cmd:85` | [!_n!/%OSSZES%]  %~1 |
-| `lib\ui.cmd:88` | [%time%] [%LEPES%/%OSSZES%] %~1 |
-| `lib\ui.cmd:93` | !UI_BEHUZAS!%~1 |
-| `lib\ui.cmd:94` | %~1 |
-| `lib\ui.cmd:106` | !_jel!  %~2 |
-| `lib\ui.cmd:108` | Eredmény: %~1 – %~2 |
-| `lib\ui.cmd:130` | !_jel!  !_nv! !_ms! |
-| `lib\ui.cmd:132` | [!_st!] !NEV_%~1! – !M_%~1! – !_dt! |
-| `lib\ui.cmd:134` | [!_st!] !NEV_%~1! – !M_%~1! |
-| `lib\ui.cmd:143` | !_t! |
-| `lib\ui.cmd:161` | !%~1! |
-| `modulok\alapalk.cmd:9` | Alapértelmezett alkalmazások |
-| `modulok\alapalk.cmd:10` | Word, Excel, PowerPoint, Adobe Acrobat Reader – PDF, Chrome – böngésző |
-| `modulok\alapalk.cmd:12` | A Windows nem engedi, hogy egy program közvetlenül átírja a felhasználó |
-| `modulok\alapalk.cmd:13` | alapértelmezett alkalmazásait. A Microsoft által támogatott mód: egy |
-| `modulok\alapalk.cmd:14` | beállítófájlt rögzítünk, amelyet a Windows bejelentkezéskor maga alkalmaz. |
-| `modulok\alapalk.cmd:18` | Rendszergazdaként fut: a beállítófájl elkészül és rögzítésre kerül. |
-| `modulok\alapalk.cmd:19` | Utána a felhasználónak ki és be kell jelentkeznie, majd ellenőrizd ugyanitt, |
-| `modulok\alapalk.cmd:20` | a segédlet sima indításával, a 4. menüponttal. |
-| `modulok\alapalk.cmd:23` | Felhasználóként fut: most csak ellenőrzöm a jelenlegi beállításokat. |
-| `modulok\alapalk.cmd:24` | A beállításhoz: jobb kattintás a segédleten – Futtatás rendszergazdaként – |
-| `modulok\alapalk.cmd:25` | 4. menüpont. |
-| `modulok\alapalk.cmd:28` | Indulhat? |
-| `modulok\alapalk.cmd:33` | ===== ALAPÉRTELMEZETT ALKALMAZÁSOK %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
-| `modulok\alapalk.cmd:37` | Alapértelmezett alkalmazások folyamatban |
-| `modulok\alapalk.cmd:39` | Társítások beállítása |
-| `modulok\alapalk.cmd:42` | Társítások ellenőrzése |
-| `modulok\laptop.cmd:9` | Laptop beállítása |
-| `modulok\laptop.cmd:10` | Választható lépések: |
-| `modulok\laptop.cmd:11` | – Fedél lehajtásakor: Nincs művelet – hálózatról és akkumulátorról is |
-| `modulok\laptop.cmd:12` | – BitLocker aktiválása az MBAM klienssel: MBAMAgent, MBAMClientUI |
-| `modulok\laptop.cmd:15` | Fedél lehajtásakor ne történjen semmi – beállítsam? |
-| `modulok\laptop.cmd:17` | BitLocker aktiválása – indítsam? |
-| `modulok\laptop.cmd:22` | Nem választottál semmit. |
-| `modulok\laptop.cmd:26` | Indulhat? |
-| `modulok\laptop.cmd:30` | ===== LAPTOP BEÁLLÍTÁSA %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
-| `modulok\laptop.cmd:34` | Laptop beállítása folyamatban |
-| `modulok\laptop.cmd:36` | Fedél lehajtása |
-| `modulok\laptop.cmd:40` | BitLocker (MBAM) |
+| `lib\ui.cmd:68` | %~1   !_m!%~3 |
+| `lib\ui.cmd:87` | [!_n!/%OSSZES%]  %~1 |
+| `lib\ui.cmd:90` | [%time%] [%LEPES%/%OSSZES%] %~1 |
+| `lib\ui.cmd:95` | !UI_BEHUZAS!%~1 |
+| `lib\ui.cmd:96` | %~1 |
+| `lib\ui.cmd:108` | !_jel!  %~2 |
+| `lib\ui.cmd:110` | Eredmény: %~1 – %~2 |
+| `lib\ui.cmd:132` | !_jel!  !_nv! !_ms! |
+| `lib\ui.cmd:134` | [!_st!] !NEV_%~1! – !M_%~1! – !_dt! |
+| `lib\ui.cmd:136` | [!_st!] !NEV_%~1! – !M_%~1! |
+| `lib\ui.cmd:145` | !_t! |
+| `lib\ui.cmd:174` | !%~1! |
+| `modulok\bitlocker.cmd:9` | BitLocker beállítása |
+| `modulok\bitlocker.cmd:10` | A BitLocker titkosítást az MBAM kliens indítja: MBAMAgent, MBAMClientUI. |
+| `modulok\bitlocker.cmd:12` | Indulhat? |
+| `modulok\bitlocker.cmd:17` | ===== BITLOCKER BEÁLLÍTÁSA %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
+| `modulok\bitlocker.cmd:21` | BitLocker beállítása folyamatban |
+| `modulok\bitlocker.cmd:22` | BitLocker (MBAM) |
+| `modulok\chrome.cmd:9` | Chrome telepítése |
+| `modulok\chrome.cmd:10` | Ha a Szoftverközpont nem indítja el a Chrome letöltését: a legfrissebb |
+| `modulok\chrome.cmd:11` | Chrome a Google oldaláról, a céges telepítővel – kb. 170 MB. |
+| `modulok\chrome.cmd:12` | A telepítéshez rendszergazdai jelszó kell, a Windows kérni fogja. |
+| `modulok\chrome.cmd:15` | Most fent van |
+| `modulok\chrome.cmd:15` | Chrome !CH_VERZIO! – a telepítő frissíti |
+| `modulok\chrome.cmd:15` | Most fent van |
+| `modulok\chrome.cmd:15` | nincs Chrome |
+| `modulok\chrome.cmd:17` | Indulhat? |
+| `modulok\chrome.cmd:22` | ===== CHROME TELEPÍTÉSE %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
+| `modulok\chrome.cmd:26` | Chrome telepítése folyamatban |
+| `modulok\chrome.cmd:27` | Letöltés |
+| `modulok\chrome.cmd:29` | Telepítés |
+| `modulok\chrome.cmd:33` | a letöltés nem sikerült |
 | `modulok\mentes.cmd:20` | Adatok mentése – előkészítés |
 | `modulok\mentes.cmd:21` | Mentés helye |
 | `modulok\mentes.cmd:23` | Mentendő tételek: |
@@ -351,6 +291,25 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:103` | Adatok visszaállítása folyamatban |
 | `modulok\visszaallitas.cmd:104` | A folyamat végéig ne húzd ki a külső meghajtót. |
 | `modulok\visszaallitas.cmd:110` | Office-parancsikonok |
+| `ps\chrome.ps1:59` | kapcsolódás... |
+| `ps\chrome.ps1:70` | második próba... |
+| `ps\chrome.ps1:76` | nem tölthető le |
+| `ps\chrome.ps1:76` | Nincs kapcsolat a dl.google.com-mal – internet vagy céges proxy/tűzfal? |
+| `ps\chrome.ps1:83` | az aláírás nem megfelelő |
+| `ps\chrome.ps1:83` | A letöltött fájl nem a Google érvényes aláírásával érkezett ( |
+| `ps\chrome.ps1:83` | ) – törölve. |
+| `ps\chrome.ps1:85` |  "$mb MB, Google-aláírás rendben"  |
+| `ps\chrome.ps1:91` | nincs letöltött telepítő |
+| `ps\chrome.ps1:93` | A Windows most kéri a rendszergazdai jelszót... |
+| `ps\chrome.ps1:99` | A jelszókérő ablakot bezárták – a Chrome nem települt. |
+| `ps\chrome.ps1:105` | a Chrome nem található |
+| `ps\chrome.ps1:105` | A telepítő sikert jelzett, de a chrome.exe nincs meg. Napló:  |
+| `ps\chrome.ps1:107` | Ez a verzió volt fent korábban is. |
+| `ps\chrome.ps1:108` |  Újraindítás után lesz teljes. |
+| `ps\chrome.ps1:112` | a telepítést megszakították |
+| `ps\chrome.ps1:113` | épp fut egy másik telepítés – próbáld újra pár perc múlva |
+| `ps\chrome.ps1:114` | másik Chrome-telepítés van a gépen – az Alkalmazásokban távolítsd el, majd próbáld újra |
+| `ps\chrome.ps1:115` | részletek a naplóban:  |
 | `ps\outlook_lista.ps1:34` | PST – újra csatolni: Fájl › Megnyitás és exportálás › Outlook-adatfájl megnyitása |
 | `ps\outlook_lista.ps1:41` | KÉZZEL – régi gépen |
 | `ps\outlook_lista.ps1:42` | [ ] További postaládák: Fiókbeállítások › Módosítás › További beállítások › Speciális |

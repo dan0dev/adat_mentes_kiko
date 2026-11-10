@@ -23,8 +23,8 @@ echo.
 %UI% :SZAKASZ "AZ ÚJ GÉPEN"
 echo.
 %UI% :MENU 2 "Adatok visszaállítása" "a külső meghajtón lévő mentésből"
-%UI% :MENU 3 "Laptop beállítása" "fedél lehajtása, BitLocker"
-%UI% :MENU 4 "Alapértelmezett alkalmazások" "Word, Excel, PowerPoint, PDF, Chrome"
+%UI% :MENU 3 "BitLocker beállítása" "titkosítás indítása az MBAM klienssel"
+%UI% :MENU 4 "Chrome telepítése" "ha a Szoftverközpont nem indítja el" "a letöltést"
 echo.
 %UI% :LABLEC NYITO
 echo.
