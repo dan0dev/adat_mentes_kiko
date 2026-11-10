@@ -22,6 +22,13 @@ $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath $PSScriptRoot
 function Lepes($t) { Write-Host ''; Write-Host "== $t" -ForegroundColor Cyan }
 function Stop($t) { Write-Host ''; Write-Host "MEGÁLLTAM: $t" -ForegroundColor Red; exit 1 }
+# Kulso parancs (git, gh): a hibakimenetre irt uzenet (pl. remote: ...) nem hiba - a kilepesi kod szamit
+function K([string]$hiba) {
+    $ErrorActionPreference = 'Continue'
+    $ki = & $args[0] $args[1..($args.Count - 1)] 2>&1
+    if ($LASTEXITCODE -ne 0) { $ki | ForEach-Object { Write-Host "  $_" }; Stop $hiba }
+    $ki | ForEach-Object { [string]$_ } | Where-Object { $_ -and $_ -notmatch '^remote:' }
+}
 
 # ---------- Ellenorzesek ----------
 Lepes 'Ellenőrzés'
@@ -33,7 +40,7 @@ if ($LASTEXITCODE -ne 0) { Stop 'a gh nincs bejelentkezve – gh auth login' }
 $ag = (git rev-parse --abbrev-ref HEAD).Trim()
 if (-not $Proba -and $ag -ne 'master') { Stop "a kiadás a master ágról megy – most ezen vagy: $ag" }
 if (git status --porcelain) { Stop 'van nem commitolt változás – előbb commitold vagy dobd el' }
-git fetch -q origin --tags
+K 'a git fetch nem sikerült' git fetch -q origin --tags | Out-Null
 if (git tag --list $cimke) { Stop "már van ilyen kiadás/címke: $cimke" }
 $regi = ([IO.File]::ReadAllLines((Join-Path $PSScriptRoot 'profil_mentes\verzio.txt'))[0]).Trim()
 if (-not $Proba -and ([version]$Verzio -le [version]$regi)) { Stop "az új verzió ($Verzio) nem nagyobb a mostaninál ($regi)" }
@@ -54,18 +61,17 @@ $utf8 = New-Object Text.UTF8Encoding $false
 $readme = Join-Path $PSScriptRoot 'README.md'
 $r = [IO.File]::ReadAllText($readme, [Text.Encoding]::UTF8) -replace '\*\*Verzió: [0-9.]+\*\*', "**Verzió: $Verzio**"
 [IO.File]::WriteAllText($readme, $r, $utf8)
-git add profil_mentes/verzio.txt README.md
-git commit -q -m "Kiadás $Verzio"
-git tag -a $cimke -m "Eszközcsere segédlet $Verzio"
-git push -q origin $ag
-git push -q origin $cimke
-if ($LASTEXITCODE -ne 0) { Stop 'a push nem sikerült' }
+K 'a git add nem sikerült' git add profil_mentes/verzio.txt README.md | Out-Null
+K 'a commit nem sikerült' git commit -q -m "Kiadás $Verzio" | Out-Null
+K 'a címke nem jött létre' git tag -a $cimke -m "Eszközcsere segédlet $Verzio" | Out-Null
+K 'a push nem sikerült' git push -q origin $ag | Out-Null
+K 'a címke pusholása nem sikerült' git push -q origin $cimke | Out-Null
 
 # ---------- ZIP ----------
 Lepes 'Csomag'
 $zip = Join-Path $env:TEMP "Eszkozcsere_segedlet_$Verzio.zip"
 if (Test-Path -LiteralPath $zip) { Remove-Item -LiteralPath $zip -Force }
-git archive --format=zip --prefix=Eszkozcsere_segedlet/ -o $zip $cimke Eszkozcsere_segedlet.bat profil_mentes
+K 'a csomag nem készült el' git archive --format=zip --prefix=Eszkozcsere_segedlet/ -o $zip $cimke Eszkozcsere_segedlet.bat profil_mentes | Out-Null
 '{0}  ({1:0} KB)' -f $zip, ((Get-Item -LiteralPath $zip).Length / 1KB)
 
 # ---------- Release ----------
@@ -73,8 +79,7 @@ Lepes 'Kiadás a GitHubon'
 if (-not $Leiras) { $Leiras = "Eszközcsere segédlet $Verzio" }
 $arg = @('release', 'create', $cimke, $zip, '--title', "Eszközcsere segédlet $Verzio", '--notes', $Leiras)
 if ($Proba) { $arg += @('--prerelease', '--latest=false') }
-gh @arg
-if ($LASTEXITCODE -ne 0) { Stop 'a GitHub-kiadás nem jött létre – a címke már fent van, gh release create-tel pótolható' }
+K 'a GitHub-kiadás nem jött létre – a címke már fent van, gh release create-tel pótolható' gh @arg
 Remove-Item -LiteralPath $zip -Force
 Write-Host ''
 Write-Host "KÉSZ: $Verzio kiadva. A segédlet 5. menüpontja mostantól ezt tölti le." -ForegroundColor Green
