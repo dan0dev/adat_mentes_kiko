@@ -31,3 +31,5 @@ $RECYCLE.BIN/
 .idea/
 # A rendszergazdai eszkozok naploi (halozati teszt) - a profil_mentes mellett
 naplok/
+# Az eles mappa helyi peldanya - ahogy a kulso meghajton van (git archive HEAD)
+Eszkozcsere_segedlet/
