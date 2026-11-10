@@ -46,6 +46,8 @@ N 'Kesz.'
 Remove-Item -LiteralPath $env:FC_MUNKA -Recurse -Force -ErrorAction SilentlyContinue
 # A kulso indito (a profil_mentes mellett) indul, ha megvan - kulonben a segedlet.bat
 if ($env:FC_UJRA -ne '0') {
+    # Az uj ablak tiszta kornyezettel induljon - az automatikus valaszadas ne oroklodjon
+    foreach ($v in 'VALASZ_SORBOL', 'PM_TESZT_KONFIG') { Remove-Item -LiteralPath "Env:$v" -ErrorAction SilentlyContinue }
     $kulso = Split-Path -Parent $env:FC_CEL
     $indito = Join-Path $kulso 'Eszkozcsere_segedlet.bat'
     if (-not (Test-Path -LiteralPath $indito)) { $indito = Join-Path $env:FC_CEL 'segedlet.bat'; $kulso = $env:FC_CEL }
