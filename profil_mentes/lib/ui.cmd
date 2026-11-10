@@ -215,7 +215,7 @@ set "_vb=%~1"
 set "_vk=!UI_BEHUZAS!› %~2"
 if /I not "%~3"=="N" (
     set "_vl="
-    for /l %%i in (0,1,9) do if not "!_vb:~%%i,1!"=="" set "_vl=!_vl!/!_vb:~%%i,1!"
+    for /l %%i in (0,1,24) do if not "!_vb:~%%i,1!"=="" set "_vl=!_vl!/!_vb:~%%i,1!"
     set "_vk=!_vk! [!_vl:~1!]"
 )
 set "_vk=!_vk! "
@@ -260,7 +260,7 @@ exit /b !_vn!
 :VALASZT_KERES
 rem _vc betu helye a _vb-ben, 1-tol - 0, ha nincs benne
 set "_vn=0"
-for /l %%i in (0,1,9) do if "!_vn!"=="0" if not "!_vb:~%%i,1!"=="" if /I "!_vb:~%%i,1!"=="!_vc!" set /a "_vn=%%i+1"
+for /l %%i in (0,1,24) do if "!_vn!"=="0" if not "!_vb:~%%i,1!"=="" if /I "!_vb:~%%i,1!"=="!_vc!" set /a "_vn=%%i+1"
 goto :eof
 
 :IDO

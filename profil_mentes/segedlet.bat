@@ -52,6 +52,7 @@ set IKONOK=call "%LIB%\ikonok.cmd"
 set BITLOCKER=call "%LIB%\bitlocker.cmd"
 set CHROME=call "%LIB%\chrome.cmd"
 set FRISSITES=call "%LIB%\frissites.cmd"
+set ESZK=call "%LIB%\eszkozok.cmd"
 set TEENDOK=call "%LIB%\teendok.cmd"
 set OSSZEGZES=call "%LIB%\osszegzes.cmd"
 
@@ -101,13 +102,20 @@ set "OL_PST="
 
 set "ADMIN=0"
 net session >nul 2>&1 && set "ADMIN=1"
+rem Tesztkornyezet: a rendszergazdai agak kiprobalasa rendszergazdai jog nelkul
+if defined PM_TESZT_ADMIN set "ADMIN=%PM_TESZT_ADMIN%"
 
 rem ==========================================================
 rem  Kezdokepernyo es menu
 rem ==========================================================
+rem ESZKOZOK parameterrel - a rendszergazdai ablak - rogton az eszkozok jonnek
+set "MOD="
+if /I "%~1"=="ESZKOZOK" set "MOD=5"
+if defined MOD goto :MENUPONT
 %KEZDO% :MUTAT
-%UI% :VALASZT 12345 "Válassz menüpontot [1–5]:" N
+%UI% :VALASZT 123456 "Válassz menüpontot [1–6]:" N
 set "MOD=%errorlevel%"
+:MENUPONT
 
 rem Menupont -> nev es modul. Uj menupontnal: lib\kezdokepernyo.cmd, egy betu a VALASZT-ba, es egy sor ide.
 rem A tovabbi kod csak a MODUL valtozot nezi, a sorszamot nem.
@@ -116,17 +124,24 @@ if "%MOD%"=="1" set "MOD_NEV=Adatok mentése"               & set "MODUL=mentes"
 if "%MOD%"=="2" set "MOD_NEV=Adatok visszaállítása"        & set "MODUL=visszaallitas"
 if "%MOD%"=="3" set "MOD_NEV=BitLocker beállítása"         & set "MODUL=bitlocker"
 if "%MOD%"=="4" set "MOD_NEV=Chrome telepítése"            & set "MODUL=chrome"
-if "%MOD%"=="5" set "MOD_NEV=Segédlet frissítése"          & set "MODUL=frissites"
+if "%MOD%"=="5" set "MOD_NEV=Rendszergazdai eszközök"      & set "MODUL=eszkozok"
+if "%MOD%"=="6" set "MOD_NEV=Segédlet frissítése"          & set "MODUL=frissites"
 if not defined MODUL goto :MEGSZAKITVA
 title Eszközcsere segédlet %VERZIO% – %MOD_NEV%
 
-rem A modul 0-val ter vissza, ha vegigment, 1-gyel, ha megszakitottak, 2-vel, ha nincs teendo
+rem A modul 0-val ter vissza, ha vegigment, 1-gyel, ha megszakitottak, 2-vel, ha nincs teendo,
+rem 3-mal, ha osszegzes nelkul ki kell lepni (pl. a rendszergazdai eszkozok vege)
 set "NINCS_TEENDO="
 call "%MODULOK%\%MODUL%.cmd"
+if errorlevel 3 goto :KILEPES
 if errorlevel 2 goto :NINCS_TEENDO
 if errorlevel 1 goto :MEGSZAKITVA
 
 %OSSZEGZES% :OSSZEGZES
+if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
+exit /b 0
+
+:KILEPES
 if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
 exit /b 0
 

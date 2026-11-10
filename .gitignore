@@ -29,3 +29,5 @@ $RECYCLE.BIN/
 # Szerkesztők
 .vscode/
 .idea/
+# A rendszergazdai eszkozok naploi (halozati teszt) - a profil_mentes mellett
+naplok/

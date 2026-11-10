@@ -5,7 +5,7 @@
 A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új gépen pedig visszaállítja.
 
 Indítás: **`Eszkozcsere_segedlet.bat`** – a `profil_mentes` mappa mellett. Az indító sosem változik,
-a frissítés (5. menüpont) csak a `profil_mentes` mappát cseréli. A verzió a kezdőképernyőn és az ablak
+a frissítés (6. menüpont) csak a `profil_mentes` mappát cseréli. A verzió a kezdőképernyőn és az ablak
 címsorában látszik.
 
 ## Mit tud
@@ -16,7 +16,8 @@ címsorában látszik.
 | **2 Adatok visszaállítása** | új gép | visszamásolja a mentést a felhasználó profiljába |
 | **3 BitLocker beállítása** | új gép | a BitLocker titkosítás indítása az MBAM klienssel |
 | **4 Chrome telepítése** | új gép | ha a Szoftverközpont nem indítja el a letöltést: a legfrissebb Chrome a Google oldaláról, rendszergazdai jelszóval |
-| **5 Segédlet frissítése** | bármelyik | a legújabb változat a GitHubról – letölti, a segédlet bezárása után lecseréli a fájlokat, és újraindul |
+| **5 Rendszergazdai eszközök** | bármelyik | Win+R parancsok (Eszközkezelő, Nyomtatáskezelés…), hálózati teszt naplóval, hálózat helyreállítása, rendszerfájlok javítása, lemezellenőrzés – külön rendszergazdai ablakban, a jelszót egyszer kell megadni |
+| **6 Segédlet frissítése** | bármelyik | a legújabb változat a GitHubról – letölti, a segédlet bezárása után lecseréli a fájlokat, és újraindul |
 
 **Amit ment és visszaállít:**
 

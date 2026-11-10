@@ -26,7 +26,7 @@ lib\                       a munkát végző közös rutinok
   tipusok\                   tételtípusok: MAPPA, FAJL, BONGESZO
   ellenorzes.cmd             felhasználó, meghajtó, futó programok, szabad hely
   talca.cmd                  a tálcára rögzített ikonok listája és képe – talca.txt, talca.png
-  outlook.cmd, programlista.cmd, ikonok.cmd, bitlocker.cmd, chrome.cmd, frissites.cmd
+  outlook.cmd, programlista.cmd, ikonok.cmd, bitlocker.cmd, chrome.cmd, frissites.cmd, eszkozok.cmd
   teendok.cmd                _TEENDOK.txt
   osszegzes.cmd              a végső összegzés minden menüponthoz
 ps\                        a PowerShell részek, olvasható formában
@@ -56,10 +56,12 @@ Az eredményt `%UI% :JELOL OK|HIBA|KIHAGYVA "üzenet" "részlet"` jelzi.
 **Visszaállítás utáni teendő egy FAJL tételhez** – a sor 6. oszlopa egy név (pl. `EXPLORER`, `STARTMENU`),
 a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaállítás után ez fut.
 
+**Új Win+R eszköz** – egy `%ESZKOZ%` sor a `config\eszkozok.cmd`-be: billentyű, parancs, hivatalos név.
+
 **Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
 
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű a `segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
+egy betű a `segedlet.bat` `%UI% :VALASZT 123456` sorában, és egy sor a menüpont → modul táblába.
 
 ## Szabályok a kódhoz
 
@@ -115,7 +117,7 @@ beállításokat (pl. hogy ne kérdezzen rá a futó programokra). A tesztek a k
 A `master` ágról, tiszta munkakönyvtárral: lefuttatja a teszteket, átírja a `profil_mentes\verzio.txt`-t és a
 README verziószámát, commitol, címkéz (`v1.1`), pushol, a címkézett állapotból ZIP-et készít (az indító és a
 `profil_mentes` mappa – tesztek, dokumentáció és git-előzmény nélkül), és feltölti GitHub-kiadásként. A segédlet
-5. menüpontja a legutolsó kiadást tölti le, és csak akkor frissít, ha annak nagyobb a verziója.
+6. menüpontja (Segédlet frissítése) a legutolsó kiadást tölti le, és csak akkor frissít, ha annak nagyobb a verziója.
 
 A fejlesztés közben a `verzio.txt` nem változik – több változtatás is mehet egy kiadásba.
 Próbakiadás: `-Proba` – nem lesz „legutolsó”, a segédlet csak `FR_KIADAS=v…` mellett tölti le.

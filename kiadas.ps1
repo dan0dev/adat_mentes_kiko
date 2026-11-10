@@ -1,6 +1,6 @@
 ﻿# ==========================================================
 #  Kiadas: egy uj verzio a GitHubra (GitHub Release), amit a segedlet
-#  5. menupontja letolt.
+#  6. menupontja (Segedlet frissitese) letolt.
 #
 #    .\kiadas.ps1 1.1 "Chrome telepítése, BitLocker, frissítés"
 #
@@ -82,4 +82,5 @@ if ($Proba) { $arg += @('--prerelease', '--latest=false') }
 K 'a GitHub-kiadás nem jött létre – a címke már fent van, gh release create-tel pótolható' gh @arg
 Remove-Item -LiteralPath $zip -Force
 Write-Host ''
-Write-Host "KÉSZ: $Verzio kiadva. A segédlet 5. menüpontja mostantól ezt tölti le." -ForegroundColor Green
+if ($Proba) { Write-Host "KÉSZ: $Verzio próbakiadás. Csak FR_KIADAS=$cimke mellett tölti le a segédlet." -ForegroundColor Green }
+else { Write-Host "KÉSZ: $Verzio kiadva. A segédlet 6. menüpontja (Segédlet frissítése) mostantól ezt tölti le." -ForegroundColor Green }

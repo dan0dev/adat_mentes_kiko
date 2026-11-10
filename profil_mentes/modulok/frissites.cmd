@@ -1,5 +1,5 @@
 rem ==========================================================
-rem  5. A segedlet frissitese a GitHubrol, a legutolso kiadasbol (GitHub Release)
+rem  6. A segedlet frissitese a GitHubrol, a legutolso kiadasbol (GitHub Release)
 rem  A repo: config\beallitasok.cmd - FR_REPO. Kiadast a kiadas.ps1 keszit.
 rem  A munka: lib\frissites.cmd, ps\frissites.ps1, ps\frissites_csere.ps1
 rem  Kilepesi kod: 0 = vegigment, osszegzes jon; 1 = megszakitva; 2 = nincs teendo

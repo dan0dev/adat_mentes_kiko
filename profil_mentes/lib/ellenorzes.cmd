@@ -11,7 +11,21 @@ rem ==========================================================
 rem Mentes, visszaallitas: a felhasznalo sajat profiljaval dolgozik
 rem Kilepesi kod: 0 = jo felhasznalo, 1 = megszakitas
 echo.
+rem Rendszergazdakent egy masik fiokkal: a profil, az AppData es a registry a rendszergazdae
+rem lenne - igy a mentes es a visszaallitas rossz adatokkal dolgozna. Ilyenkor nem engedjuk.
 if "%ADMIN%"=="1" (
+    set "BEJ="
+    set "PS_FAJL=%PSDIR%\bejelentkezett.ps1"
+    for /f "delims=" %%u in ('%PS_FUTTAT% 2^>nul') do set "BEJ=%%u"
+    if defined BEJ if /I not "!BEJ!"=="%USERNAME%" (
+        echo   !C_PIROS!A segédlet most egy másik, rendszergazdai fiókkal fut.!C_0!
+        echo     Rendszergazdai fiók:  !C_FEHER!%USERNAME%!C_0!
+        echo     Bejelentkezve:        !C_FEHER!!BEJ!!C_0!
+        echo.
+        echo   Így a mentés és a visszaállítás a rendszergazda adataival dolgozna, nem a
+        echo   felhasználóéval. Indítsd el a segédletet sima dupla kattintással.
+        exit /b 1
+    )
     echo   !C_SARGA!Figyelem: a segédlet rendszergazdaként fut. A mentés és a visszaállítás!C_0!
     echo   !C_SARGA!annak a fióknak az adataival dolgozik, amelyik elindította.!C_0!
     echo.

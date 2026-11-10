@@ -17,7 +17,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $d = $PSScriptRoot
 $m = "$env:TEMP\pm_teszt\kulso\Mentes\$($env:USERNAME)_$($env:COMPUTERNAME)"
-$sorrend = 'mentes', 'visszaallitas', 'bitlocker_megse', 'chrome_megse', 'frissites_git', 'hibas_bevitel', 'visszaallitas_hibas', 'regi_mentes'
+$sorrend = 'mentes', 'visszaallitas', 'bitlocker_megse', 'chrome_megse', 'eszkozok_megse', 'admin_eszkozok', 'admin_masik_fiok', 'frissites_git', 'hibas_bevitel', 'visszaallitas_hibas', 'regi_mentes'
 if ($Csak) { $sorrend = $sorrend | Where-Object { $Csak -contains $_ } }
 $hibak = 0
 foreach ($v in $sorrend) {
@@ -31,7 +31,13 @@ foreach ($v in $sorrend) {
         $arg.Mentes = "$d\alap\mentes_regi"
         $mappa = "$env:TEMP\pm_teszt\kulso\Mentes\mentes_regi"
     }
-    $atirat = & "$d\futtat.ps1" @arg
+    # Rendszergazdai agak: a segedlet azt hiszi, rendszergazdakent fut (PM_TESZT_ADMIN);
+    # admin_masik_fiok: egy masik fiok nevevel - a mentesnek meg kell allnia
+    $regiNev = $env:USERNAME
+    if ($v -like 'admin_*') { $env:PM_TESZT_ADMIN = '1' }
+    if ($v -eq 'admin_masik_fiok') { $env:USERNAME = 'masik_rendszergazda' }
+    try { $atirat = & "$d\futtat.ps1" @arg }
+    finally { Remove-Item Env:PM_TESZT_ADMIN -ErrorAction SilentlyContinue; $env:USERNAME = $regiNev }
     if ($v -eq 'mentes') {
         $ch = "$mappa\Chrome_mentes\Default"
         foreach ($f in 'Bookmarks', 'History', 'History Provider Cache', 'Preferences') {

@@ -28,7 +28,8 @@ echo.
 echo.
 %UI% :SZAKASZ "EGYÉB"
 echo.
-%UI% :MENU 5 "Segédlet frissítése" "a legújabb változat a GitHubról"
+%UI% :MENU 5 "Rendszergazdai eszközök" "Win+R parancsok, hálózat, javítás"
+%UI% :MENU 6 "Segédlet frissítése" "a legújabb változat a GitHubról"
 echo.
 %UI% :LABLEC NYITO
 echo.
