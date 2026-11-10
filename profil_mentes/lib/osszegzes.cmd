@@ -17,6 +17,7 @@ rem Osszegzes fajl - az eredmeny mar a fajlnevben latszik
 set "OSSZ_HELY=%TEMP%"
 set "OSSZ_ELO=_BITLOCKER"
 if "%MODUL%"=="chrome" set "OSSZ_ELO=_CHROME"
+if "%MODUL%"=="frissites" set "OSSZ_ELO=_FRISSITES"
 set "HELY_CIMKE=Fájlok helye"
 if "%MODUL%"=="mentes" set "OSSZ_HELY=%CEL%"
 if "%MODUL%"=="mentes" set "OSSZ_ELO=_MENTES"

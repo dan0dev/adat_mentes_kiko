@@ -23,7 +23,7 @@ rem ---------- Kezdőképernyő - a valódi, lib\kezdokepernyo.cmd ----------
 set KEZDO=call "%LIB%\kezdokepernyo.cmd"
 set "ADMIN=1"
 %KEZDO% :MUTAT
-%UI% :VALASZT 123 "Válassz menüpontot [1–3]:" N
+%UI% :VALASZT 12345 "Válassz menüpontot [1–5]:" N
 
 rem ---------- Futás ----------
 %UI% :CIM "Adatok mentése folyamatban"

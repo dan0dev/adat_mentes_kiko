@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.0
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 318 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 357 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -22,9 +22,10 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `config\tetelek.cmd:36` | Fájlkezelő – Gyorselérés |
 | `config\tetelek.cmd:37` | Start menü rögzítései |
 | `config\tetelek.cmd:38` | C:\TEMP mappa |
-| `Eszkozcsere_segedlet.bat:104` | Válassz menüpontot [1–4]: |
-| `Eszkozcsere_segedlet.bat:127` | Megszakítva – nem történt változtatás. |
-| `Eszkozcsere_segedlet.bat:129` | Kilépéshez nyomj meg egy billentyűt... |
+| `Eszkozcsere_segedlet.bat:105` | Válassz menüpontot [1–5]: |
+| `Eszkozcsere_segedlet.bat:133` | Kilépéshez nyomj meg egy billentyűt... |
+| `Eszkozcsere_segedlet.bat:140` | Megszakítva – nem történt változtatás. |
+| `Eszkozcsere_segedlet.bat:142` | Kilépéshez nyomj meg egy billentyűt... |
 | `lib\bitlocker.cmd:12` | MBAMAgent.exe nem található |
 | `lib\bitlocker.cmd:12` | Telepítve van az MBAM kliens? Keresett hely: %MBAM_DIR% |
 | `lib\bitlocker.cmd:16` | MBAMClientUI.exe nem található |
@@ -76,6 +77,8 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ellenorzes.cmd:183` | M – megszakítás    F – folytatás így |
 | `lib\ellenorzes.cmd:184` | Választás |
 | `lib\ellenorzes.cmd:189` | Hely rendben. |
+| `lib\frissites.cmd:42` | %FR_MOD%: %FR_REPO% %FR_AG% |
+| `lib\frissites.cmd:56` | Eredmény: !_f1! !_f2! !_f3! |
 | `lib\ikonok.cmd:13` | az asztal mappája nem található |
 | `lib\ikonok.cmd:17` | a Start menü mappája nem található |
 | `lib\ikonok.cmd:22` | Asztal: %DESK% |
@@ -114,26 +117,29 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\kezdokepernyo.cmd:27` | Chrome telepítése |
 | `lib\kezdokepernyo.cmd:27` | ha a Szoftverközpont nem indítja el |
 | `lib\kezdokepernyo.cmd:27` | a letöltést |
+| `lib\kezdokepernyo.cmd:29` | EGYÉB |
+| `lib\kezdokepernyo.cmd:31` | Segédlet frissítése |
+| `lib\kezdokepernyo.cmd:31` | a legújabb változat a GitHubról |
 | `lib\masolas.cmd:15` | %R_SRC% -> %R_DST% |
-| `lib\osszegzes.cmd:42` | %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP% %time:~0,5% · %MOD_NEV% |
-| `lib\osszegzes.cmd:51` | Összegzés – %MOD_NEV% |
-| `lib\osszegzes.cmd:54` | Sikeres: %DB_OK%     Hibás: %DB_HIBA%     Kihagyva: %DB_KIHAGY%     Időtartam: %E_PERC% perc %E_MP% mp |
-| `lib\osszegzes.cmd:56` | Sikeres %DB_OK% · Hibás %DB_HIBA% · Kihagyva %DB_KIHAGY% · %E_PERC% perc %E_MP% mp |
-| `lib\osszegzes.cmd:59` | FIGYELEM: %DB_HIBA% tétel hibával zárult – nézd át a listát és a naplót. |
-| `lib\osszegzes.cmd:61` | KÉSZ – minden elérhető tétel rendben. |
-| `lib\osszegzes.cmd:62` | A kihagyott tételek ezen a gépen nem léteztek; ez általában rendben van. |
-| `lib\osszegzes.cmd:64` | KÉSZ – minden tétel sikeresen lefutott. |
-| `lib\osszegzes.cmd:68` | Összegzés |
-| `lib\osszegzes.cmd:69` | Teendők |
-| `lib\osszegzes.cmd:69` | %%~nxx |
-| `lib\osszegzes.cmd:71` | Napló |
-| `lib\osszegzes.cmd:75` | Teendő: kövesd az MBAM ablakot, a titkosítás utána a háttérben fut. |
-| `lib\osszegzes.cmd:81` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\osszegzes.cmd:85` | Megnyissam a naplót? |
-| `lib\osszegzes.cmd:89` | Megnyissam a teendők listáját? |
-| `lib\osszegzes.cmd:93` | Megnyissam a mentés mappáját ellenőrzésre? |
-| `lib\osszegzes.cmd:97` | Megnyissam a mentés mappáját a listákkal? |
-| `lib\osszegzes.cmd:101` | Kész. Kilépéshez nyomj meg egy billentyűt... |
+| `lib\osszegzes.cmd:43` | %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP% %time:~0,5% · %MOD_NEV% |
+| `lib\osszegzes.cmd:52` | Összegzés – %MOD_NEV% |
+| `lib\osszegzes.cmd:55` | Sikeres: %DB_OK%     Hibás: %DB_HIBA%     Kihagyva: %DB_KIHAGY%     Időtartam: %E_PERC% perc %E_MP% mp |
+| `lib\osszegzes.cmd:57` | Sikeres %DB_OK% · Hibás %DB_HIBA% · Kihagyva %DB_KIHAGY% · %E_PERC% perc %E_MP% mp |
+| `lib\osszegzes.cmd:60` | FIGYELEM: %DB_HIBA% tétel hibával zárult – nézd át a listát és a naplót. |
+| `lib\osszegzes.cmd:62` | KÉSZ – minden elérhető tétel rendben. |
+| `lib\osszegzes.cmd:63` | A kihagyott tételek ezen a gépen nem léteztek; ez általában rendben van. |
+| `lib\osszegzes.cmd:65` | KÉSZ – minden tétel sikeresen lefutott. |
+| `lib\osszegzes.cmd:69` | Összegzés |
+| `lib\osszegzes.cmd:70` | Teendők |
+| `lib\osszegzes.cmd:70` | %%~nxx |
+| `lib\osszegzes.cmd:72` | Napló |
+| `lib\osszegzes.cmd:76` | Teendő: kövesd az MBAM ablakot, a titkosítás utána a háttérben fut. |
+| `lib\osszegzes.cmd:82` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
+| `lib\osszegzes.cmd:86` | Megnyissam a naplót? |
+| `lib\osszegzes.cmd:90` | Megnyissam a teendők listáját? |
+| `lib\osszegzes.cmd:94` | Megnyissam a mentés mappáját ellenőrzésre? |
+| `lib\osszegzes.cmd:98` | Megnyissam a mentés mappáját a listákkal? |
+| `lib\osszegzes.cmd:102` | Kész. Kilépéshez nyomj meg egy billentyűt... |
 | `lib\outlook.cmd:19` | Outlook-lista – csatolt PST-fájlok keresése... |
 | `lib\outlook.cmd:26` | A PST-lista nem készült el – a PowerShell nem elérhető. |
 | `lib\outlook.cmd:29` | Kész: %OL_PST% csatolt PST |
@@ -248,6 +254,27 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\chrome.cmd:27` | Letöltés |
 | `modulok\chrome.cmd:29` | Telepítés |
 | `modulok\chrome.cmd:33` | a letöltés nem sikerült |
+| `modulok\frissites.cmd:9` | Segédlet frissítése |
+| `modulok\frissites.cmd:10` | A segédlet legújabb változata a GitHubról – internet kell hozzá. |
+| `modulok\frissites.cmd:11` | A program fájljai cserélődnek, a mentésekhez nem nyúl. |
+| `modulok\frissites.cmd:16` | Ez a fejlesztői példány, git-mappában – itt a git-tel frissíts. |
+| `modulok\frissites.cmd:23` | A segédlet mappája nem írható: !APP! |
+| `modulok\frissites.cmd:24` | Másold a segédletet egy írható helyre, és onnan frissíts. |
+| `modulok\frissites.cmd:30` | ===== FRISSÍTÉS %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
+| `modulok\frissites.cmd:31` | Lekérdezés a GitHubról... |
+| `modulok\frissites.cmd:35` | !FR_UJ_UZENET! |
+| `modulok\frissites.cmd:38` | Ez a változat |
+| `modulok\frissites.cmd:38` | !FR_HELYI:~0,7! |
+| `modulok\frissites.cmd:38` | Ez a változat |
+| `modulok\frissites.cmd:38` | ismeretlen – még nem frissült innen |
+| `modulok\frissites.cmd:39` | Legújabb |
+| `modulok\frissites.cmd:39` | !FR_UJ_SHA:~0,7! · !FR_UJ_DATUM! |
+| `modulok\frissites.cmd:40` | Utolsó változás |
+| `modulok\frissites.cmd:46` | Frissítsem? |
+| `modulok\frissites.cmd:52` | Segédlet frissítése folyamatban |
+| `modulok\frissites.cmd:53` | Letöltés |
+| `modulok\frissites.cmd:55` | Csere előkészítése |
+| `modulok\frissites.cmd:59` | a letöltés nem sikerült |
 | `modulok\mentes.cmd:20` | Adatok mentése – előkészítés |
 | `modulok\mentes.cmd:21` | Mentés helye |
 | `modulok\mentes.cmd:23` | Mentendő tételek: |
@@ -310,6 +337,18 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `ps\chrome.ps1:113` | épp fut egy másik telepítés – próbáld újra pár perc múlva |
 | `ps\chrome.ps1:114` | másik Chrome-telepítés van a gépen – az Alkalmazásokban távolítsd el, majd próbáld újra |
 | `ps\chrome.ps1:115` | részletek a naplóban:  |
+| `ps\frissites.ps1:35` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
+| `ps\frissites.ps1:53` | nem tölthető le |
+| `ps\frissites.ps1:53` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
+| `ps\frissites.ps1:56` | a letöltött fájl hibás |
+| `ps\frissites.ps1:56` | A ZIP nem csomagolható ki. |
+| `ps\frissites.ps1:62` | a letöltés nem teljes |
+| `ps\frissites.ps1:62` | A letöltött változatból hiányzik a segédlet egy része – nem cserélem le. |
+| `ps\frissites.ps1:66` | , "$db fájl, ellenőrizve",  |
+| `ps\frissites.ps1:85` | bezáráskor frissül |
+| `ps\frissites.ps1:85` | Nyomj meg egy billentyűt – a segédlet bezárul, frissül és újraindul. |
+| `ps\frissites_csere.ps1:20` | Eszközcsere segédlet |
+| `ps\frissites_csere.ps1:30` | a segédlet 30 perc után sem zárult be |
 | `ps\outlook_lista.ps1:34` | PST – újra csatolni: Fájl › Megnyitás és exportálás › Outlook-adatfájl megnyitása |
 | `ps\outlook_lista.ps1:41` | KÉZZEL – régi gépen |
 | `ps\outlook_lista.ps1:42` | [ ] További postaládák: Fiókbeállítások › Módosítás › További beállítások › Speciális |

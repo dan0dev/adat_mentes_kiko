@@ -25,3 +25,7 @@ set "WIN_INST=%WINDIR:~2%\Installer\"
 rem BitLocker / MBAM kliens helye - mindig a 64 bites Program Files
 if defined ProgramW6432 (set "PF64=%ProgramW6432%") else (set "PF64=%ProgramFiles%")
 set "MBAM_DIR=%PF64%\Microsoft\MDOP MBAM"
+
+rem A segedlet frissitese (5. menupont): a GitHub-repo es az ag, ahonnan letolti
+set "FR_REPO=dan0dev/adat_mentes_kiko"
+set "FR_AG=master"

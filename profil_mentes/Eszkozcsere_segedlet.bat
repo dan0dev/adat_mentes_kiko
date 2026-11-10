@@ -47,6 +47,7 @@ set TALCA=call "%LIB%\talca.cmd"
 set IKONOK=call "%LIB%\ikonok.cmd"
 set BITLOCKER=call "%LIB%\bitlocker.cmd"
 set CHROME=call "%LIB%\chrome.cmd"
+set FRISSITES=call "%LIB%\frissites.cmd"
 set TEENDOK=call "%LIB%\teendok.cmd"
 set OSSZEGZES=call "%LIB%\osszegzes.cmd"
 
@@ -101,7 +102,7 @@ rem ==========================================================
 rem  Kezdokepernyo es menu
 rem ==========================================================
 %KEZDO% :MUTAT
-%UI% :VALASZT 1234 "Válassz menüpontot [1–4]:" N
+%UI% :VALASZT 12345 "Válassz menüpontot [1–5]:" N
 set "MOD=%errorlevel%"
 
 rem Menupont -> nev es modul. Uj menupontnal: lib\kezdokepernyo.cmd, egy betu a VALASZT-ba, es egy sor ide.
@@ -111,14 +112,26 @@ if "%MOD%"=="1" set "MOD_NEV=Adatok mentése"               & set "MODUL=mentes"
 if "%MOD%"=="2" set "MOD_NEV=Adatok visszaállítása"        & set "MODUL=visszaallitas"
 if "%MOD%"=="3" set "MOD_NEV=BitLocker beállítása"         & set "MODUL=bitlocker"
 if "%MOD%"=="4" set "MOD_NEV=Chrome telepítése"            & set "MODUL=chrome"
+if "%MOD%"=="5" set "MOD_NEV=Segédlet frissítése"          & set "MODUL=frissites"
 if not defined MODUL goto :MEGSZAKITVA
 title Eszközcsere segédlet – %MOD_NEV%
 
-rem A modul 0-val ter vissza, ha vegigment, 1-gyel, ha megszakitottak
+rem A modul 0-val ter vissza, ha vegigment, 1-gyel, ha megszakitottak, 2-vel, ha nincs teendo
+set "NINCS_TEENDO="
 call "%MODULOK%\%MODUL%.cmd"
+if errorlevel 2 goto :NINCS_TEENDO
 if errorlevel 1 goto :MEGSZAKITVA
 
 %OSSZEGZES% :OSSZEGZES
+if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
+exit /b 0
+
+:NINCS_TEENDO
+echo.
+%UI% :SAV OK "!NINCS_TEENDO!"
+echo.
+echo   Kilépéshez nyomj meg egy billentyűt...
+pause >nul
 if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
 exit /b 0
 

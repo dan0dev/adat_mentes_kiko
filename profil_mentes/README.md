@@ -12,6 +12,7 @@ A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új g
 | **2 Adatok visszaállítása** | új gép | visszamásolja a mentést a felhasználó profiljába |
 | **3 BitLocker beállítása** | új gép | a BitLocker titkosítás indítása az MBAM klienssel |
 | **4 Chrome telepítése** | új gép | ha a Szoftverközpont nem indítja el a letöltést: a legfrissebb Chrome a Google oldaláról, rendszergazdai jelszóval |
+| **5 Segédlet frissítése** | bármelyik | a legújabb változat a GitHubról – letölti, a segédlet bezárása után lecseréli a fájlokat, és újraindul |
 
 **Amit ment és visszaállít:**
 

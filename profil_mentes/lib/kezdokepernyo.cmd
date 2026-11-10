@@ -26,6 +26,10 @@ echo.
 %UI% :MENU 3 "BitLocker beállítása" "titkosítás indítása az MBAM klienssel"
 %UI% :MENU 4 "Chrome telepítése" "ha a Szoftverközpont nem indítja el" "a letöltést"
 echo.
+%UI% :SZAKASZ "EGYÉB"
+echo.
+%UI% :MENU 5 "Segédlet frissítése" "a legújabb változat a GitHubról"
+echo.
 %UI% :LABLEC NYITO
 echo.
 goto :eof

@@ -22,7 +22,7 @@ lib\                       a munkát végző közös rutinok
   tipusok\                   tételtípusok: MAPPA, FAJL, BONGESZO
   ellenorzes.cmd             felhasználó, meghajtó, futó programok, szabad hely
   talca.cmd                  a tálcára rögzített ikonok listája és képe – talca.txt, talca.png
-  outlook.cmd, programlista.cmd, ikonok.cmd, bitlocker.cmd, chrome.cmd
+  outlook.cmd, programlista.cmd, ikonok.cmd, bitlocker.cmd, chrome.cmd, frissites.cmd
   teendok.cmd                _TEENDOK.txt
   osszegzes.cmd              a végső összegzés minden menüponthoz
 ps\                        a PowerShell részek, olvasható formában
@@ -55,7 +55,7 @@ a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaál
 **Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
 
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 123` sorában, és egy sor a menüpont → modul táblába.
+egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 12345` sorában, és egy sor a menüpont → modul táblába.
 
 ## Szabályok a kódhoz
 
