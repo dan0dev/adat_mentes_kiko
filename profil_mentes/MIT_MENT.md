@@ -12,29 +12,28 @@ ahonnan mentette.
 | Outlook-aláírások | `%APPDATA%\Microsoft\Signatures` | minden aláírás, képekkel |
 | Office-sablonok | `%APPDATA%\Microsoft\Templates` | saját sablonok, a Word `Normal.dotm`-ja |
 | Office egyéni szótárai | `%APPDATA%\Microsoft\UProof` | a helyesírás-ellenőrzőhöz felvett szavak |
-| Office automatikus javítás *(tesztelés alatt)* | `%APPDATA%\Microsoft\Office\*.acl` | saját javítások, pl. „ttm” → „tisztelettel” |
-| Word-gyorsrészek *(tesztelés alatt)* | `%APPDATA%\Microsoft\Document Building Blocks` | mentett szövegrészek, gyorsrészek |
-| Office menüszalag *(tesztelés alatt)* | `%LOCALAPPDATA%\Microsoft\Office\*.officeUI` | testreszabott menüszalag, gyorselérési eszköztár |
-| Outlook-levélpapírok *(tesztelés alatt)* | `%APPDATA%\Microsoft\Stationery` | levélpapírok, témák |
-| Office – legutóbbi fájlok *(tesztelés alatt)* | registry: `HKCU\…\Office\16.0\Word`, `Excel`, `PowerPoint` › `User MRU` | a legutóbb megnyitott és a rögzített fájlok listája (Office 2016 és 365). A helyi és a hálózati fájl csak akkor nyílik meg, ha az új gépen is ugyanott van; a OneDrive/SharePoint-fájlok a fiókkal amúgy is visszajönnek |
+| Office automatikus javítás (tesztelés alatt) | `%APPDATA%\Microsoft\Office\*.acl` | saját javítások, pl. „ttm” → „tisztelettel” |
+| Word-gyorsrészek (tesztelés alatt) | `%APPDATA%\Microsoft\Document Building Blocks` | mentett szövegrészek, gyorsrészek |
+| Office menüszalag (tesztelés alatt) | `%LOCALAPPDATA%\Microsoft\Office\*.officeUI` | testreszabott menüszalag, gyorselérési eszköztár |
+| Outlook-levélpapírok (tesztelés alatt) | `%APPDATA%\Microsoft\Stationery` | levélpapírok, témák |
+| Office – legutóbbi fájlok (tesztelés alatt) | registry: `HKCU\…\Office\16.0\Word`, `Excel`, `PowerPoint` › `User MRU` | a legutóbb megnyitott és a rögzített fájlok listája (Office 2016 és 365). A helyi és a hálózati fájl csak akkor nyílik meg, ha az új gépen is ugyanott van; a OneDrive/SharePoint-fájlok a fiókkal amúgy is visszajönnek |
 | Excel XLSTART mappa | `%APPDATA%\Microsoft\Excel\XLSTART` | induláskor megnyíló fájlok, személyes makrófüzet |
 | Indítópult mappa | `%APPDATA%\…\Start Menu\Programs\Startup` | bejelentkezéskor induló programok |
-| Chrome-profilok | `%LOCALAPPDATA%\Google\Chrome\User Data` | minden profilból: könyvjelzők, előzmények, beállítások – és a profillista; a könyvjelzők ikonjai, az új lap csempéi, a címsor javaslatai, a saját helyesírási szavak *(tesztelés alatt)* |
+| Chrome-profilok | `%LOCALAPPDATA%\Google\Chrome\User Data` | minden profilból: könyvjelzők, előzmények, beállítások – és a profillista; a könyvjelzők ikonjai, az új lap csempéi, a címsor javaslatai, a saját helyesírási szavak (tesztelés alatt) |
 | Edge-kedvencek | `%LOCALAPPDATA%\Microsoft\Edge\User Data` | minden profil kedvencei, a profillista |
-| Teams-hátterek *(tesztelés alatt)* | `…\Packages\MSTeams_8wekyb3d8bbwe\…\Backgrounds\Uploads` | feltöltött háttérképek (új Teams) |
+| Teams-hátterek (tesztelés alatt) | `…\Packages\MSTeams_8wekyb3d8bbwe\…\Backgrounds\Uploads` | feltöltött háttérképek (új Teams) |
 | Kedvencek mappa | `%USERPROFILE%\Favorites` | a régi Internet Explorer / Edge kedvencek |
 | Sticky Notes-jegyzetek | `%LOCALAPPDATA%\Packages\Microsoft.MicrosoftStickyNotes_…` | a cetlik |
 | Fájlkezelő – Gyorselérés | `%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations` | a rögzített mappák |
-| Fájlkezelő – Legutóbbiak *(tesztelés alatt)* | ugyanott | a Fájlkezelő legutóbbi fájljai |
+| Fájlkezelő – Legutóbbiak (tesztelés alatt) | ugyanott | a Fájlkezelő legutóbbi fájljai |
 | Start menü rögzítései | `%LOCALAPPDATA%\Packages\Microsoft.Windows.StartMenuExperienceHost_…` | a Start menübe rögzített programok |
 | C:\TEMP mappa | `C:\TEMP` | teljes mappa – másolás közben **K**-val átugorható |
 
 Ami a régi gépen nem létezik, az kimarad (`[KIHAGYVA]`) – ez általában rendben van.
-A *(tesztelés alatt)* tételek működnek, de valódi gépcserén még nincsenek kipróbálva.
 
 **Visszaállításkor magától:**
 
-- **Office-ikonok az asztalon** *(tesztelés alatt)* – Word, Excel, Outlook, PowerPoint, Teams, Skype Vállalati verzió, és ami a
+- **Office-ikonok az asztalon** (tesztelés alatt) – Word, Excel, Outlook, PowerPoint, Teams, Skype Vállalati verzió, és ami a
   régi gép asztalán kint volt (pl. OneNote) – ha telepítve van. A régi (pl. Office 2016-os) rossz ikonokat
   lecseréli. Ha minden rendben, a lépés meg sem jelenik.
 - **Fájlkezelő és Start menü** újraindítása, hogy a Gyorselérés és a rögzítések betöltődjenek.
