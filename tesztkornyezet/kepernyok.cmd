@@ -35,7 +35,7 @@ echo   A folyamat végéig ne húzd ki a külső meghajtót.
 %UI% :FEJLEC "Chrome-profilok"
 %UI% :RESZLET "Default, Profile 1"
 %UI% :JELOL OK "2 profil, ellenőrizve"
-%UI% :FEJLEC "PST-mappa (Outlook)"
+%UI% :FEJLEC "Sticky Notes-jegyzetek"
 %UI% :JELOL HIBA "néhány fájl nem másolható" "Zárolt fájl vagy hiányzó jogosultság – részletek a naplóban."
 %UI% :FEJLEC "Office-parancsikonok"
 %UI% :JELOL NEMKERT "nem kérted"

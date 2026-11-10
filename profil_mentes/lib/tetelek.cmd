@@ -50,10 +50,19 @@ call "%LIB%\tipusok\%T_TIPUS%.cmd" :%~2
 goto :eof
 
 :FORRASOK
-rem A helyellenorzeshez: a MAPPA tipusu tetelek forrasai pontosvesszovel. Kimenet: PS_FORRASOK
+rem A helyellenorzeshez: a MAPPA tipusu tetelek forrasai pontosvesszovel. Kimenet: PS_FORRASOK,
+rem es az elso atugorhato (A jelzos) tetel forrasa es neve: PS_KIEMELT, K_NEV - errol a
+rem helyellenorzes kulon fajlszamot es meretet ir ki
 set "PS_FORRASOK="
+set "PS_KIEMELT="
+set "K_NEV="
 for /l %%i in (1,1,%T_DB%) do if /I "!T_TIPUS_%%i!"=="MAPPA" (
     if defined PS_FORRASOK (set "PS_FORRASOK=!PS_FORRASOK!;!T_FORRAS_%%i!") else (set "PS_FORRASOK=!T_FORRAS_%%i!")
+    set "_jel=#!T_P1_%%i!"
+    if not "!_jel:A=!"=="!_jel!" if not defined PS_KIEMELT (
+        set "PS_KIEMELT=!T_FORRAS_%%i!"
+        set "K_NEV=!T_NEV_%%i!"
+    )
 )
 goto :eof
 

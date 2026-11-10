@@ -2,7 +2,5 @@ rem Teszt beallitasok - az Eszkozcsere_segedlet.bat a PM_TESZT_KONFIG valtozon k
 rem a config\beallitasok.cmd utan. Igy a futo programok kerdese nem jon elo.
 set "FIGYELT_PROGRAMOK=pm_nincs_ilyen.exe"
 set "KENYSZER_BEZARAS="
-rem Tanusitvanyok: csak a kulon PmTeszt tarolo - a valodi Szemelyes tarolohoz a teszt nem nyul.
-set "TAN_TAROLOK=PmTeszt"
 rem A C:\TEMP helyett a hamis profil egy mappaja - a valodi C:\TEMP-hez a teszt nem nyul
 set "C_TEMP_FORRAS=%USERPROFILE%\_C_TEMP"

@@ -3,7 +3,6 @@
 #  Csak a registryt olvassa, az Outlookhoz nem nyul.
 #  Rovid, kulcsszavas - a fajl neve (outlook_lista.txt) mar megmondja, mi ez.
 #  Bemenet:  OL_OUT  - a kimeneti szovegfajl
-#            SRC_PST - a PST mappa, ami mentesre kerul
 #            VERZIO, SZERZO - a fajl lablecehez
 #  Kimenet:  PST|<eleresi ut> minden csatolt PST-rol - ez latszik a kepernyon
 #            SUM|<darab> a vegen

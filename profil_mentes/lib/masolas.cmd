@@ -7,13 +7,20 @@ rem  Hivas: %MASOLAS% :ROBO
 rem ==========================================================
 
 :ROBO
-rem Bemenet: R_SRC, R_DST, R_OPT, R_PROG.  Kimenet: R_ALLAPOT, R_UZENET, R_RESZLET
+rem Bemenet: R_SRC, R_DST, R_OPT, R_PROG, R_ATUGORHATO (1 = a K billentyuvel atugorhato,
+rem csak R_PROG=1 mellett).  Kimenet: R_ALLAPOT (OK, HIBA, ATUGORVA), R_UZENET, R_RESZLET
 rem A naplo UTF-8, a robocopy viszont a /LOG+ fajlba es a kepernyore mindig a 852-es
 rem kodlapon ir, a /UNILOG+ pedig hozzafuzeskor nem Unicode. Ezert minden hivas egy
 rem uj Unicode fajlba naploz (/UNILOG:), amit a type UTF-8-kent fuz a naplohoz.
 >>"%LOG%" echo        %R_SRC% -^> %R_DST%
 set "R_LOGT=%TEMP%\_robocopy_%RANDOM%.txt"
 set "R_RESZLET="
+rem Az atugorhatosag csak erre a hivasra szol - a ps\folyamat.ps1 az R_ATU-t nezi,
+rem atugraskor letrehozza az R_ATF fajlt
+set "R_ATU=%R_ATUGORHATO%"
+set "R_ATUGORHATO="
+set "R_ATF=%TEMP%\_robocopy_atugras_%RANDOM%.txt"
+if exist "%R_ATF%" del /q "%R_ATF%" >nul 2>&1
 if "%R_PROG%"=="1" goto :ROBO_PROG
 robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /R:1 /W:1 /NP /UNILOG:"%R_LOGT%" >nul
 set "R_RC=%errorlevel%"
@@ -32,6 +39,13 @@ if exist "%R_RCF%" (
     del /q "%R_RCF%" >nul 2>&1
 )
 call :ROBO_NAPLO
+if exist "%R_ATF%" (
+    del /q "%R_ATF%" >nul 2>&1
+    set "R_ALLAPOT=ATUGORVA"
+    set "R_UZENET=átugorva"
+    set "R_RESZLET=Részben másolva – a többit kézzel nézd át."
+    goto :eof
+)
 :ROBO_ELLENORZES
 rem Ellenorzes: ugyanaz a masolas csak listazva - ha lenne mit masolni, elter
 robocopy "%R_SRC%" "%R_DST%" %R_OPT% /FFT /L /R:0 /W:0 /NJH /NJS /NDL /NFL /NP >nul

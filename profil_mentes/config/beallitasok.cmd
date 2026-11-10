@@ -9,15 +9,8 @@ set "MAPPA_NEV=Mentes"
 rem Ennyi MB tartalekot var el a helyellenorzes a becsult meret folott
 set /a RAHAGYAS_MB=300
 
-rem A PST mappa: a mentes ezt viszi at, az Outlook lista ehhez viszonyit
-set "SRC_PST=%USERPROFILE%\PST"
-
 rem A C:\TEMP mappa helye
 set "C_TEMP_FORRAS=%SystemDrive%\TEMP"
-
-rem Tanusitvany tarolok (certmgr.msc - Aktualis felhasznalo), szokozzel elvalasztva:
-rem My = Szemelyes, AddressBook = Masok. Csak a kulcs nelkuli tanusitvanyok kerulnek at.
-set "TAN_TAROLOK=My AddressBook"
 
 rem Ezek a programok zarolhatjak a fajlokat, mentes es exportalas elott ellenorizzuk
 set "FIGYELT_PROGRAMOK=chrome.exe msedge.exe outlook.exe winword.exe excel.exe Microsoft.Notes.exe"

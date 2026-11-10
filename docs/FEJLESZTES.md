@@ -10,19 +10,19 @@ karbantartáshoz kell, a külső meghajtóra nem kerül.
 ```
 Eszkozcsere_segedlet.bat   belépési pont: környezet, menü, a modul indítása, összegzés
 config\                    ITT BŐVÍTS – listák és beállítások, kód nélkül
-  beallitasok.cmd            mappanév, tartalék hely, figyelt programok, tanúsítványtárolók, MBAM helye...
+  beallitasok.cmd            mappanév, tartalék hely, figyelt programok, MBAM helye...
   tetelek.cmd                a mentendő tételek – egy sor = egy tétel
   parancsikonok.cmd          az asztali Office-parancsikonok listája
-  alapertelmezett_alk.cmd    fájltípusok és programok az 5. menühöz
+  alapertelmezett_alk.cmd    fájltípusok és programok a 4. menühöz
 modulok\                   menüpontonként egy fájl: képernyők, kérdések, sorrend
 lib\                       a munkát végző közös rutinok
   ui.cmd                     minden rajzolás: keretek, lépések, állapotjelek, sávok, kérdések
   kezdokepernyo.cmd          a kezdőképernyő és a menü
   masolas.cmd, robo_prog.cmd robocopy + ellenőrző másodfutás, folyamatjelző
   tetelek.cmd                a config\tetelek.cmd beolvasása és futtatása
-  tipusok\                   tételtípusok: MAPPA, FAJL, BONGESZO, TANUSITVANY
+  tipusok\                   tételtípusok: MAPPA, FAJL, BONGESZO
   ellenorzes.cmd             felhasználó, meghajtó, futó programok, szabad hely
-  talca.cmd                  a tálcára rögzített ikonok listája – talca.txt
+  talca.cmd                  a tálcára rögzített ikonok listája és képe – talca.txt, talca.png
   outlook.cmd, programlista.cmd, ikonok.cmd, alapalk.cmd, laptop.cmd
   teendok.cmd                _TEENDOK.txt
   osszegzes.cmd              a végső összegzés minden menüponthoz
@@ -39,7 +39,12 @@ ps\                        a PowerShell részek, olvasható formában
 
 A mentés és a visszaállítás is automatikusan viszi; a lista és a lépésszám magától frissül.
 A név legfeljebb 26 karakter. A MAPPA tétel jelzői együtt is megadhatók: `P` = folyamatjelző, `J` = gyorsabb
-másolás nagy fájloknál (robocopy `/J`), pl. `PJ` – így megy a PST-mappa és a C:\TEMP.
+másolás nagy fájloknál (robocopy `/J`), `A` = átugorható – pl. `PJA` a C:\TEMP.
+
+**Átugorható tétel (`A`)** – másolás közben a **K** billentyű leállítja a robocopy-t (`ps\folyamat.ps1`), a
+félbemaradt fájlt törli, és a tétel `[KIHAGYVA] átugorva` lesz, egy sorral a `_TEENDOK.txt`-ben. A
+helyellenőrzés az első ilyen tételről külön fájlszámot és méretet ír ki. A felbemaradt fájlt az ideje
+árulja el: a robocopy előre lefoglalja a teljes méretet, és csak a végén állítja az időt a forráséra.
 
 **Új tételtípus** – új fájl a `lib\tipusok\` alá (pl. `REGISTRY.cmd`) a többi mintájára, `:MENT` és `:VISSZA`
 címkével. Bemenet: `T_NEV`, `T_FORRAS`, `T_MAPPA`, `T_P1`, `T_P2`, mentésnél `CEL`, visszaállításnál `FORRAS`.
@@ -47,8 +52,6 @@ Az eredményt `%UI% :JELOL OK|HIBA|KIHAGYVA "üzenet" "részlet"` jelzi.
 
 **Visszaállítás utáni teendő egy FAJL tételhez** – a sor 6. oszlopa egy név (pl. `EXPLORER`, `STARTMENU`),
 a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaállítás után ez fut.
-
-**Tanúsítványtárolók** – `TAN_TAROLOK` a `config\beallitasok.cmd`-ben (alapból `My AddressBook`).
 
 **Új program az asztali parancsikonokhoz** – egy `%IKON_APP%` sor a `config\parancsikonok.cmd`-be.
 
@@ -88,8 +91,8 @@ egy betű az `Eszkozcsere_segedlet.bat` `%UI% :VALASZT 1234` sorában, és egy s
 
 ## Tesztelés
 
-A `tesztkornyezet\` mappa a segédletet hamis felhasználói profillal, hamis külső meghajtóval (`subst`) és
-külön teszt-tanúsítványtárolóval (`PmTeszt`) futtatja, előre megírt válaszokkal, és az átiratokat ellenőrzi:
+A `tesztkornyezet\` mappa a segédletet hamis felhasználói profillal, hamis külső meghajtóval (`subst`)
+futtatja, előre megírt válaszokkal, és az átiratokat ellenőrzi:
 
 ```powershell
 tesztkornyezet\mind.ps1 -Ellenoriz -Kredit -Szoveg    # minden forgatókönyv, minden ellenőrzéssel
@@ -101,4 +104,4 @@ tesztkornyezet\szovegjegyzek.ps1                      # minden szöveg egy tábl
 Az ellenőrzés keresi: csipogást, hibás ékezetet, 76-nál hosszabb sort, cmd hibát, ékezet nélküli és magázó
 szavakat, a "Készítette" sort, és az eredményeket az `alap\` mappában rögzített alapértékekhez hasonlítja.
 A `PM_TESZT_KONFIG` környezeti változóval a tesztkörnyezet a `config\beallitasok.cmd` után felülírja a
-beállításokat (pl. hogy ne kérdezzen rá a futó programokra, és a `PmTeszt` tárolót használja).
+beállításokat (pl. hogy ne kérdezzen rá a futó programokra).

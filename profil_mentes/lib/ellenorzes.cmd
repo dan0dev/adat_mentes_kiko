@@ -126,12 +126,16 @@ set "H_KELL="
 set "H_SZABAD="
 set "H_FS="
 set "H_MAX="
+set "H_KDB="
+set "H_KMERET="
 set "PS_FAJL=%PSDIR%\hely.ps1"
-for /f "tokens=1-4" %%a in ('%PS_FUTTAT% 2^>nul') do (
+for /f "tokens=1-5*" %%a in ('%PS_FUTTAT% 2^>nul') do (
     set "H_KELL=%%a"
     set "H_SZABAD=%%b"
     set "H_FS=%%c"
     set "H_MAX=%%d"
+    set "H_KDB=%%e"
+    set "H_KMERET=%%f"
 )
 if not defined H_MAX (
     echo   !C_SARGA!A helyellenőrzés nem futott le, folytatom nélküle.!C_0!
@@ -141,6 +145,10 @@ set /a H_KELL+=RAHAGYAS_MB
 %UI% :MB_GB H_KELL H_KELL_TXT
 %UI% :MB_GB H_SZABAD H_SZABAD_TXT
 echo   Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: !H_FS!
+rem Az atugorhato tetel (C:\TEMP): mekkora - masolas kozben a K billentyuvel kihagyhato
+if defined K_NEV if defined H_KDB if not "!H_KDB!"=="-" if not "!H_KDB!"=="0" (
+    echo   !K_NEV!: !H_KDB! fájl, !H_KMERET! – másolás közben K-val átugorható.
+)
 if !H_KELL! GTR !H_SZABAD! (
     echo.
     echo   !C_PIROS!Nincs elég hely a külső meghajtón.!C_0!

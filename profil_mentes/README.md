@@ -15,8 +15,7 @@ A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új g
 
 **Amit ment és visszaállít:**
 
-- Tanúsítványok (certmgr.msc – Személyes, Mások)
-- Outlook-aláírások, a `%USERPROFILE%\PST` mappa
+- Outlook-aláírások
 - Office-sablonok, egyéni szótárak, Excel XLSTART
 - Chrome: könyvjelzők, előzmények, beállítások – minden profil
 - Edge-kedvencek, Kedvencek mappa
@@ -24,7 +23,7 @@ A felhasználó adatait a régi gépen lementi egy külső meghajtóra, az új g
 - Fájlkezelő – Gyorselérés, Start menü rögzítései
 - Indítópult mappa, C:\TEMP
 
-**Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`),
+**Amit listáz** (a mentés mappájába): telepített programok (`apps.txt`), tálcaikonok (`talca.txt`, és egy kép a tálcáról: `talca.png`),
 csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
 
 ## Használat
@@ -50,7 +49,9 @@ csatolt PST-k helye és az Outlook-teendők (`outlook_lista.txt`).
   gépen nem létezik – ez általában rendben van.
 - **A futó programokat** (Outlook, Word, Excel, Chrome, Edge, Sticky Notes) bezárást kéri, mert zárolhatják a fájlokat.
 - **A végén összegzés** és egy színes sáv: zöld = kész, piros = valami hibás.
-- **Időtartam**: pár perc, a PST-k méretétől függően több.
+- **Időtartam**: pár perc, nagy C:\TEMP mappánál több.
+- **A C:\TEMP mappa átugorható**: mentés előtt kiírja, hány fájl és mekkora. Ha a másolása túl sokáig tart,
+  **K** – a félbemaradt fájl törlődik, a többi lépés megy tovább, a `_TEENDOK.txt`-be pedig bekerül.
 - **Újrafuttatható**: a meglévő mentés frissül, semmi nem törlődik.
 - **Ha a Chrome már futott** az új gépen, rákérdez, átírhatja-e a profillistát (az ott mentett jelszavak,
   sütik elveszhetnek; a régit `Local State.regi` néven megtartja).
@@ -65,15 +66,16 @@ A mentés mappája: `<meghajtó>:\Mentes\<felhasználó>_<gép>\`
 | `_VISSZAALLITAS_…txt` | a visszaállítás összegzése |
 | `mentes_naplo.txt`, `visszaallitas_naplo.txt` | részletes napló, hiba esetén ide nézz |
 | `apps.txt`, `talca.txt`, `outlook_lista.txt` | listák a kézi lépésekhez |
-| `Tanusitvanyok\lista.txt` | a mentett tanúsítványok |
+| `talca.png` | kép a tálcáról – az ikonok sorrendje is látszik |
 
 ## Ami továbbra is manuális
 
 A `_TEENDOK.txt` ezeket pipálható listában adja:
 
-- **Tálcaikonok** újrarögzítése – `talca.txt` alapján (Windows 11 nem engedi scriptből).
+- **Tálcaikonok** újrarögzítése – `talca.txt` és `talca.png` alapján (Windows 11 nem engedi scriptből).
 - **Outlook**: PST-k csatolása (`outlook_lista.txt`), további postaládák, feladócímek, fiókok, alapértelmezett aláírás.
-- **Archive PST-k** mentése.
+- **PST-k** átmásolása – a helyüket a mentés előtt kiírja, és az `outlook_lista.txt`-ben is megvan.
+- **Tanúsítványok** (certmgr.msc – Személyes) – a segédlet nem menti őket.
 - **Letöltések** és a felhasználó **saját mappái** – a segédlet nem menti.
 - **Böngészőben mentett jelszavak**
 - **Programok** telepítése az `apps.txt` alapján.

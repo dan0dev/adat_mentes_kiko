@@ -24,10 +24,13 @@ if not exist "%TODO%" (
     echo.
     echo RÉGI GÉP
     echo [ ] Outlook: további postaládák, Feladó címek, további fiókok – outlook_lista.txt
-    echo [ ] Tálca ikonjai – talca.txt
+    echo [ ] Tálca ikonjai – talca.txt, talca.png
+    echo [ ] PST-k átmásolása kézzel – outlook_lista.txt
+    echo [ ] Tanúsítványok: certmgr.msc – Személyes, kézzel
     echo [ ] Böngészőben mentett jelszavak
 )
 for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
+call :ATUGORVA_SOROK
 call :IMPORT_RESZ
 goto :eof
 
@@ -35,16 +38,16 @@ goto :eof
 >>"%TODO%" (
     echo.
     echo ÚJ GÉP
-    echo [ ] 3 Visszaállítás, laptopnál 4 Laptop
-    echo [ ] 5 Alapértelmezett alkalmazások, ki- és bejelentkezés, 5 ellenőrzés
-    echo [ ] Tanúsítványok: certmgr.msc – Személyes, ellenőrzés
+    echo [ ] 2 Visszaállítás, laptopnál 3 Laptop
+    echo [ ] 4 Alapértelmezett alkalmazások, ki- és bejelentkezés, 4 ellenőrzés
+    echo [ ] Tanúsítványok: telepítés kézzel
     echo [ ] Outlook: PST-k csatolása – outlook_lista.txt
     echo [ ] Outlook: postaládák, feladók, fiókok
     echo [ ] Outlook: alapértelmezett aláírás
     echo [ ] Chrome, Edge: profilok, könyvjelzők, újra bejelentkezés
     echo [ ] Sticky Notes
     echo [ ] Programok: apps.txt összevetése, hiányzók telepítése
-    echo [ ] Tálca ikonjai újra – talca.txt
+    echo [ ] Tálca ikonjai újra – talca.txt, talca.png
     echo [ ] Start menü: hiányzó rögzítések kézzel
     echo [ ] Minden rendben: mentés törlése a meghajtóról
 )
@@ -73,9 +76,17 @@ if not exist "%TODO%" (
 )
 >>"%TODO%" echo.
 >>"%TODO%" echo VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME%
-if %DB_HIBA%==0 (
+set /a _gond=DB_HIBA+DB_ATUGORVA
+if %_gond%==0 (
     >>"%TODO%" echo Minden tétel rendben
 ) else (
     for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
+    call :ATUGORVA_SOROK
 )
+goto :eof
+
+:ATUGORVA_SOROK
+rem A masolas kozben atugrott tetelek (K billentyu) - ezeket kezzel kell atnezni
+if "%DB_ATUGORVA%"=="0" goto :eof
+for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="KIHAGYVA" if "!M_%%i!"=="átugorva" >>"%TODO%" echo [ ] ÁTUGORVA: !NEV_%%i! – kézzel nézd át
 goto :eof

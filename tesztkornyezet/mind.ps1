@@ -31,25 +31,12 @@ foreach ($v in $sorrend) {
         $arg.Mentes = "$d\alap\mentes_regi"
         $mappa = "$env:TEMP\pm_teszt\kulso\Mentes\mentes_regi"
     }
-    # Tanusitvanyok: mentes elott a harom teszt tanusitvany (kulcsos, nem exportalhato, nyilvanos),
-    # visszaallitas elott ures tarolo - utana csak a nyilvanos kell ott legyen
-    if ($v -eq 'mentes') { & "$d\profil_feltolt.ps1" -CsakTanusitvany }
-    if ($v -eq 'visszaallitas') { & "$d\profil_feltolt.ps1" -TanusitvanyUrit }
     $atirat = & "$d\futtat.ps1" @arg
     if ($v -eq 'mentes') {
         $ch = "$mappa\Chrome_mentes\Default"
         foreach ($f in 'Bookmarks', 'History', 'History Provider Cache', 'Preferences') {
             if (-not (Test-Path -LiteralPath "$ch\$f")) { $gond.Add("Chrome: hianyzik a mentesbol: Default\$f") }
         }
-        $tan = @(Get-ChildItem "$mappa\Tanusitvanyok\PmTeszt" -File -ErrorAction SilentlyContinue)
-        if (@($tan | Where-Object Extension -ne '.cer').Count) { $gond.Add('tanusitvany: nem csak .cer') }
-        if (@($tan | Where-Object Extension -eq '.cer').Count -ne 1) { $gond.Add('tanusitvany: nem 1 .cer') }
-        if (-not (Test-Path "$mappa\Tanusitvanyok\lista.txt")) { $gond.Add('tanusitvany: nincs lista.txt') }
-    }
-    if ($v -eq 'visszaallitas') {
-        $vissza = @(Get-ChildItem Cert:\CurrentUser\PmTeszt)
-        if ($vissza.Count -ne 1) { $gond.Add("tanusitvany: visszaallitas utan $($vissza.Count) db, nem 1") }
-        if (@($vissza | Where-Object HasPrivateKey).Count) { $gond.Add('tanusitvany: kulcsos is visszaallt') }
     }
     if ($v -eq 'regi_mentes') {
         $todo = "$mappa\_LEFT-TO-DO.txt"
@@ -81,7 +68,5 @@ foreach ($v in $sorrend) {
     }
     if ($gond.Count) { $hibak++; "FAIL  $v"; $gond | ForEach-Object { "      $_" } } else { "ok    $v" }
 }
-# A teszt tanusitvanyok es kulcsaik ne maradjanak a gepen
-& "$d\profil_feltolt.ps1" -TanusitvanyUrit
 "Hibas forgatokonyvek: $hibak / $($sorrend.Count)"
 exit $hibak

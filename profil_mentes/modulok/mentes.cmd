@@ -22,6 +22,8 @@ cls
 echo.
 echo   Mentendő tételek:
 %TETELEK% :LISTA "Programlista" "Tálcaikonok listája" "Outlook-lista"
+echo.
+echo   !C_SARGA!A tanúsítványokat és a PST-ket a segédlet nem menti – kézzel intézd.!C_0!
 if exist "%CEL%\" (
     echo.
     echo   !C_SARGA!Ennek a gépnek már van mentése: a meglévő fájlok frissülnek,!C_0!

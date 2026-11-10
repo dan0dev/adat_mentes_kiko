@@ -85,7 +85,7 @@ if defined DESK call set "DESK=%DESK%"
 if not defined DESK set "DESK=%USERPROFILE%\Desktop"
 
 rem ---------- Szamlalok ----------
-set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0
+set /a OSSZES=0, LEPES=0, DB_OK=0, DB_HIBA=0, DB_KIHAGY=0, DB_ATUGORVA=0
 set /a DO_IKON=0, DO_BL=0, DO_FEDEL=0
 set "AA_MOD="
 set "AA_OK=0"
