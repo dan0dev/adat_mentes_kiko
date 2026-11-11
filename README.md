@@ -1,6 +1,6 @@
 # Eszközcsere segédlet
 
-**Verzió: 1.0** · **Készítette: Kakuk Dániel**
+**Verzió: 1.1** · **Készítette: Kakuk Dániel**
 
 Felhasználói adatok mentése és visszaállítása eszközcseréhez (Windows 10/11).
 
