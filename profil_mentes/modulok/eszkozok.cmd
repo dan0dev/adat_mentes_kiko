@@ -9,6 +9,14 @@ rem ==========================================================
 
 set "LOG=%TEMP%\eszkozok_naplo.txt"
 if "%ADMIN%"=="1" goto :ES_MENU
+rem A rendszergazdai ablakban vagyunk, megis normal jog latszik: nem nyitunk ujabb ablakot,
+rem kulonben vegtelenul nyilnanak egymas utan.
+if "%ES_EMELT_ABLAK%"=="1" (
+    cls
+    %UI% :CIM "Rendszergazdai eszközök"
+    echo   !C_SARGA!Ez az ablak nem kapott rendszergazdai jogot – újabb ablakot nem nyitok.!C_0!
+    exit /b 2
+)
 
 rem ---------- Rendszergazdai ablak megnyitasa ----------
 rem A Windows jelszokeroje maga a megerosites - kulon kerdes nincs
