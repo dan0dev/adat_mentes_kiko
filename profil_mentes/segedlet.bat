@@ -105,6 +105,15 @@ set "OL_PST="
 
 set "ADMIN=0"
 net session >nul 2>&1 && set "ADMIN=1"
+rem A net session a Kiszolgalo (Server) szolgaltatast igenyli - ahol az ki van kapcsolva,
+rem rendszergazdakent is hibat ad. Ilyenkor a folyamat integritasi szintje dont:
+rem S-1-16-12288 = magas szint, vagyis emelt (rendszergazdai) ablak.
+if "%ADMIN%"=="0" (
+    whoami /groups 2>nul | find "S-1-16-12288" >nul && set "ADMIN=1"
+)
+rem ESZKOZOK parameter: ez mar a megnyitott rendszergazdai ablak - innen soha nem nyitunk ujat
+set "ES_EMELT_ABLAK="
+if /I "%~1"=="ESZKOZOK" set "ES_EMELT_ABLAK=1"
 rem Tesztkornyezet: a rendszergazdai agak kiprobalasa rendszergazdai jog nelkul
 if defined PM_TESZT_ADMIN set "ADMIN=%PM_TESZT_ADMIN%"
 

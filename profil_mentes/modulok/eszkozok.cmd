@@ -9,6 +9,10 @@ rem ==========================================================
 
 set "LOG=%TEMP%\eszkozok_naplo.txt"
 if "%ADMIN%"=="1" goto :ES_MENU
+rem A megnyitott rendszergazdai ablakban vagyunk, megis normal jog latszik (pl. a cegnel a
+rem megadott fiok nem teljes rendszergazda): nem nyitunk ujabb ablakot - kulonben vegtelenul
+rem nyilnanak egymas utan -, hanem a menu jon, a megadott fiok jogaival.
+if "%ES_EMELT_ABLAK%"=="1" goto :ES_MENU
 
 rem ---------- Rendszergazdai ablak megnyitasa ----------
 rem A Windows jelszokeroje maga a megerosites - kulon kerdes nincs
@@ -28,6 +32,10 @@ title Eszközcsere segédlet %VERZIO% – Rendszergazdai eszközök
 :ES_RAJZ
 cls
 %UI% :CIM "Rendszergazdai eszközök"
+if not "%ADMIN%"=="1" (
+    echo   !C_SARGA!Ez az ablak nem kapott teljes rendszergazdai jogot – egyes eszközök hibát adhatnak.!C_0!
+    echo.
+)
 %UI% :SZAKASZ "WIN+R PARANCSOK"
 echo.
 for /l %%i in (1,1,%ES_DB%) do call :ES_SOR %%i
