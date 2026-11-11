@@ -40,7 +40,7 @@ csatolt PST-k helye (`outlook_lista.txt`), a nyomtatók és a hálózati meghajt
 **A régi gépen**
 
 1. Dupla kattintás: `Eszkozcsere_segedlet.bat`
-2. **1** → a külső meghajtó betűjele (a felismert már ott áll – Enter, vagy rögtön írd a másikat) → **Indulhat a mentés? I**
+2. **1** → a külső meghajtó betűjele (a D már ott áll – Enter, vagy rögtön írd a másikat) → **Indulhat a mentés? I**
 3. A végén egy kérdés: megnyissa-e a teendőket és a mappát – utána vissza a menübe. Kilépés: **X**.
 
 **Az új gépen**

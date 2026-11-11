@@ -31,41 +31,10 @@ exit /b 0
 :MEGHAJTO
 rem Kulso meghajto betujel bekerese.  Kimenet: DRIVE, IRHATO, ROOT
 rem %1 = KELL: csak irhato meghajto fogadhato el - mentesnel
-rem A felismert kulso meghajto - ps\meghajto.ps1 - alapertek: Enterre azt hasznalja, de
-rem mas betu is beirhato. Ha nem talal kulsot, mentesnel nincs alapertek - a betut be kell irni.
-rem Mentesnel, ha a valasztott meghajto nem kulso (belso lemez, halozat), egyszer rakerdez -
-rem akkor is, ha mar van rajta mentes: egy belso D:\Mentes miatt se keruljon a mentes
-rem kerdes nelkul a regi gep sajat lemezere. Visszaallitasnal a nem kulso, de mentest
-rem tartalmazo meghajto is lehet alapertek, ha kulso nincs.
+rem Alapertek a D - Enterre azt hasznalja, de mas betu is beirhato. Ha a rendszer a D-n van,
+rem nincs alapertek.
 set "M_ALAP="
-set "M_BALAP="
-set "M_DB=0"
-set "M_BDB=0"
-rem A # miatt a lista sosem ures - ures valtozon a cmd betucsereje nem mukodik
-set "M_LISTA=#"
-set "PS_FAJL=%PSDIR%\meghajto.ps1"
-for /f "tokens=1-5 delims=|" %%a in ('%PS_FUTTAT% 2^>nul') do (
-    set "_mc=%%b"
-    if "!_mc!"=="-" set "_mc=címke nélkül"
-    set "_mm="
-    if "%%d"=="1" set "_mm=, már van rajta mentés"
-    if "%%e"=="1" (
-        if not defined M_ALAP set "M_ALAP=%%a"
-        set "M_LISTA=!M_LISTA!%%a"
-        set /a M_DB+=1
-        if !M_DB!==1 echo.
-        if !M_DB!==1 echo   Felismert külső meghajtó:
-        echo     !C_FEHER!%%a:!C_0!  !_mc!, %%c GB!_mm!
-    ) else (
-        if not defined M_BALAP set "M_BALAP=%%a"
-        set /a M_BDB+=1
-        if !M_BDB!==1 echo.
-        if !M_BDB!==1 echo   !C_SARGA!Nem külső meghajtó – belső lemez vagy hálózat –, de van rajta mentés:!C_0!
-        echo     !C_FEHER!%%a:!C_0!  !_mc!, %%c GB
-    )
-)
-rem Visszaallitasnal - ha kulso nincs - a mentest tartalmazo meghajto az alapertek; mentesnel soha
-if not defined M_ALAP if /I not "%~1"=="KELL" set "M_ALAP=%M_BALAP%"
+if /I not "%SystemDrive%"=="D:" set "M_ALAP=D"
 :MEGHAJTO_BEKER
 echo.
 %UI% :BEKER DRIVE "A külső meghajtó betűjele:" "%M_ALAP%"
@@ -102,13 +71,6 @@ if "%IRHATO%"=="0" if /I "%~1"=="KELL" (
     echo   !C_PIROS!A kiválasztott meghajtó nem írható: !DRIVE!:!C_0!
     echo   !C_PIROS!Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót.!C_0!
     goto :MEGHAJTO_BEKER
-)
-rem Mentes belso lemezre: egy Enterrel a regi gep sajat lemezere kerulne a mentes
-set "_ml=!M_LISTA:%DRIVE%=!"
-if /I "%~1"=="KELL" if "!_ml!"=="!M_LISTA!" (
-    echo   !C_SARGA!A %DRIVE%: nem külső meghajtó – belső lemez vagy hálózat.!C_0!
-    %UI% :VALASZT IN "Biztosan erre mentsek?"
-    if errorlevel 2 goto :MEGHAJTO_BEKER
 )
 set "ROOT=%DRIVE%:\%MAPPA_NEV%"
 exit /b 0

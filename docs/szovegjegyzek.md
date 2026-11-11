@@ -1,6 +1,6 @@
-# Szövegjegyzék – Eszközcsere segédlet 1.0
+# Szövegjegyzék – Eszközcsere segédlet 1.1
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 10. – 506 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 11. – 503 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -53,39 +53,35 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ellenorzes.cmd:23` | Rendszergazdai fiók:  %USERNAME% |
 | `lib\ellenorzes.cmd:24` | Bejelentkezve:        !BEJ! |
 | `lib\ellenorzes.cmd:26` | Így a rendszergazda adataival dolgozna – indítsd sima dupla kattintással. |
-| `lib\ellenorzes.cmd:49` | címke nélkül |
-| `lib\ellenorzes.cmd:51` | , már van rajta mentés |
-| `lib\ellenorzes.cmd:71` | A külső meghajtó betűjele: |
-| `lib\ellenorzes.cmd:83` | Csak egy betűt adj meg, pl. E. |
-| `lib\ellenorzes.cmd:88` | A rendszermeghajtó nem lehet a külső meghajtó. |
-| `lib\ellenorzes.cmd:92` | Nincs ilyen meghajtó: !DRIVE!: – csatlakoztatva van a külső meghajtó? |
-| `lib\ellenorzes.cmd:102` | A kiválasztott meghajtó nem írható: !DRIVE!: |
-| `lib\ellenorzes.cmd:103` | Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót. |
-| `lib\ellenorzes.cmd:109` | A %DRIVE%: nem külső meghajtó – belső lemez vagy hálózat. |
-| `lib\ellenorzes.cmd:110` | Biztosan erre mentsek? |
-| `lib\ellenorzes.cmd:130` | Még fut:!FUTO! |
-| `lib\ellenorzes.cmd:131` | A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes |
-| `lib\ellenorzes.cmd:132` | a háttérben is futhat. |
-| `lib\ellenorzes.cmd:134` | U – újraellenőrzés    B – bezárás    F – folytatás így |
-| `lib\ellenorzes.cmd:135` | Válassz: |
-| `lib\ellenorzes.cmd:141` | Bezárás… Ha az Outlook, a Word vagy az Excel kérdez, válaszolj. |
-| `lib\ellenorzes.cmd:155` | Nem zárult be mind. Ha valamelyik kérdez, például |
-| `lib\ellenorzes.cmd:156` | mentést, válaszolj, majd U. |
-| `lib\ellenorzes.cmd:157` | Kényszerített bezárásnál a nem mentett munka elvész. Az Outlookot csak |
-| `lib\ellenorzes.cmd:158` | végső esetben zárd be így. |
-| `lib\ellenorzes.cmd:159` | U – újraellenőrzés    K – kényszerített bezárás    F – folytatás így |
-| `lib\ellenorzes.cmd:160` | Válassz: |
-| `lib\ellenorzes.cmd:187` | A helyellenőrzés nem futott le, folytatom nélküle. |
-| `lib\ellenorzes.cmd:193` | Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: !H_FS! |
-| `lib\ellenorzes.cmd:196` | !K_NEV!: !H_KDB! fájl, !H_KMERET! – másolás közben K-val átugorható. |
-| `lib\ellenorzes.cmd:200` | Nincs elég hely ezen a meghajtón: !PS_BETU! |
-| `lib\ellenorzes.cmd:201` | M – megszakítás    F – folytatás így |
-| `lib\ellenorzes.cmd:202` | Válassz: |
-| `lib\ellenorzes.cmd:209` | Van 4 GB-nál nagyobb fájl – FAT32-re nem másolható. |
-| `lib\ellenorzes.cmd:210` | Formázd exFAT-ra vagy NTFS-re, vagy válassz másik meghajtót. |
-| `lib\ellenorzes.cmd:211` | M – megszakítás    F – folytatás így |
-| `lib\ellenorzes.cmd:212` | Válassz: |
-| `lib\ellenorzes.cmd:217` | Hely rendben. |
+| `lib\ellenorzes.cmd:40` | A külső meghajtó betűjele: |
+| `lib\ellenorzes.cmd:52` | Csak egy betűt adj meg, pl. E. |
+| `lib\ellenorzes.cmd:57` | A rendszermeghajtó nem lehet a külső meghajtó. |
+| `lib\ellenorzes.cmd:61` | Nincs ilyen meghajtó: !DRIVE!: – csatlakoztatva van a külső meghajtó? |
+| `lib\ellenorzes.cmd:71` | A kiválasztott meghajtó nem írható: !DRIVE!: |
+| `lib\ellenorzes.cmd:72` | Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót. |
+| `lib\ellenorzes.cmd:92` | Még fut:!FUTO! |
+| `lib\ellenorzes.cmd:93` | A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes |
+| `lib\ellenorzes.cmd:94` | a háttérben is futhat. |
+| `lib\ellenorzes.cmd:96` | U – újraellenőrzés    B – bezárás    F – folytatás így |
+| `lib\ellenorzes.cmd:97` | Válassz: |
+| `lib\ellenorzes.cmd:103` | Bezárás… Ha az Outlook, a Word vagy az Excel kérdez, válaszolj. |
+| `lib\ellenorzes.cmd:117` | Nem zárult be mind. Ha valamelyik kérdez, például |
+| `lib\ellenorzes.cmd:118` | mentést, válaszolj, majd U. |
+| `lib\ellenorzes.cmd:119` | Kényszerített bezárásnál a nem mentett munka elvész. Az Outlookot csak |
+| `lib\ellenorzes.cmd:120` | végső esetben zárd be így. |
+| `lib\ellenorzes.cmd:121` | U – újraellenőrzés    K – kényszerített bezárás    F – folytatás így |
+| `lib\ellenorzes.cmd:122` | Válassz: |
+| `lib\ellenorzes.cmd:149` | A helyellenőrzés nem futott le, folytatom nélküle. |
+| `lib\ellenorzes.cmd:155` | Szükséges kb. !H_KELL_TXT!    Szabad: !H_SZABAD_TXT!    Fájlrendszer: !H_FS! |
+| `lib\ellenorzes.cmd:158` | !K_NEV!: !H_KDB! fájl, !H_KMERET! – másolás közben K-val átugorható. |
+| `lib\ellenorzes.cmd:162` | Nincs elég hely ezen a meghajtón: !PS_BETU! |
+| `lib\ellenorzes.cmd:163` | M – megszakítás    F – folytatás így |
+| `lib\ellenorzes.cmd:164` | Válassz: |
+| `lib\ellenorzes.cmd:171` | Van 4 GB-nál nagyobb fájl – FAT32-re nem másolható. |
+| `lib\ellenorzes.cmd:172` | Formázd exFAT-ra vagy NTFS-re, vagy válassz másik meghajtót. |
+| `lib\ellenorzes.cmd:173` | M – megszakítás    F – folytatás így |
+| `lib\ellenorzes.cmd:174` | Válassz: |
+| `lib\ellenorzes.cmd:179` | Hely rendben. |
 | `lib\eszkozok.cmd:19` | A rendszergazdai ablak nem nyílt meg. |
 | `lib\eszkozok.cmd:22` | Tesztkörnyezet – a rendszergazdai ablak nem nyílik meg. |
 | `lib\eszkozok.cmd:62` | !_en! (!_ep!) – ezen a gépen nincs meg. |
@@ -335,26 +331,27 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\chrome.cmd:26` | Letöltés |
 | `modulok\chrome.cmd:28` | Telepítés |
 | `modulok\chrome.cmd:32` | a letöltés nem sikerült |
-| `modulok\eszkozok.cmd:16` | Rendszergazdai eszközök |
-| `modulok\eszkozok.cmd:17` | Külön rendszergazdai ablak nyílik – a Windows egyszer kéri a jelszót. |
-| `modulok\eszkozok.cmd:21` | !ES_EMELES_UZENET! |
-| `modulok\eszkozok.cmd:30` | Rendszergazdai eszközök |
-| `modulok\eszkozok.cmd:31` | WIN+R PARANCSOK |
-| `modulok\eszkozok.cmd:35` | HÁLÓZAT |
-| `modulok\eszkozok.cmd:37` | Hálózati teszt |
-| `modulok\eszkozok.cmd:37` | router, DNS, ping, weboldal – naplóba |
-| `modulok\eszkozok.cmd:38` | Hálózat helyreállítása |
-| `modulok\eszkozok.cmd:38` | ipconfig, netsh – utána újraindítás |
-| `modulok\eszkozok.cmd:40` | JAVÍTÁS |
-| `modulok\eszkozok.cmd:42` | Rendszerfájlok javítása |
-| `modulok\eszkozok.cmd:42` | DISM, sfc /scannow |
-| `modulok\eszkozok.cmd:43` | Lemezellenőrzés |
-| `modulok\eszkozok.cmd:43` | chkdsk /f /r – újraindításkor fut |
-| `modulok\eszkozok.cmd:45` | Kilépés |
-| `modulok\eszkozok.cmd:49` | Válassz: |
-| `modulok\eszkozok.cmd:76` | !ES_K_%~1! |
-| `modulok\eszkozok.cmd:76` | !ES_P_%~1! |
-| `modulok\eszkozok.cmd:76` | !ES_N_%~1! |
+| `modulok\eszkozok.cmd:20` | Rendszergazdai eszközök |
+| `modulok\eszkozok.cmd:21` | Külön rendszergazdai ablak nyílik – a Windows egyszer kéri a jelszót. |
+| `modulok\eszkozok.cmd:25` | !ES_EMELES_UZENET! |
+| `modulok\eszkozok.cmd:34` | Rendszergazdai eszközök |
+| `modulok\eszkozok.cmd:36` | Ez az ablak nem kapott teljes rendszergazdai jogot – egyes eszközök hibát adhatnak. |
+| `modulok\eszkozok.cmd:39` | WIN+R PARANCSOK |
+| `modulok\eszkozok.cmd:43` | HÁLÓZAT |
+| `modulok\eszkozok.cmd:45` | Hálózati teszt |
+| `modulok\eszkozok.cmd:45` | router, DNS, ping, weboldal – naplóba |
+| `modulok\eszkozok.cmd:46` | Hálózat helyreállítása |
+| `modulok\eszkozok.cmd:46` | ipconfig, netsh – utána újraindítás |
+| `modulok\eszkozok.cmd:48` | JAVÍTÁS |
+| `modulok\eszkozok.cmd:50` | Rendszerfájlok javítása |
+| `modulok\eszkozok.cmd:50` | DISM, sfc /scannow |
+| `modulok\eszkozok.cmd:51` | Lemezellenőrzés |
+| `modulok\eszkozok.cmd:51` | chkdsk /f /r – újraindításkor fut |
+| `modulok\eszkozok.cmd:53` | Kilépés |
+| `modulok\eszkozok.cmd:57` | Válassz: |
+| `modulok\eszkozok.cmd:84` | !ES_K_%~1! |
+| `modulok\eszkozok.cmd:84` | !ES_P_%~1! |
+| `modulok\eszkozok.cmd:84` | !ES_N_%~1! |
 | `modulok\frissites.cmd:10` | Segédlet frissítése |
 | `modulok\frissites.cmd:11` | A legújabb verzió a GitHubról – internet kell; a mentésekhez nem nyúl. |
 | `modulok\frissites.cmd:16` | Ez a fejlesztői példány, git-mappában – itt a git-tel frissíts. |
@@ -415,16 +412,16 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:128` | Office-parancsikonok |
 | `modulok\visszaallitas.cmd:134` | A Fájlkezelő újraindul, egy pillanat… |
 | `segedlet.bat:17` | Kakuk Dániel |
-| `segedlet.bat:120` | Válassz menüpontot [1–6], kilépés: X |
-| `segedlet.bat:129` | Adatok mentése |
-| `segedlet.bat:130` | Adatok visszaállítása |
-| `segedlet.bat:131` | BitLocker beállítása |
-| `segedlet.bat:132` | Chrome telepítése |
-| `segedlet.bat:133` | Rendszergazdai eszközök |
-| `segedlet.bat:134` | Segédlet frissítése |
-| `segedlet.bat:166` | Nem indult el – az okát fent látod. |
-| `segedlet.bat:168` | Vissza a menübe: nyomj meg egy billentyűt… |
-| `segedlet.bat:174` | Vissza a menübe: nyomj meg egy billentyűt… |
+| `segedlet.bat:129` | Válassz menüpontot [1–6], kilépés: X |
+| `segedlet.bat:138` | Adatok mentése |
+| `segedlet.bat:139` | Adatok visszaállítása |
+| `segedlet.bat:140` | BitLocker beállítása |
+| `segedlet.bat:141` | Chrome telepítése |
+| `segedlet.bat:142` | Rendszergazdai eszközök |
+| `segedlet.bat:143` | Segédlet frissítése |
+| `segedlet.bat:175` | Nem indult el – az okát fent látod. |
+| `segedlet.bat:177` | Vissza a menübe: nyomj meg egy billentyűt… |
+| `segedlet.bat:183` | Vissza a menübe: nyomj meg egy billentyűt… |
 | `..\Eszkozcsere_segedlet.bat:13` | Nem találom a profil_mentes mappát ennek a fájlnak a mappájában: |
 | `..\Eszkozcsere_segedlet.bat:14` | %~dp0 |
 | `..\Eszkozcsere_segedlet.bat:15` | Az Eszkozcsere_segedlet.bat és a profil_mentes mappa legyen egymás mellett. |
