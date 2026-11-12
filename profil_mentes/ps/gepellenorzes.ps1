@@ -327,19 +327,63 @@ if ($cMeghajto) {
     }
 }
 
+# A C: meghajtót tartalmazó lemez sorszáma – az eseménynapló lemezhibáinál kell
+$rendszerLemez = $null
+if ($cMeghajto) {
+    $rendszerLemez = (Get-CimAssociatedInstance -InputObject $cMeghajto -ResultClassName Win32_DiskPartition |
+        Select-Object -First 1).DiskIndex
+}
+
 $fizikai = Get-PhysicalDisk | Select-Object FriendlyName, MediaType, BusType, HealthStatus,
     @{ n = 'Méret GB'; e = { [math]::Round($_.Size / 1GB) } }
 if ($fizikai) {
     Write-Log ''
     Write-Tabla $fizikai
     foreach ($d in $fizikai) {
-        if ($d.MediaType -eq 'HDD') {
+        # A külső (USB) HDD - pl. a mentéshez használt meghajtó - nem lassítja a gépet
+        if ($d.MediaType -eq 'HDD' -and "$($d.BusType)" -ne 'USB') {
             Add-Figyelmeztetes ("'{0}' hagyományos HDD – ez a legtöbb lassúság oka, SSD-csere javasolt." -f $d.FriendlyName)
         }
         if ($d.HealthStatus -and $d.HealthStatus -ne 'Healthy') {
             Add-Figyelmeztetes ("'{0}' állapota: {1}. Adatmentés és lemezcsere javasolt!" -f $d.FriendlyName, $d.HealthStatus) -Kritikus
         }
     }
+}
+
+# A lemezek saját hibaszámlálói (SMART) – csak rendszergazdaként olvashatók
+$lemezSzamlalok = @{}
+if ($IsAdmin) {
+    $szamlaloTabla = foreach ($pd in Get-PhysicalDisk) {
+        $r = $pd | Get-StorageReliabilityCounter
+        if (-not $r) { continue }
+        $lemezSzamlalok[[int]$pd.DeviceId] = $r
+        [pscustomobject]@{
+            'Lemez'            = $pd.DeviceId
+            'Név'              = $pd.FriendlyName
+            'Javíthatatlan olv.' = $r.ReadErrorsUncorrected
+            'Javíthatatlan írás' = $r.WriteErrorsUncorrected
+            'Kopás %'          = $r.Wear
+            'Hő °C'            = $r.Temperature
+            'Üzemóra'          = $r.PowerOnHours
+        }
+        $javithatatlan = [int64]$r.ReadErrorsUncorrected + [int64]$r.WriteErrorsUncorrected
+        if ($javithatatlan -gt 0) {
+            Add-Figyelmeztetes ("'{0}': {1} javíthatatlan olvasási/írási hiba a lemez saját számlálója szerint. Adatmentés és lemezcsere javasolt." -f $pd.FriendlyName, $javithatatlan) -Kritikus
+        }
+        if ($r.Wear -ge 80) {
+            Add-Figyelmeztetes ("'{0}': az SSD élettartamának {1}%-a elhasználódott – a cserét érdemes betervezni." -f $pd.FriendlyName, $r.Wear)
+        }
+        if ($r.Temperature -ge 70) {
+            Add-Figyelmeztetes ("'{0}' hőmérséklete {1} °C – magas, érdemes a szellőzést ellenőrizni." -f $pd.FriendlyName, $r.Temperature)
+        }
+    }
+    if ($szamlaloTabla) {
+        Write-Log ''
+        Write-Log '  A lemezek saját hibaszámlálói (SMART):'
+        Write-Tabla $szamlaloTabla
+    }
+} else {
+    Write-Log '  A lemezek saját hibaszámlálói (SMART) rendszergazdaként látszanak.' 'DarkGray'
 }
 
 $lemezPerf = Get-CimInstance Win32_PerfFormattedData_PerfDisk_PhysicalDisk -Filter "Name='_Total'"
@@ -475,10 +519,70 @@ if ($kekhalal.Count -gt 0) {
     Add-Figyelmeztetes ("{0} kékhalál az elmúlt 30 napban – driver- vagy hardverhiba gyanú." -f $kekhalal.Count) -Kritikus
 }
 
+# A három esemény súlya nagyon különböző:
+#   7   rossz blokk – valódi figyelmeztető jel
+#   51  hiba lapozás közben – gyakran átmeneti (alvó mód, illesztőprogram, kihúzott eszköz)
+#   153 újrapróbált I/O-művelet – gyakori, többnyire ártalmatlan
+# A 'disk' forrás minden lemezt figyel, az USB-s meghajtókat is: egy menet közben kihúzott
+# pendrive is hagy ilyen bejegyzést. Ezért lemezenként ítélünk: belső vagy külső, és milyen esemény.
 $lemezHiba = Get-Esemenyek @{ LogName = 'System'; ProviderName = 'disk'; Id = 7, 51, 153; StartTime = (Get-Date).AddDays(-30) }
-Write-Log ("  Lemezhibák (disk 7/51/153), utolsó 30 nap:           {0} db" -f $lemezHiba.Count)
+Write-Log ("  Lemez I/O-hibák (disk 7/51/153), utolsó 30 nap:      {0} db" -f $lemezHiba.Count)
 if ($lemezHiba.Count -gt 0) {
-    Add-Figyelmeztetes ("{0} lemezhiba-bejegyzés az elmúlt 30 napban – a lemez haldoklik, adatmentés javasolt!" -f $lemezHiba.Count) -Kritikus
+    $lemezAdat = @{}
+    foreach ($dd in Get-CimInstance Win32_DiskDrive) { $lemezAdat[[int]$dd.Index] = $dd }
+    $esemenyNev = @{ 7 = 'rossz blokk'; 51 = 'lapozási hiba'; 153 = 'újrapróbált I/O' }
+
+    # Melyik lemez: a bejegyzés adataiban \Device\Harddisk<N>\..., a 153-asnál a 3. adat a lemez sorszáma
+    $tetelek = foreach ($e in $lemezHiba) {
+        $adatok = @($e.Properties | ForEach-Object { "$($_.Value)" })
+        $szam = $null
+        $m = [regex]::Match(($adatok -join ' ') + ' ' + $e.Message, 'Harddisk(\d+)')
+        if ($m.Success) { $szam = [int]$m.Groups[1].Value }
+        elseif ($e.Id -eq 153 -and $adatok.Count -ge 3 -and $adatok[2] -match '^\d+$') { $szam = [int]$adatok[2] }
+        [pscustomobject]@{ Ido = $e.TimeCreated; Id = $e.Id; Lemez = $szam }
+    }
+
+    foreach ($cs in ($tetelek | Group-Object Lemez)) {
+        $szam = if ("$($cs.Name)" -match '^\d+$') { [int]$cs.Name } else { $null }
+        $dd = if ($null -ne $szam) { $lemezAdat[$szam] } else { $null }
+        # Külső: USB, cserélhető, vagy már nincs a gépben (kihúzták)
+        $kulso = ($null -ne $szam) -and ((-not $dd) -or "$($dd.InterfaceType)" -eq 'USB' -or "$($dd.MediaType)" -match 'External|Removable')
+        if ($dd) {
+            $modell = "$($dd.Model)".Trim()
+            $cimke = "$szam. lemez – $modell"
+            if ($kulso) { $cimke += ' (külső/USB)' } elseif ($szam -eq $rendszerLemez) { $cimke += ' (rendszerlemez)' }
+        } elseif ($null -ne $szam) {
+            $cimke = "$szam. lemez – már nincs csatlakoztatva, valószínűleg külső meghajtó"
+        } else {
+            $cimke = 'ismeretlen lemez'
+        }
+        $db  = $cs.Count
+        $db7 = @($cs.Group | Where-Object { $_.Id -eq 7 }).Count
+        $fajtak = ($cs.Group | Group-Object Id | Sort-Object { [int]$_.Name } | ForEach-Object {
+            '{0}× {1} (ID {2})' -f $_.Count, $esemenyNev[[int]$_.Name], $_.Name }) -join ', '
+        $utolso = ($cs.Group | Sort-Object Ido -Descending | Select-Object -First 1).Ido
+        Write-Log ("     {0}: {1}, legutóbb {2:yyyy-MM-dd HH:mm}" -f $cimke, $fajtak, $utolso) 'DarkGray'
+
+        # A lemez saját számlálója (ha rendszergazdaként olvasható) megerősíti vagy cáfolja
+        $r = if ($null -ne $szam) { $lemezSzamlalok[$szam] } else { $null }
+        $szamlaloRendben = $r -and ([int64]$r.ReadErrorsUncorrected + [int64]$r.WriteErrorsUncorrected) -eq 0
+
+        if ($kulso) {
+            if ($db7 -gt 0) {
+                Add-Figyelmeztetes ("Rossz blokk a külső meghajtón: {0}. Ha mentéshez használod, érdemes ellenőrizni vagy cserélni." -f $cimke)
+            } else {
+                Write-Log '  i  Külső meghajtó bejegyzése – a gép belső lemezét nem érinti (pl. menet közben kihúzott pendrive).' 'DarkGray'
+            }
+        } elseif ($db7 -gt 0) {
+            Add-Figyelmeztetes ("Rossz blokk ({0}×): {1}. Adatmentés és a lemez ellenőrzése javasolt (gyártói diagnosztika)." -f $db7, $cimke) -Kritikus
+        } elseif ($db -ge 5) {
+            Add-Figyelmeztetes ("Ismétlődő I/O-hibák ({0} db 30 nap alatt): {1}. Adatmentés és a lemez ellenőrzése javasolt." -f $db, $cimke) -Kritikus
+        } else {
+            $szoveg = "{0} lemez-I/O figyelmeztetés: {1}. Egyszeri előfordulás gyakran ártalmatlan (alvó mód, illesztőprogram) – ha ismétlődik, érdemes megnézni." -f $db, $cimke
+            if ($szamlaloRendben) { $szoveg += ' A lemez saját számlálója szerint nincs javíthatatlan hiba.' }
+            Add-Figyelmeztetes $szoveg
+        }
+    }
 }
 
 # =====================================================================
