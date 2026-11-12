@@ -30,6 +30,7 @@ echo.
 echo.
 %UI% :MENU 5 "Rendszergazdai eszközök" "Win+R parancsok, hálózat, javítás"
 %UI% :MENU 6 "Segédlet frissítése" "a legújabb verzió a GitHubról"
+%UI% :MENU 7 "Gép ellenőrzése" "teljesítmény, hő, lemez, akku"
 echo.
 %UI% :LABLEC NYITO
 echo.

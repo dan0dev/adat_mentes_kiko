@@ -18,6 +18,7 @@ címsorában látszik.
 | **4 Chrome telepítése** | új gép | ha a Szoftverközpont nem indítja el a letöltést: a legfrissebb Chrome a Google oldaláról, rendszergazdai jelszóval |
 | **5 Rendszergazdai eszközök** | bármelyik | Win+R parancsok (Eszközkezelő, Nyomtatáskezelés…), hálózati teszt naplóval, hálózat helyreállítása, rendszerfájlok javítása, lemezellenőrzés – külön rendszergazdai ablakban, a jelszót egyszer kell megadni |
 | **6 Segédlet frissítése** | bármelyik | a legújabb változat a GitHubról – letölti, a segédlet bezárása után lecseréli a fájlokat, és újraindul |
+| **7 Gép ellenőrzése** | bármelyik | ha lassú vagy melegszik a gép: hő, CPU-terhelés és a legtöbbet fogyasztó programok, memória, lemez (SSD/HDD, állapot), energiaséma, akkukopás, automatikusan induló programok, eseménynapló (fojtás, váratlan leállás, kékhalál) – a napló a `naplok\gepellenorzes` mappába kerül. Van megfigyelő mód is (pl. 10 percig méri a hőt és a terhelést) – a parancsot a menüpont végén írja ki |
 
 **Amit ment és visszaállít** – a teljes lista helyekkel és a kézi teendőkkel: [MIT_MENT.md](MIT_MENT.md)
 

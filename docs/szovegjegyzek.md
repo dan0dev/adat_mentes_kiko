@@ -412,7 +412,7 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:128` | Office-parancsikonok |
 | `modulok\visszaallitas.cmd:134` | A Fájlkezelő újraindul, egy pillanat… |
 | `segedlet.bat:17` | Kakuk Dániel |
-| `segedlet.bat:129` | Válassz menüpontot [1–6], kilépés: X |
+| `segedlet.bat:129` | Válassz menüpontot [1–7], kilépés: X |
 | `segedlet.bat:138` | Adatok mentése |
 | `segedlet.bat:139` | Adatok visszaállítása |
 | `segedlet.bat:140` | BitLocker beállítása |

@@ -62,7 +62,7 @@ a `lib\tipusok\FAJL.cmd`-ben pedig egy `:UTANA_<név>` címke. Sikeres visszaál
 `ALAP` (mindig kell, ha telepítve van) vagy üres (csak ha a régi gépen kint volt), és a régi ikon más nevei.
 
 **Új menüpont** – új fájl a `modulok\` alá, plusz: egy `%UI% :MENU` sor a `lib\kezdokepernyo.cmd`-ben,
-egy betű a `segedlet.bat` `%UI% :VALASZT 123456` sorában, és egy sor a menüpont → modul táblába.
+egy betű a `segedlet.bat` `%UI% :VALASZT 1234567` sorában, és egy sor a menüpont → modul táblába.
 
 ## Szabályok a kódhoz
 

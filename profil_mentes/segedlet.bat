@@ -126,11 +126,11 @@ set "MOD="
 if /I "%~1"=="ESZKOZOK" set "MOD=5"
 if defined MOD goto :MENUPONT
 %KEZDO% :MUTAT
-%UI% :VALASZT 123456X "Válassz menüpontot [1–6], kilépés: X" N
+%UI% :VALASZT 1234567X "Válassz menüpontot [1–7], kilépés: X" N
 set "MOD=%errorlevel%"
 :MENUPONT
-rem X (7) vagy elfogyott bemenet (255): kilepes
-if %MOD% GEQ 7 goto :KILEPES
+rem X (8) vagy elfogyott bemenet (255): kilepes
+if %MOD% GEQ 8 goto :KILEPES
 
 rem Menupont -> nev es modul. Uj menupontnal: lib\kezdokepernyo.cmd, egy betu a VALASZT-ba, es egy sor ide.
 rem A tovabbi kod csak a MODUL valtozot nezi, a sorszamot nem.
@@ -141,6 +141,7 @@ if "%MOD%"=="3" set "MOD_NEV=BitLocker beállítása"         & set "MODUL=bitlo
 if "%MOD%"=="4" set "MOD_NEV=Chrome telepítése"            & set "MODUL=chrome"
 if "%MOD%"=="5" set "MOD_NEV=Rendszergazdai eszközök"      & set "MODUL=eszkozok"
 if "%MOD%"=="6" set "MOD_NEV=Segédlet frissítése"          & set "MODUL=frissites"
+if "%MOD%"=="7" set "MOD_NEV=Gép ellenőrzése"              & set "MODUL=gepellenorzes"
 if not defined MODUL goto :KILEPES
 call :MENUPONT_FUT
 if errorlevel 3 goto :KILEPES
