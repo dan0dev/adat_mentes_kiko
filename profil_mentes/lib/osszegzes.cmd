@@ -77,7 +77,7 @@ call :NAPLO_NEV
 %UI% :ADAT "Napló" "!NAPLO_NEV!"
 
 echo.
-%UI% :LABLEC TELJES
+%UI% :VONAL
 >>"%OSSZ_FAJL%" echo.
 >>"%OSSZ_FAJL%" echo Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO%
 

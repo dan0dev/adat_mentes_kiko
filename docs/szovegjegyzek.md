@@ -1,6 +1,6 @@
 # Szövegjegyzék – Eszközcsere segédlet 1.2.1
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 12. – 668 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 15. – 664 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -60,8 +60,8 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ellenorzes.cmd:71` | A kiválasztott meghajtó nem írható: !DRIVE!: |
 | `lib\ellenorzes.cmd:72` | Kapcsold ki az írásvédelmet, vagy válassz másik meghajtót. |
 | `lib\ellenorzes.cmd:92` | Még fut:!FUTO! |
-| `lib\ellenorzes.cmd:93` | A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes |
-| `lib\ellenorzes.cmd:94` | a háttérben is futhat. |
+| `lib\ellenorzes.cmd:93` | Az érintett programokat ajánlott bezárni a problémamentes mentés |
+| `lib\ellenorzes.cmd:94` | érdekében (nyomj B-t). |
 | `lib\ellenorzes.cmd:96` | U – újraellenőrzés    B – bezárás    F – folytatás így |
 | `lib\ellenorzes.cmd:97` | Válassz: |
 | `lib\ellenorzes.cmd:103` | Bezárás… Ha az Outlook, a Word vagy az Excel kérdez, válaszolj. |
@@ -81,7 +81,7 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ellenorzes.cmd:172` | Formázd exFAT-ra vagy NTFS-re, vagy válassz másik meghajtót. |
 | `lib\ellenorzes.cmd:173` | M – megszakítás    F – folytatás így |
 | `lib\ellenorzes.cmd:174` | Válassz: |
-| `lib\ellenorzes.cmd:179` | Hely rendben. |
+| `lib\ellenorzes.cmd:179` | Elegendő szabad hely. |
 | `lib\eszkozok.cmd:19` | A rendszergazdai ablak nem nyílt meg. |
 | `lib\eszkozok.cmd:22` | Tesztkörnyezet – a rendszergazdai ablak nem nyílik meg. |
 | `lib\eszkozok.cmd:62` | !_en! (!_ep!) – ezen a gépen nincs meg. |
@@ -231,27 +231,23 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\talca.cmd:40` | %TALCA_DB% ikon – talca.txt |
 | `lib\talca.cmd:46` | a PowerShell nem elérhető |
 | `lib\talca.cmd:53` | a kép nem menthető |
-| `lib\teendok.cmd:22` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\teendok.cmd:26` | RÉGI GÉP – kézzel, a segédlet ezeket nem tudja: |
-| `lib\teendok.cmd:27` | [ ] Outlook: további postaládák, feladócímek, fiókok – írd fel |
-| `lib\teendok.cmd:29` | [ ] Tanúsítványok kimentése: certmgr.msc – Személyes |
-| `lib\teendok.cmd:30` | [ ] Böngészőjelszavak: szinkron vagy export – nem kerülnek át |
-| `lib\teendok.cmd:38` | ÚJ GÉP |
-| `lib\teendok.cmd:39` | [ ] Segédlet: 2 Visszaállítás, 3 BitLocker |
-| `lib\teendok.cmd:40` | [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése |
-| `lib\teendok.cmd:41` | [ ] Alapértelmezett alkalmazások: Word, Excel, PowerPoint, PDF, Chrome |
-| `lib\teendok.cmd:42` | [ ] Tanúsítványok telepítése |
-| `lib\teendok.cmd:44` | [ ] Outlook: további postaládák, feladócímek, fiókok |
-| `lib\teendok.cmd:45` | [ ] Outlook: alapértelmezett aláírás kiválasztása |
-| `lib\teendok.cmd:46` | [ ] Chrome, Edge: bejelentkezés, jelszavak |
-| `lib\teendok.cmd:47` | [ ] Programok: a hiányzók telepítése – apps.txt |
-| `lib\teendok.cmd:48` | [ ] Nyomtatók, hálózati meghajtók: ami nem jött vissza – nyomtatok_meghajtok.txt |
-| `lib\teendok.cmd:49` | [ ] Tálcaikonok rögzítése – talca.txt, talca.png |
-| `lib\teendok.cmd:50` | [ ] Start menü: a hiányzó rögzítések |
-| `lib\teendok.cmd:51` | [ ] Ha minden rendben: a mentés törlése a meghajtóról |
-| `lib\teendok.cmd:67` | Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO% |
-| `lib\teendok.cmd:76` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
-| `lib\teendok.cmd:79` | Minden tétel rendben |
+| `lib\teendok.cmd:25` | RÉGI GÉP – kézzel, a segédlet ezeket nem tudja: |
+| `lib\teendok.cmd:26` | [ ] Outlook: további postaládák, feladócímek, fiókok |
+| `lib\teendok.cmd:28` | [ ] Tanúsítványok kimentése: certmgr.msc – Személyes |
+| `lib\teendok.cmd:29` | [ ] Böngészőjelszavak |
+| `lib\teendok.cmd:37` | ÚJ GÉP |
+| `lib\teendok.cmd:38` | [ ] Segédlet: 2 Visszaállítás, 3 BitLocker |
+| `lib\teendok.cmd:39` | [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése |
+| `lib\teendok.cmd:40` | [ ] Alapértelmezett alkalmazások |
+| `lib\teendok.cmd:41` | [ ] Tanúsítványok telepítése |
+| `lib\teendok.cmd:43` | [ ] Outlook: további postaládák, feladócímek, fiókok |
+| `lib\teendok.cmd:44` | [ ] Outlook: alapértelmezett aláírás kiválasztása |
+| `lib\teendok.cmd:45` | [ ] Chrome, Edge: bejelentkezés, jelszavak |
+| `lib\teendok.cmd:46` | [ ] Programok: a hiányzók telepítése – apps.txt |
+| `lib\teendok.cmd:47` | [ ] Nyomtatók, hálózati meghajtók: ami nem jött vissza – nyomtatok_meghajtok.txt |
+| `lib\teendok.cmd:48` | [ ] Tálcaikonok rögzítése – talca.txt, talca.png |
+| `lib\teendok.cmd:72` | VISSZAÁLLÍTÁS – %DATUM_SZEP% · %COMPUTERNAME% |
+| `lib\teendok.cmd:75` | Minden tétel rendben |
 | `lib\tetelek.cmd:23` | config\tetelek.cmd: ismeretlen típus: %~1 – %~2 |
 | `lib\tetelek.cmd:56` | a mentés nem érhető el |
 | `lib\tetelek.cmd:56` | A külső meghajtó lecsatlakozott? |
@@ -386,7 +382,7 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\mentes.cmd:20` | Adatok mentése – előkészítés |
 | `modulok\mentes.cmd:21` | Felhasználó |
 | `modulok\mentes.cmd:22` | Mentés helye |
-| `modulok\mentes.cmd:24` | Mentendő tételek: |
+| `modulok\mentes.cmd:24` | Mentésre kerülnek a következők: |
 | `modulok\mentes.cmd:27` | A tanúsítványokat és a PST-ket kézzel vidd át. |
 | `modulok\mentes.cmd:35` | A profil egy része most nem érhető el – a mentés hiányos lenne: |
 | `modulok\mentes.cmd:36` | !PROFIL_HIANY! |

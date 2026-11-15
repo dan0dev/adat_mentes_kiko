@@ -90,8 +90,8 @@ if not defined FUTO (
 )
 echo.
 echo   !C_SARGA!Még fut:!FUTO!!C_0!
-echo   A nyitott programok zárolhatják a fájlokat. Az Edge és a Sticky Notes
-echo   a háttérben is futhat.
+echo   Az érintett programokat ajánlott bezárni a problémamentes mentés
+echo   érdekében (nyomj B-t).
 if "%APP_PROBALT%"=="1" goto :APPOK_KENYSZER
 echo   U – újraellenőrzés    B – bezárás    F – folytatás így
 %UI% :VALASZT UBF "Válassz:"
@@ -176,5 +176,5 @@ if /I "!H_FS!"=="FAT32" if !H_MAX! GEQ 4096 (
     set "HELY_STOP=1"
     goto :eof
 )
-echo   !C_ZOLD!Hely rendben.!C_0!
+echo   !C_ZOLD!Elegendő szabad hely.!C_0!
 goto :eof

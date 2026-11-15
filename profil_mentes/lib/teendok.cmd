@@ -19,15 +19,14 @@ if not exist "%TODO%" (
     set "TODO="
     goto :eof
 )
->>"%TODO%" echo Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO%
 rem Csak az kerul ide, amit a segedlet NEM tud megcsinalni - amit elvegzett (listak,
 rem talcakep), az nem teendo. A PST-sor csak akkor, ha van csatolt PST (vagy a lista nem keszult el).
 >>"%TODO%" echo.
 >>"%TODO%" echo RÉGI GÉP – kézzel, a segédlet ezeket nem tudja:
->>"%TODO%" echo [ ] Outlook: további postaládák, feladócímek, fiókok – írd fel
+>>"%TODO%" echo [ ] Outlook: további postaládák, feladócímek, fiókok
 if not "%OL_PST%"=="0" >>"%TODO%" echo [ ] PST-fájlok átmásolása – a helyük: outlook_lista.txt
 >>"%TODO%" echo [ ] Tanúsítványok kimentése: certmgr.msc – Személyes
->>"%TODO%" echo [ ] Böngészőjelszavak: szinkron vagy export – nem kerülnek át
+>>"%TODO%" echo [ ] Böngészőjelszavak
 for /l %%i in (1,1,%OSSZES%) do if "!E_%%i!"=="HIBA" >>"%TODO%" echo [ ] HIBÁS: !NEV_%%i! – !M_%%i!
 call :ATUGORVA_SOROK
 call :IMPORT_RESZ
@@ -38,7 +37,7 @@ goto :eof
 >>"%TODO%" echo ÚJ GÉP
 >>"%TODO%" echo [ ] Segédlet: 2 Visszaállítás, 3 BitLocker
 >>"%TODO%" echo [ ] Chrome: Szoftverközpont – ha nem indul el, 4 Chrome telepítése
->>"%TODO%" echo [ ] Alapértelmezett alkalmazások: Word, Excel, PowerPoint, PDF, Chrome
+>>"%TODO%" echo [ ] Alapértelmezett alkalmazások
 >>"%TODO%" echo [ ] Tanúsítványok telepítése
 if not "%OL_PST%"=="0" >>"%TODO%" echo [ ] Outlook: PST-k csatolása – outlook_lista.txt
 >>"%TODO%" echo [ ] Outlook: további postaládák, feladócímek, fiókok
@@ -47,8 +46,6 @@ if not "%OL_PST%"=="0" >>"%TODO%" echo [ ] Outlook: PST-k csatolása – outlook
 >>"%TODO%" echo [ ] Programok: a hiányzók telepítése – apps.txt
 >>"%TODO%" echo [ ] Nyomtatók, hálózati meghajtók: ami nem jött vissza – nyomtatok_meghajtok.txt
 >>"%TODO%" echo [ ] Tálcaikonok rögzítése – talca.txt, talca.png
->>"%TODO%" echo [ ] Start menü: a hiányzó rögzítések
->>"%TODO%" echo [ ] Ha minden rendben: a mentés törlése a meghajtóról
 goto :eof
 
 :VISSZAALLITAS
@@ -64,7 +61,6 @@ rem Regebbi mentesnel meg nincs ilyen fajl - ekkor az uj gep reszt itt irjuk meg
 if not exist "%TODO%" (
     (>"%TODO%" echo %USERNAME% · %COMPUTERNAME% · %DATUM_SZEP%) 2>nul
     if exist "%TODO%" (
-        >>"%TODO%" echo Eszközcsere segédlet %VERZIO% · Készítette: %SZERZO%
         call :IMPORT_RESZ
     )
 )

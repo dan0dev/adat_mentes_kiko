@@ -49,7 +49,8 @@ if ($Szoveg) {
         $tokenek = $sorok[$i] -split '[\s,;()\[\]?“”]+' | Where-Object { $_ -and $_ -notmatch '[_\\.:]' }
         foreach ($t in $tokenek) {
             $kis = $t.ToLowerInvariant()
-            foreach ($e in $ekezetNelkul) { if ($kis.StartsWith($e)) { $problemak.Add(('{0}. sor: ekezet nelkuli szo: {1}' -f ($i + 1), $t)); break } }
+            # Csak az ekezet nelkuli szo gyanus: az "Elegendő" nem az "eleg" hibas alakja
+            if ($kis -notmatch '[áéíóöőúüű]') { foreach ($e in $ekezetNelkul) { if ($kis.StartsWith($e)) { $problemak.Add(('{0}. sor: ekezet nelkuli szo: {1}' -f ($i + 1), $t)); break } } }
             if ($magazo -contains $kis) { $problemak.Add(('{0}. sor: magazo alak: {1}' -f ($i + 1), $t)) }
         }
     }

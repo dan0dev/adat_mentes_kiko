@@ -21,7 +21,7 @@ cls
 %UI% :ADAT "Felhasználó" "%USERNAME%" SARGA
 %UI% :ADAT "Mentés helye" "%CEL%"
 echo.
-echo   Mentendő tételek:
+echo   Mentésre kerülnek a következők:
 %TETELEK% :LISTA "Programlista" "Tálcaikonok listája" "Outlook-lista" "Nyomtatók, meghajtók"
 echo.
 echo   !C_SARGA!A tanúsítványokat és a PST-ket kézzel vidd át.!C_0!
