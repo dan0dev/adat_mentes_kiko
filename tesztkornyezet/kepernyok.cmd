@@ -51,6 +51,7 @@ echo.
 %UI% :SAV HIBA "FIGYELEM: 1 tétel hibával zárult – nézd át a listát és a naplót."
 %UI% :SAV OK "KÉSZ – minden tétel sikeresen lefutott."
 %UI% :SAV FIGYEL "Megszakítva – nem történt változtatás."
+%UI% :SAV UJ "Új verzió érhető el: 1.3 – Nyomd meg a [6]-ot a frissítéshez."
 echo.
 %UI% :LABLEC TELJES
 echo.

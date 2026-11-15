@@ -30,3 +30,6 @@ rem A segedlet frissitese (6. menupont): a GitHub-repo, aminek a legutolso kiada
 rem FR_KIADAS: ures = a legutolso kiadas; egy cimke (pl. v1.2) csak teszteleshez kell
 set "FR_REPO=dan0dev/adat_mentes_kiko"
 set "FR_KIADAS="
+rem FR_JELZES: 1 = inditaskor a hatterben megnezi, van-e ujabb verzio, es ha van, a kezdokepernyo
+rem tetejen sarga sor jelzi. Internet nelkul nem jelenik meg semmi. 0 = kikapcsolva.
+set "FR_JELZES=1"

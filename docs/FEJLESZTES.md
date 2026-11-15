@@ -122,6 +122,9 @@ A `master` ágról, tiszta munkakönyvtárral: lefuttatja a teszteket, átírja 
 README verziószámát, commitol, címkéz (`v1.1`), pushol, a címkézett állapotból ZIP-et készít (az indító és a
 `profil_mentes` mappa – tesztek, dokumentáció és git-előzmény nélkül), és feltölti GitHub-kiadásként. A segédlet
 6. menüpontja (Segédlet frissítése) a legutolsó kiadást tölti le, és csak akkor frissít, ha annak nagyobb a verziója.
+Az új kiadást a felhasználók a kezdőképernyő tetején, sárga sorban látják: a `segedlet.bat` indításkor a háttérben
+lekérdezi (`ps\frissites.ps1`, `JELZES` mód, 5 mp időkorlát), és csak akkor jelez, ha van hálózat és újabb a verzió.
+A fejlesztői példányban (git-mappa), a rendszergazdai ablakban és a tesztkörnyezetben ez nem fut.
 
 A fejlesztés közben a `verzio.txt` nem változik – több változtatás is mehet egy kiadásba.
 Próbakiadás: `-Proba` – nem lesz „legutolsó”, a segédlet csak `FR_KIADAS=v…` mellett tölti le.

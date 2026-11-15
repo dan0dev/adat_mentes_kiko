@@ -138,8 +138,9 @@ if defined _dt (
 goto :eof
 
 :SAV
-rem %1 = OK / HIBA / FIGYEL, %2 = szoveg. OK es HIBA: 70 oszlopos szines sav,
-rem FIGYEL: sarga sor. Szinek nelkul sima szoveg.
+rem %1 = OK / HIBA / UJ / FIGYEL, %2 = szoveg. OK, HIBA es UJ: 70 oszlopos szines sav
+rem (UJ: sarga - az uj verzio jelzese a kezdokepernyon), FIGYEL: sarga sor.
+rem Szinek nelkul sima szoveg.
 set "_t=   %~2"
 if /I "%~1"=="FIGYEL" (
     echo   !C_SARGA!!_t!!C_0!
@@ -147,6 +148,10 @@ if /I "%~1"=="FIGYEL" (
 )
 call :VAG _t 70
 call :PAD _t 70
+if /I "%~1"=="UJ" (
+    echo   !C_SARGA_HATTER!!_t!!C_0!
+    goto :eof
+)
 if /I "%~1"=="OK" (echo   !C_ZOLD_HATTER!!_t!!C_0!) else (echo   !C_PIROS_HATTER!!_t!!C_0!)
 goto :eof
 
@@ -290,6 +295,7 @@ set "C_FEHER="
 set "C_SZURKE="
 set "C_ZOLD_HATTER="
 set "C_PIROS_HATTER="
+set "C_SARGA_HATTER="
 set "_ver="
 set "V_MAJ="
 set "V_BLD="
@@ -314,4 +320,5 @@ set "C_FEHER=%ESC%[97m"
 set "C_SZURKE=%ESC%[90m"
 set "C_ZOLD_HATTER=%ESC%[42;30m"
 set "C_PIROS_HATTER=%ESC%[41;97m"
+set "C_SARGA_HATTER=%ESC%[43;30m"
 goto :eof

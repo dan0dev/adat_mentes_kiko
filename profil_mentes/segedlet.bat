@@ -66,6 +66,15 @@ call "%CONF%\beallitasok.cmd"
 rem Teszt kornyezet: a tesztkornyezet\futtat.ps1 ezen keresztul irja felul a beallitasokat
 if defined PM_TESZT_KONFIG call "%PM_TESZT_KONFIG%"
 
+rem ---------- Uj verzio keresese a hatterben - a kezdokepernyo tetejen jelzi ----------
+rem Nem var ra: a PowerShell kozben fut, amig a program tovabb indul. Az eredmeny az
+rem FR_JEL_FAJL-ba kerul, a lib\kezdokepernyo.cmd olvassa. Kihagyva: a rendszergazdai
+rem ablakban (nincs kezdokepernyo) es a fejlesztoi peldanyban (ott a git-tel frissitunk).
+set "FR_JEL_FAJL="
+set "FR_JEL_VERZIO="
+set "FR_JEL_KESZ="
+if "%FR_JELZES%"=="1" if /I not "%~1"=="ESZKOZOK" if not exist "%APP%\..\.git\" call :FRISS_JELZES
+
 rem ---------- Szinek ----------
 %UI% :SZINEK_BEALLIT
 
@@ -187,6 +196,21 @@ if "%_rc%"=="3" exit /b 3
 if "%MOD_KILEP%"=="1" exit /b 3
 exit /b 0
 
+:FRISS_JELZES
+rem A hatterben futo PowerShell az inditaskori kornyezetet orokli - a valtozok csak erre kellenek.
+rem A bemenet nul: a hatterfolyamat nem nyulhat a billentyuzethez.
+rem A korabbi futasok maradeka (pl. ha a kereses a kilepes utan ert veget) - torles
+del /q "%TEMP%\_eszkozcsere_ujverzio_*" >nul 2>&1
+set "FR_JEL_FAJL=%TEMP%\_eszkozcsere_ujverzio_%RANDOM%.txt"
+setlocal
+set "FR_MOD=JELZES"
+set "FR_KI=%FR_JEL_FAJL%"
+set "PS_FAJL=%PSDIR%\frissites.ps1"
+start "" /b %PS_FUTTAT% <nul >nul 2>&1
+endlocal
+goto :eof
+
 :KILEPES
+if defined FR_JEL_FAJL del /q "%FR_JEL_FAJL%" >nul 2>&1
 if defined PM_KODLAP >nul chcp !PM_KODLAP! <nul
 exit /b 0

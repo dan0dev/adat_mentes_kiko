@@ -1,6 +1,6 @@
 # ==========================================================
 #  A segedlet frissitese a GitHubrol, kiadasbol - lib\frissites.cmd futtatja
-#  Bemenet:  FR_MOD      ELLENORIZ | LETOLT | INDIT
+#  Bemenet:  FR_MOD      JELZES | ELLENORIZ | LETOLT | INDIT
 #            FR_REPO     pl. dan0dev/adat_mentes_kiko
 #            FR_KIADAS   ures = a legutolso kiadas, kulonben ez a cimke (pl. v1.2) - teszthez
 #            VERZIO      a futo valtozat (verzio.txt)
@@ -8,6 +8,7 @@
 #            FR_MUNKA    ideiglenes mappa a letolteshez
 #            FR_UJ_URL, FR_UJ_VERZIO  letolteskor: az ELLENORIZ eredmenye
 #            FR_KI       eredmenyfajl
+#  JELZES:    a kezdokepernyo sorahoz, a hatterben - lasd lent
 #  ELLENORIZ: a kiadas a GitHub API-bol. FR_KI sorai: allapot (UJ, AZONOS, HIBA), helyi verzio,
 #             uj verzio, datum, leiras, a ZIP cime
 #  LETOLT:    a kiadas ZIP-je, kicsomagolas, a profil_mentes mappa es a verzio ellenorzese
@@ -29,13 +30,45 @@ function Tiszta($t) { (($t -split "`n")[0] -replace '["!%^&<>|]', '').Trim() }
 # A gep proxybeallitasa, a bejelentkezett felhasznalo nevevel - ceges proxy mogott is menjen
 try { [Net.WebRequest]::DefaultWebProxy.Credentials = [Net.CredentialCache]::DefaultNetworkCredentials } catch { }
 
+# A kiadas lekerdezese a GitHub API-bol - az ELLENORIZ es a JELZES is ezt hasznalja
+function Kiadas([int]$mp) {
+    $url = "https://api.github.com/repos/$($env:FR_REPO)/releases/latest"
+    if ($env:FR_KIADAS) { $url = "https://api.github.com/repos/$($env:FR_REPO)/releases/tags/$($env:FR_KIADAS)" }
+    Invoke-RestMethod -UseBasicParsing -Uri $url -Headers $fej -TimeoutSec $mp
+}
+# UJ, ha a kiadas verzioja nagyobb a helyinel - csak ujabbra frissit
+function Allapot($uj, $helyi) {
+    try { if ([version]$uj -le [version]$helyi) { return 'AZONOS' } }
+    catch { if ($uj -eq $helyi) { return 'AZONOS' } }
+    'UJ'
+}
+
+# ---------- Jelzes a kezdokepernyon ----------
+# A segedlet inditasakor a hatterben fut, nem var ra senki. FR_KI egyetlen sora mindig megirodik:
+# "UJ 1.3", ha van ujabb, kulonben "NINCS" - halozat nelkul, hibanal, idotullepesnel is.
+# Atmeneti fajlbol nevezzuk at, igy a kezdokepernyo felkesz fajlt soha nem olvas.
+if ($env:FR_MOD -eq 'JELZES') {
+    $sor = 'NINCS'
+    try {
+        if ([Net.NetworkInformation.NetworkInterface]::GetIsNetworkAvailable()) {
+            $uj = ([string](Kiadas 5).tag_name).TrimStart('v', 'V')
+            # A kepernyore csak szamok es pontok kerulhetnek
+            if ($uj -match '^\d+(\.\d+)*$' -and (Allapot $uj $env:VERZIO) -eq 'UJ' -and [version]$env:VERZIO) { $sor = "UJ $uj" }
+        }
+    } catch { }
+    try {
+        $tmp = "$($env:FR_KI).tmp"
+        [IO.File]::WriteAllText($tmp, $sor, $utf8)
+        Move-Item -LiteralPath $tmp -Destination $env:FR_KI -Force
+    } catch { }
+    exit 0
+}
+
 # ---------- Ellenorzes ----------
 if ($env:FR_MOD -eq 'ELLENORIZ') {
     $helyi = $env:VERZIO
-    $url = "https://api.github.com/repos/$($env:FR_REPO)/releases/latest"
-    if ($env:FR_KIADAS) { $url = "https://api.github.com/repos/$($env:FR_REPO)/releases/tags/$($env:FR_KIADAS)" }
     try {
-        $r = Invoke-RestMethod -UseBasicParsing -Uri $url -Headers $fej -TimeoutSec 20
+        $r = Kiadas 20
     } catch {
         $kod = 0; try { $kod = [int]$_.Exception.Response.StatusCode } catch { }
         if ($kod -eq 404) { Ki @('HIBA', $helyi, '', '', 'Még nincs kiadás a GitHubon.') }
@@ -48,11 +81,7 @@ if ($env:FR_MOD -eq 'ELLENORIZ') {
     $leiras = Tiszta $r.body
     if (-not $leiras) { $leiras = Tiszta $r.name }
     if ($leiras.Length -gt 50) { $leiras = $leiras.Substring(0, 49) + '…' }
-    # Verzioszamok osszevetese: csak ujabbra frissit
-    $allapot = 'UJ'
-    try { if ([version]$uj -le [version]$helyi) { $allapot = 'AZONOS' } }
-    catch { if ($uj -eq $helyi) { $allapot = 'AZONOS' } }
-    Ki @($allapot, $helyi, $uj, $datum, $leiras, $zip.browser_download_url)
+    Ki @((Allapot $uj $helyi), $helyi, $uj, $datum, $leiras, $zip.browser_download_url)
 }
 
 # ---------- Letoltes ----------

@@ -1,6 +1,6 @@
-# Szövegjegyzék – Eszközcsere segédlet 1.1
+# Szövegjegyzék – Eszközcsere segédlet 1.2.1
 
-Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 11. – 503 szöveg.
+Generálta: `tesztkornyezet\szovegjegyzek.ps1` – 2026. 11. 12. – 668 szöveg.
 Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás a forrásfájlban történik, a jegyzék újragenerálható.
 
 | Hely | Szöveg |
@@ -145,30 +145,33 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ikonok.cmd:37` | nem sikerült automatikusan |
 | `lib\ikonok.cmd:38` | Az Office-ikonokat tedd ki kézzel. |
 | `lib\ikonok.cmd:45` | Office-ikonok: !_i1! !_i2! – !_i3! |
-| `lib\kezdokepernyo.cmd:14` | Felhasználó |
-| `lib\kezdokepernyo.cmd:15` | Számítógép |
-| `lib\kezdokepernyo.cmd:16` | Profil |
-| `lib\kezdokepernyo.cmd:17` | 1 |
-| `lib\kezdokepernyo.cmd:17` | Jogosultság |
-| `lib\kezdokepernyo.cmd:17` | rendszergazda |
-| `lib\kezdokepernyo.cmd:17` | Jogosultság |
-| `lib\kezdokepernyo.cmd:17` | normál felhasználó |
-| `lib\kezdokepernyo.cmd:19` | A RÉGI GÉPEN |
-| `lib\kezdokepernyo.cmd:21` | Adatok mentése |
-| `lib\kezdokepernyo.cmd:21` | a külső meghajtóra |
-| `lib\kezdokepernyo.cmd:23` | AZ ÚJ GÉPEN |
-| `lib\kezdokepernyo.cmd:25` | Adatok visszaállítása |
-| `lib\kezdokepernyo.cmd:25` | a külső meghajtóról |
-| `lib\kezdokepernyo.cmd:26` | BitLocker beállítása |
-| `lib\kezdokepernyo.cmd:26` | titkosítás indítása az MBAM klienssel |
-| `lib\kezdokepernyo.cmd:27` | Chrome telepítése |
-| `lib\kezdokepernyo.cmd:27` | ha a Szoftverközpont nem indítja el |
-| `lib\kezdokepernyo.cmd:27` | a letöltést |
-| `lib\kezdokepernyo.cmd:29` | EGYÉB |
-| `lib\kezdokepernyo.cmd:31` | Rendszergazdai eszközök |
-| `lib\kezdokepernyo.cmd:31` | Win+R parancsok, hálózat, javítás |
-| `lib\kezdokepernyo.cmd:32` | Segédlet frissítése |
-| `lib\kezdokepernyo.cmd:32` | a legújabb verzió a GitHubról |
+| `lib\kezdokepernyo.cmd:15` | Felhasználó |
+| `lib\kezdokepernyo.cmd:16` | Számítógép |
+| `lib\kezdokepernyo.cmd:17` | Profil |
+| `lib\kezdokepernyo.cmd:18` | 1 |
+| `lib\kezdokepernyo.cmd:18` | Jogosultság |
+| `lib\kezdokepernyo.cmd:18` | rendszergazda |
+| `lib\kezdokepernyo.cmd:18` | Jogosultság |
+| `lib\kezdokepernyo.cmd:18` | normál felhasználó |
+| `lib\kezdokepernyo.cmd:20` | A RÉGI GÉPEN |
+| `lib\kezdokepernyo.cmd:22` | Adatok mentése |
+| `lib\kezdokepernyo.cmd:22` | a külső meghajtóra |
+| `lib\kezdokepernyo.cmd:24` | AZ ÚJ GÉPEN |
+| `lib\kezdokepernyo.cmd:26` | Adatok visszaállítása |
+| `lib\kezdokepernyo.cmd:26` | a külső meghajtóról |
+| `lib\kezdokepernyo.cmd:27` | BitLocker beállítása |
+| `lib\kezdokepernyo.cmd:27` | titkosítás indítása az MBAM klienssel |
+| `lib\kezdokepernyo.cmd:28` | Chrome telepítése |
+| `lib\kezdokepernyo.cmd:28` | ha a Szoftverközpont nem indítja el |
+| `lib\kezdokepernyo.cmd:28` | a letöltést |
+| `lib\kezdokepernyo.cmd:30` | EGYÉB |
+| `lib\kezdokepernyo.cmd:32` | Rendszergazdai eszközök |
+| `lib\kezdokepernyo.cmd:32` | Win+R parancsok, hálózat, javítás |
+| `lib\kezdokepernyo.cmd:33` | Segédlet frissítése |
+| `lib\kezdokepernyo.cmd:33` | a legújabb verzió a GitHubról |
+| `lib\kezdokepernyo.cmd:34` | Gép ellenőrzése – [TESZT] |
+| `lib\kezdokepernyo.cmd:34` | teljesítmény, hő, lemez, akku |
+| `lib\kezdokepernyo.cmd:60` | Új verzió érhető el: %FR_JEL_VERZIO% – Nyomd meg a [6]-ot a frissítéshez. |
 | `lib\masolas.cmd:15` | %R_SRC% -> %R_DST% |
 | `lib\masolas.cmd:45` | átugorva |
 | `lib\masolas.cmd:46` | Részben másolva – a többit kézzel nézd át. |
@@ -316,9 +319,10 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `lib\ui.cmd:132` | !_jel!  !_nv! !_ms! |
 | `lib\ui.cmd:134` | [!_st!] !NEV_%~1! – !M_%~1! – !_dt! |
 | `lib\ui.cmd:136` | [!_st!] !NEV_%~1! – !M_%~1! |
-| `lib\ui.cmd:145` | !_t! |
-| `lib\ui.cmd:177` | !%~1! |
-| `lib\ui.cmd:213` | %~1 |
+| `lib\ui.cmd:146` | !_t! |
+| `lib\ui.cmd:152` | !_t! |
+| `lib\ui.cmd:182` | !%~1! |
+| `lib\ui.cmd:218` | %~1 |
 | `modulok\bitlocker.cmd:9` | BitLocker beállítása |
 | `modulok\bitlocker.cmd:13` | ===== BITLOCKER BEÁLLÍTÁSA %date% %time% – %USERNAME% / %COMPUTERNAME% ===== |
 | `modulok\bitlocker.cmd:16` | BitLocker (MBAM) |
@@ -370,6 +374,15 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\frissites.cmd:53` | Csere előkészítése |
 | `modulok\frissites.cmd:57` | a letöltés nem sikerült |
 | `modulok\frissites.cmd:62` | A frissítéshez nyomj meg egy billentyűt – bezárul, frissül és újraindul. |
+| `modulok\gepellenorzes.cmd:12` | Gép ellenőrzése |
+| `modulok\gepellenorzes.cmd:13` | Teljesítmény, hő, memória, lemez, akku, eseménynapló – kb. fél perc. |
+| `modulok\gepellenorzes.cmd:25` | TIPP – MEGFIGYELŐ MÓD |
+| `modulok\gepellenorzes.cmd:27` | Ha a gép csak terhelés alatt melegszik: van megfigyelő mód is – pl. 10 |
+| `modulok\gepellenorzes.cmd:28` | percig 30 másodpercenként méri a hőt és a terhelést, Excelbe (CSV) is. |
+| `modulok\gepellenorzes.cmd:29` | Egy PowerShell ablakba másold be: |
+| `modulok\gepellenorzes.cmd:31` | !_ge_parancs! |
+| `modulok\gepellenorzes.cmd:33` | A percek száma a -MonitorPerc után írható át, a mérés gyakorisága |
+| `modulok\gepellenorzes.cmd:34` | -IntervalMp 20 hozzáírásával. A napló: C:\Temp\GepEllenorzes |
 | `modulok\mentes.cmd:20` | Adatok mentése – előkészítés |
 | `modulok\mentes.cmd:21` | Felhasználó |
 | `modulok\mentes.cmd:22` | Mentés helye |
@@ -412,16 +425,17 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `modulok\visszaallitas.cmd:128` | Office-parancsikonok |
 | `modulok\visszaallitas.cmd:134` | A Fájlkezelő újraindul, egy pillanat… |
 | `segedlet.bat:17` | Kakuk Dániel |
-| `segedlet.bat:129` | Válassz menüpontot [1–7], kilépés: X |
-| `segedlet.bat:138` | Adatok mentése |
-| `segedlet.bat:139` | Adatok visszaállítása |
-| `segedlet.bat:140` | BitLocker beállítása |
-| `segedlet.bat:141` | Chrome telepítése |
-| `segedlet.bat:142` | Rendszergazdai eszközök |
-| `segedlet.bat:143` | Segédlet frissítése |
-| `segedlet.bat:175` | Nem indult el – az okát fent látod. |
-| `segedlet.bat:177` | Vissza a menübe: nyomj meg egy billentyűt… |
-| `segedlet.bat:183` | Vissza a menübe: nyomj meg egy billentyűt… |
+| `segedlet.bat:138` | Válassz menüpontot [1–7], kilépés: X |
+| `segedlet.bat:147` | Adatok mentése |
+| `segedlet.bat:148` | Adatok visszaállítása |
+| `segedlet.bat:149` | BitLocker beállítása |
+| `segedlet.bat:150` | Chrome telepítése |
+| `segedlet.bat:151` | Rendszergazdai eszközök |
+| `segedlet.bat:152` | Segédlet frissítése |
+| `segedlet.bat:153` | Gép ellenőrzése |
+| `segedlet.bat:185` | Nem indult el – az okát fent látod. |
+| `segedlet.bat:187` | Vissza a menübe: nyomj meg egy billentyűt… |
+| `segedlet.bat:193` | Vissza a menübe: nyomj meg egy billentyűt… |
 | `..\Eszkozcsere_segedlet.bat:13` | Nem találom a profil_mentes mappát ennek a fájlnak a mappájában: |
 | `..\Eszkozcsere_segedlet.bat:14` | %~dp0 |
 | `..\Eszkozcsere_segedlet.bat:15` | Az Eszkozcsere_segedlet.bat és a profil_mentes mappa legyen egymás mellett. |
@@ -450,25 +464,176 @@ Minden felhasználónak szóló szöveg egy helyen, lektoráláshoz. A javítás
 | `ps\emeles.ps1:13` | NEM\|Hálózati meghajtóról nem megy – másold a segédletet helyi lemezre vagy pendrive-ra. |
 | `ps\emeles.ps1:20` | NEM\|A jelszókérő ablakot bezártad – a rendszergazdai ablak nem nyílt meg. |
 | `ps\emeles.ps1:22` | NEM\|A rendszergazdai ablak nem nyílt meg:  |
-| `ps\frissites.ps1:22` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
-| `ps\frissites.ps1:41` | Még nincs kiadás a GitHubon. |
-| `ps\frissites.ps1:46` | A kiadásban nincs letölthető csomag. |
-| `ps\frissites.ps1:67` | nem tölthető le |
-| `ps\frissites.ps1:70` | a letöltött fájl hibás |
-| `ps\frissites.ps1:70` | A ZIP nem csomagolható ki. |
-| `ps\frissites.ps1:76` | a letöltés nem teljes |
-| `ps\frissites.ps1:76` | Hiányos csomag – nem cserélem le. |
-| `ps\frissites.ps1:79` | a verzió nem egyezik |
-| `ps\frissites.ps1:79` | A csomagban $v van, a kiadás $($env:FR_UJ_VERZIO) – nem cserélem le. |
-| `ps\frissites.ps1:82` | $db fájl, ellenőrizve |
-| `ps\frissites.ps1:82` | Verzió: $v |
-| `ps\frissites.ps1:100` | bezáráskor frissül |
-| `ps\frissites.ps1:100` | Nyomj meg egy billentyűt – a segédlet bezárul, frissül és újraindul. |
+| `ps\frissites.ps1:23` | Nincs kapcsolat a GitHubbal – internet vagy céges proxy/tűzfal? |
+| `ps\frissites.ps1:74` | Még nincs kiadás a GitHubon. |
+| `ps\frissites.ps1:79` | A kiadásban nincs letölthető csomag. |
+| `ps\frissites.ps1:96` | nem tölthető le |
+| `ps\frissites.ps1:99` | a letöltött fájl hibás |
+| `ps\frissites.ps1:99` | A ZIP nem csomagolható ki. |
+| `ps\frissites.ps1:105` | a letöltés nem teljes |
+| `ps\frissites.ps1:105` | Hiányos csomag – nem cserélem le. |
+| `ps\frissites.ps1:108` | a verzió nem egyezik |
+| `ps\frissites.ps1:108` | A csomagban $v van, a kiadás $($env:FR_UJ_VERZIO) – nem cserélem le. |
+| `ps\frissites.ps1:111` | $db fájl, ellenőrizve |
+| `ps\frissites.ps1:111` | Verzió: $v |
+| `ps\frissites.ps1:129` | bezáráskor frissül |
+| `ps\frissites.ps1:129` | Nyomj meg egy billentyűt – a segédlet bezárul, frissül és újraindul. |
 | `ps\frissites_csere.ps1:19` | A segédlet frissítése nem sikerült:`n$t`n`nA régi változat megmaradt. Napló: $naplo |
 | `ps\frissites_csere.ps1:19` | Eszközcsere segédlet |
 | `ps\frissites_csere.ps1:29` | a segédlet 30 perc után sem zárult be |
 | `ps\frissites_csere.ps1:35` | nem a segédlet mappája: $m |
 | `ps\frissites_csere.ps1:42` | a fájlok nem másolhatók (robocopy: $rc) – nyitva van valami a segédlet mappájából? |
+| `ps\gepellenorzes.ps1:88` | Zóna |
+| `ps\gepellenorzes.ps1:90` | Forrás |
+| `ps\gepellenorzes.ps1:101` | Zóna |
+| `ps\gepellenorzes.ps1:103` | Forrás |
+| `ps\gepellenorzes.ps1:103` | Perf számláló |
+| `ps\gepellenorzes.ps1:151` | Defender víruskeresés – általában átmeneti |
+| `ps\gepellenorzes.ps1:152` | Defender for Endpoint – biztonsági ügynök |
+| `ps\gepellenorzes.ps1:153` | Windows Update telepítés – frissítés után megszűnik |
+| `ps\gepellenorzes.ps1:154` | Windows Update / összetevő telepítés |
+| `ps\gepellenorzes.ps1:155` | Windows keresés indexelés |
+| `ps\gepellenorzes.ps1:156` | Windows keresés indexelés |
+| `ps\gepellenorzes.ps1:157` | WMI – gyakran felügyeleti szoftver kérdezi folyamatosan |
+| `ps\gepellenorzes.ps1:158` | SCCM/ConfigMgr kliens – telepítés vagy leltár fut |
+| `ps\gepellenorzes.ps1:159` | Teams – videóhívás, háttérelmosás erősen terhel |
+| `ps\gepellenorzes.ps1:160` | Teams – videóhívás, háttérelmosás erősen terhel |
+| `ps\gepellenorzes.ps1:161` | Böngésző – beragadt fül? (Shift+Esc: böngésző feladatkezelő) |
+| `ps\gepellenorzes.ps1:162` | Böngésző – beragadt fül? (Shift+Esc: böngésző feladatkezelő) |
+| `ps\gepellenorzes.ps1:163` | Böngésző – beragadt fül? |
+| `ps\gepellenorzes.ps1:164` | Kernel/illesztőprogram – tartósan magas: driverprobléma gyanú |
+| `ps\gepellenorzes.ps1:165` | Asztalkezelő – tartósan magas: grafikus driver gyanú |
+| `ps\gepellenorzes.ps1:166` | Hangmotor – tartósan magas: hangdriver/hangjavító gyanú |
+| `ps\gepellenorzes.ps1:172` | TELJESÍTMÉNY- ÉS HŐELLENŐRZÉS – $gepNev – $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') |
+| `ps\gepellenorzes.ps1:173` | 1. GÉPADATOK |
+| `ps\gepellenorzes.ps1:181` |   Gép:            {0} |
+| `ps\gepellenorzes.ps1:182` |   Felhasználó:    {0}\{1} |
+| `ps\gepellenorzes.ps1:183` |   Gyártó/típus:   {0} {1} |
+| `ps\gepellenorzes.ps1:184` |   Sorozatszám:    {0} |
+| `ps\gepellenorzes.ps1:187` |   Processzor:     {0} ({1} mag / {2} szál) |
+| `ps\gepellenorzes.ps1:189` |   Utolsó indítás: {0:yyyy-MM-dd HH:mm} (uptime: {1} nap {2} óra) |
+| `ps\gepellenorzes.ps1:190` | nem – néhány adat hiányozhat |
+| `ps\gepellenorzes.ps1:193` | A gép {0} napja nem volt újraindítva. Újraindítás javasolt (nem leállítás – a Gyorsindítás miatt a leállítás nem nulláz). |
+| `ps\gepellenorzes.ps1:196` | A BIOS több mint 2 éves. A gyártói BIOS-frissítés gyakran javít a ventilátorvezérlésen és energiakezelésen. |
+| `ps\gepellenorzes.ps1:200` | Windows-összetevők (CBS) |
+| `ps\gepellenorzes.ps1:203` | Függőben lévő újraindítás: {0}. Amíg nincs újraindítva, a háttérfolyamatok terhelhetik a gépet. |
+| `ps\gepellenorzes.ps1:209` | 2. HŐMÉRSÉKLET |
+| `ps\gepellenorzes.ps1:212` |   A gép nem ad ki hőadatot WMI-n keresztül (vagy rendszergazdai jog kell). |
+| `ps\gepellenorzes.ps1:213` |   Alternatíva: HWiNFO / Core Temp, vagy a gyártó diagnosztikája (HP: F2, Dell: F12, Lenovo: Vantage). |
+| `ps\gepellenorzes.ps1:218` | Kritikus hőmérséklet: {0} °C. A CPU ilyenkor már visszafogja magát (throttling). |
+| `ps\gepellenorzes.ps1:220` | Magas hőmérséklet: {0} °C. Terhelés alatt még belefér, alapjáraton nem normális. |
+| `ps\gepellenorzes.ps1:222` |   Legmagasabb érték: {0} °C – rendben. |
+| `ps\gepellenorzes.ps1:224` |   Megj.: ez ACPI hőzóna, nem mindig a CPU-mag hője. Ha minden futtatáskor ugyanaz |
+| `ps\gepellenorzes.ps1:225` |   az érték (pl. 27,8 °C), a gyártó nem ad valós adatot – ilyenkor HWiNFO kell. |
+| `ps\gepellenorzes.ps1:231` | 3. PROCESSZOR – terhelés és top 5 folyamat |
+| `ps\gepellenorzes.ps1:232` |   Mérés 5 másodpercig... |
+| `ps\gepellenorzes.ps1:243` |   Össz-CPU-terhelés: {0}% |
+| `ps\gepellenorzes.ps1:246` |   Aktuális órajel:   kb. {0} MHz (névleges: {1} MHz, {2}%) |
+| `ps\gepellenorzes.ps1:248` | Terhelés alatt is alacsony az órajel – hő- vagy tápfojtás (throttling) gyanú. |
+| `ps\gepellenorzes.ps1:252` | Nagyon magas össz-CPU-terhelés: {0}%. |
+| `ps\gepellenorzes.ps1:261` | Szolgáltatás: $szolg |
+| `ps\gepellenorzes.ps1:269` | Leírás |
+| `ps\gepellenorzes.ps1:278` | {0} (PID {1}) {2}% CPU-t használ. |
+| `ps\gepellenorzes.ps1:289` | 4. MEMÓRIA |
+| `ps\gepellenorzes.ps1:293` |   Használt: {0:N1} GB / {1:N1} GB ({2}%) |
+| `ps\gepellenorzes.ps1:296` | A memória {0}%-ban tele – a gép lapozófájlt használ, ez nagyon lassít. |
+| `ps\gepellenorzes.ps1:298` | Magas memóriahasználat: {0}%. |
+| `ps\gepellenorzes.ps1:301` | Kevés a RAM ({0:N0} GB) – mai irodai használathoz (Teams, böngésző) min. 8, inkább 16 GB ajánlott. |
+| `ps\gepellenorzes.ps1:305` |   Top 5 RAM-fogyasztó program (azonos nevű folyamatok összesítve): |
+| `ps\gepellenorzes.ps1:309` | Példány |
+| `ps\gepellenorzes.ps1:324` |   C: meghajtó: {0} GB szabad / {1} GB ({2}%) |
+| `ps\gepellenorzes.ps1:326` | Kevés a szabad hely a C:-n ({0} GB). Ez lassítja a frissítéseket és a lapozást. |
+| `ps\gepellenorzes.ps1:338` | Méret GB |
+| `ps\gepellenorzes.ps1:345` | '{0}' hagyományos HDD – ez a legtöbb lassúság oka, SSD-csere javasolt. |
+| `ps\gepellenorzes.ps1:348` | '{0}' állapota: {1}. Adatmentés és lemezcsere javasolt! |
+| `ps\gepellenorzes.ps1:362` | Név |
+| `ps\gepellenorzes.ps1:363` | Javíthatatlan olv. |
+| `ps\gepellenorzes.ps1:364` | Javíthatatlan írás |
+| `ps\gepellenorzes.ps1:365` | Kopás % |
+| `ps\gepellenorzes.ps1:366` | Hő °C |
+| `ps\gepellenorzes.ps1:367` | Üzemóra |
+| `ps\gepellenorzes.ps1:371` | '{0}': {1} javíthatatlan olvasási/írási hiba a lemez saját számlálója szerint. Adatmentés és lemezcsere javasolt. |
+| `ps\gepellenorzes.ps1:374` | '{0}': az SSD élettartamának {1}%-a elhasználódott – a cserét érdemes betervezni. |
+| `ps\gepellenorzes.ps1:377` | '{0}' hőmérséklete {1} °C – magas, érdemes a szellőzést ellenőrizni. |
+| `ps\gepellenorzes.ps1:382` |   A lemezek saját hibaszámlálói (SMART): |
+| `ps\gepellenorzes.ps1:386` |   A lemezek saját hibaszámlálói (SMART) rendszergazdaként látszanak. |
+| `ps\gepellenorzes.ps1:392` |   Lemezaktivitás most: {0}% (várakozási sor: {1}) |
+| `ps\gepellenorzes.ps1:394` | A lemez közel 100%-on pörög – a gép emiatt "akadhat", még ha a CPU nincs is terhelve. |
+| `ps\gepellenorzes.ps1:401` | 6. ENERGIAGAZDÁLKODÁS |
+| `ps\gepellenorzes.ps1:406` | Kiegyensúlyozott (Balanced) |
+| `ps\gepellenorzes.ps1:407` | Nagy teljesítményű (High performance) |
+| `ps\gepellenorzes.ps1:409` | Energiatakarékos (Power saver) |
+| `ps\gepellenorzes.ps1:411` | egyedi / gyártói séma |
+| `ps\gepellenorzes.ps1:412` |   Aktív séma: {0} – {1} |
+| `ps\gepellenorzes.ps1:416` | Teljesítménycentrikus energiaséma aktív – a CPU feleslegesen magas órajelen jár, ez melegít. Javasolt: Kiegyensúlyozott (powercfg /setactive SCHEME_BALANCED). |
+| `ps\gepellenorzes.ps1:422` |   Min. processzorállapot: hálózat {0}% / akku {1}% |
+| `ps\gepellenorzes.ps1:424` | A minimális processzorállapot magasra van állítva – a CPU alapjáraton sem lassít vissza (alapérték: 5%). |
+| `ps\gepellenorzes.ps1:428` |   Max. processzorállapot: hálózat {0}% / akku {1}% |
+| `ps\gepellenorzes.ps1:434` | Legjobb energiahatékonyság |
+| `ps\gepellenorzes.ps1:435` | Kiegyensúlyozott |
+| `ps\gepellenorzes.ps1:436` | Jobb teljesítmény |
+| `ps\gepellenorzes.ps1:437` | Legjobb teljesítmény |
+| `ps\gepellenorzes.ps1:444` |   Windows energiamód: hálózat: {0} / akku: {1} |
+| `ps\gepellenorzes.ps1:446` | A Windows energiamód 'Legjobb teljesítmény' – ez is több hőt termel. |
+| `ps\gepellenorzes.ps1:453` | 7. AKKUMULÁTOR |
+| `ps\gepellenorzes.ps1:456` |   Nincs akkumulátor (asztali gép?). |
+| `ps\gepellenorzes.ps1:459` | Akkumulátorról megy |
+| `ps\gepellenorzes.ps1:459` | Hálózati tápról (töltő bedugva) |
+| `ps\gepellenorzes.ps1:459` | Teljesen feltöltve |
+| `ps\gepellenorzes.ps1:460` | Töltődik |
+| `ps\gepellenorzes.ps1:460` | Töltődik (magas) |
+| `ps\gepellenorzes.ps1:460` | Töltődik (alacsony) |
+| `ps\gepellenorzes.ps1:461` | Töltődik (kritikus) |
+| `ps\gepellenorzes.ps1:461` | Részben töltött |
+| `ps\gepellenorzes.ps1:463` |   Állapot:    {0} |
+| `ps\gepellenorzes.ps1:464` |   Töltöttség: {0}% |
+| `ps\gepellenorzes.ps1:471` |   Kapacitás:  {0} / {1} mWh – az eredeti {2}%-a |
+| `ps\gepellenorzes.ps1:473` | Az akkumulátor erősen kopott ({0}%). Nézd meg, nem duzzadt-e (felpúposodó touchpad, nyíló ház)! |
+| `ps\gepellenorzes.ps1:477` |   Kapacitás: nem olvasható (rendszergazdaként futtatva látszik). |
+| `ps\gepellenorzes.ps1:482` |   Részletes akku-riport: $akkuRiport |
+| `ps\gepellenorzes.ps1:488` | 8. AUTOMATIKUSAN INDULÓ PROGRAMOK |
+| `ps\gepellenorzes.ps1:490` | Felhasználó |
+| `ps\gepellenorzes.ps1:491` |   Összesen: {0} db |
+| `ps\gepellenorzes.ps1:494` | Sok automatikusan induló program ({0} db) – lassítja az indulást és a háttérben is terhel. |
+| `ps\gepellenorzes.ps1:500` | 9. ESEMÉNYNAPLÓ (hiba-előzmények) |
+| `ps\gepellenorzes.ps1:503` |   CPU-fojtás a firmware által (ID 37), utolsó 7 nap:   {0} db |
+| `ps\gepellenorzes.ps1:505` |      legutóbb: {0:yyyy-MM-dd HH:mm} |
+| `ps\gepellenorzes.ps1:506` | A firmware {0} alkalommal visszafogta a CPU-t az elmúlt héten – tipikusan túlmelegedés vagy gyenge töltő miatt. |
+| `ps\gepellenorzes.ps1:510` |   Váratlan leállás (Kernel-Power 41), utolsó 30 nap:   {0} db |
+| `ps\gepellenorzes.ps1:512` |      legutóbb: {0:yyyy-MM-dd HH:mm} |
+| `ps\gepellenorzes.ps1:513` | {0} váratlan leállás az elmúlt 30 napban – túlmelegedéses lekapcsolás is okozhatja. |
+| `ps\gepellenorzes.ps1:517` |   Kékhalál (BugCheck 1001), utolsó 30 nap:             {0} db |
+| `ps\gepellenorzes.ps1:519` | {0} kékhalál az elmúlt 30 napban – driver- vagy hardverhiba gyanú. |
+| `ps\gepellenorzes.ps1:529` |   Lemez I/O-hibák (disk 7/51/153), utolsó 30 nap:      {0} db |
+| `ps\gepellenorzes.ps1:533` | lapozási hiba |
+| `ps\gepellenorzes.ps1:533` | újrapróbált I/O |
+| `ps\gepellenorzes.ps1:553` |  (külső/USB) |
+| `ps\gepellenorzes.ps1:555` | $szam. lemez – már nincs csatlakoztatva, valószínűleg külső meghajtó |
+| `ps\gepellenorzes.ps1:564` |      {0}: {1}, legutóbb {2:yyyy-MM-dd HH:mm} |
+| `ps\gepellenorzes.ps1:572` | Rossz blokk a külső meghajtón: {0}. Ha mentéshez használod, érdemes ellenőrizni vagy cserélni. |
+| `ps\gepellenorzes.ps1:574` |   i  Külső meghajtó bejegyzése – a gép belső lemezét nem érinti (pl. menet közben kihúzott pendrive). |
+| `ps\gepellenorzes.ps1:577` | Rossz blokk ({0}×): {1}. Adatmentés és a lemez ellenőrzése javasolt (gyártói diagnosztika). |
+| `ps\gepellenorzes.ps1:579` | Ismétlődő I/O-hibák ({0} db 30 nap alatt): {1}. Adatmentés és a lemez ellenőrzése javasolt. |
+| `ps\gepellenorzes.ps1:581` | {0} lemez-I/O figyelmeztetés: {1}. Egyszeri előfordulás gyakran ártalmatlan (alvó mód, illesztőprogram) – ha ismétlődik, érdemes megnézni. |
+| `ps\gepellenorzes.ps1:582` |  A lemez saját számlálója szerint nincs javíthatatlan hiba. |
+| `ps\gepellenorzes.ps1:592` | 10. MEGFIGYELÉS – {0} perc, {1} mp-enként |
+| `ps\gepellenorzes.ps1:608` | Idő |
+| `ps\gepellenorzes.ps1:609` | Max hő (°C) |
+| `ps\gepellenorzes.ps1:610` | CPU terhelés % |
+| `ps\gepellenorzes.ps1:616` |   {0}   hő: {1,-9} CPU: {2,3}%   top: {3} ({4}%) |
+| `ps\gepellenorzes.ps1:623` |   Csúcsértékek: hő {0} °C, CPU {1}% |
+| `ps\gepellenorzes.ps1:624` |   CSV (Excelben megnyitható): $csv |
+| `ps\gepellenorzes.ps1:626` | A megfigyelés alatt {0} °C-ig ment fel a hő. |
+| `ps\gepellenorzes.ps1:633` | ÖSSZEGZÉS |
+| `ps\gepellenorzes.ps1:635` |   Nem találtam szoftveres okot. Ha a gép mégis forró, valószínűleg hardveres: |
+| `ps\gepellenorzes.ps1:636` |   eltömődött szellőző/ventilátor, kiszáradt hővezető paszta, vagy az akkumulátor. |
+| `ps\gepellenorzes.ps1:638` |   {0} megállapítás: |
+| `ps\gepellenorzes.ps1:646` |   Fizikai ellenőrzés (a script ezt nem látja): |
+| `ps\gepellenorzes.ps1:647` |    - Szellőzőnyílások szabadok? (ágyon, ölben, puha felületen használja?) |
+| `ps\gepellenorzes.ps1:648` |    - Pörög a ventilátor? Zúg, kattog, vagy épp néma, miközben a gép forró? |
+| `ps\gepellenorzes.ps1:649` |    - Duzzadt akku jelei: felpúposodó touchpad/billentyűzet, nyíló ház -> AZONNAL ne használja! |
+| `ps\gepellenorzes.ps1:650` |    - Gyári töltő van rajta? A gyenge töltő is okoz fojtást. |
+| `ps\gepellenorzes.ps1:651` |    - Gyártói hardverteszt: HP – F2 (PC Hardware Diagnostics), Dell – F12 (ePSA), Lenovo – Vantage / Diagnostics. |
 | `ps\halozat_teszt.ps1:53` | IP-cím |
 | `ps\halozat_teszt.ps1:53` | IP-cím |
 | `ps\halozat_teszt.ps1:63` | $atjaro – nem válaszol a pingre |
