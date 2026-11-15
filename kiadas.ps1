@@ -72,6 +72,17 @@ Lepes 'Csomag'
 $zip = Join-Path $env:TEMP "Eszkozcsere_segedlet_$Verzio.zip"
 if (Test-Path -LiteralPath $zip) { Remove-Item -LiteralPath $zip -Force }
 K 'a csomag nem készült el' git archive --format=zip --prefix=Eszkozcsere_segedlet/ -o $zip $cimke Eszkozcsere_segedlet.bat profil_mentes | Out-Null
+# A PDF-útmutató az indító mellé - a címkézett állapotból. A 6. menüpont csak a profil_mentes
+# mappát cseréli, ezért ezt csak az új letöltés hozza.
+$pdf = 'docs/Eszkozcsere_segedlet_utmutato.pdf'
+if (git ls-tree --name-only $cimke $pdf) {
+    $pdfTmp = Join-Path $env:TEMP 'Eszkozcsere_segedlet_utmutato.pdf'
+    cmd /c "git show `"${cimke}:$pdf`" > `"$pdfTmp`""
+    Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
+    $a = [IO.Compression.ZipFile]::Open($zip, 'Update')
+    try { [void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($a, $pdfTmp, 'Eszkozcsere_segedlet/Eszkozcsere_segedlet_utmutato.pdf') }
+    finally { $a.Dispose(); Remove-Item -LiteralPath $pdfTmp -Force -ErrorAction SilentlyContinue }
+}
 '{0}  ({1:0} KB)' -f $zip, ((Get-Item -LiteralPath $zip).Length / 1KB)
 
 # ---------- Release ----------
