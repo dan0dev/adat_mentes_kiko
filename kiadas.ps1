@@ -69,7 +69,9 @@ K 'a címke pusholása nem sikerült' git push -q origin $cimke | Out-Null
 
 # ---------- ZIP ----------
 Lepes 'Csomag'
-$zip = Join-Path $env:TEMP "Eszkozcsere_segedlet_$Verzio.zip"
+# Állandó név, verzió nélkül: így a .../releases/latest/download/Eszkozcsere_segedlet.zip
+# link mindig a legutolsó kiadást tölti le
+$zip = Join-Path $env:TEMP 'Eszkozcsere_segedlet.zip'
 if (Test-Path -LiteralPath $zip) { Remove-Item -LiteralPath $zip -Force }
 K 'a csomag nem készült el' git archive --format=zip --prefix=Eszkozcsere_segedlet/ -o $zip $cimke Eszkozcsere_segedlet.bat profil_mentes | Out-Null
 # A PDF-útmutató az indító mellé - a címkézett állapotból. A 6. menüpont csak a profil_mentes
